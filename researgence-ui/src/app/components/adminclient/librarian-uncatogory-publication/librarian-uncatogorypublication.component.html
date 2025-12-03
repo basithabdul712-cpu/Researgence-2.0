@@ -1,0 +1,343 @@
+<style>
+  .menu-open {
+    width: 100%;
+  }
+
+  .menu-closeds {
+    width: 83%;
+    margin-left: 250px;
+  }
+
+  .line-select {
+
+    width: 187px;
+
+  }
+  *{
+    transition: unset;
+  }
+  
+</style>
+<script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+
+<div class="content-wrapper">
+  <div class="container-fluid" [ngClass]="{'menu-closeds': isMenuOpen}" style="padding-left: 0px;padding-right: 0px;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="alert alert-dismissible alert-info" style="margin-bottom: unset;background-color: #ececec;border-color: transparent;color: #000000;text-align: right;font-size: 12px;padding: 5px;">
+          <button type="button" class="close" data-dismiss="alert" style="background: unset;border: unset;right: 0px;"><i class="fa fa-remove"></i></button>
+          Currently logged in as {{Name}}({{roleName}}) </div>
+      </div>
+      
+            <div class="row">
+              <div class="video_bar bluebar_expand"[ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+              [ngStyle]="{
+            'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '':'unset','width':stickyEnable&&isMenuOpen? '95%':'100%'
+          }" #blueheader style="padding-left: 50px;">
+                   <div class="container container-90 " style="width: 90%;">
+                  <div class="row">
+                 <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '19px'}" style="margin-left: -26px; "   >
+                         <h2 style="font-size: 19px;;">Mine Your Publications</h2>
+                         <p style="margin-top: 0;font-size: 12px;">Explore deeper using qualitative and quantitative metrics for advanced research analysis.</p>
+                   <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green"  href="/newrequest">here</a> to contact our team.</p>
+                       </div>
+                       <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"  href="/newrequest"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                        <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Help Manual</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+                      </div>
+               </div>
+              </div>
+               </div>
+             </div>
+        
+             <div class="container container-90" >
+              <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '150px' : '30px'}">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="inner-page-header gradient-box">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <h3 class="page_title" style="font-size: 24px;">List Of Uncategorized Publications</h3>
+                        </div>
+                        <div class="col-lg-6">
+                            <!-- <input type="button"  class="btn-outline float-right ml-20" (click)="exportexcel()" value="Download Excel"> -->
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="view">
+                  <h6 class="tweet" style="font-size: 15px;font-weight: 500;padding-top: 8px;text-align: end;padding-right: 10px;"> Showing {{ startrow + 1 }} to {{endrow}} of {{this.collapsablesize}} records</h6>
+                </div>
+                     <div class="row">
+                      <div class="col-lg-12">
+                        <div class="filter">
+                        <div class="publication_list row">
+                          <div class="col-lg-12">
+                        <div style="float: inherit;margin-right: 20px;"> 
+                          <label class="control-label heading_sm">Show</label>
+                          <select style="border: 1px solid #ccc !important;" [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                            <option *ngFor="let dropcount of pageSizecount" [value]="dropcount">{{dropcount}}</option>
+                          </select>
+                       </div>
+                       <!-- <div *ngIf="userName==support" style="width: 60%;float: inline-end;"> 
+                        <label class="control-label heading_sm">University</label>
+                        <input style="border: 1px solid lightgray;width: 25%;" name="univName" [(ngModel)]="univName" (keyup)="changeTitle(univName)" placeholder="Enter University" autocomplete="off"> 
+                        <ul  class="dropdown-list" *ngIf="hideDrop&& filterTitle.length > 0" style="z-index: 10;">       
+                          <li *ngFor="let n of filterTitle"  (click)="onSelectTitle(n.universityId,n.universityName)">
+                            {{ n.universityName }}
+                         </li>
+                        </ul>
+                      </div> -->
+                      <!-- <div *ngIf="userName==support" style="width: 50%;"> 
+                        <label class="control-label heading_sm">Search</label>
+                        <input style="border: 1px solid lightgray;width: 25%;" name="searchData" [(ngModel)]="searchData" (keyup)="changeFilters(searchData)" placeholder="Search Inputsource | Createdbyname" autocomplete="off"> 
+                      </div>                    -->
+                          </div>
+                         </div>
+                       </div>
+                        <div class="result col-lg-12">
+                          <div class="content-wrapper-white" style="overflow: auto;margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+                            <div class="scrollClass">
+                             
+                              <table id="example" class="table table-bordered" style="width:100%" >
+                                <thead style="    background: #0151be;
+                                color: #fff;">
+                                  <tr>
+                                    <th  class="name" style="padding-right: unset;color: white;">SL.NO</th>
+                                    <th scope="col" class="name" style="color: white;"><div style="width: 250px;">PUBLICATION DETAIL</div></th>
+                                    <th scope="col" class="name" style="color: white;width: 100%;">AUTHOR AFFILIATION</th>
+                                    <th scope="col" class="name" style="color: white;">LINK</th>
+                                    <th scope="col" class="name" style="color: white;">YEAR</th>
+                                    <th scope="col" class="name" class="sticky-column-right bg-light" style="background-color: #0151be !important;color: #fff !important;">EDIT</th>
+                                    </tr>
+                              </thead>
+                              
+                              <tbody>
+                                <tr *ngFor="let d of dataList ;let i=index">
+                                  <td>{{ i + 1 +(page - 1) * pageSize }}</td>        
+                                  <td>
+                                    <p><span style="font-weight: 700;">Title</span>: {{d.publicationTitle}}</p>
+                                    <p><span style="font-weight: 700;">Doi</span>: {{d.doi}}</p>
+                                    <p><span style="font-weight: 700;">Source</span>: {{d.sourcePublication}}</p>
+                                    </td>
+                                  <td>
+                                    <ng-container *ngFor="let t of (expandedItems.includes(d) ? d.authorAffiliation : d.authorAffiliation.slice(0, 1))" >
+                                      {{t}}
+                                    </ng-container>  
+                                    <ng-container *ngIf="d.authorAffiliation.length > 1">
+                                      <a class="showMore" (click)="toggleExpansion(d)">{{ expandedItems.includes(d) ? 'Show Less' : 'Show More' }}</a>
+                                    </ng-container>         
+                                  </td>
+                                  <td>{{d.link}}</td>
+                                  <td>{{d.year}}</td>
+                                  <td class="sticky-column-right bg-light">                  
+                                      <a style="font-size: 20px;cursor: pointer;" class="fa fa-edit control-btn" (click)="edit(d.publicationId)"></a>                                                   
+                                  </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        </div>
+                      </div>
+                     
+                        <div class="row d-flex justify-content-center">
+                          <div class="col-lg-12">
+                            <div class="row ">
+                              <div class="col-lg-4 text-right" style="margin-top: 10px;margin-left: 40%;">
+                                <ngb-pagination [(page)]="page" [pageSize]="pageSize" [maxSize]="3" [collectionSize]="collapsablesize"
+                                (pageChange)="onPageChange($event)">
+                              </ngb-pagination>
+                              </div>
+                            </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+              </div>
+          </div>
+        <br>
+        <br>
+  </div>
+</div>
+
+
+
+<div class="modal fade modal_special in" style="display: block;" id="add_new_form" tabindex="-1" role="dialog" aria-labelledby="add_new_modal" aria-hidden="true" *ngIf="enableViewPub">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 1200px;left: -290px;top: 10px; overflow-y: scroll;height: 600px;" >
+      <div class="modal-header" >
+        <p class="modal-title" id="add_new_modal" style="left: -20%;width: 100%;">Edit Publication - Resolve Author Affiliations</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closePubDetail()"><span
+            aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+        <form id="step-form">
+          <fieldset >
+            <div class="form-card">
+              <div>
+                <p><span style="font-weight: bold;">Title:</span> {{checkValues.title}}</p>
+              </div>
+              <div>
+                <p><span style="font-weight: bold;">SourceName:</span> {{checkValues.publicationSourceName}}</p>
+              </div>
+              <div *ngIf="checkValues.doi" >
+                <p><span style="font-weight: bold;">Doi:</span> {{checkValues.doi}}</p>
+              </div>
+              <div *ngIf="checkValues.publisherName" >
+                <p><span style="font-weight: bold;">Publisher:</span> {{checkValues.publisherName}}</p>
+              </div>
+
+              <div>
+                <p><span *ngIf="checkValues.year">{{checkValues.year}},</span>Article type: {{checkValues.articleTypeName}},P-ISSN:{{checkValues.pissn}},E-ISSN:{{checkValues.eissn}},P-ISBN:{{checkValues.pisbn}},E-ISBN:{{checkValues.eisbn}}</p>
+              </div>
+             <br>
+              <div>
+                <p *ngIf="checkValues.onlineDate"><span style="font-weight: bold;">Published Online:</span> {{checkValues.onlineDate}}</p>
+              </div>
+             <br>
+              <div>
+                 <div class="author_detail" style="margin-top: 10px;">
+                <div class="row">
+                  <div class="col-lg-7">
+                    <h4>Author Detail</h4>
+                    <p class="text-sm"></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <ol id="example1" class="list-group ol-list author_list" cdkDropList (cdkDropListDropped)="onDrop($event)">
+                      <ng-container *ngFor="let user of tempusers;let i=index">
+                      <li class="list-group-item" [ngStyle]="{'border-left' : user.isHomeUniversity==1 ? '5px solid limegreen' : '5px solid red'}"  style="cursor: pointer;border-top-width: thin;" cdkDrag cdkDragLockAxis="y"><span style="font-weight: 900;">{{user.fullName}}</span>,{{user.departmentName}},{{user.instituteName}},<span style="font-weight: 900;">{{user.universityName}}</span>,{{user.locationName}},{{user.stateName}},{{user.countryName}}<span class="cor_author ml-20"></span>
+                        <a *ngIf="user.isHomeUniversity==1"  class="edit" draggable="false" (click)="newEdit(i)">Edit</a>
+                        <!-- <a *ngIf="user.isHomeUniversity==1" class="fa fa-trash control-btn" style="padding-right: 15px;padding-top: 2px;" (click)="deleteData(i)"></a> -->
+                      </li>
+                    </ng-container>
+                    </ol>
+                    <hr class="hr-grey">
+                  </div>
+                  <div class="col-lg-12" *ngIf="enableHome||enableAway">
+                    <div class="col-lg-3">
+                    <h4>Edit Author</h4>
+                  </div>
+                  </div>
+                </div>
+            <div *ngIf="enableHome">
+            <div class="col-lg-12 bg-white"  *ngFor="let f of feeders;let i=index;" style="top: 31px;margin-bottom: 50px;">                     
+              <div class="row">
+              <div class="col-md-6">
+                <label style="width: 25%;">University</label>
+                <div style="margin-left: 15px;">
+                <input type="text" class="custom-input"  name="f.universityName" [(ngModel)]="f.universityName" readonly>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label style="width: 25%;">AuthorName</label>
+                <div style="margin-left: 15px;">
+                <input type="text" class="custom-input" name="f.fullName" [(ngModel)]="f.fullName" readonly>
+               </div>
+             </div>
+    </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label style="width: 25%;">Country</label>
+        <div style="margin-left: 15px;">
+          <select style="width: 232px;" name="f.countryName" class="custom-select line-select" [(ngModel)]="f.countryName" (ngModelChange)="countryFilterHome(f.countryName,i,f.universityId)">
+            <option value="" selected disabled>Select Country</option>
+            <option *ngFor="let item of uniqCountry" >{{item}}</option>                     
+          </select>
+        </div>
+      </div>
+              <div class="col-md-6">
+                <label style="width: 26%;">State</label>
+        <div style="margin-left: 15px;">
+          <select style="width: 232px;" class="custom-select line-select" name="f.stateName" [(ngModel)]="f.stateName" (ngModelChange)="stateFiltersHome(f.stateName,i,f.universityId)">
+            <option value="" selected disabled>Select State</option>
+            <option *ngFor="let item of uniqState" >{{item}}</option>                      
+          </select>
+        </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3" *ngIf="f.layerType=='3LType1'||f.layerType=='3LType2'||f.layerType=='4LType1'">
+                <label >Location</label>
+                <div style="margin-left: 15px;">
+                  <select style="width: 160px;" class="custom-select line-select" name="f.locationName" [(ngModel)]="f.locationName" (ngModelChange)="baseLocfilter(f.locationName,i,f.universityId)">
+                    <option value="" selected disabled>Select Location</option>
+                    <option *ngFor="let item of uniqueLocationNames" >{{item}}</option>                      
+                  </select>
+                </div>
+            </div>
+            <div class="col-md-3" *ngIf="f.layerType=='4LType1'||f.layerType=='4LType2'||f.layerType=='3LType3'">
+              <label >School</label>
+      <div style="margin-left: 15px;">
+        <select style="width: 160px;" class="custom-select line-select" name="f.schoolName" [(ngModel)]="f.schoolName" (ngModelChange)="baseSchfilter(f.schoolName,i,f.universityId)">
+          <option value="" selected disabled>Select School</option>
+          <option *ngFor="let item of layerSchool" >{{item}}</option>                      
+        </select>
+      </div>
+            </div>
+              <div class="col-md-3" *ngIf="f.layerType=='2LType1'||f.layerType=='3LType1'||f.layerType=='3LType3'||f.layerType=='4LType1'||f.layerType=='4LType2'">
+                <label >Institute</label>
+                <div style="margin-left: 15px;">
+                  <select style="width: 160px;" class="custom-select line-select" name="f.instituteName" [(ngModel)]="f.instituteName"  (ngModelChange)="baseInstfilter(f.instituteName,i,f.universityId)">
+                    <option value="" selected disabled>Select Institute</option>
+                    <option *ngFor="let item of layerIns" >{{item}}</option>                          
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3" *ngIf="f.layerType=='2LType1'||f.layerType=='3LType1'||f.layerType=='3LType2'||f.layerType=='3LType3'||f.layerType=='2LType2'||f.layerType=='4LType1'||f.layerType=='4LType2'">
+                <label >Department</label>
+                <div style="margin-left: 15px;">
+                  <select style="width: 160px;" class="custom-select line-select" name="f.departmentName" [(ngModel)]="f.departmentName" (ngModelChange)="baseDeptfilter(f.departmentName,i,f.universityId)">
+                    <option value="" selected disabled>Select Department</option>
+                    <option *ngFor="let item of layerDept" >{{item}}</option>                         
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">    
+              <div class="col-md-6">
+                <label for="" style="width: 25%;">EmailId</label><br>
+                <div style="margin-left: 15px;"><input type="text"  class="custom-input" name="f.correspondingEmail" [(ngModel)]="f.correspondingEmail"></div>
+              </div>                              
+              <div class="col-md-6">
+                <label for="" style="width: 36%;">CorrespondingAuthor</label>
+                <div style="margin-left: 15px;margin-top: 10px;">
+                  <select name="f.correspondingAuthor" [(ngModel)]="f.correspondingAuthor" (change)="corresAuthor(f.correspondingAuthor,i)">
+                    <option value="" selected disabled>Corresponding Author</option>
+                    <option *ngFor="let item of commonDropDown" [value]="item.key">{{item.value}}</option>                     
+                  </select>
+                </div>                          
+              </div>
+            </div>
+            <div class="centered-actions" style="top: 10px;">
+              <span class="left"></span>
+              <!-- <a class="fa fa-plus control-btn" (click)="addNewDetails('home')"></a> -->
+              <input type="button" class="btn-solid-blue" data-toggle="modal" value="Update" (click)="addNewDetails('home')">
+              <span class="right"></span>
+             </div><table class="table-editable"></table>     
+             <p style="color: red;">Please submit after update to reflect in the portal</p>                  
+            </div>
+           </div>
+               </div>
+              </div>
+              <br>
+              <br>
+              <div>
+                <input type="button" name="next" class="next btn-outline-blue float-right" style="width: 20%;float: right;margin-left: 10px;"  value="Close" (click)="closePubDetail()"/>
+                <input type="button" name="next" class="next btn-outline-blue float-right" style="width: 20%;float: right;margin-left: 10px;"  value="SUBMIT" (click)="submitAll()"/>
+              </div>
+              <br> <br> <br>
+              </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

@@ -1,0 +1,82 @@
+
+
+/* .content-wrapper.bluebar_collapse .head-video-cover {
+  margin-right: -56%;
+} */
+.opensideBar {
+  padding-left: 250px;
+  margin-left: 0px;
+  }
+  @media (min-width: 992px){
+  .col-lg-5 {
+    flex: 0 0 auto;
+    width:43.666667%;
+  }
+}
+
+.row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1* var(--bs-gutter-y));
+  margin-right: calc(-0.5* var(--bs-gutter-x));
+  margin-left: calc(-0.5* var(--bs-gutter-x));
+}
+.bluebar_collapse .help-btn {
+  display: block;
+  float: left;
+  padding: 10px 10px;
+  margin-right: 44px;
+}
+.container-90 {
+  width: 90% !important;
+}
+.score_container, .dash_card_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.hover-box {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  background-color: white; /* Default background color */
+  transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+.hover-box:hover {
+  background-color: rgb(255, 254, 254); /* Background color on hover */
+}
+
+.primary_score, .secondary_score {
+  position: relative;
+  z-index: 1; /* Ensures the scores are above other content */
+  color: black; /* Default text color */
+  transition: color 0.3s; /* Smooth transition for text color */
+}
+
+.hover-box:hover .primary_score,
+.hover-box:hover .secondary_score,
+.hover-box:hover .total_score {
+  color: rgb(255, 255, 255);; /* Text color on hover */
+}
+
+.message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent background */
+  color: #fff;
+  border-radius: 5px;
+  white-space: nowrap;
+  z-index: 10;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s; /* Smooth transition for opacity */
+}
+
+.hover-box:hover .message {
+  opacity: 1; /* Show message on hover */
+}

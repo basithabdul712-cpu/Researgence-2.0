@@ -1,0 +1,63 @@
+.alignDrop{
+    height: 100px;
+    overflow: scroll;
+    width: 90%;
+    background: white;
+  }
+  .alignDrop li:hover{
+  background-color: #c0bbbb;
+  color: #000; 
+  cursor: pointer;
+  }
+  .but
+  {
+    width:100px;
+    height:30px;
+    border-radius: 10px;
+    background-color: #0051bf;
+    color: white;
+    border-color: #0051bf;
+    font-weight: bold;
+  }
+
+  .menu-open {
+    padding-left: 5%;
+    }
+    
+    .menu-closed {
+    padding-left: 240px;
+    margin-left: 0px;
+    }
+
+  .editDrop{
+  height: 150px;
+  overflow: scroll;
+  }
+  .editAuthor{
+  height: 150px;
+  overflow: scroll;
+  }
+  .editDrop li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+  .editAuthor li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+.Greenbg{
+  background: #c2cf1d;
+  color: #000000;
+  border: none;
+  padding: 6px 10px;
+  margin-left: 7px;
+}
+.name{
+  color: white;
+  border-right: solid 1px black;
+}
+.tl{
+  border-right: solid 1px black;
+}

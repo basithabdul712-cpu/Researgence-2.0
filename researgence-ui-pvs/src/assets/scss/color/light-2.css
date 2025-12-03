@@ -1,0 +1,5 @@
+
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: File to import not found or unreadable: theme/variables.\A        Load path: D:/angular_theme/researgencegit/src/assets/scss/color\A         on line 100 of D:\angular_theme\researgencegit\src\assets\scss\color\light-2.scss\A \A 95: 	 85. wishlist\A 96: 	 86. checkout\A 97: 	 87. typahead-search\A 98:  */\A 99: \A 100: @import \"theme/variables\";\A 101: $primary-color: #0288d1;\A 102: $secondary-color :#26c6da;\A 103: $gradient-primary: linear-gradient($secondary-color, $primary-color);\A 104: $all-focus-outline-color: $primary-color;\A 105: $code-tag-color: $primary-color;"; }

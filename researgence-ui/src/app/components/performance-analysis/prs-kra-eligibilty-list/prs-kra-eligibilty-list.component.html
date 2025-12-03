@@ -1,0 +1,182 @@
+<style>
+  .sidemenu-open {
+  padding-left: 0%;
+}
+
+.menu-closed {
+  padding-left: 250px;
+}
+</style>
+<div class="content-wrapper" [ngClass]="{'sidemenu-open': !isMenuOpen, 'menu-closed': isMenuOpen}"
+  style="font-family: 'Red Hat Display', sans-serif;">
+  <div class="container-fluid">
+    <div class="row" style="margin-bottom: -23px;">
+      <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;"><i
+            class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}})
+      </div>
+    </div>
+    <div class="row">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+        [ngStyle]="{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 50px;">
+        <div class="container container-90 ">
+          <div class="row" style="margin-left: -40px;width: 102%;">
+            <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle]="{'margin-top' : stickyEnable ? '' : '20px'}">
+              <h2>Welcome to Your Researgence Repository</h2>
+              <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+              <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30"
+                  style="margin-right: 15px;">For support, click <a class="link-green" href="/newrequest">here</a> to
+                contact our team.</p>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn" href="/newrequest"><img
+                  src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20"
+                  style="margin-right: 10px;">Support</a>
+                  <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo"
+                target="_blank" class="video_btn mediabox"><span>Watch Video</span><img
+                  src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container container-90" style="width: 90%;">
+    <div class="content-pushed" [ngStyle]="{'padding-top' : stickyEnable ? '170px' : '35px'}">
+      <div class="row">           
+        <div class="col-lg-12">
+          <div class="inner-page-header gradient-box">
+            <div class="row">
+              <div class="col-lg-6">
+                <h3 class="page_title" style="font-size: 24px;">PRS - KRA Eligibility List</h3>
+              </div>
+              <div class="col-lg-6" >
+                <a *ngIf="userRole!=12"  style="cursor: pointer;" class="btn-outline float-right ml-20" routerLink="/performance-analysis-dashboard">Back</a>
+                <!-- <a style="cursor: pointer;" class="btn-outline float-right" (click)="getCompareExcelData()">Download Excel</a> -->
+                <a style="cursor: pointer;" class="btn-outline float-right" (click)="downloadCsv()">Download Excel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <label class="control-label heading_sm" style="text-align: end;"> Showing {{ startrow +1 }} to {{ endrow}} of
+          {{this.tcollectionSize}} records</label> -->
+      </div>
+
+      <!-- Download image -->
+      <div class="d-flex align-items-center justify-content-center" *ngIf="enablePic" style="width: 100%;height:100%;" >
+        <div class="d-flex flex-column align-items-center justify-content-center"  style="width: 300px;height:100px;">
+          <img style="width: 100px;height: 100px;" src="../../../../../assets/images/tree/throbber.gif">
+          <h5 style="margin-top: 10px;color: black;font-size: 15px;font-family: 'Times New Roman', Times, serif;" *ngIf="!enableFilterText" >Downloading Please Wait...</h5>
+          <h5 style="margin-top: 10px;color: black;font-size: 15px;font-family: 'Times New Roman', Times, serif;" *ngIf="enableFilterText" >Page Loading Please Wait...</h5>
+        </div>
+    </div>
+
+      <div class="row" [ngStyle]="{'opacity': enablePic ? '1%':'100%'}">
+        <div class="col-lg-12" style="margin-top: unset;">
+          <div class="publication_list row">
+            <div class="col-lg-12">
+              <div class="filter" style="display: flex;flex-flow: wrap;">
+                <div class="sort " style="margin-right: 11px !important;" *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'"> <span
+                    class="custom-dropdown">
+                    <label class="control-label heading_sm">Campus</label>
+                    <select style="width: 100px" [(ngModel)]="filterCamp" (change)="filters('loc')">
+                      <option disabled selected value="undefined">Select Campus</option>
+                      <option value="">All Campus</option>
+                      <option *ngFor="let item of layerCampus">{{item}}</option>
+                    </select>
+                  </span> </div>
+                <div class="sort" style="margin-right: 11px !important;" *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'"> <span
+                    class="custom-dropdown">
+                    <label class="control-label heading_sm">School</label>
+                    <select style="width: 100px" [(ngModel)]="filterSchool" (change)="filters('scl')">
+                      <option disabled selected value="undefined">Select School</option>
+                      <option value="">All School</option>
+                      <option *ngFor="let item of layerSchool">{{item}}</option>
+                    </select>
+                  </span> </div>
+                <div class="sort" style="margin-right: 11px !important;"
+                  *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'">
+                  <span class="custom-dropdown">
+                    <label class="control-label heading_sm">Institute</label>
+                    <select style="width: 100px" [(ngModel)]="filterInst" (change)="filters('inst')">
+                      <option disabled selected value="undefined">Select Institute</option>
+                      <option value="">All Institute</option>
+                      <option *ngFor="let item of layerInst">{{item}}</option>
+                    </select>
+                  </span> </div>
+                <div class="sort" style="margin-right: 11px !important;"
+                  *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'">
+                  <span class="custom-dropdown">
+                    <label class="control-label heading_sm">Department</label>
+                    <select style="width: 100px" [(ngModel)]="filterDepart" (change)="filters('dept')">
+                      <option disabled selected value="undefined">Select Department</option>
+                      <option value="">All Department</option>
+                      <option *ngFor="let item of layerDept" [value]="item.departmentName">{{item.departmentName}}
+                      </option>
+                    </select>
+                  </span> </div>
+
+                <!-- <div class="sort" style="margin-right: 21px !important;"> <span class="custom-dropdown">
+                    <div>
+                      <label class="control-label heading_sm">Show</label>
+                      <label>
+                        <select class="form-control input-sm ts" [(ngModel)]="pageSize"
+                          (change)="onPageSizeChange($event.target.value)">
+                          <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+                          <option *ngIf="tcollectionSize>100"  [value]="tcollectionSize">All</option>
+                        </select>
+                        <span class="caret"></span>
+                      </label>
+                    </div>
+                  </span> </div> -->
+                  <div class="sort" style="margin-right: 11px !important;margin-top: 5px;position: sticky;left: 80%;"> <span class="custom-dropdown">
+                    <div>
+                      <!-- <label class="control-label heading_sm">{{tempUnivName}}</label> -->
+                      <input type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" value="Clear" (click)="clearFilter()">
+                      <input type="button" style="margin-right: 10px;" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" (click)="filterRecords()" value="Filter">
+                    </div>
+                  </span></div>
+              </div>
+            </div>
+
+              <div class="row" style="margin-bottom: 10px;margin-top: 10px;margin-left: unset;padding: unset;"> 
+                <div class="col-lg-12">
+                  <app-ag-grid 
+                    [gridData]="facultiesListdata" [layerType]="layerType"
+                  ></app-ag-grid>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="row" style="margin-bottom: 30px;"></div>
+          <!-- <div class="paginate" style="display: flex;align-items: center;justify-content: center;" >
+            <div class="row" style="width: 400px;">
+              <tr style="margin-left: -40px;">
+                <p class="pages-link" style="float: inline-start;" [class.disabled]="tpage === 1"
+                  (click)="onPageChange(tpage-1)">Previous</p>
+                <ngb-pagination class="pagination1" (pageChange)="onPageChange($event)" [maxSize]="3" [(page)]="tpage"
+                  [pageSize]="pageSize" [collectionSize]="tcollectionSize" style="float: left;">
+                </ngb-pagination>
+                <p class="pages-link" style="text-decoration: none;margin-left: 20px;"
+                  [class.disabled]="tpage == totalPages" (click)="onPageChange(tpage+1)">Next</p>
+              </tr>
+            </div>
+            <br>
+            <br>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    .sort {
+      float: left;
+      margin-right: 23px;
+      text-align: center;
+    }
+  </style>

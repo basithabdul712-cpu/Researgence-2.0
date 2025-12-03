@@ -1,0 +1,353 @@
+<style>
+  .menu-open {
+    width: 100%;
+    margin-left: -7%;
+    margin-top: 3%;
+  }
+  
+  .menu-closed {
+    width: 95%;
+    margin-left: 3%;
+    margin-top: 3%;
+  }
+  </style>
+  
+  <div class="content-wrapper">
+  
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="content-container" [ngClass]="{'menu-open': !isMenuOpen, 'menu-closed': isMenuOpen}">
+        <div class="gradient-box">
+          <h3 class="text-white text-center" style="font-family: 'gothammedium';">RESEARCHER DETAILS</h3>
+        </div>
+        <div class="gradient-box">
+          <div class="bg-white" >
+            <div class="row">
+      <form class="form">
+              <div class="col-lg-6" >
+               
+        <table class="form-table">
+          <tbody  >
+          
+            <tr>
+            <th colspan="2" class="label-column"><h4>PERSONAL DETAIL</h4></th>
+          </tr>
+          <tr *ngIf="roleId=='5'||roleId=='12'" >
+            <td colspan="1" class="label-column"><label>UNIVERSITY<span style="color: red;">*</span></label></td>
+            <td>
+              
+              <input class="form-texts" [(ngModel)]="universityName" name="universityName" readonly> 
+            </td>
+          </tr>
+          <tr>
+            <td colspan="1" class="label-column"><label *ngIf="universityName!=='Ashoka University'">EMPLOYEE ID</label>
+              <label *ngIf="universityName==='Ashoka University'">PROFILE ID</label>
+            </td>
+            <td *ngIf="enableEdit"><input class="form-texts" name="empId" [(ngModel)]="empId" [readonly]="!editableInput"><a class="fa fa-edit control-btn" (click)="modifyEmpId()"></a></td>
+            <td *ngIf="!enableEdit"><input class="form-texts" name="empId" [(ngModel)]="empId" readonly></td>
+          </tr>
+          <tr >
+          <td colspan="1" class="label-column"><label>NAME<span style="color: red;">*</span></label></td>
+          <td><input class="form-texts" name="fullName" [(ngModel)]="fullName" ></td>
+          </tr>
+          <tr >
+            <td colspan="1" class="label-column"><label>USER NAME</label></td>
+            <td><input class="form-texts" name="loginuserName" [(ngModel)]="loginuserName" readonly></td>
+            </tr>
+            <tr >
+              <td colspan="1" class="label-column"><label>EMAIL ID</label></td>
+              <td><input class="form-texts" name="emailId" [(ngModel)]="emailId" [readonly]="!enableMail"></td>
+              </tr>
+          <tr >
+            <td colspan="1" class="label-column"><label>DESIGNATION</label></td>
+            <td>
+              <select class="custom-select line-select" name="designationName" [(ngModel)]="designationName"> 
+                <option *ngFor="let item of filteredDesignations" class="select-selected">{{item.value}}</option>
+              </select>
+            </td>
+          </tr>
+          
+          <tr>
+            <td colspan="1" class="label-column"><label>GENDER</label></td>
+          <td>
+            <select class="custom-select line-select" name="genderName" [(ngModel)]="genderName"> 
+              <option *ngFor="let item of filteredGenders" class="select-selected">{{item.value}}</option>
+            </select>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="1" class="label-column"><label>DATE OF BIRTH</label></td>
+          <td><input type="date" id="dateOfBirth" name="dateOfBirth" [(ngModel)]="dateOfBirth" class="form-texts" ></td>
+          </tr>
+          <tr>
+            <td colspan="1" class="label-column"><label>DATE OF JOINING</label></td>
+          <td><input type="date" id="dateOfJoining" name="dateOfJoining" [(ngModel)]="dateOfJoining" class="form-texts"></td>
+          </tr>
+ 
+          <tr *ngIf="roleId=='5'||roleId=='12'||roleId=='10'||roleId=='17'" >
+            <td colspan="1" class="label-column"><label>USER STATUS<span style="color: red;">*</span></label></td>
+            <td>
+              <!-- <input class="form-text" name="userstatusName" [(ngModel)]="userstatusName"> -->
+              <select class="custom-select line-select" name="userstatusName" [(ngModel)]="userstatusName"> 
+                <option *ngFor="let item of userStatusFilter" class="select-selected">{{item.value}}</option>
+              </select>
+            </td>
+          </tr>
+          <tr *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'">
+            <td colspan="1" class="label-column"><label>CAMPUS<span style="color: red;">*</span></label></td>
+          <td *ngIf="roleId==12||roleId==5||roleId==17">
+            <select class="custom-select line-select" name="locationName" [(ngModel)]="locationName" (change)="filterSchool(locationName)"> 
+              <option *ngFor="let item of layerCampus" class="select-selected">{{item}}</option>
+            </select>
+          </td>
+          <td *ngIf="!enableEdit"><input name="locationName" [(ngModel)]="locationName" class="form-texts" readonly></td>
+          </tr>
+          <tr *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'">
+            <td colspan="1" class="label-column"><label>SCHOOL<span style="color: red;">*</span></label></td>
+          <td *ngIf="roleId==12||roleId==5||roleId==17">
+            <select class="custom-select line-select" name="schoolName" [(ngModel)]="schoolName" (change)="filterInst(schoolName)"> 
+              <option *ngFor="let item of layerSchool" class="select-selected">{{item}}</option>
+            </select>
+          </td>
+          <td *ngIf="!enableEdit"><input name="schoolName" [(ngModel)]="schoolName" class="form-texts" readonly></td>
+          </tr>
+          <tr *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'">
+            <td colspan="1" class="label-column"><label>INSTITUTE<span style="color: red;">*</span></label></td>
+          <td *ngIf="roleId==12||roleId==5||roleId==17">
+            <select class="custom-select line-select" name="instituteName" [(ngModel)]="instituteName" (change)="filterDept(instituteName)"> 
+              <option *ngFor="let item of layerInst" class="select-selected">{{item}}</option>
+            </select>
+          </td>
+          <td *ngIf="!enableEdit"><input name="instituteName" [(ngModel)]="instituteName" class="form-texts" readonly></td>
+          </tr>
+          <tr *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'">
+            <td colspan="1" class="label-column"><label>DEPARTMENT<span style="color: red;">*</span></label></td>
+          <td *ngIf="roleId==12||roleId==5||roleId==17">
+            <select class="custom-select line-select" name="departmentName" [(ngModel)]="departmentName"> 
+              <option *ngFor="let item of filteredDept" class="select-selected" (click)="selectDept(item.departmentName)">{{item.departmentName}}</option>
+            </select>
+          </td>
+          <td *ngIf="!enableEdit"><input class="form-texts" name="departmentName" [(ngModel)]="departmentName" readonly></td>
+          </tr>
+          <tr >
+          
+            <input type="file" (change)="onFileSelected($event)"  />
+            <br>
+            <!-- <button class="upload-buttons" (click)="uploadFile()" [disabled]="!file">Upload File</button> -->
+           </tr>  
+         
+        </tbody></table>
+              </div>
+              <div class="col-lg-6">
+              
+        <table class="form-table">
+          <tbody><tr>
+            <th colspan="2" class="label-column"><h4>RESEARCH INFORMATION</h4></th>
+          </tr>
+          <tr>
+            <td class="label-column"><label>ORCID ID</label></td>
+          <td><input class="form-text" name="orcid" [(ngModel)]="orcid">
+            <div *ngIf="orcid?.length > 20" style="color: red;" >
+              Maximum 20 characters allowed.
+            </div></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>SCOPUS ID</label></td>
+          <td><input class="form-text" name="scopusId" [(ngModel)]="scopusId"  >
+            <div *ngIf="scopusId?.length > 20" style="color: red;" >
+              Maximum 20 characters allowed.
+            </div></td>
+          
+          </tr>
+          <tr>
+            <td class="label-column"><label>WEB OF SCIENCE ID</label></td>
+          <td><input class="form-text" name="wosId" [(ngModel)]="wosId" >
+            <div *ngIf="wosId?.length > 20" style="color: red;" >
+              Maximum 20 characters allowed.
+            </div></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>VIDWAN ID</label></td>
+          <td><input class="form-text" name="vidwanId" [(ngModel)]="vidwanId" >
+            <div *ngIf="vidwanId?.length > 20" style="color: red;" >
+              Maximum 20 characters allowed.
+            </div></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>GOOGLE SCHOLAR ID</label></td>
+          <td><input class="form-text" name="googleScholarId" [(ngModel)]="googleScholarId" >
+            <div *ngIf="googleScholarId?.length > 20" style="color: red;" >
+              Maximum 20 characters allowed.
+            </div></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>RESEARCH AREA</label></td>
+          <td>
+           <div style="width:275px;">
+              <div class="input-group">
+                <input style="border: 0;border-bottom: #ccc 2px solid;"  type="text" class="form-control" placeholder="Enter ResearchArea" [(ngModel)]="newTag" (keydown.enter)="addTag()" (keyup)="onResearcher(newTag)" #inputBox/>
+                  <ul *ngIf="researchDrop"  class="editDrop" style="background: #d2d4d6;">
+                    <li *ngFor="let list of researchname"  (click)="onInput(list.value)">
+                       {{ list.value }}
+                    </li>
+                 </ul>
+              </div>
+                
+              <div class="tag-list" style="margin-top: 5px;margin-bottom: 5px;">
+                  <span class="tag" *ngFor="let tag of tags">{{ tag }} <span class="remove" (click)="removeTag(tag)">&times;</span></span>
+                </div>
+              </div>
+          </td>
+          </tr>
+          <br>
+          <tr *ngIf="roleId=='5'||roleId=='12'">
+            <td class="label-column"><label>ROLES<span style="color: red;">*</span></label></td>
+            <td class="check">
+              <div class="checks">Select Role</div>
+              <div style="float: left;" *ngFor="let item of roleList">
+              <input *ngIf="item.roleId==2"  type="checkbox" style="position: unset;margin-left: 10px;"  name="Faculty" [(ngModel)]="Faculty" (ngModelChange)="updateValues('2')">
+              <label class="tabs" *ngIf="item.roleId==2">
+                Faculty
+              </label>
+            </div>
+            <div style="float: left;" *ngFor="let item of roleList">
+              <input *ngIf="item.roleId==3" type="checkbox" style="position: unset;margin-left: 20px;" name="Scholar" [(ngModel)]="Scholar" (change)="updateValues('3')">
+              <label class="tabs" *ngIf="item.roleId==3">
+                Scholar
+              </label>
+            </div>
+            <div style="float: left;" *ngFor="let item of roleList">
+              <input *ngIf="item.roleId==4" type="checkbox" style="position: unset;margin-left: 20px;" name="Student" [(ngModel)]="Student" (change)="updateValues('4')">
+              <label class="tabs" *ngIf="item.roleId==4">
+                Student
+              </label>
+            </div>
+            <div style="float: left;" *ngFor="let item of roleList">
+              <input *ngIf="item.roleId==7" type="checkbox" style="position: unset;margin-left: 10px;" name="hoc" [(ngModel)]="hoc" (change)="updateValues('7')">
+              <label class="tabs" *ngIf="item.roleId==7">
+                HOC
+              </label>
+            </div>
+            <div style="float: left;" *ngFor="let item of roleList">
+              <input *ngIf="item.roleId==8" type="checkbox" style="position: unset;margin-left: 20px;" name="hoi" [(ngModel)]="hoi" (change)="updateValues('8')">
+              <label class="tabs" *ngIf="item.roleId==8">
+                HOI
+              </label>
+            </div>
+            <div style="float: left;" *ngFor="let item of roleList">
+              <input *ngIf="item.roleId==10" type="checkbox" style="position: unset;margin-left: 20px;" name="hos" [(ngModel)]="hos" (change)="updateValues('10')">
+              <label class="tabs" *ngIf="item.roleId==10">
+                HOS
+              </label>
+            </div>
+            <div style="float: left;" *ngFor="let item of roleList">
+              <input *ngIf="item.roleId==9" type="checkbox" style="position: unset;margin-left: 20px;" name="hod" [(ngModel)]="hod" (change)="updateValues('9')">
+              <label class="tabs" *ngIf="item.roleId==9">
+                HOD
+              </label>
+            </div>
+            <div style="float: left;" *ngFor="let item of roleList">
+              <input  *ngIf="item.roleId==6" type="checkbox" style="position: unset;margin-left: 10px;" name="Management" [(ngModel)]="Management" (change)="updateValues('6')">
+              <label class="tabs" *ngIf="item.roleId==6">
+                Management
+              </label>
+            </div>
+            <div style="float: left;" *ngFor="let item of roleList">
+              <input *ngIf="item.roleId==5" type="checkbox" style="position: unset;margin-left: 20px;"  name="Admin" [(ngModel)]="Admin" (change)="updateValues('5')">
+              <label class="tabs" *ngIf="item.roleId==5">
+                Admin
+              </label>
+            </div>
+            <div style="float: left;" *ngFor="let item of roleList">
+              <input *ngIf="item.roleId==16" type="checkbox" style="position: unset;margin-left: 20px;"  name="universityNew" [(ngModel)]="universityNew" (change)="updateValues('16')">
+              <label class="tabs" *ngIf="item.roleId==16">
+                University
+              </label>
+            </div>
+            <div style="float: left;" *ngFor="let item of roleList">
+              <input *ngIf="item.roleId==17" type="checkbox" style="position: unset;margin-left: 20px;"  name="Librarian" [(ngModel)]="Librarian" (change)="updateValues('17')">
+              <label class="tabs" *ngIf="item.roleId==17">
+                Librarian
+              </label>
+            </div>
+            </td>           
+          </tr>   
+          <br>
+
+          <tr>
+            <td>
+              <!-- <div class="prf-img" >
+                <div class="media align-items-center" *ngIf="!authService.userData as user" >
+                  <img class="rounded-circle" style="margin-bottom: 5px;width:90px;height:90px;box-shadow: 5px 0 10px 0 lightgrey;
+                  " [src]="imgUrl"  (error)="setDefaultPic()">
+                  <div class="dotted-animation"><span class="animate-circle"></span><span class="main-circle"></span></div>
+                </div>
+              </div> -->
+            </td>
+          </tr>
+         
+           <!-- <div class="row">
+            <input type="file" (change)="onFileSelected($event)" >
+            <button class="test" style="width:75%;" (click)="uploadToServer()" [disabled]="!selectedImage">Upload Image</button>
+          </div> -->
+        </tbody></table>
+        <div class="prf-img" *ngIf="this.isPhoto && (this.roleId==2 || this.roleId==5 || this.roleId==12 || this.roleId==17) " >
+          <div class="media align-items-center" *ngIf="!authService.userData as user" >
+            <img class="rounded-circle prf-imgs"
+             [src]="imgUrl == null ? 'assets/images/user/default.png' : imgUrl" >
+            <div class="dotted-animation"><span class="animate-circle"></span><span class="main-circle"></span></div>
+          </div>
+        </div>
+              </div>
+
+              <ng-template #demoModal let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title" id="modal-basic-title">CHANGE PASSWORD</h4>
+                  <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                </div>
+                <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                  <form>
+                    <div class="form-group">
+                     <div class="input-group">
+                      <label>CURRENT PASSWORD</label>                     
+                        <input style="border-radius: 8px;height: 30px;" name="crossTitle" class="form-control" placeholder="CURRENT PASSWORD" [type]="password" [(ngModel)]="currentPassword">        
+                      </div>
+                      <br>
+                      <div class="input-group">
+                        <label>NEW PASSWORD</label>                     
+                          <input style="border-radius: 8px;height: 30px;" name="crossSourceName" class="form-control" placeholder="NEW PASSWORD" [type]="password" [(ngModel)]="newPassword">        
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <label>CONFIRM PASSWORD</label>                     
+                              <input style="border-radius: 8px;height: 30px;" name="CONFIRM PASSWORD" class="form-control" placeholder="CONFIRM PASSWORD" [type]="password" [(ngModel)]="cnfPassword">
+                              <button style="float: right;border-radius: 20px;background: green;color: antiquewhite;margin-top: 1%;" (click)="OnClick()">
+                                <i class="fa fa-eye" aria-hidden="true" *ngIf="!showPassword"></i>
+                                <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="showPassword"></i>
+                              </button>        
+                              <br>
+                              <label *ngIf="mismatchMsg" style="color: red;">{{msg}}</label>
+                            </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer" style="height: 55px;">
+                  
+                  <button style="margin-left: 60%;" type="button" class="btn-green center-block" (click)="processData()">SUBMIT</button>
+                  <button style="margin-right: 20px;" type="button" class="btn-green center-block" (click)="clearPopUP()">CANCEL</button>
+                </div>
+                </ng-template>
+
+                <div class="col-lg-12" style="margin-bottom: 2%;">
+                  <button style="display: unset;margin-left: 45%;" class="btn-green center-block" type="button" (click)="UpdateData()">SUBMIT</button>
+                  <button style="display: unset;margin-left: 1%;" class="btn-green center-block" type="button" (click)="changePassword(demoModal)" *ngIf="roleId==2">CHANGE PASSWORD</button>
+                </div>
+               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>

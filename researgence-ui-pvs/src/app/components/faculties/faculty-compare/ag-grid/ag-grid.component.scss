@@ -1,0 +1,26 @@
+.ag-theme-quartz {
+    --ag-header-height: 30px;
+    // --ag-header-foreground-color: white;
+    // --ag-header-background-color: rgb(23,96,172);
+    // --ag-header-cell-hover-background-color: rgb(23,96,172);
+    // --ag-header-cell-moving-background-color: rgb(23,96,172);
+
+    --ag-header-column-separator-display: block;
+    --ag-header-column-separator-height: 50%;
+    --ag-header-column-separator-width: 2px;
+    --ag-header-column-separator-color: white;
+
+    --ag-data-color: black;
+}
+::ng-deep .ag-theme-quartz .ag-header-cell-label {
+    justify-content: center;
+}
+::ng-deep .ag-cell {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    text-align: center !important;
+    // vertical-align: middle !important;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center;
+  }

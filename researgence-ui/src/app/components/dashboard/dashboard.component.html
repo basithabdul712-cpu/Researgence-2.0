@@ -1,0 +1,200 @@
+<head>
+  <link href="https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css" rel="stylesheet">
+  <link href="https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-rounded/css/uicons-thin-rounded.css" rel="stylesheet">
+  <link href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css" rel="stylesheet">
+  <link href="https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-straight/css/uicons-thin-straight.css" rel="stylesheet">
+  <link href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-straight/css/uicons-regular-straight.css" rel="stylesheet">
+</head>
+
+<div class="content-wrapper" [ngClass]="{'opensideBar': isMenuOpen}" style="background: var(--background-blue);background-size: cover;background-attachment: fixed;min-height: calc(100vh - 80px);">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="alert alert-dismissible alert-info">
+        <p style="width: 30%;margin-bottom: -20px;overflow: unset;">Welcome to Your Research Information Management System.</p>
+        <button type="button" style="border: unset;" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+  </div>
+ 
+  <div class="container container-90 home">
+     <div class="block-btn-blue-container">
+        <!-- <a    >About University</a> -->
+        <!-- [routerLink]="['/facultyProfiles/about/univ']" -->
+        <!-- <a  >Message from Vice Chancellor</a> -->
+        <!-- [routerLink]="['/facultyProfiles/vice/univ']" -->
+        <!-- <a >Research Policy</a> -->
+        <!-- [routerLink]="['/facultyProfiles/research/univ']" -->
+    </div>
+        <!-- <div class="row">
+          <div class="col-lg-12">
+              <p class="welcome_msg" style="color: #fff;text-align: left;font-style: unset;">Dear {{Name}}, (<span style="color: #d9dd0b;">logged in as {{roleName}}</span> <span style="color: #d9dd0b;" *ngIf="userName==='9'">, {{userDetail.DepartmentName}}</span> <span style="color: #d9dd0b;" *ngIf="userName==='8'">, {{userDetail.InstituteName}}</span><span style="color: #d9dd0b;" *ngIf="userName==='10'">, {{userDetail.SchoolName}}</span>)</p>
+              <p style="color: #fff;position: relative;bottom: 30px;font-size: 15px;text-align: left;">Welcome to Your Research Information Management System.</p>
+          </div>
+        </div> -->
+        <br><br>
+    <div class="row" style="margin-top: 15px;">
+          <div class="col-lg-6">
+              <h3 style="margin:0 0 20px 0;color: #fff;" *ngIf="!enableHex">My Research Outputs</h3>
+              <h3 style="margin:0 0 20px 0;color: #fff;" *ngIf="enableHex">Research Output Repository</h3>
+                      
+                  <a *ngFor="let item of topThreeModules" class="glass-box ror_card" [routerLink]="getRouterLink(item.moduleName)">
+                    <p>{{ item.moduleName }}</p>
+                    <p *ngIf="item.totalCount==0" class="text-green text-size-lg text-bold" style="font-size: 25px;">YTI</p>
+                    <p *ngIf="item.totalCount!=0" class="text-green text-size-lg text-bold" style="font-size: 25px;">
+                      {{ getCount(item.moduleName) }}
+                    </p>
+                    <table>
+                      <tr>
+                        <td>{{item.lineItem1Text}}</td>
+                        <td>{{item.lineItem1Count}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{item.lineItem2Text}}</td>
+                        <td>{{item.lineItem2Count}}</td>
+                      </tr>
+                    </table>
+                  </a>
+                  <a (click)="toDetail()" style="cursor: pointer;" class="btn-black-glass">View more...</a>
+          </div>
+              <div class="col-lg-3">
+              <h3 style="margin:0 0 20px 0;color: #fff;">Expert Profiles</h3>
+                  <div class="glass-box expert_profile" style="height: 318px;padding-top: 45px;" >  
+                    <ng-container *ngIf="roleId==2||roleId==3||roleId==18">
+                      <a (click)="toMyprofile()" style="cursor: pointer;">
+                        <span style="font-size: 17px;font-weight: 900;letter-spacing: 2px;">My Profile</span>
+                      </a>
+                    </ng-container>  
+                          <ng-container *ngFor="let exp of filteredItems" >
+                            <a routerLink="/facultyProfiles" (click)="toFaculty()" *ngIf="exp.moduleName=='Faculty'&&exp.totalCount!=0&&exp.enableModule=='True'" style="cursor: pointer;">
+                              <span *ngIf="exp.totalCount==0" style="font-size: 20px;">YTI</span>
+                              <span *ngIf="exp.totalCount!=0" style="font-size: 25px;">{{facCount}}</span>{{exp.moduleName}}
+                            </a>
+                          </ng-container>
+                          <ng-container *ngIf="enableHex">
+                          <ng-container *ngFor="let exp of filteredItems">
+                            <a routerLink="/scholar" *ngIf="exp.moduleName=='Scholar'&&exp.totalCount!=0&&exp.enableModule=='True'">
+                              <span *ngIf="exp.totalCount==0" style="font-size: 20px;">YTI</span>
+                              <span *ngIf="exp.totalCount!=0" style="font-size: 25px;">{{scholarCount}}</span>{{exp.moduleName}}
+                            </a>
+                          </ng-container>
+                        </ng-container>
+                          <ng-container *ngIf="enableHex">
+                          <ng-container *ngFor="let exp of filteredItems">
+                            <a routerLink="/Staff" *ngIf="exp.moduleName=='Staff'&&exp.totalCount!=0&&exp.enableModule=='True'">
+                              <span *ngIf="exp.totalCount==0" style="font-size: 20px;">YTI</span>
+                              <span *ngIf="exp.totalCount!=0" style="font-size: 25px;">{{startupCount}}</span>{{exp.moduleName}}
+                            </a>
+                          </ng-container>
+                        </ng-container>
+                          <ng-container *ngIf="enableHex">
+                          <ng-container *ngFor="let exp of filteredItems">
+                            <a routerLink="/Student" *ngIf="exp.moduleName=='Student'&&exp.totalCount!=0&&exp.enableModule=='True'">
+                              <span *ngIf="exp.totalCount==0" style="font-size: 20px;">YTI</span>
+                              <span *ngIf="exp.totalCount!=0" style="font-size: 25px;">{{studentCount}}</span>{{exp.moduleName}}
+                            </a>
+                          </ng-container>
+                        </ng-container>
+                  </div>  
+          </div>
+              <div class="col-lg-3">
+              <h3 style="margin:0 0 20px 0;color: #fff;">Research Trends</h3>
+                   <div class="glass-box trends" >
+                      <table style="color: #fff;">   
+                           <tr *ngFor="let data of area">
+                              <td>#{{data.researchArea}}</td>
+                               <td style="align-items: end;">{{data.pubCount}}</td>
+                          </tr>                        
+                       </table>
+                  </div>  
+                  <!-- <a  class="btn-black-glass" style="margin-top: 20px;">View more...</a> -->
+          </div>
+        </div>
+    <div class="row" style="margin-top: 50px; margin-bottom: 50px;">
+
+
+
+  <!-- Main dashboard content -->
+  <!-- <div class="dashboard-content">
+  <P>Critical Alert (Subscription expires in {{DaysLeft}} days or already expired)
+Title: Subscription Expiring Soon!
+Message:
+Your subscription will expire in {{DaysLeft}}. Please renew immediately to avoid service
+interruption.
+For Renewal reach out to Reseagerce Support Team.</P>   
+  </div> -->
+
+  <div class="dashboard-container" [class.disabled]="disableUI">
+
+  <!-- 🔴 Modal Popup (Critical/Expired) -->
+  <div class="alert-modal" *ngIf="showModal && alertData && (roleId === '2') && alertData.isExpired === '1'">
+      <div class="alert-box">
+
+      <h3 >⚠️ Subscription Expired
+      </h3>
+      <p>{{ alertData.alertMessage }}</p>
+
+        <!-- OK button hidden for expired -->
+        <button *ngIf="!disableUI" (click)="closeModal()">OK</button>
+      </div>
+  </div>
+  <div class="alert-modal" *ngIf="showModal && alertData && (roleId !== '2')">
+    <div class="alert-box">
+      <!-- Other roles -->
+      <h3>
+        {{ 
+          alertData.isExpired === '1' ? '⚠️ Subscription Expired' :
+          alertData.alertLevel === 'CRITICAL' ? '🚨 Subscription Expiring Soon!' :
+          '🔔 Alert' 
+        }}
+      </h3>
+      <p>{{ alertData.alertMessage }}</p>
+
+      <!-- OK button hidden for expired -->
+      <button *ngIf="!disableUI" (click)="closeModal()">OK</button>
+    </div>
+  </div>
+
+  <!-- 🟢 Scrolling Banner (Medium/Low) -->
+  <div class="scrolling-banner" *ngIf="showBanner && alertData">
+    <marquee behavior="scroll" direction="left">
+      <!-- {{ alertData.alertMessage }} -->
+          <span class="star">*</span>
+    {{ alertData.alertMessage }}
+    <span class="star">*</span>
+    </marquee>
+  </div>
+
+  <!-- 💻 Dashboard Content -->
+  <!-- <div class="dashboard-content">
+    <h2>Dashboard</h2>
+    <p>Normal dashboard content goes here.</p>
+  </div> -->
+</div>
+
+
+
+
+
+
+
+                <div class="col-lg-12">
+              <h3 style="margin:0 0 20px 0;color: #fff;">Researgence<sup>+</sup> Subscriptions</h3>
+                   <div class="products" style="color: #fff;justify-content: space-evenly;">
+                    <a style="cursor: pointer;" *ngFor="let item of newsub" [routerLink]="item.routeUrl" 
+                    (mouseover)="onHover(item)" (mouseleave)="onLeave()" [ngStyle]="getStyle(item)">
+                   {{ shouldDisplayNewData(item) ? newData : item.subscriptionModule }} </a>
+                   </div>
+                   <!-- <div  [ngStyle] = "{'margin-left' : !isMenuOpen ? '650px' : '600px'}" *ngIf="hoverMessage" class="hover-message">{{ hoverMessage }}</div> -->
+                </div>     
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+              <div class="col-lg-12" style="background: rgba(0,0,0,0.3)">
+              <p class="text-center" style="margin-top: 10px; margin-bottom: 0;color: #fff;">Useful Information</p>
+                  <div class="footer_link"><a class="btn-link" (click)="toInfo('PrivacyPolicy')">Privacy Policy</a><a class="btn-link" (click)="toInfo('DataCoverage')">Data Coverage</a>
+                    <a class="btn-link" (click)="toInfo('FrequencyUpdates')">Frequency of Updates</a><a class="btn-link">User Statistics</a></div>
+          </div>
+        </div>
+    </div>
+</div>

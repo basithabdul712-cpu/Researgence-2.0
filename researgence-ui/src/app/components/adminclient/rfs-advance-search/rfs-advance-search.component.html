@@ -1,0 +1,173 @@
+<style>
+  .menu-open {
+    width: 100%;
+    margin-left: -7%;
+    margin-top: 3%;
+  }
+  
+  .menu-closed {
+    width: 95%;
+    margin-left: 3%;
+    margin-top: 3%;
+  }
+  </style>
+
+<div class="content-wrapper">
+      <div class="container-fluid"  [ngClass]="{'menu-open': !isMenuOpen, 'menu-closed': isMenuOpen}">
+            <div class="container-fluid">
+             <div class="gradient-box">
+              <div class="bg-white" >
+               <div class="row">
+                <form class="form">
+                  <div>
+                    <h2 style="text-align: center;font-size: x-large;font-style: italic;">RFS REQUEST - Advanced Search</h2>
+                  </div>
+                 <div class="col-lg-6" >
+                         
+                  <table class="form-table">
+                    <tbody>
+                    
+                      <tr>
+                      <th colspan="2" class="label-column"></th>
+                    </tr>
+                    <tr >
+                      <td class="label-column"><label>UNIVERSITY</label></td>
+                      <td>
+                        <input *ngIf="userName===supportAdmin"  class="form-text" [(ngModel)]="universityName" name="universityName" readonly> 
+                        <select *ngIf="userName===support" class="custom-select line-select" name="universityName" [(ngModel)]="universityName" (change)="changeUniv(universityName)"> 
+                          <option style="background-color: #004096;" disabled selected value="undefined">Select University</option>
+                          <option *ngFor="let item of data" class="select-selected" style="background-color: #005bb3;">{{item.universityName}}</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr >
+                      <td class="label-column"><label>STATUS</label></td>
+                      <td> 
+                        <select class="custom-select line-select" name="status" [(ngModel)]="status" (change)="changeStatus(status)"> 
+                          <option style="background-color: #004096;" disabled selected value="undefined">Select Status</option>
+                        <option *ngFor="let item of statusList" class="select-selected" style="background-color: #005bb3;">{{item.value}}</option>
+                      </select></td>
+                    </tr>
+                    <tr >
+                    <td class="label-column"><label>CREATED DATE FROM</label></td>
+                    <td><input type="date" id="createdDateFrom" name="createdDateFrom" [(ngModel)]="createdDateFrom" class="form-text" ></td>
+                    </tr>
+                    <tr >
+                      <td class="label-column"><label>VERIFIED DATE FROM</label></td>
+                      <td>
+                        <input type="date" id="verifiedDateFrom" name="verifiedDateFrom" [(ngModel)]="verifiedDateFrom" class="form-text" >
+                      </td>
+                    </tr>
+                    
+                    <tr>
+                      <td class="label-column"><label>PUBLICATION TITLE</label></td>
+                    <td>
+                      <input class="form-text" name="publicationTitle" [(ngModel)]="publicationTitle" (keyup)="changePubTitle(searchbar.value)" #searchbar>
+                      <ul *ngIf="titleEnable"  class="alignDrop">
+                        <li *ngFor="let n of pubList"  (click)="onSelectPubTitle(n.name)">
+                           {{ n.name }}
+                        </li>
+                    </ul>
+
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>SOURCE/JOURNAL</label></td>
+                    <td><input class="form-text" name="journal" [(ngModel)]="journal" (keyup)="changeSourceTitle(searchjournal.value)" #searchjournal>
+                    <ul *ngIf="sourceEnable"  class="alignDrop">
+                      <li *ngFor="let n of journalList"  (click)="onSelectSourceTitle(n.name)">
+                         {{ n.name }}
+                      </li>
+                  </ul>
+                </td>
+                  </tr>
+                   
+                  </tbody></table>
+                        </div>
+                        <div class="col-lg-6">
+                        
+                  <table class="form-table">
+                    <tbody><tr>
+                      <th colspan="2" class="label-column"></th>
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>RFS TYPE</label></td>
+                    <td>
+                      <select class="custom-select line-select" name="rfsFilter" [(ngModel)]="rfsFilter" (change)="changerfsType(rfsFilter)"> 
+                        <option style="background-color: #004096;" disabled selected value="undefined">Select RFS TYPE</option>
+                        <option *ngFor="let item of rfsTypeList" class="select-selected" style="background-color: #005bb3;">{{item.value}}</option>
+                      </select>
+                    </td>
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>VERIFIED BY</label></td>
+                    <td>
+                      <select class="custom-select line-select" name="rfsFilter" [(ngModel)]="verifiedStatus" (change)="changeUser(verifiedStatus)"> 
+                        <option style="background-color: #004096;" disabled selected value="undefined">Select Verified User</option>
+                        <option *ngFor="let item of verifiedStatusList" class="select-selected" style="background-color: #005bb3;">{{item.value}}</option>
+                      </select>
+                    </td>
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>CREATED DATE TO</label></td>
+                    <td><input type="date" id="createdDateTo" name="createdDateTo" [(ngModel)]="createdDateTo" class="form-text" ></td>
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>VERIFIED DATE TO</label></td>
+                    <td><input type="date" id="verifiedDateTo" name="verifiedDateTo" [(ngModel)]="verifiedDateTo" class="form-text" ></td>
+                    </tr>
+                    <br> 
+                    <div class="col-lg-12" style="margin-bottom: 1%;">
+                      <button style="margin-top: 1%;float: left;" class="btn-green center-block" (click)="searchFilter()">Search</button>
+                      <button style="margin-top: 1%;" class="btn-green center-block" (click)="refresh()">Reset</button>
+                    </div>                 
+                  </tbody></table>
+                        </div>  
+
+                </form>
+                      </div>
+                    </div>
+                  </div>
+                
+                <div style="margin-top: 40px;">
+                  <table class="table table-striped" style="border: 1px solid black;">
+                        <thead>
+                        <tr style="background:#254e99;">
+                          <th scope="col" class="name">S.NO</th>
+                          <th scope="col" class="name">Author Details</th>
+                          <th scope="col" class="name">Publication Details</th>
+                          <th scope="col" class="name">CreatedDate</th>
+                          <th scope="col" class="name">RFS Type</th>
+                          <th scope="col" class="name">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of dataList | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i=index">
+                            <td class="box">{{ i + 1 + (page - 1) * pageSize }}</td>
+                            <td class="box">
+                              <p>{{item.userName}}</p>
+                              <!-- <p>{{item.departmentName}}</p> -->
+                            </td>
+                            <td class="box">
+                              <p>{{item.publicationTitle}}</p>
+                              <p>{{item.publicationSource}}</p>
+                              <a class="fa fa-file-pdf-o" style="color: red;" *ngIf="item.rfsType!='Linked'"  (click)="testNew(item.pdFfileLocation)"></a>
+                            </td>
+                            <td class="box">{{item.createdDate | date:'dd/MM/yyyy'}}</td>
+                            <td class="box">{{item.rfsType | uppercase}}</td>
+                            <td class="box">{{item.status}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+            
+                </div>
+                <br>
+                <ngb-pagination style="float: right;" [maxSize]="3" [pageSize] = "pageSize" [collectionSize]="collectionSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+                <br>
+                <br>
+                <br>
+                </div>
+      
+          </div>
+      
+</div>

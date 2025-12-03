@@ -1,0 +1,37 @@
+.menu-closed {
+  padding-left: 266px !important;
+}
+
+.dropdown-menu {
+  position: absolute;
+   top: 100%;
+   left: unset !important; 
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: left;
+  background-color: #ffffff;
+  /* border: 1px solid #dfd7ca; */
+  border-radius: 4px !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+
+// li a:hover{
+//     background: #0051bf !important;
+//     color: white !important;
+// }
+button.btn.btn-default.dropdown-toggle.download_btn_multi:hover{
+background-color: #dbdf08 !important;
+color: #000 !important;
+}
+// .pdfHover:hover{
+//   background:#1717b3de !important;
+//   color: white !important;
+// }

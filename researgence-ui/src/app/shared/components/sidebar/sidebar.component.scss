@@ -1,0 +1,24 @@
+.reside{
+    height:40px
+}
+.btn-sidebar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn-solid-blue {
+    display: block;
+    width: 97px;
+    border-radius: 24px;
+    padding: 4px 20px;
+    background: #0051bf;
+    color: #fff;
+    border: none;
+    font-family: 'Red Hat Display', sans-serif;
+    font-weight: bold;
+}
+.btn-solid-blue:hover{
+    background: #dbdf08;
+    border: transparent;
+    color: #000;
+}

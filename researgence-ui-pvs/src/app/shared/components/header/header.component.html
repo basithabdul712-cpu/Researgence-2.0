@@ -1,0 +1,133 @@
+<!-- Page Header Start-->
+<div class="page-main-header" [ngClass]="{'open' : navServices.collapseSidebar}" id="page-main-header" style="margin-left: 0;width: 100%;transition: 0.3s; font-family: 'Red Hat Display', sans-serif;">
+  <div class="main-header-right row">
+   
+    <div class="mobile-sidebar col-auto p-0">
+      <div class="media-body text-start switch-sm" [ngClass]="{'headerunShift' : !navServices.collapseSidebar}">
+        <label class="switch">
+          <a href="javascript:void(0)" (click)="collapseSidebar()" style="color: #000;">
+            <span class="menu-btn"><i class="fa fa-bars"></i></span>
+          </a>
+        </label>
+      </div>
+    </div>
+    <div class="nav-right col">
+      <ul class="nav-menus" [ngClass]="{'open' : openNav}">
+        <li></li>
+
+        <img [src]="univImage" class="reslogo" alt="reslogo" >
+        <!-- <img [src]="univImage" class="reslogo" alt="reslogo" style="height: 50px;" [ngStyle]="{'left': navServices.collapseSidebar ? '27%' : '17%'}"> -->
+        <p style="width: -webkit-fill-available;text-align: center;margin-top: unset;margin-bottom: unset;line-height: unset;letter-spacing: unset;color: #0051bf;font-size: 13px;">Research Information Management System (RIMS)</p>
+       
+        <li style="border-left: none;"><a  class="header-link" href="https://ashoka.researgence.ai" target="_blank"><img src="https://researgence.ai/univ-assets/cssimage/role-icon.png" alt="" class="icon"><img src="https://researgence.ai/univ-assets/cssimage/role-icon-over.png" alt="" class="icon-over">Login</a></li>
+
+      <li style="border-left: none;border-right: none;left: 15px;"><a  class="header-link" (click)="getlandingpage()"><img src="https://researgence.ai/univ-assets/cssimage/home-icon.png" alt="" class="icon"><img src="https://researgence.ai/univ-assets/cssimage/home-icon-over.png" alt="" class="icon-over">Home</a></li>
+      <li style="border-left: none;border-right: none;left: 10px;"><a  class="header-link" (click)="toggleFullScreen()"><img src="https://researgence.ai/univ-assets/cssimage/fullscreen-icon.png" alt="" class="icon"><img src="https://researgence.ai/univ-assets/cssimage/fullscreen-icon-over.png" alt="" class="icon-over">Fullscreen</a></li>
+      <!-- <li style="border-left: none;" class="onhover-dropdown"><span style="background-color: #0288d1;border-radius: 19px;position: relative;top: 5px;right: 15px;padding: 0.5px 5px;color: white;">{{notificationCount}}</span><a  class="header-link" style="position: relative;bottom: 9px;"><img src="https://researgence.ai/univ-assets/cssimage/notification-icon.png" alt="" class="icon"><img src="https://researgence.ai/univ-assets/cssimage/notification-icon-over.png" alt="" class="icon-over">Notification</a>
+        <ul class="notification-dropdown onhover-show-div" [ngClass]="{'enableScroll': enableNotification}" >
+          <li>Notification <span class="badge rounded-pill badge-primary pull-right">{{notificationCount}}</span>
+            <span class="badge rounded-pill badge-primary pull-right" style="color: #0288d1 !important;background-color: unset;"><div class="hoverAll" (click)="markAll()">Mark All As Read</div></span></li>
+          <li>
+            <div class="media" *ngFor="let item of notifyList;let i=index" >
+              <div class="flex-grow-1" [ngClass]="{'backCover': item.isViewed==0, 'nobackCover': item.isViewed==1}">
+                <h6 class="mt-0" style="color: black !important;" [ngClass]="{'unmarked': item.isViewed==0, 'marked': item.isViewed==1}"><span>
+                    <app-feather-icons class="alert-color font-danger" [icon]="'alert-circle'"></app-feather-icons>
+                  </span>{{item.notificationMessage}}
+                  <a class="menu-item" style="float: right;margin-top: 10px;">
+                    <svg (click)="openNotify(item.notificationId)" style="color: black;margin-left: 2%;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M9.5 13a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0z"/>
+                   
+                   </svg>
+                     <ul class="dropdown-content" style="width: 55%;">
+                       <li style="height: 40px;"><a href="javascript:void(0)" (click)="markData(item.notificationId)">Mark as Read</a></li>
+                     </ul>
+                   </a>
+                   <svg *ngIf="item.isViewed==0"  style="color: red;float: right;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-flag-fill" viewBox="0 0 16 16">
+                    <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/></svg>
+                    <svg *ngIf="item.isViewed==1"  style="color: grey;float: right;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-flag-fill" viewBox="0 0 16 16">
+                      <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/></svg>
+                    
+                    </h6>
+                <p class="mb-0">{{item.modifiedDate}}</p>
+                <br>
+              </div>
+            </div>
+          </li>
+          <li class="bg-light txt-dark"><a href="javascript:void(0)" (click)="showAllnotification()">All notification</a><small class="pull-right">{{ time | date: 'hh:mm:ss a' }}</small></li>
+        </ul>
+      </li> -->
+        <li style="border-left: none;"><a  class="header-link" (click)="backClicked()" ><img src="https://researgence.ai/univ-assets/cssimage/back-icon.png" alt="" class="icon"><img src="https://researgence.ai/univ-assets/cssimage/back-icon-over.png" alt="" class="icon-over">Back</a></li>
+        <!-- <li style="border-left: none;">
+            <a  class="header-link" (click)="backClicked()">
+                <img src="assets/given/img/poweroff-black.svg" class="icon" alt style="width: 22px;left: 55px;cursor: pointer;" />
+                <img src="assets/given/img/poweroff-blue.svg" alt style="width: 22px;left: 55px;cursor: pointer;" class="icon-over" />
+                Logout
+            </a>
+        </li> -->
+        <!-- <li class="onhover-dropdown">
+          <div class="media align-items-center" *ngIf="!authService.userData as user">
+            <img class="img-60 rounded-circle" style="margin-bottom: 5px;" [src]="imgUrl"  (error)="setDefaultPic()">
+            <div class="dotted-animation"><span class="animate-circle"></span><span class="main-circle"></span></div>
+          </div> -->
+          <!-- <div class="media align-items-center" *ngIf="authService.userData as user"><img
+              class="align-self-center pull-right img-50 rounded-circle"  style="margin-bottom: 5px;"
+              [src]="user.photoURL ==null ? 'assets/images/user/profile-pic.jpg' : user.photoURL" alt="header-user">
+            <div class="dotted-animation"><span class="animate-circle"></span><span class="main-circle"></span></div>
+          </div> -->
+          <!-- <ul class="profile-dropdown onhover-show-div p-20"> -->
+           <!-- <div *ngFor="let item of role" style="padding-bottom: 3px;">
+            <li *ngIf="username" style="padding-left: 15px;">
+              <a href="javascript:void(0)" *ngIf="username!=null" (click)="switchRole(item.roleId,item.roleName)">
+              <app-feather-icons [icon]="'user'" ></app-feather-icons>
+              <input type="checkbox" style="display: inline-block;position: absolute;left:0px;top:4px;" class="check" [checked]="item.roleId==username" ><span style="margin-left: 10px;font-size: 14px;"> {{item.roleName}}</span>
+            </a></li>
+          </div> -->
+          <!-- <li *ngIf="username==2||username==3" ><a href="javascript:void(0)" (click)="gotoMyprofile()" style="font-size: 14px;"> 
+            <app-feather-icons [icon]="'user'" ></app-feather-icons>My Profile 
+          </a></li>
+            <li><a href="javascript:void(0)" (click)="gotoedit()" style="font-size: 14px;"> 
+                <app-feather-icons [icon]="'user'" ></app-feather-icons>Edit Profile 
+              </a></li> -->
+            <!-- <li ><a href="javascript:void(0)" (click)="SignOut()" style="font-size: 14px;">
+                <app-feather-icons [icon]="'log-out'"></app-feather-icons>Logout
+              </a></li>
+          </ul> -->
+        <!-- </li> -->
+          
+      </ul>
+   
+     
+      <div class="d-lg-none mobile-toggle pull-right" (click)="openMobileNav()">
+        <app-feather-icons [icon]="'more-horizontal'"></app-feather-icons>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Help</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+      <div class="col-lg-12">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-7 text-dark col-md-6 col-sm-6">
+              <!-- <h5 class="small-text" style="padding-top: 20px;">You are currently logged in via management login</h5> -->
+              <h2 style="padding-top: 50px;">Welcome to Your Researgence Repository</h2>
+              <p>This is your Scholarly Research Platform.<br>
+                Researgence creates a world of research for our subscribers by integrating all research data into the platform.  Take a tour de research of the portal by checking the demo video on the right!</p>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-6"><a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank"><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="img-responsive" /></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Close')">Close</button>
+	</div>
+</ng-template>
+
+<!-- Page Header Ends -->

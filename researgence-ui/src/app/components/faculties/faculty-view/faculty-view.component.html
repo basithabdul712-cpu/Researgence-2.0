@@ -1,0 +1,197 @@
+<style>
+  .menu-open {
+    width: 100%;
+    margin-left: -7%;
+    margin-top: 3%;
+  }
+  
+  .menu-closed {
+    width: 95%;
+    margin-left: 3%;
+    margin-top: 3%;
+  }
+  </style>
+  
+  <div class="content-wrapper">
+  
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="content-container" [ngClass]="{'menu-open': !isMenuOpen, 'menu-closed': isMenuOpen}">
+        <div class="gradient-box">
+          <h3 class="text-white text-center" style="font-family: 'gothammedium';">VIEW USER DETAILS</h3>
+        </div>
+        <div class="gradient-box">
+          <div class="bg-white" >
+            <div class="row">
+      <form class="form">
+              <div class="col-lg-6" >
+               
+        <table class="form-table">
+          <tbody  >
+          
+            <tr>
+            <th colspan="2" class="label-column"><h4>PERSONAL DETAIL</h4></th>
+          </tr>
+          <tr *ngIf="roleId=='5'||roleId=='10'||roleId=='12'" >
+            <td class="label-column"><label>UNIVERSITY<span style="color: red;">*</span></label></td>
+            <td>
+              <input class="form-text" name="universityName" [(ngModel)]="universityName" readonly>
+            </td>
+          </tr>
+          <tr *ngIf="roleId=='5'||roleId=='10'||roleId=='12'" >
+            <td class="label-column"><label *ngIf="universityName!=='Ashoka University'">EMPLOYEE ID</label><label *ngIf="universityName==='Ashoka University'">PROFILE ID</label></td>
+            <td><input class="form-text" name="empId" [(ngModel)]="empId" readonly></td>
+          </tr>
+          <tr >
+          <td class="label-column"><label>NAME<span style="color: red;">*</span></label></td>
+          <td><input class="form-text" name="fullName" [(ngModel)]="fullName" readonly></td>
+          </tr>
+          <tr >
+            <td class="label-column"><label>DESIGNATION<span style="color: red;">*</span></label></td>
+            <td>
+              <input class="form-text" name="designationName" [(ngModel)]="designationName" readonly>
+            </td>
+          </tr>
+          <tr >
+            <td colspan="1" class="label-column"><label>EMAIL ID</label></td>
+            <td><input class="form-texts" name="emailId" [(ngModel)]="emailId" readonly></td>
+            </tr>
+          
+          <tr>
+            <td class="label-column"><label>GENDER<span style="color: red;">*</span></label></td>
+          <td>
+            <input class="form-text" name="genderName" [(ngModel)]="genderName" readonly>
+
+            </td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>DATE OF BIRTH<span style="color: red;">*</span></label></td>
+          <td><input type="date" id="dateOfBirth" name="dateOfBirth" [(ngModel)]="dateOfBirth" class="form-text" readonly></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>DATE OF JOINING<span style="color: red;">*</span></label></td>
+          <td><input type="date" id="dateOfJoining" name="dateOfJoining" [(ngModel)]="dateOfJoining" class="form-text" readonly></td>
+          </tr>
+ 
+          <tr *ngIf="roleId=='5'||roleId=='10'||roleId=='12'" >
+            <td class="label-column"><label>USER STATUS<span style="color: red;">*</span></label></td>
+            <td>
+              <input class="form-text" name="userstatusName" [(ngModel)]="userstatusName" readonly>
+
+            </td>
+          </tr>
+          <tr *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'">
+            <td class="label-column"><label>CAMPUS<span style="color: red;">*</span></label></td>
+          <td>
+            <input class="form-text" name="locationName" [(ngModel)]="locationName" readonly>
+
+          </td>
+          </tr>
+          <tr *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'">
+            <td class="label-column"><label>SCHOOL<span style="color: red;">*</span></label></td>
+          <td>
+            <input class="form-text" name="schoolName" [(ngModel)]="schoolName" readonly>
+
+          </td>
+          </tr>
+          <tr *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'">
+            <td class="label-column"><label>INSTITUTE<span style="color: red;">*</span></label></td>
+          <td>
+            <input class="form-text" name="instituteName" [(ngModel)]="instituteName" readonly>
+
+          </td>
+          </tr>
+          <tr *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'">
+            <td class="label-column"><label>DEPARTMENT<span style="color: red;">*</span></label></td>
+          <td>
+            <input class="form-text" name="departmentName" [(ngModel)]="departmentName" readonly>
+
+          </td>
+          </tr>
+         
+        </tbody></table>
+              </div>
+              <div class="col-lg-6">
+              
+        <table class="form-table">
+          <tbody><tr>
+            <th colspan="2" class="label-column"><h4>RESEARCH INFORMATION</h4></th>
+          </tr>
+          <tr>
+            <td class="label-column"><label>ORCID ID</label></td>
+          <td><input class="form-text" name="orcid" [(ngModel)]="orcid" readonly ></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>SCOPUS ID</label></td>
+          <td><input class="form-text" name="scopusId" [(ngModel)]="scopusId" readonly></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>WEB OF SCIENCE ID</label></td>
+          <td><input class="form-text" name="wosId" [(ngModel)]="wosId" readonly></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>VIDWAN ID</label></td>
+          <td><input class="form-text" name="vidwanId" [(ngModel)]="vidwanId" readonly></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>GOOGLE SCHOLAR ID</label></td>
+          <td><input class="form-text" name="googleScholarId" [(ngModel)]="googleScholarId" readonly></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>RESEARCH AREA<span style="color: red;">*</span></label></td>
+          <td>
+            <input class="form-text" value="" data-role="tagsinput"  name="researchArea" [(ngModel)]="researchArea" readonly>
+  
+          </td>
+          </tr>
+          <tr *ngIf="roleId=='5'||roleId=='10'||roleId=='12'">
+            <td class="label-column"><label>ROLES<span style="color: red;">*</span></label></td>
+            <td class="check">
+              <div class="checks">SELECT ROLE</div>
+              <input type="checkbox" style="position: unset;margin-left: 10px;"  name="Faculty" [(ngModel)]="Faculty" (ngModelChange)="updateValues('2')">
+              <label class="tabs" >
+                Faculty
+              </label>
+              <input type="checkbox" style="position: unset;margin-left: 20px;" name="Scholar" [(ngModel)]="Scholar" (change)="updateValues('3')">
+              <label class="tabs" >
+                Scholar
+              </label>
+              <input type="checkbox" style="position: unset;margin-left: 20px;" name="Student" [(ngModel)]="Student" (change)="updateValues('4')">
+              <label class="tabs" >
+                Student
+              </label>
+              <input type="checkbox" style="position: unset;margin-left: 10px;" name="hoc" [(ngModel)]="hoc" (change)="updateValues('7')">
+              <label class="tabs" >
+                HOC
+              </label>
+              <input type="checkbox" style="position: unset;margin-left: 20px;" name="hoi" [(ngModel)]="hoi" (change)="updateValues('8')">
+              <label class="tabs" >
+                HOI
+              </label>
+              <input type="checkbox" style="position: unset;margin-left: 20px;" name="hod" [(ngModel)]="hod" (change)="updateValues('9')">
+              <label class="tabs" >
+                HOD
+              </label>
+              <input type="checkbox" style="position: unset;margin-left: 10px;" name="Management" [(ngModel)]="Management" (change)="updateValues('6')">
+              <label class="tabs" >
+                Management
+              </label>
+              <input type="checkbox" style="position: unset;margin-left: 20px;"  name="Admin" [(ngModel)]="Admin" (change)="updateValues('5')">
+              <label class="tabs" >
+                Admin
+              </label>
+            </td>           
+          </tr>   
+          <br>
+        </tbody></table>
+              </div>
+      </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+

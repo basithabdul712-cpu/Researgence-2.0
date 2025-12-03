@@ -1,0 +1,149 @@
+
+
+.dropdown-list {
+  overflow: scroll;
+  margin-right: 80%;
+  max-width: 880px;
+  width: 30%;
+  margin-left: 250px;
+ font-size: 16px;
+ max-height: 150px;
+}
+.forms-control:focus{
+  border-color: 1px solid black;
+  outline: 0;
+  box-shadow: none;
+}
+.content-wrapper{
+  background: var(--background-white) repeat top center;
+}
+
+// .menu-open {
+//   padding-left: 5%;
+// }
+
+// .menu-closed {
+//   padding-left: 12%;
+// }
+
+  .forms-control:focus{
+    border-color: 1px solid black;
+    outline: 0;
+    box-shadow: none;
+  }
+  .dropdown-list li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+  .subMenus {
+    margin-top: 7%;
+}
+label.adminClient {
+  border: solid 1px #0d6efd;
+  margin-left: 20%;
+  width: 20%;
+  text-align: center;
+  font-size: 17px;
+  background: #0d6efd;
+  color: white;
+  height: 40px;
+  border-radius: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+label.adminClient:hover{
+  background: linear-gradient(45deg, black, transparent);
+  border: solid 1px black;
+}
+
+.name{
+  color: white;
+  border-right: solid 1px black;
+}
+
+.row{
+  padding-bottom: 4%;
+}
+.btn-green{
+margin-right: 40px;
+background: #c2cf1d;
+color: #000000;
+border: none;
+padding: 6px 10px;
+margin-left: 7px;
+}
+.btn-green:hover{
+background-color: #000000;
+color: white;
+}
+
+.box{
+  border-right: solid 1px black;
+}
+
+.message {
+  border-radius: 50px;
+  margin: 0 15px 20px;
+  padding: 10px 20px;
+  position: relative;
+  font-size: 20px;
+}
+.message.to {
+  background-color: 
+#2095FE;
+  color: 
+#fff;
+  margin-left: 100px;
+  text-align: right;
+}
+.message.from {
+  background-color: 
+#E5E4E9;
+  color: 
+#363636;
+  margin-right: 100px;
+}
+.message.to + .message.to,
+.message.from + .message.from {
+  margin-top: -10px;
+}
+.rounded-div {  
+  margin-left: 74%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  width: 21%
+}
+
+.select-selected{
+  position: absolute;
+    background-color: #005bb3;
+    color: white;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+  }
+  
+  .line-select {
+    background: none;
+    border: none;
+    border-bottom: #ccc 2px solid;
+    width: 350px;
+    color: #000000;
+    }
+
+    .alignDrop{
+      height: 150px;
+      overflow: scroll;
+      width: 90%;
+      background: white;
+    }
+    .alignDrop li:hover{
+    background-color: #005bb3;
+    color: white; 
+    cursor: pointer;
+    }

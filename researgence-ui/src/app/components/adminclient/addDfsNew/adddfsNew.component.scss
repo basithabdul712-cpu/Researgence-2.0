@@ -1,0 +1,41 @@
+
+.subMenus {
+  margin-top: 7%;
+  height: 700px;
+}
+.dropdown-list {
+overflow: scroll;
+// margin-right: 80%;
+// max-width: 880px;
+width: 55%;
+margin-left: 250px;
+font-size: 20px;
+ max-height: 400px;
+}
+.forms-control:focus{
+border-color: 1px solid black;
+outline: 0;
+box-shadow: none;
+}
+.content-wrapper{
+background: var(--background-white) repeat top center;
+}
+
+.menu-open {
+padding-left: 5%;
+}
+
+.menu-closed {
+padding-left: 12%;
+}
+
+.forms-control:focus{
+  border-color: 1px solid black;
+  outline: 0;
+  box-shadow: none;
+}
+.dropdown-list li:hover{
+  background-color: #0051bf;
+  color: white; 
+  cursor: pointer;
+}

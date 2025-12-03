@@ -1,0 +1,131 @@
+.menu-closed {
+ 
+  padding-left: 266px;
+}
+
+.alert-info {
+  background-color: #ececec;
+  border-color: transparent;
+  color: #000000;
+  text-align: right;
+  font-size: 12px;
+}
+.alert {
+  padding: 5px;
+  margin-bottom: -19px;
+  border: none;
+  border-radius: 0px;
+  padding-right: 30px;
+}
+td{
+  font-size: 14px;
+}
+
+
+.dropdown-menu {
+  position: absolute;
+   top: 100%;
+   left: unset !important; 
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: left;
+  background-color: #ffffff;
+  /* border: 1px solid #dfd7ca; */
+  border-radius: 4px !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+
+// .new-custom-dropdown {
+//   display: none;
+//   position: absolute;
+//   z-index: 1000;
+//   border: 1px solid #ccc;
+//   width: 70%;
+//   left: 70px;
+//   bottom:-25px;
+//   color: #000;
+// }
+
+// .new-custom-dropdown.show {
+//   display: block;
+  
+//   background-color: white;
+//   color: #000;
+// }
+// .new-custom-dropdown li:hover{
+//   background-color: blue;
+//   color: #ffffff;
+// }
+button.btn.btn-default.dropdown-toggle.download_btn_multi:hover{
+  background-color: #dbdf08 !important;
+  color: #000 !important;
+}
+// .pdfHover:hover{
+//   background:#1717b3de !important;
+//   color: white !important;
+// }
+.highlightedName{
+  text-decoration: underline #0051bf;
+  font-weight: 700;
+}
+article.journal::after {
+  content: "Journal";
+  font-size: 12px;
+position: absolute;
+top: 8px !important;
+  left: 70px;
+}
+article.preprint::after {
+  content: "PrePrint";
+  font-size: 12px;
+  position: absolute;
+  top: 7px;
+  left: 70px;
+}
+article.conference::after {
+  content: "Conference";
+  font-size: 12px;
+position: absolute;
+top: 8px !important;
+  left: 70px;
+}
+article.bookchapter::after {
+  content: "Book Chapter";
+  font-size: 12px;
+position: absolute;
+top: 8px !important; 
+  left: 70px;
+}
+article.book::after {
+  content: "Book";
+  font-size: 12px;
+position: absolute;
+top: 8px !important; 
+  left: 58px; 
+}
+.showMore{
+  text-decoration: none;
+    color: #adc12e;
+}
+.showMore:after{
+  content: unset !important;
+}
+.showMore:hover{
+  color: #0051bf;
+}
+*{
+  transition: 0.0s !important;
+}
+
+.doiLink:hover{
+  color: #0051bf !important;
+  text-decoration: underline !important;
+}

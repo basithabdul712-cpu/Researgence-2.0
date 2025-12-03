@@ -1,0 +1,68 @@
+<style>
+  .menu-opens {
+  padding-left: 0%;
+}
+
+.menu-closeds {
+  padding-left: 250px;
+}
+</style> 
+   <div class="content-wrapper"  [ngClass]="{'menu-opens': !isMenuOpen, 'menu-closeds': isMenuOpen}">
+    <div class="container-fluid" >
+      <div class="row">
+        <div class="alert alert-dismissible alert-info">
+          <button type="button" class="close" data-dismiss="alert" style="background: unset;border: unset;"><i class="fa fa-remove"></i></button>
+          Currently logged in as {{Name}}({{roleName}}) </div>
+      </div>
+      
+      <div class="row">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 50px;">
+        
+      <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle]="{'margin-top' : stickyEnable ? '' : '10px'}">
+        <h2>Welcome to Your Researgence Repository</h2>
+        <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+  <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green"  href="/newrequest">here</a> to contact our team.</p>
+      </div>
+    
+            <div class="col-lg-5 col-md-5 col-sm-5" style="width: 36%;"><a  href="/newrequest" class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+              <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg"
+              alt="srp video" class="head-video-cover"></a> -->
+            </div>
+         </div>
+    </div>
+    </div>
+
+    <div class="container container-90">
+      <div class="content-pushed" style="padding-top: 20px;">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="inner-page-header gradient-box">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h3 class="page_title" style="font-size: 24px;">Notifications</h3>
+                </div>
+                <div class="col-lg-6 flex flex-align-right flex-align-center" style="height: 30px"> <a class="btn-link text-white text-bold" style="margin: 20px;" (click)="markAll()" id="btnReadAll">Mark all as read</a>   
+                  <a class="btn-link text-white text-bold" style="margin: 0;"  id="btnDelete">Clear all</a> </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 notification">
+            <div *ngIf="noNotification" id="clear_msg" style="display: none;">No more Notification</div>
+           
+            <!-- <div *ngIf="noNotification"  id="clear_msg" style="display: block;">No more Notification</div> -->
+            <div *ngFor="let item of notifyList">
+              <div [ngClass]="'box alert alert-dismissible unread ' + (item.isViewed == 1 ? '' : 'unread')">
+                <p>{{item.notificationMessage}}</p>
+                <a *ngIf="item.isViewed==0"  class="close_btn fa fa-check-circle" data-dismiss="alert" style="cursor: pointer;" (click)="markData(item.notificationId)">Mark as read</a> 
+                <a  class="close_btn fa fa-close" data-dismiss="alert"></a>              
+                <span class="date">{{item.modifiedDate}}</span> </div>
+            </div>
+        </div>
+      </div>
+    </div> 
+</div>
+</div>

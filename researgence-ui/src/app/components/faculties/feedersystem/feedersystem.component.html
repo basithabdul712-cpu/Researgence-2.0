@@ -1,0 +1,549 @@
+<div class="content-wrapper" [ngClass]="{'menu-open': !isMenuOpen, 'menu-closeds': isMenuOpen}">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="content-container">
+          <div class="gradient-box" *ngIf="!rfsEnable">
+            <h3 class="text-white text-center" *ngIf="this.type!='RFS'">DAILY FEEDER SYSTEM</h3>
+            <h3 class="text-white text-center" *ngIf="this.type=='RFS'" >RESEARCHER FEEDER SYSTEM</h3>
+          </div>
+          <div *ngIf="rfsEnable" style="margin-left: 100px;margin-top: 40px;display: inline-block;">
+            <table class="table table-striped" style="width:1100px" >
+                <tr     style="height:70px">
+                    <td  style="border: 1px solid black;">
+                     <p>{{rfsuserName}}<br>
+                      {{rfsDept}}</p>
+                    </td>
+                    <td style="border: 1px solid black;">
+                      <p><span style="font-weight: bold;">Title:</span>{{rfsPubTitle}}<br>
+                        <span style="font-weight: bold;">SourceName:</span>{{rfsSource}}<br>
+                        <span ><span style="font-weight: bold;" >DOI:</span>{{rfsDoi}}</span></p>
+                    </td>
+                </tr>
+            </table>
+          </div>
+          <div class="gradient-box">
+            <div class="bg-white">
+              <div class="row">
+                <div class="col-lg-12">
+                  <table class="form-table bg-dark-gray" style="background-color: #242424;">
+                    <tbody><tr>
+                      <td class="padding-all text-white" style="text-align: center;" width="200"><h3>TITLE</h3></td>
+                      <td class="padding-all" width="50%"><input class="form-text" style="height: 40px;" [(ngModel)]="title" #searchbar (keyup)="changeJournal(searchbar.value)">
+                        <ul *ngIf="hideTitle"  class="alignDrop">
+                          <li *ngFor="let n of titleList"  (click)="onSelectJournal(n.name)">
+                             {{ n.name }}
+                          </li>
+                      </ul>
+                      </td>
+                      <td align="left"><button class="btn-green dark-bg" (click)="startAdd()">+ Add</button></td>
+                    </tr>
+                  </tbody></table>
+                </div>
+              </div>
+              <div class="row" *ngIf="showData">
+                <div class="col-lg-12">
+                  <table class="form-table bg-gray">
+                    <tbody><tr>
+                      <td class="padding-all" style="text-align: center;" width="200"><h3>DOI</h3></td>
+                      <td class="padding-all" width="50%"><input class="form-text" style="height: 40px;" [(ngModel)]="doi"></td>
+                      <td><button class="btn-green" [disabled]="doi==''" (click)="crossRefData(demoModal)" [ngStyle]="{'opacity': doi==null ? '0.6' : ''}">CROSSREF</button></td>
+                      <td><button class="btn-green" style="cursor: default;">ORCHID</button></td>
+                    </tr>
+                  </tbody></table>
+                </div>
+              </div>
+              <ng-template #demoModal let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title" id="modal-basic-title"></h4>
+                  <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                </div>
+                <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                  <form>
+                    <div class="form-group">
+                     <div class="input-group">
+                      <label>TITLE</label>                     
+                        <input style="border-radius: 8px;height: 30px;" name="crossTitle" class="form-control" placeholder="Title" type="text" [(ngModel)]="crossTitle">        
+                      </div>
+                      <br>
+                      <div class="input-group">
+                        <label>SOURCE NAME</label>                     
+                          <input style="border-radius: 8px;height: 30px;" name="crossSourceName" class="form-control" placeholder="SourceName" type="text" [(ngModel)]="crossSourceName">        
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <label>TYPE</label>                     
+                              <input style="border-radius: 8px;height: 30px;" name="crossType" class="form-control" placeholder="Type" type="text" [(ngModel)]="crossType">        
+                            </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer" style="height: 55px;">
+                  <p style="color: red;padding-right: 60px;" *ngIf="erromessage" >{{erromessage}}</p>
+                  <button [disabled]="erromessage == 'DOI ALREADY EXISTS'" style="margin-right: 20px;" type="button" class="but" (click)="processData()">PROCEED</button>
+                  <button style="margin-right: 20px;" type="button" class="but" (click)="clearPopUP()">CLEAR</button>
+                </div>
+                </ng-template>
+              
+            <div class="row" *ngIf="showData&&crossData">        
+                  <div class="col-lg-12">
+                    <ul class="tab-container">
+                      <li (click)="onTabClick('BIBLIOGRAPHICS')" [class.active]="activetab=='BIBLIOGRAPHICS'" class="tab-link">BIBLIOGRAPHICS</li>
+                      <li (click)="onTabClick('CITATION')" [class.active]="activetab=='CITATION'" class="tab-link">CITATION</li>
+                      <li (click)="onTabClick('ADDAUTHOR')" [class.active]="activetab=='ADDAUTHOR'" class="tab-link">AUTHOR DETAILS</li>
+                    </ul>
+                    <div *ngIf="activetab=='BIBLIOGRAPHICS'" class="w-100">
+                      <div class="row" *ngIf="showData&&crossData">
+                        <div class="col-lg-12">
+                          <table class="form-table" style="background: #f7f7f7">
+                            <tbody><tr>
+                              <th colspan="2" class="label-column text-center" style="font-family: 'gothammedium';"><h4>BIBLIOGRAPHICS DETAILS</h4></th>
+                            </tr>
+                            <tr>
+                              <td class="label-column"><label>TITLE</label></td>
+                              <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.title"></td>
+                            </tr>
+                            <tr *ngIf="checkValues.sourceName" >
+                              <td></td>
+                              <td><label>{{checkValues.sourceName}}</label></td>
+                            </tr>
+                            <tr>
+                              <td class="label-column"><label style="background: papayawhip;">SOURCE NAME<span style="color: red;">*</span></label></td>
+                              <td><input class="form-text bg-transparent" [(ngModel)]="sourceNameData" (keyup)="onKeySource($event,sourceNameData)">
+                                <ul class="alignDrop1" *ngIf="sourceNameOpen">
+                                  <li *ngFor="let n of filterJournal"  (click)="onSelectSource(n.name,n.id)">
+                                     {{ n.name }}
+                                  </li>
+                              </ul>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="label-column"><label>CONFERENCE NAME</label></td>
+                              <td style="padding: 0;"><table class="form-table">
+                                  <tbody><tr>
+                                    <td><input class="form-text bg-transparent" [(ngModel)]="conferenceName"></td>
+                                    <td class="spacer">&nbsp;</td>
+                                    <td class="label-column"><label style="background: papayawhip;">LEVEL<span style="color: red;">*</span></label></td>
+                                    <td>         
+                                        <select class="custom-select line-select" [(ngModel)]="level" (change)="levelChange()">
+                                          <option  disabled selected value="undefined" >Select Level</option>
+                                          <option *ngFor="let item of leveDropDownmn" >{{item.value}}</option>                      
+                                        </select>
+                                    </td>
+                                  </tr>
+                                </tbody></table></td>
+                            </tr>
+                            <tr>
+                              <td class="label-column"><label>YEAR</label></td>
+                              <td style="padding: 0;"><table class="form-table">
+                                  <tbody><tr>
+                                    <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.year"></td>
+                                    <td class="label-column" width="70"><label>VOL NO</label></td>
+                                    <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.volumeNumber"></td>
+                                    <td class="label-column" width="70"><label>ISS NO</label></td>
+                                    <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.issueNumber"></td>
+                                    <td class="label-column" width="70"><label>B PAGE</label></td>
+                                    <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.bPage"></td>
+                                  </tr>
+                                </tbody></table></td>
+                            </tr>
+                            <tr>
+                              <td class="label-column"><label>E PAGE</label></td>
+                              <td style="padding: 0;"><table class="form-table">
+                                  <tbody><tr>
+                                    <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.ePage"></td>
+                                    <td class="label-column" width="70"><label style="background: papayawhip;">P ISSN</label></td>
+                                    <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.pissn"></td>
+                                    <td class="label-column" width="70"><label style="background: papayawhip;">E ISSN</label></td>
+                                    <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.eissn"></td>
+                                    <td class="label-column" width="70"><label style="background: papayawhip;">E ISBN</label></td>
+                                    <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.eisbn"></td>
+                                  </tr>
+                                </tbody></table></td>
+                            </tr>
+                      <tr>
+                              <td class="label-column"><label style="background: papayawhip;">P ISBN</label></td>
+                              <td style="padding: 0;"><table class="form-table">
+                                  <tbody><tr>
+                                    <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.pisbn"></td>
+                                    <td class="label-column" width="100"><label>ACCEPTED DATE</label></td>
+                                    <td><input type="date" name="doj" class="form-text bg-transparent" [(ngModel)]="checkValues.depositedDate"> </td>
+                                    <td class="label-column" width="100"><label>ONLINE DATE</label></td>
+                                    <td><input type="date" name="doj" class="form-text bg-transparent" [(ngModel)]="checkValues.onlineDate"></td>
+                                  </tr>
+                                </tbody></table></td>
+                            </tr>
+                            <br>
+                            <tr>
+                              <td class="label-column"><label>CROSSREF DATE</label></td>
+                              <td style="padding: 0;">
+                    <table class="form-table">
+                      <tbody><tr>
+                        <td><input type="date" name="doj" class="form-text bg-transparent" [(ngModel)]="checkValues.publishedDate"></td>
+                       
+                        <td class="label-column" width="100"><label>PRINT DATE</label></td>
+                        <td><input type="date" name="doj" class="form-text bg-transparent" [(ngModel)]="checkValues.printDate"></td>
+                        <td class="label-column" width="100"><label>ABSTRACT</label></td>
+                              <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.abstract"></td>
+                      </tr>
+                    </tbody></table>	
+                </tr>
+                         <tr>
+                             <td class="label-column"><label>TECHNOLOGY AREAS</label></td>
+                             <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.technologyarea"></td>
+                            </tr>
+        
+                         <tr>
+                              <td class="label-column"><label style="background: papayawhip;">PUBLISHER</label></td>
+                              <td style="padding: 0;">
+                    <table class="form-table">
+                      <tbody><tr>
+                        <td><input class="form-text bg-transparent" name="publisherSource" [(ngModel)]="publisherSource"></td>
+                        <td class="spacer">&nbsp;</td>
+                        <td class="label-column"><label style="background: papayawhip;">TYPE<span style="color: red;" *ngIf="enableType">*</span></label></td>
+                        <td *ngIf="!enableType" ><input class="form-text bg-transparent" [(ngModel)]="checkValues.type" readonly></td>
+                        <td *ngIf="enableType" >
+                          <select class="custom-select line-select" [(ngModel)]="checkValues.type" (change)="chaneTypes()">
+                            <option value="" >Select Type</option>
+                            <option *ngFor="let item of articleDropdown" >{{item.value}}</option>                      
+                          </select>
+                        </td>
+                      </tr>
+                    </tbody></table>	
+                  </td>
+                </tr>
+                  <tr>
+                        <td class="label-column"><label>DOI</label></td>
+                        <td style="padding: 0;">
+                    <table class="form-table">
+                      <tbody><tr>
+                        <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.doi"></td>
+                        <td class="spacer">&nbsp;</td>
+                        <td class="label-column"><label>WEBLINK</label></td>
+                        <td><input class="form-text bg-transparent" [(ngModel)]="checkValues.weblink"></td>
+                      </tr>
+                    </tbody></table>	
+                    </td>
+                            </tr>
+                          </tbody></table>             
+                            <div class="col-md-2" style="float: right;margin-top: 10px; margin-bottom: 10px;">
+                              <button  class="btn-green dark-bg" (click)="onTabClick('CITATION')" [class.active]="activetab=='CITATION'">
+                                Next
+                              </button>              
+                          </div>         
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="activetab=='CITATION'" class="w-100">
+                      <div class="row" *ngIf="showData&&crossData">
+                        <form class="form">
+                          <div class="col-lg-6">
+                            <table class="form-table" style="border-right: 1px solid #ccc; margin-top: 50px;">
+                              <tbody><tr>
+                                <th colspan="3" class="text-center"><h4>ARTICLE INDEXING</h4></th>
+                              </tr>
+                              <tr *ngFor="let item of indexData" >    
+                                <td *ngIf="item.type=='ArticleIndexing'" class="label-column"><label>{{item.fieldDesc}}</label></td>
+                                  <td *ngIf="item.type=='ArticleIndexing'">
+                                    <input type="radio" id="yesOption" [name]="'IsApplicable_' + item.fieldDesc" [value]="1" [(ngModel)]="item.IsApplicable" [checked]="item.IsApplicable === 1">
+                                    <label for="yesOption" style="margin-right: 10px;">Yes</label>
+                                    <input type="radio" id="noOption" [name]="'IsApplicable_' + item.fieldDesc" [value]="0" [(ngModel)]="item.IsApplicable" [checked]="item.IsApplicable === 0">
+                                    <label for="noOption">No</label>
+                                  </td>
+                                <td  *ngIf="item.forDFSInputValue==1&&item.type=='ArticleIndexing'"><input type="number" class="form-text" placeholder="CITATIONS" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"></td>                  
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <div class="col-lg-6">
+                            <table class="form-table" style=" margin-top: 50px;">
+                              <tbody><tr>
+                                <th colspan="3" class="text-center"><h4>SOURCE INDEXING</h4></th>
+                              </tr>
+                              <tr *ngFor="let item of indexData">
+                                <td *ngIf="item.type=='SourceIndexing'" class="label-column"><label>{{item.fieldDesc}}</label></td>     
+                                <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='UGCCare'">
+                                  <select class="custom-select line-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                                    <option *ngFor="let ugc of UGCdropdown" >{{ugc.value}}</option>                      
+                                  </select>
+                                </td>
+                                <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='ABDC'">
+                                  <select class="custom-select line-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                                    <option *ngFor="let abdc of ABDCdropdown" >{{abdc.value}}</option>                      
+                                  </select>
+                                </td>
+                                <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='SCI'">
+                                  <select class="custom-select line-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                                    <option *ngFor="let sci of SCIdropdown" >{{sci.value}}</option>                      
+                                  </select>
+                                </td>
+                                <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='QRankWOS'">
+                                  <select class="custom-select line-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                                    <option *ngFor="let qr of Qrankdropdown" >{{qr.value}}</option>                      
+                                  </select>
+                                </td>
+                                <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='QRankSC'">
+                                  <select class="custom-select line-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                                    <option *ngFor="let qr of QrankdropdownScs" >{{qr.value}}</option>                      
+                                  </select>
+                                </td>
+                                <td *ngIf="item.type=='SourceIndexing'&&item.fieldName!='QRankWOS'&&item.fieldName!='QRankSC'&&item.fieldName!='SCI'&&item.fieldName!='ABDC'&&item.fieldName!='UGCCare'">
+                                  <input type="tel" class="form-text" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                                </td>
+                              </tr>
+                            </tbody></table>
+                            <div class="col-md-2" style="float: right;margin-top: 10px; margin-bottom: 10px;">
+                              <button  class="btn-green dark-bg" (click)="onTabClick('ADDAUTHOR')" [class.active]="activetab=='ADDAUTHOR'">
+                                Next
+                              </button>      
+                          </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div *ngIf="activetab=='ADDAUTHOR'" class="w-100">
+                      <div class="row" *ngIf="showData&&crossData">
+                        <tr>
+                          <td class="label-column"><label style="margin-left: 6%;color: dimgrey;font-weight: 500;">AUTHORS</label></td>
+                          <td><label style="font-weight: 500;color: dimgrey;">{{checkValues.authors|| "Authors not found.."}}</label></td>
+                        </tr>
+                        <tr>
+                          <td class="label-column"><label style="margin-left: 6%;color: dimgrey;font-weight: 500;">AUTHORS ADDRESS</label></td>
+                          <td><label style="font-weight: 500;color: dimgrey;">{{checkValues.authorsAddress|| "Address not found.."}}</label></td>
+                        </tr>
+                      </div>
+                      <div class="row" *ngIf="showData&&crossData">
+                        <div class="col-lg-12">
+                        <button class="state-btn" (click)="newStateModel(addState)">Add Location</button>
+                        </div>
+                      </div>
+                      <ng-template #addState let-modal>
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="modal-basic-title" style="line-height: unset;letter-spacing: unset;font-weight: 600;">Add Location</h4>
+                          <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                        </div>
+                        <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                          <form>
+                            <div class="form-group">
+                             <div class="input-group">
+                              <label>COUNTRY</label>                     
+                                <select class="custom-select line-select" [(ngModel)]="countryModel" (ngModelChange)="countryModelFilter(countryModel)">
+                                  <option disabled selected value="undefined">Select Country</option>
+                                  <option *ngFor="let item of countryList" >{{item.countryName}}</option>                      
+                                </select>        
+                              </div>
+                              <br>
+                              <div class="input-group" *ngIf="!enableState" >
+                                <label>STATE</label>                     
+                                  <input style="border-radius: 8px;height: 30px;" (keyup)="SearchStateModel(stateModel)" [(ngModel)]="stateModel" name="state" class="form-control" placeholder="Enter the State..." type="text" >        
+                                  <ul class="editAuthor" *ngIf="stateModelEnable" style="background: #d2d4d6;float: left;width: 100%;">
+                                    <li *ngFor="let a of filterStateList" (click)="selectStateModel(a.stateName,a.stateId)">
+                                       {{a.stateName}}
+                                    </li>
+                                </ul>
+                                </div>
+                                <div class="input-group" *ngIf="enableState" >
+                                  <label>STATE</label>                     
+                                  <br>
+                                  <select class="custom-select line-select" [(ngModel)]="stateModel" (ngModelChange)="stateModelFilter(stateModel)">
+                                    <option disabled selected value="">Select State</option>
+                                    <option *ngFor="let item of filteredStateModel" >{{item.stateName}}</option>                      
+                                  </select>  
+                                  </div>
+                                <br>
+                                <div class="input-group">
+                                    <label>LOCATION</label>                     
+                                      <input style="border-radius: 8px;height: 30px;" name="location" [(ngModel)]="newLocationName" class="form-control" placeholder="Enter the Location..."  type="text" > 
+                                    </div>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer" style="height: 55px;">
+                          <button style="margin-right: 20px;" type="button" class="but" (click)="addLocation()">SUBMIT</button>
+                        </div>
+                        </ng-template>
+                        <div class="col-lg-12">
+                          <div class="bg-blue text-white" style="margin-top: 50px; padding: 15px;">
+                            <h4 style="display: block; float: left">AUTHOR DETAILS</h4>
+                              <button class="btn-green" style="margin-left: 50px;"  (click)="add()">+ADD</button>
+                            </div>                
+                              <div class="col-lg-12 bg-white"  *ngFor="let f of feeders;let i=index;" style="top: 31px;margin-bottom: 50px;">                     
+                                <div class="row">
+                                <div class="col-md-4">
+                                  <label style="padding-top: 17px;">UNIVERSITY</label>
+                                  <div style="float: right;">
+                                  <input type="text" class="custom-input"  [(ngModel)]="f.universityName" (keyup)="onKeyIP($event,f.universityName,i)">
+                                      <ul class="editDrop" *ngIf="ipDropdown&&i==checkData" style="background: #d2d4d6; ">
+                                        <li *ngFor="let n of fill"  (click)="onInput(n.name,n.id,i)">
+                                           {{ n.name }}
+                                        </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <label style="padding-top: 17px;">Author Name</label>
+                                  <div style="float: right;">
+                                  <input type="text" class="custom-input"  [(ngModel)]="f.fullName" (keyup)="SearchIPData($event,f.fullName,i)">
+                            <ul class="editAuthor" *ngIf="ipAutherDrop&&i==checkDataauthor" style="background: #d2d4d6;">
+                              <li *ngFor="let a of Author"  (click)="onAutherClick(a.universityId,a.userId,a.authorName,a.departmentId,a.department,a.instituteId,a.institute,a.locationId,a.location,a.countryId,a.country,a.email,a.coressauthor,i,a.stateId,a.state,a.schoolId,a.school)">
+                                 {{a.authorName}}
+                              </li>
+                          </ul>
+                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <label style="padding-top: 16px;">Country</label>
+                                  <div *ngIf="i !== editRowId"style="float: right;"><input type="text"  class="custom-input" [(ngModel)]="f.countryName" readonly></div>
+                          <div *ngIf="i === editRowId" style="width: 82%;float: right;margin-top: 20px;">
+                            <select class="custom-select line-select" [(ngModel)]="f.countryName" (ngModelChange)="countryFilter(f.countryName,i)">
+                              <option value="">Select Country</option>
+                              <option *ngFor="let item of countryList" >{{item.countryName}}</option>                      
+                            </select>
+                          </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label style="padding-top: 16px;">State</label>
+                                  <div *ngIf="i !== editRowId" style="float: right;"><input type="text" class="custom-input"  [(ngModel)]="f.stateName" readonly></div>
+                          <div *ngIf="i === editRowId" style="width: 82%;float: right;margin-top: 20px;">
+                            <select class="custom-select line-select" [(ngModel)]="f.stateName" (ngModelChange)="stateFilters(f.stateName,i)">
+                              <option value="">Select State</option>
+                              <option *ngFor="let item of filteredState" >{{item.stateName}}</option>                      
+                            </select>
+                          </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label style="padding-top: 16px;">Location</label>
+                                    <div *ngIf="i !== editRowId" style="float: right;"><input type="text"  class="custom-input" [(ngModel)]="f.locationName" readonly></div>
+                                    <div *ngIf="i === editRowId&&!filterListDrop" style="width: 77%;float: right;margin-top: 20px;">
+                                      <select class="custom-select line-select" [(ngModel)]="f.locationName" (ngModelChange)="baseLocfilter(f.locationName,i)">
+                                        <option *ngFor="let item of uniqueLocationNames" >{{item}}</option>                      
+                                      </select>
+                                    </div>
+                                    <div *ngIf="i === editRowId&&filterListDrop" style="width: 77%;float: right;margin-top: 20px;">
+                                      <select class="custom-select line-select" [(ngModel)]="f.locationName" (ngModelChange)="LocationFilter(f.locationName,i)">
+                                        <option value="">Select Location</option>
+                                        <option *ngFor="let item of filterLocation" >{{item.locationName}}</option>                      
+                                      </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <label style="padding-top: 16px;">School</label>
+                                  <div *ngIf="i !== editRowId" style="float: right;"><input type="text"  class="custom-input" [(ngModel)]="f.schoolName" readonly></div>
+                          <div *ngIf="i === editRowId&&filterListDrop" style="float: right;">
+                            <input type="text"  class="custom-input"  [(ngModel)]="f.schoolName" (keyup)="SearchSchool(f.schoolName,i)">
+                            <ul class="editAuthor" *ngIf="ipSchoolDrop&&i==editRowId" style="background: #d2d4d6;">
+                              <li *ngFor="let a of schoolList"  (click)="onselectSchool(a.name,a.id,i)">
+                                 {{a.name}}
+                              </li>
+                          </ul>
+                          </div>
+                          <div *ngIf="i === editRowId&&!filterListDrop" style="width: 82%;float: right;margin-top: 20px;">
+                            <select *ngIf="f.schoolEnable"  class="custom-select line-select" [(ngModel)]="f.schoolName" (ngModelChange)="baseSchfilter(f.schoolName,i)">
+                              <option *ngFor="let item of layerSchool" >{{item}}</option>                      
+                            </select>
+                          </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label style="padding-top: 16px;">Institute</label>
+                                  <div *ngIf="i !== editRowId" style="float: right;"><input type="text"  class="custom-input" [(ngModel)]="f.instituteName" readonly></div>
+                                  <div *ngIf="i === editRowId&&!filterListDrop" style="width: 82%;float: right;margin-top: 20px;">
+                                    <select class="custom-select line-select" [(ngModel)]="f.instituteName" (ngModelChange)="baseInstfilter(f.instituteName,i)">
+                                      <option *ngFor="let item of layerIns" >{{item}}</option>                      
+                                    </select>
+                                  </div>
+                                  <div *ngIf="i === editRowId&&filterListDrop" style="float: right;">
+                                    <input type="text"  class="custom-input" [(ngModel)]="f.instituteName" (keyup)="SearchInstitute(f.instituteName,i)">
+                                    <ul class="editAuthor" *ngIf="ipInstituteDrop&&i==editRowId" style="background: #d2d4d6;">
+                                      <li *ngFor="let a of instituteList"  (click)="onselectInstitute(a.name,a.id,i)">
+                                         {{a.name}}
+                                      </li>
+                                  </ul>
+                                  </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <label style="padding-top: 16px;">Department</label>
+                                  <div *ngIf="i !== editRowId" style="float: right;"><input type="text"  class="custom-input" [(ngModel)]="f.departmentName" readonly></div>
+                                  <div *ngIf="i === editRowId&&!filterListDrop" style="float: right; margin-top: 20px;">
+                                    <select class="custom-select line-select" [(ngModel)]="f.departmentName" (ngModelChange)="baseDeptfilter(f.departmentName,i)">
+                                      <option *ngFor="let item of filteredList" >{{item.departmentName}}</option>                      
+                                    </select>
+                                  </div>
+                                  <div *ngIf="i === editRowId&&filterListDrop" style="float: right; margin-top: 20px;">
+                                    <input type="text"  class="custom-input" [(ngModel)]="f.departmentName" (keyup)="SearchDepartment(f.departmentName,i)">
+                                    <ul class="editAuthor" *ngIf="ipDepartmentDrop&&i==editRowId" style="background: #d2d4d6;">
+                                      <li *ngFor="let a of departmentList"  (click)="onselectDepartment(a.name,a.id,i)">
+                                         {{a.name}}
+                                      </li>
+                                  </ul>
+                                  </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <label for=""  style="padding-top: 16px;">Link Author</label>
+                                  <div *ngIf="i !== editRowId" style="float: right;">
+                                    <input type="text"  class="custom-input" [(ngModel)]="f.linkname" (keyup)="aliasid(f.linkname, i)">
+                                    <ul *ngIf="isalias&&enableLink==i" class="editAuthor"  style="background: #d2d4d6;">
+                                      <li *ngFor="let a of linkauthor" (click)="Onlink(a.authorName,i,a.userId)">
+                                         {{a.authorName}}
+                                      </li>
+                                  </ul>
+                                  </div>   
+                                  <div *ngIf="i === editRowId" style="float: right;">
+                                    <input type="text"  class="custom-input" [(ngModel)]="f.linkname" (keyup)="aliasid(f.linkname, i)">
+                                    <ul *ngIf="isalias&&enableLink==i" class="editAuthor"  style="background: #d2d4d6;">
+                                      <li *ngFor="let a of linkauthor" (click)="Onlink(a.authorName,i,a.userId)">
+                                         {{a.authorName}}
+                                      </li>
+                                  </ul>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">                          
+                                <div class="col-md-4">
+                                  <label  style="padding-top: 16px; "  for="">Corresponding</label><br>
+                                  <label> EmailId</label>
+                                  <div style="float: right;    margin-top: -38px;" *ngIf="i === editRowId"><input type="text"  class="custom-input" [(ngModel)]="f.correspondingEmail"></div>
+                                  <div style="float: right; margin-top: -38px;" *ngIf="i !== editRowId"><input type="text"  class="custom-input" [(ngModel)]="f.correspondingEmail" readonly></div>
+                                </div>
+                                <div class="col-md-4">
+                                  <label for=""  style="padding-top: 16px;">Corresponding Author</label>
+                                  <div *ngIf="i === editRowId" style="float: right;">
+                                    <select  [(ngModel)]="f.correspondingAuthor" (change)="corresAuthor(f.correspondingAuthor,i)">
+                                      <option *ngFor="let item of commonDropDown" [value]="item.key">{{item.value}}</option>                      
+                                    </select>
+                                  </div>                          
+                                  <div *ngIf="i !== editRowId" style="float: right;width: 63%;margin-top: 17px;">
+                                    <select  [(ngModel)]="f.correspondingAuthor" (change)="corresAuthor(f.correspondingAuthor,i)">
+                                      <option *ngFor="let item of commonDropDown" [value]="item.key">{{item.value}}</option>                      
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="centered-actions" style="top: 10px;">
+                                <span class="left"></span>
+                                <a class="fa fa-edit control-btn" (click)="toggle(i)"></a>
+                                <a class="fa fa-refresh control-btn" (click)="check(i)"></a>
+                                <a class="fa fa-trash control-btn" (click)="delete(i)"></a>
+                                <span class="right"></span>
+                              </div><table class="table-editable"></table>                       
+                        </div>
+                        <div class="row" *ngIf="showData&&crossData">
+                          <div class="col-lg-12">
+                            <div class="center-block" style="width:300px;">
+                              <button class="btn-green big-btn" (click)="submitAll()">SUBMIT</button>
+                              <button class="btn-green big-btn" style="margin-left: 10px;" (click)="clearAll()">CLEAR</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>     
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

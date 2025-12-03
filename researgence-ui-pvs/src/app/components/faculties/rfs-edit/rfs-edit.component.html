@@ -1,0 +1,130 @@
+<style>
+  .menu-open {
+    width: 100%;
+    margin-left: -7%;
+    margin-top: 3%;
+  }
+  
+  .menu-closed {
+    width: 95%;
+    margin-left: 3%;
+    margin-top: 3%;
+  }
+  </style>
+  
+  <div class="content-wrapper">
+  
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="content-container" [ngClass]="{'menu-open': !isMenuOpen, 'menu-closed': isMenuOpen}">
+        <div class="gradient-box">
+          <h3 class="text-white text-center" style="font-family: 'gothammedium';">RFS EDIT</h3>
+        </div>
+        <div class="gradient-box">
+          <div class="bg-white" >
+            <div class="row">
+      <form class="form">
+              <div class="col-lg-6" >
+               
+        <table class="form-table">
+          <tbody  >
+          
+           
+         
+          <tr  >
+            <td class="label-column"><label>EMPLOYEE ID</label><span style="color:red">*</span></td>
+            <td><input class="form-text" [(ngModel)]="empId" name="empId" readonly></td>
+          </tr>
+          <tr  >
+            <td class="label-column"><label>TITLE</label><span style="color:red">*</span></td>
+            <td>
+              <input class="form-text" style="height: 40px;" [(ngModel)]="title" #searchbar (keyup)="changeJournal(searchbar.value)" [readonly]="isReadOnly">
+              <ul *ngIf="hideTitle"  class="alignDrop">
+                <li *ngFor="let n of titleList"  (click)="onSelectJournal(n.name)">
+                   {{ n.name }}
+                </li>
+            </ul>       
+                 </td>
+          </tr>
+          <tr >
+          <td class="label-column"><label>SOURCE NAME</label><span style="color:red">*</span></td>
+          <td>
+            <!-- <input class="form-text" [(ngModel)]="sourcename" name="sourcename" > -->
+            <input class="form-text" name="sourcename" [(ngModel)]="sourcename" (keyup)="changeSourceTitle(searchjournal.value)" #searchjournal [readonly]="isReadOnly">
+            <ul *ngIf="sourceEnable"  class="alignDrop">
+              <li *ngFor="let n of journalList"  (click)="onSelectSourceTitle(n.name)">
+                 {{ n.name }}
+              </li>
+          </ul>
+         
+          </td>
+          </tr>
+         
+          
+          <tr>
+            <td class="label-column"><label>DOI</label><span style="color:red">*</span></td>
+          <td>
+            <input class="form-text" [(ngModel)]="doi" name="doi" [readonly]="isReadOnly">
+            </td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>RFS TYPE</label></td>
+          <td><input class="form-text"  [(ngModel)]="type" name="type" readonly> </td>
+          </tr>
+                     
+        </tbody></table>
+              </div>
+              <div class="col-lg-6">
+              
+        <table class="form-table">
+          <tbody>
+        
+          <tr>
+            <td class="label-column"><label>REMARK</label></td>
+          <td><input class="form-text"  [(ngModel)]="remark" name="remark" ></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>STATUS</label></td>
+          <td><input class="form-text"  [(ngModel)]="status" name="status" readonly></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>CREATED BY</label></td>
+          <td><input class="form-text"  [(ngModel)]="createdby" name="createdby" readonly></td>
+          </tr>
+          <tr>
+            <td class="label-column"><label>CREATED DATE</label><span style="color:red">*</span></td>
+          <td><input type="date" id="dateOfJoining"  [(ngModel)]="createdbydate" name="createdbydate" class="form-text" readonly></td>
+          </tr>
+          <!--  -->
+            
+          <tr >
+        
+
+              <td class="label-column"><label>UPLOAD PDF<span style="color: red;">*</span></label></td>
+
+              <td >
+              
+                <input type="file" [(ngModel)]="pdfLocation"  (change)="selectFile($event)"/>
+                <!-- <div *ngIf="fileexists" style="color: red;">Already file exists....</div> -->
+                
+              </td>
+              <td >
+                <div >
+                <div class="label-column fa fa-file-pdf-o" style="overflow-wrap: break-word;"  >  {{filetypename}}   </div>   
+                </div>
+              </td>
+           </tr>
+        </tbody></table>
+              </div>
+        <div class="col-lg-12">
+          <button class="btn-green center-block" style="margin-bottom:10px" (click)="submit()" >SUBMIT</button>
+        </div>
+      </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  </div>

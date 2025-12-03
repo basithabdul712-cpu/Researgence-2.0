@@ -1,0 +1,22 @@
+.not-found-container {
+  position: relative;
+  background-image: var(--background-white);
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.not-found-container h1 {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+}
+
+.not-found-container p {
+  font-size: 1.5em;
+  margin-bottom: 2em;
+}

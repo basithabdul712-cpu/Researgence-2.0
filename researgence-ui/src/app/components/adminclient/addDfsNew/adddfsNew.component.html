@@ -1,0 +1,23 @@
+<div class="content-wrapper">
+      <div class="container-fluid" style="padding-top: 60px;" [ngClass]="{'menu-open': !isMenuOpen, 'menu-closed': isMenuOpen}">
+            <div class="col-lg-12s">          
+                  <h2 class="page-title" id="page-title" #header style="width: 31%;border: solid 1px #c7a408;text-align: center;margin-left: 31%;background: #c7a408;color: white;border-radius: 7.5px;">
+                      UNIVERSITIES</h2>
+            </div>
+           <div class="subMenus" >
+              <!-- <p *ngFor="let item of universityList" >{{item.universityName}}</p> -->
+              <div class="search">
+             <input type="text" class="forms-control" name="universityName" [(ngModel)]="universityName" (keyup)="onKeyUp($event)" placeholder="Select University" autocomplete="off" style="margin-left:250px;width: 55%;text-align: center;font-size: 25px;border-radius: 7.5px;" >
+             <button type="button" class="btn btn-primary" style="margin-bottom: 10px;margin-left: 10px;height: 43px;" (click)="getDFS(universityId)">Submit</button>
+            </div>
+        <ul  class="dropdown-list">
+      
+            <li *ngFor="let n of fill" (click)="onItemClick(n.universityName,n.universityId)">
+            {{ n.universityName }}
+            </li>
+          </ul>
+      </div>
+      
+    </div>
+      
+</div>

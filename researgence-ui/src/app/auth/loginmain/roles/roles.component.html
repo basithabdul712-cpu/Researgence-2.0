@@ -1,0 +1,108 @@
+<html>
+<body>
+  <div id="loading" class="green-bg" style="display: none;">
+    <div id="loading-center">
+      <div class="boxLoading"></div>
+    </div>
+  </div>
+ 
+  <div class="parent-container">
+    <div class="navbar-brand">
+      <img src="assets/given/img/poweroff.png" class="icon" alt style="width: 35px;left: 55px;cursor: pointer;" />
+      <img src="assets/given/img/poweroff-white.png" alt style="width: 35px;left: 55px;cursor: pointer;" class="icon-over" (click)="SignOut()"/>
+      <div style="position: absolute;left: 52px;top: -14px">
+         <p class="icon-over" style="position: fixed;display: none;">Logout</p>
+      </div>
+    </div>
+
+    <div class="researgencelogo">
+      <img src="assets/given/img/logo-white.png" alt="logo"  style="right: 20px;position: fixed;"/>
+    </div>
+
+    <div class="role-content" style="margin-top: 0px;position: relative;left: 50%;" [ngStyle]="{'width' : enableAshoka ? '800px' : ''}">
+    <div class="client-logo"><img alt="" [src]="univImage"></div>
+    <!-- <div class="welcome-text">{{universityName}}</div> -->
+    <br>
+    <div class="col-sm-12" *ngIf="!enableAshoka" >
+      <section id="testim" class="testim" style="margin-left: unset;">
+        <div class="wrap" >
+          <span id="right-arrow" class="arrow right fa fa-chevron-right" (click)="nextSlide()"></span>
+          <span id="left-arrow" class="arrow left fa fa-chevron-left" (click)="prevSlide()"></span>
+          <ul id="testim-dots" class="dots">
+            <li *ngFor="let dot of dots; let i = index" class="dot" [class.active]="dot" (click)="showSlide(i)"></li>
+          </ul>          
+          <div id="testim-content" class="cont">
+            <div *ngFor="let testimonial of testimonials; let i = index" [class.active]="i === currentIndex" [class.inactive]="i !== currentIndex">
+              <div class="img"><img [src]="testimonial.image" alt="girl"></div>
+              <h2>{{ testimonial.name }}</h2>
+              <p>{{ testimonial.text }}</p>
+            </div>
+          </div>
+        </div>
+        
+      </section>
+    </div>
+    <div class="col-sm-12" *ngIf="enableAshoka" >
+      <section id="testim" class="testim" style="margin-left: unset;">
+        <div class="wrap" >         
+          <div id="testim-content" class="cont">
+            <div [class.active]="true">
+              <div class="img"><img [src]="ashokaQuoteImg" alt="girl"></div>
+              <h2>Prof Gautam I. Menon, Dean (Research), Professor of Physics & Biology, Ashoka University</h2>
+              <p>At Ashoka University, we believe that publishing impactful research is crucial to our mission of becoming a leading research institution. In just a decade, our faculty and students have made significant strides, producing work recognized globally. This repository highlights our dedication to academic excellence and knowledge dissemination. By contributing to esteemed journals and authoring influential books, Ashoka University aims to make meaningful contributions not only to the global academic community but also to society at large by influencing policy, driving innovation, and fostering a deeper understanding of the world.</p>
+            </div>
+          </div>
+        </div>
+        
+      </section>
+    </div>
+  
+    <div class="container" style="height:auto;width: unset;">
+      <div class="col-lg-12"  [ngStyle]="{'margin-top' : enableAshoka ? '-50px' : ''}">
+        <h4 class="text-yellow text-center" >Select Your Role</h4>
+      
+          <ul class="roles">
+            <li *ngFor="let user of rolesImage"><a class="hexagon" role="button"
+                (click)="subUser(user.roleName,user.roleId,user.landingPage)">
+                <img [src]="user.imageUrl" alt class="icon">
+                <img [src]="user.imagewhite" alt class="icon_hover">
+                 <div>{{user.roleName}}</div>
+              </a>
+            </li>
+          </ul>
+      </div>
+    </div>
+
+    <!-- <div id="slideOut" [ngClass]="{ 'showSlideOut': isCollapsed }" [@slideInOut]="isCollapsed">
+      <div class="modal-content" >
+        <div class="modal-header slideOutTab"(click)="toggleCollapse()" >
+          <h4 class="modal-title" >Updates</h4>
+          <button type="button" class="close" aria-label="Close" >
+            <span aria-hidden="true" *ngIf="isCollapsed" style="color: white;">-</span>
+            <span aria-hidden="true" *ngIf="!isCollapsed" style="color: white;">+</span>
+          </button>
+        </div>
+        <div class="collapse" style="display: block" >
+          <div class="modal-body"  *ngIf="enableContent" >
+            <img src="../../../../assets/given/img/invitation-design-sgt.jpg" alt="" class="img-responsive"/>
+        <p>On behalf of the Research &amp; Development Council, SGT University, we are delighted to extend an invitation to you for an exclusive demonstration session of Digital Research Information System – Researgence to our faculty members.
+        </p>
+
+        <p><strong>The schedule of the session is as follows:</strong></p>
+        
+        <p>Date: July 3rd, 2024<br>
+            Time: 10:30 AM onwards<br>
+            Venue: Auditorium, C-Block</p>
+        <p>We look forward to your valuable presence and contributions.</p>
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div> -->
+  </div>
+  </div>
+
+<section class="bg-blur"> <img src="https://researgence.ai/univ-assets/cssimage/blur-bg.jpg" alt=""> </section>
+</body>
+<br />
+</html>

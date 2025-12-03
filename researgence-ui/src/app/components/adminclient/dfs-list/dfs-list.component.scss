@@ -1,0 +1,141 @@
+
+
+.dropdown-list {
+  overflow: scroll;
+  margin-right: 80%;
+  max-width: 880px;
+  width: 55%;
+  margin-left: 250px;
+ font-size: 20px;
+ max-height: 400px;
+}
+.forms-control:focus{
+  border-color: 1px solid black;
+  outline: 0;
+  box-shadow: none;
+}
+.content-wrapper{
+  background: var(--background-white) repeat top center;
+}
+
+.container-fluid {
+  transition: padding-left 0.3s ease, transform 0.3s ease;
+}
+.menu-opens {
+  padding-left: 0%;
+  transform: translateX(0.5);
+  
+}
+
+.menu-closeds {
+  padding-left: 263px;
+  transform: translateX(0.5);
+ 
+}
+
+  .forms-control:focus{
+    border-color: 1px solid black;
+    outline: 0;
+    box-shadow: none;
+  }
+  .dropdown-list li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+  .subMenus {
+    margin-top: 7%;
+}
+label.adminClient {
+  border: solid 1px #0d6efd;
+  margin-left: 20%;
+  width: 20%;
+  text-align: center;
+  font-size: 17px;
+  background: #0d6efd;
+  color: white;
+  height: 40px;
+  border-radius: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+label.adminClient:hover{
+  background: linear-gradient(45deg, black, transparent);
+  border: solid 1px black;
+}
+
+.name{
+  color: white;
+}
+
+
+.btn-green{
+margin-right: 40px;
+background: #c2cf1d;
+color: #000000;
+border: none;
+padding: 6px 10px;
+margin-left: 7px;
+}
+.btn-green:hover{
+background-color: #000000;
+color: white;
+}
+
+.scrollClass {
+  overflow-x: scroll;
+}
+.name {
+  white-space: nowrap; 
+  padding-right: 100px;
+}
+
+span.sorting:before{
+  float: right;
+  margin-left: -13px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  content: "▼"/"";
+}
+
+span.sorting:after{
+  float: right;
+  content: "▲"/"";
+  margin-left: 3px;
+  margin-top: -11px;
+  margin-bottom: 0px;
+}
+
+
+
+
+.gradient-box{
+  background: rgb(23,96,172);
+  background: linear-gradient(157deg, rgba(23,96,172,1) 0%, rgba(195,208,28,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1760ac",endColorstr="#c3d01c",GradientType=1);
+  padding: 15px;
+  margin-top: 10px;
+}
+
+
+.dropdown-list {
+  overflow: scroll;
+  width: 320px;
+  font-size: 16px;
+  max-height: 150px;
+  background: white;
+}
+
+.dropdown-list li:hover{
+  background-color: #0051bf;
+  color: white; 
+  cursor: pointer;
+}
+
+.sticky-column-right {
+  position: sticky;
+  right: 0; /* Sticky to the right side */
+  z-index: 0; /* Ensure it's above other elements */
+  background-color: #f8f9fa; /* Optional: background color for sticky visibility */
+}

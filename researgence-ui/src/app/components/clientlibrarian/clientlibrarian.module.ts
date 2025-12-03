@@ -1,0 +1,35 @@
+
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { AuthService } from 'src/app/shared/services/firebase/auth.service';
+import { FormsModule } from '@angular/forms';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ChartistModule } from 'ng-chartist';
+import { NgChartsModule } from 'ng2-charts';
+import { CountToModule } from 'angular-count-to';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { ClientlibrarianRoutingModule } from './clientlibrarian-routing.module';
+import { ClientlibrarianComponent } from './clientlibrarian.component';
+
+@NgModule({
+  declarations: [ClientlibrarianComponent],
+  imports: [
+    ClientlibrarianRoutingModule,
+    CommonModule,
+    FormsModule,
+    CarouselModule,
+    NgbModule,
+    ChartistModule,
+    NgChartsModule,
+    CountToModule,
+    NgxChartsModule,
+    Ng2GoogleChartsModule,
+    SharedModule,
+  ],
+  providers:[AuthService],
+
+})
+export class ClientlibrarianModule { }

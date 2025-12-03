@@ -1,0 +1,227 @@
+<html>
+  <body>
+    <div class="brand clearfix bg-blue">
+      <div class="container-800"><img src="img/jis-logo.png" alt="" width="auto" height="60" class="img-block">
+        <p class="blue-subtitle text-white" style="margin: 20px auto; float: left">{{univName}}</p>
+      </div>
+    </div>
+    <div class="ts-main-content" *ngIf="type=='DataCoverage'" >
+      <div class="container-800" style="margin-top: 100px;">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="inner-page-header gradient-box" style="margin-bottom: 30px;">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h3 class="page_title">Data Coverage</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <p>Here's the <strong>'Data Coverage'</strong> document for the Researgence portal. This table highlights the publication and patent repositories that share open REST API’s along with the research outputs they offer.</p>
+            
+            <table class="table table-bordered" style="width:100%">
+              <thead>
+                <tr>
+                  <th style="color: white;">Repository Name</th>
+                  <th style="color: white;">API Availability</th>
+                  <th style="color: white;">Research Outputs Covered</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>PubMed</td>
+                  <td>Open REST API</td>
+                  <td>Publications, Clinical Trials</td>
+                </tr>
+                <tr>
+                  <td>CrossRef</td>
+                  <td>Open REST API</td>
+                  <td>Publications, Journals, Books</td>
+                </tr>
+                <tr>
+                  <td>arXiv</td>
+                  <td>Open REST API</td>
+                  <td>Preprints (Various Disciplines)</td>
+                </tr>
+             <tr>
+                  <td>Europe PMC</td>
+                  <td>Open REST API</td>
+                  <td>Publications, Clinical Guidelines</td>
+                </tr>
+             <tr>
+                  <td>USPTO (U.S. Patent and Trademark Office)</td>
+                  <td>Open REST API</td>
+                  <td>Patents, Trademark Applications</td>
+                </tr>
+             <tr>
+                  <td>Espacenet (European Patent Office)</td>
+                  <td>Open REST API</td>
+                  <td>Patents, Patent Applications</td>
+                </tr>
+             <tr>
+                  <td>IEEE Xplore</td>
+                  <td>Open REST API</td>
+                  <td>Publications, Conferences, Standards</td>
+                </tr>
+             <tr>
+                  <td>Google Scholar</td>
+                  <td>Limited API*</td>
+                  <td>Publications, Citations</td>
+                </tr>
+             <tr>
+                  <td>ORCID</td>
+                  <td>Open REST API</td>
+                  <td>Publications, Grants, Patents</td>
+                </tr>
+             <tr>
+                  <td>OpenAlex</td>
+                  <td>Open REST API</td>
+                  <td>Publications, Authors, Institutions</td>
+                </tr>
+             <tr>
+                  <td>WIPO (World Intellectual Property Organization)</td>
+                  <td>Open REST API</td>
+                  <td>Patents, Copyrights, Trademarks</td>
+                </tr>
+              </tbody>
+            </table>
+              
+              
+            <p><strong>Note:</strong> Google Scholar does not provide a full-fledged open REST API but has limited programmable access through other means, which may be less reliable for automatic data extraction.</p>
+            
+            
+              
+               <p class="blue-subtitle" style="font-family: auto;">API Functionality Overview</p>
+            <p>Each listed repository provides specific functionalities through their APIs:</p>
+           <ul class="ul-list">
+          <li class="list-inline"><strong>PubMed, Europe PMC:</strong> These medical databases offer extensive data on publications and clinical trials, suitable for medical and life sciences research.</li>
+           <li class="list-inline"><strong>CrossRef, IEEE Xplore, OpenAlex:</strong> These provide broad coverage across multiple disciplines with access to a wide variety of documents including journals, conference proceedings, books, and detailed metadata on authors and institutions.</li>
+           <li class="list-inline"><strong>arXiv:</strong> Ideal for early access to research in physics, mathematics, computer science, and more through preprints.</li>
+           <li class="list-inline"><strong>USPTO, Espacenet, WIPO:</strong> Focus on patents and related documents, essential for studies in technology and innovation.</li>
+           <li class="list-inline"><strong>ORCID:</strong> Integrates personal researcher profiles which can include a wide range of outputs like publications, patents, and project grants.</li>
+    
+          </ul>
+              <p>This updated document reflects the current available APIs for programmatically accessing research outputs that can be integrated into the Researgence ecosystem.</p>
+               
+              
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="ts-main-content" *ngIf="type=='PrivacyPolicy'" >
+      <div class="container-800" style="margin-top: 100px;">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="inner-page-header gradient-box" style="margin-bottom: 30px;">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h3 class="page_title">Privacy Policy for Researgence</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <p>Welcome to Researgence, a comprehensive Research Information Management System <strong>(RIMS)</strong> designed to facilitate and manage research outputs including Publications, Patents, Projects, and expert profiles for faculty, scholars, and research students. This Privacy Policy outlines how Researgence collects, uses, shares, and protects personal information of the users of the repository and its associated services.</p>
+            
+           <ol class="ol-list" style="padding: unset;">
+          <li>
+                  <p class="heading_sm">Information on how we collect</p>
+                  <p>We collect information to provide better services to all our users. The types of personal information we may collect include,</p>
+                   <ul class="ul-list">
+                       <li><strong>Personal Identification Information:</strong> Name, email address, phone number, institutional affiliation, and position (e.g., scholar, faculty, Head of Department).</li>
+                       <li><strong>Research Outputs:</strong> Information about publications, patents, projects, and other research outputs.</li>
+                       <li><strong>Usage Data:</strong> Information on how the Service is accessed and used, including login data, page views, and IP addresses.</li>
+                  </ul>
+               </li>
+               
+               <li><p class="heading_sm">How We Use Your Information </p>
+                   <p>We use the information we collect to,</p>
+                   <ul class="ul-list">
+                       <li>Operate, maintain, and improve the service.</li>
+                       <li>Create and manage user profiles.</li>
+                       <li>Facilitate research output portfolio management by users.</li>
+                       <li>Analyze how the service is used for its continuous improvement.</li>
+                       <li>Communicate with you, including sending you updates, alerts and administrative messages.</li>
+                   </ul>
+               </li>
+               
+               <li><p class="heading_sm">Sharing Your Information</p>
+               We do not share personal information with companies, organizations, or individuals outside of Researgence. 
+               </li>
+                <li><p class="heading_sm">Data Security</p>
+               We prioritize the security of your personal information and employ advanced measures to safeguard it. Our security protocols include the use of encryption, secure servers, and regular security assessments to protect against unauthorized access, alteration, disclosure, or destruction of your data. We are committed to maintaining the highest standards of security and continuously update our practices to ensure the safety of your data. While we strive to provide robust security, please be aware that no method of internet transmission or electronic storage is entirely without risk. 
+               </li>
+               <li><p class="heading_sm">Data Retention</p>
+               We retain personal information we collect from you where we have an ongoing legitimate business need to do so (for example, to comply with applicable legal, tax, or accounting requirements).
+               </li>
+               <li><p class="heading_sm">Your Data Protection Rights</p>
+              Depending on your location, you may have certain rights under data protection laws, including the right to access, correct, update or request delete of your personal information.
+               </li>
+               <li><p class="heading_sm">Changes to this Privacy Policy</p>
+             We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.
+               </li>
+               <li><p class="heading_sm">Contact Us</p>
+            If you have any questions about this Privacy Policy, please contact us at <a href="mailto:support@researgence.com" target="_blank">support@researgence.com</a>
+               </li>
+    </ol>
+             
+                  
+                  <p class="small">This Privacy Policy is for general informational purposes only and does not constitute legal advice. Researgence users are encouraged to consult with a legal advisor for advice on specific legal issues.</p>
+               
+              
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ts-main-content" *ngIf="type=='FrequencyUpdates'" >
+      <div class="container-800" style="margin-top: 100px;">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="inner-page-header gradient-box" style="margin-bottom: 30px;">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h3 class="page_title">Researgence: Frequency of Updates</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <p><strong>Preamble</strong> Researgence is at the forefront of leveraging the vast potential of open access sources to enhance research visibility and accessibility. By expanding the capabilities of these resources, Researgence provides a comprehensive and dynamic platform that continuously adapts and updates to reflect the most current research outputs and metrics. This document outlines the frequency and methodology of updates across various elements within the Researgence system.</p>
+            
+           <ol class="ol-list" style="padding: unset;">
+          <li>
+                  <p class="heading_sm">Daily Updates of Publications</p>
+    Our Daily Feeder System is a robust mechanism that scans and updates publications every day. It processes information from over 110 million metadata entries housed in our proprietary search engine 'Episteme'. This ensures that the latest research publications are readily available to users, maintaining the platform's relevance and utility.</li>
+               
+               <li><p class="heading_sm">Monthly Updates of Indexing and Citations </p>
+    Indexing and citations are critical for the academic visibility of publications. Researgence updates these metrics once a month, drawing from a diverse range of open access information sources. This monthly update cycle helps researchers and institutions keep track of citation metrics and the evolving impact of their work.</li>
+               
+               <li><p class="heading_sm">Annual and Biannual Updates of Quality Scores</p> 
+    The quality scores within Researgence that reflects the prestige and credibility of research outputs, are updated annually and biannually. These updates coincide with the release schedules of respective agencies that disseminate this information through open channels. This schedule ensures that the quality scores in Researgence are always aligned with the latest assessments from authoritative bodies.</li>
+               
+               <li><p class="heading_sm">Rapid Updates of Faculty Contributions</p> 
+    Faculty contributions to publications and patents are a key component of Researgence. These contributions are validated and updated within 2 business days of submission. This swift update process supports the accuracy of faculty profiles and their associated research outputs, facilitating prompt recognition and reflection of academic achievements.</li>
+    </ol>
+              <p class="blue-subtitle" style="font-family: auto;">Conclusion:</p>
+                  
+                  <p>The update frequencies outlined above ensure that Researgence remains a cutting-edge platform for research management and dissemination. By continuously integrating the latest data from open access sources, Researgence supports its mission to foster a dynamic and collaborative research ecosystem that is both current and comprehensive.</p>
+               
+              
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </body>
+</html>

@@ -1,0 +1,410 @@
+<style>
+  .sidemenu-open {
+  padding-left: 0%;
+}
+
+.menu-closed {
+  padding-left: 250px;
+}
+</style>
+<div class="content-wrapper" [ngClass]="{'sidemenu-open': !isMenuOpen, 'menu-closed': isMenuOpen}"
+  style="font-family: 'Red Hat Display', sans-serif;">
+  <div class="container-fluid">
+    <div class="row" style="margin-bottom: -23px;">
+      <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;"><i
+            class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}})
+      </div>
+    </div>
+    <div class="row">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+        [ngStyle]="{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 50px;">
+        <div class="container container-90 ">
+          <div class="row" style="margin-left: -40px;width: 102%;">
+            <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle]="{'margin-top' : stickyEnable ? '' : '20px'}">
+              <h2>Welcome to Your Researgence Repository</h2>
+              <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+              <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30"
+                  style="margin-right: 15px;">For support, click <a class="link-green" href="/newrequest">here</a> to
+                contact our team.</p>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn" href="/newrequest"><img
+                  src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20"
+                  style="margin-right: 10px;">Support</a><a href="https://www.youtube.com/watch?v=3wzpI7orqxo"
+                target="_blank" class="video_btn mediabox"><span>Watch Video</span><img
+                  src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container container-90" style="width: 90%;">
+    <div class="content-pushed" [ngStyle]="{'padding-top' : stickyEnable ? '170px' : '35px'}">
+      <div class="row">           
+        <div class="col-lg-12">
+          <div class="inner-page-header gradient-box">
+            <div class="row">
+              <div class="col-lg-6">
+                <h3 class="page_title" style="font-size: 24px;">Faculty Profile Compare - Publications</h3>
+              </div>
+              <div class="col-lg-6" >
+                <a style="cursor: pointer;" class="btn-outline float-right ml-20" routerLink="/facultyProfiles">Back</a>
+                <a style="cursor: pointer;" class="btn-outline float-right" (click)="exportExcel()">Download Excel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <label class="control-label heading_sm" style="text-align: end;"> Showing {{ startrow +1 }} to {{ endrow}} of
+          {{this.tcollectionSize}} records</label>
+      </div>
+      <div class="row">
+        <div class="col-lg-12" style="margin-top: unset;">
+          <div class="publication_list row">
+            <div class="col-lg-12">
+              <div class="filter">
+                <div class="sort" style="margin-right: 21px !important;">
+                  <label class="control-label heading_sm" style="float: inline-start;">Year</label>
+                  <input style="width: 70px;float: inline-start;margin-right: 10px;" [(ngModel)]="fromMonthYear"
+                    autocomplete="off" class="form-control" name="date" bsDatepicker
+                    [bsConfig]="{dateInputFormat: 'MM/YYYY',monthLabel: 'MMM',maxDate:maxDate}"
+                    (onShown)="onOpenCalendar($event)" (ngModelChange)="getFromYear('from')">
+                  <input style="width: 70px;" [(ngModel)]="toMonthYear" autocomplete="off" class="form-control"
+                    name="date" bsDatepicker [bsConfig]="{dateInputFormat: 'MM/YYYY',monthLabel: 'MMM',maxDate:maxDate}"
+                    (onShown)="onOpenCalendar($event)" (ngModelChange)="getToYear('to')">
+                </div>
+                <div class="sort " style="margin-right: 21px !important;" *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'"> <span
+                    class="custom-dropdown">
+                    <label class="control-label heading_sm">Campus</label>
+                    <select style="width: 150px" [(ngModel)]="filterCamp" (change)="filters('loc')">
+                      <option disabled selected value="undefined">Select Campus</option>
+                      <option value="">All Campus</option>
+                      <option *ngFor="let item of layerCampus">{{item}}</option>
+                    </select>
+                  </span> </div>
+                <div class="sort" style="margin-right: 21px !important;" *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'"> <span
+                    class="custom-dropdown">
+                    <label class="control-label heading_sm">School</label>
+                    <select style="width: 100px" [(ngModel)]="filterSchool" (change)="filters('scl')">
+                      <option disabled selected value="undefined">Select School</option>
+                      <option value="">All School</option>
+                      <option *ngFor="let item of layerSchool">{{item}}</option>
+                    </select>
+                  </span> </div>
+                <div class="sort" style="margin-right: 21px !important;"
+                  *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'">
+                  <span class="custom-dropdown">
+                    <label class="control-label heading_sm">Institute</label>
+                    <select style="width: 100px" [(ngModel)]="filterInst" (change)="filters('inst')">
+                      <option disabled selected value="undefined">Select Institute</option>
+                      <option value="">All Institute</option>
+                      <option *ngFor="let item of layerInst">{{item}}</option>
+                    </select>
+                  </span> </div>
+                <div class="sort" style="margin-right: 21px !important;"
+                  *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'">
+                  <span class="custom-dropdown">
+                    <label class="control-label heading_sm">Department</label>
+                    <select style="width: 100px" [(ngModel)]="filterDepart" (change)="filters('dept')">
+                      <option disabled selected value="undefined">Select Department</option>
+                      <option value="">All Department</option>
+                      <option *ngFor="let item of layerDept" [value]="item.departmentName">{{item.departmentName}}
+                      </option>
+                    </select>
+                  </span> </div>
+
+                <div class="sort" style="margin-right: 21px !important;"> <span class="custom-dropdown">
+                    <div>
+                      <label class="control-label heading_sm">Show</label>
+                      <label>
+                        <select class="form-control input-sm ts" [(ngModel)]="pageSize"
+                          (change)="onPageSizeChange($event.target.value)">
+                          <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+                        </select>
+                        <span class="caret"></span>
+                      </label>
+                    </div>
+                  </span> </div>
+                  <div *ngIf="userRole==12"  class="sort" style="margin-right: 21px !important;"> <span class="custom-dropdown">
+                    <div>
+                      <label class="control-label heading_sm">{{tempUnivName}}</label>
+                    </div>
+                  </span></div>
+              </div>
+            </div>
+
+            <!-- <div class="result col-lg-12">
+              <div class="content-wrapper-white"
+                style="overflow: auto;margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;"> -->
+                <!-- <table id="example" class="table table-bordered" style="width:100%">
+                <thead style="    background: #0151be;
+                color: #fff;">
+                  <tr>
+                    <th>Sl No </th>
+                    <th (click)="sort('employeeId')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'employeeId' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'employeeId' && currentSortDirection === 'desc'
+                    }">EMP ID <span class="sorting"></span></th>
+                    <th (click)="sort('authorName')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'authorName' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'authorName' && currentSortDirection === 'desc'
+                    }">Author <span class="sorting"></span></th>
+                    <th (click)="sort('totalPubCount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'totalPubCount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'totalPubCount' && currentSortDirection === 'desc'
+                    }">Total <span class="sorting"></span></th>
+                    <th (click)="sort('scopusPubCount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'scopusPubCount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'scopusPubCount' && currentSortDirection === 'desc'
+                    }">SCS <span class="sorting"></span></th>
+                    <th  (click)="sort('wosPubcount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'wosPubcount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'wosPubcount' && currentSortDirection === 'desc'
+                    }">WOS <span class="sorting"></span></th>
+                    <th (click)="sort('sciPubCount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'sciPubCount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'sciPubCount' && currentSortDirection === 'desc'
+                    }">SCI <span class="sorting"></span></th>
+                    <th (click)="sort('pubmedPubCount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'pubmedPubCount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'pubmedPubCount' && currentSortDirection === 'desc'
+                    }">PMD <span class="sorting"></span></th>
+                    <th (click)="sort('ieeePubcount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'ieeePubcount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'ieeePubcount' && currentSortDirection === 'desc'
+                    }">IEEE <span class="sorting"></span></th>
+                    <th (click)="sort('abdcPubCount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'abdcPubCount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'abdcPubCount' && currentSortDirection === 'desc'
+                    }">ABDC <span class="sorting"></span></th>
+                    <th (click)="sort('ugccarePubcount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'ugccarePubcount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'ugccarePubcount' && currentSortDirection === 'desc'
+                    }">UGC CARE <span class="sorting"></span></th>
+                    <th (click)="sort('ugccareGp1Pubcount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'ugccareGp1Pubcount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'ugccareGp1Pubcount' && currentSortDirection === 'desc'
+                    }">UGC CARE1 <span class="sorting"></span></th>
+                    <th (click)="sort('gsPubCount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'gsPubCount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'gsPubCount' && currentSortDirection === 'desc'
+                    }">GSC <span class="sorting"></span></th>
+                    <th (click)="sort('scopusCitation')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'scopusCitation' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'scopusCitation' && currentSortDirection === 'desc'
+                    }">Citations SCS <span class="sorting"></span></th>
+                    <th (click)="sort('wosCitation')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'wosCitation' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'wosCitation' && currentSortDirection === 'desc'
+                    }">Citations WOS <span class="sorting"></span></th>
+                    <th (click)="sort('gsCitation')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'gsCitation' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'gsCitation' && currentSortDirection === 'desc'
+                    }">Citations GCS <span class="sorting"></span></th>
+                    <th (click)="sort('scopusHindex')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'scopusHindex' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'scopusHindex' && currentSortDirection === 'desc'
+                    }">h-Index SCS <span class="sorting"></span></th>
+                    <th (click)="sort('wosHindex')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'wosHindex' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'wosHindex' && currentSortDirection === 'desc'
+                    }">h-Index WOS <span class="sorting"></span></th>
+                    <th (click)="sort('gsHindex')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'gsHindex' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'gsHindex' && currentSortDirection === 'desc'
+                    }">h-Index GSC <span class="sorting"></span></th>
+                    <th (click)="sort('scopusI10index')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'scopusI10index' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'scopusI10index' && currentSortDirection === 'desc'
+                    }">i10 SCS <span class="sorting"></span></th>
+                    <th (click)="sort('wosI10index')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'wosI10index' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'wosI10index' && currentSortDirection === 'desc'
+                    }">i10 WOS <span class="sorting"></span></th>
+                    <th (click)="sort('gsI10Index')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'gsI10Index' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'gsI10Index' && currentSortDirection === 'desc'
+                    }">i10 GSC <span class="sorting"></span></th>
+                    <th (click)="sort('scopusAvgSNIP')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'scopusAvgSNIP' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'scopusAvgSNIP' && currentSortDirection === 'desc'
+                    }">Scopus Snip (AVG) <span class="sorting"></span></th>
+                    <th (click)="sort('scopusAvgCiteScore')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'scopusAvgCiteScore' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'scopusAvgCiteScore' && currentSortDirection === 'desc'
+                    }">Cite-Score SCS <span class="sorting"></span></th>
+                    <th (click)="sort('wosAvgImpFactor')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'wosAvgImpFactor' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'wosAvgImpFactor' && currentSortDirection === 'desc'
+                    }">Impact Factor WOS <span class="sorting"></span></th>
+                    <th (click)="sort('scopusQ1')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'scopusQ1' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'scopusQ1' && currentSortDirection === 'desc'
+                    }">Q1 SCS <span class="sorting"></span></th>
+                    <th (click)="sort('scopusQ2')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'scopusQ2' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'scopusQ2' && currentSortDirection === 'desc'
+                    }">Q2 SCS <span class="sorting"></span></th>
+                    <th (click)="sort('wosQ1')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'wosQ1' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'wosQ1' && currentSortDirection === 'desc'
+                    }">Q1 WOS <span class="sorting"></span></th>
+                    <th (click)="sort('wosQ2')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'wosQ2' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'wosQ2' && currentSortDirection === 'desc'
+                    }">Q2 WOS <span class="sorting"></span></th>
+                    <th (click)="sort('journalCount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'journalCount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'journalCount' && currentSortDirection === 'desc'
+                    }">Journal <span class="sorting"></span></th>
+                    <th (click)="sort('conferenceCount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'conferenceCount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'conferenceCount' && currentSortDirection === 'desc'
+                    }">Conference <span class="sorting"></span></th>
+                    <th (click)="sort('bookCount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'bookCount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'bookCount' && currentSortDirection === 'desc'
+                    }">Book <span class="sorting"></span></th>
+                    <th (click)="sort('bookChapterCount')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'bookChapterCount' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'bookChapterCount' && currentSortDirection === 'desc'
+                    }">Book-Chapter <span class="sorting"></span></th>
+                    <th *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'" (click)="sort('location')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'location' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'location' && currentSortDirection === 'desc'
+                    }">Location <span class="sorting"></span></th>
+                    <th *ngIf="layerType=='4LType1'||layerType=='4LType2'" (click)="sort('school')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'school' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'school' && currentSortDirection === 'desc'
+                    }">School <span class="sorting"></span></th>
+                    <th *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'" (click)="sort('institute')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'institute' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'institute' && currentSortDirection === 'desc'
+                    }">Institute <span class="sorting"></span></th>
+                    <th *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'" (click)="sort('department')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'department' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'department' && currentSortDirection === 'desc'
+                    }">Department <span class="sorting"></span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let c of facultiesListdata | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i=index" >
+                    <td>{{ i + 1 + (this.startrow) }}</td>
+                    <td>{{c.employeeId}}</td>
+                    <td>{{c.authorName}}</td>
+                    <td>{{c.totalPubCount}}</td>
+                    <td>{{c.scopusPubCount}}</td>
+                    <td>{{c.wosPubcount}}</td>
+                    <td>{{c.sciPubCount}}</td> 
+                    <td>{{c.pubmedPubCount}}</td>
+                    <td>{{c.ieeePubcount}}</td>
+                    <td>{{c.abdcPubCount}}</td>
+                    <td>{{c.ugccarePubcount}}</td>
+                    <td>{{c.ugccareGp1Pubcount}}</td>
+                    <td>{{c.gsPubCount}}</td>
+                    <td>{{c.scopusCitation}}</td>
+                    <td>{{c.wosCitation}}</td>
+                    <td>{{c.gsCitation}}</td>
+                    <td>{{c.scopusHindex}}</td>
+                    <td>{{c.wosHindex}}</td>
+                    <td>{{c.gsHindex}}</td>
+                    <td>{{c.scopusI10index}}</td>
+                    <td>{{c.wosI10index}}</td>
+                    <td>{{c.gsI10Index}}</td>
+                    <td>{{c.scopusAvgSNIP}}</td>
+                    <td>{{c.scopusAvgCiteScore}}</td>
+                    <td>{{c.wosAvgImpFactor}}</td>
+                    <td>{{c.scopusQ1}}</td>
+                    <td>{{c.scopusQ2}}</td>
+                    <td>{{c.wosQ1}}</td>
+                    <td>{{c.wosQ2}}</td>
+                    <td>{{c.journalCount}}</td>
+                    <td>{{c.conferenceCount}}</td>
+                    <td>{{c.bookCount}}</td>
+                    <td>{{c.bookChapterCount}}</td>
+                    <td *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'">{{c.location}}</td>
+                    <td *ngIf="layerType=='4LType1'||layerType=='4LType2'">{{c.school}}</td>
+                    <td *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'">{{c.institute}}</td>
+                    <td *ngIf="layerType=='2LTyp]e1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'">{{c.department}}</td> 
+                  </tr>
+                </tbody>
+              </table> -->
+                
+               <!-- </div> -->
+            <!-- </div> -->
+          <!-- </div> -->
+              <div class="row" style="margin-bottom: 10px;margin-top: 10px;margin-left: unset;padding: unset;"> 
+                <div class="col-lg-12">
+                  <app-ag-grid 
+                    [gridData]="facultiesListdata"
+                  ></app-ag-grid>
+                </div>
+              </div>
+          <div class="paginate" style="display: flex;align-items: center;justify-content: center;" >
+            <div class="row" style="width: 400px;">
+              <tr style="margin-left: -40px;">
+                <p class="pages-link" style="float: inline-start;" [class.disabled]="tpage === 1"
+                  (click)="onPageChange(tpage-1)">Previous</p>
+                <ngb-pagination class="pagination1" (pageChange)="onPageChange($event)" [maxSize]="3" [(page)]="tpage"
+                  [pageSize]="pageSize" [collectionSize]="tcollectionSize" style="float: left;">
+                </ngb-pagination>
+                <p class="pages-link" style="text-decoration: none;margin-left: 20px;"
+                  [class.disabled]="tpage == totalPages" (click)="onPageChange(tpage+1)">Next</p>
+              </tr>
+            </div>
+            <br>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    .sort {
+      float: left;
+      margin-right: 23px;
+      text-align: center;
+    }
+  </style>

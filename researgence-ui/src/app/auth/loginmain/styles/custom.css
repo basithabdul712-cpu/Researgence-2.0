@@ -1,0 +1,166 @@
+@media (min-width: 768px){
+.navbar-header {
+    float: right;
+}
+}
+.navbar-brand {
+    float: right;
+    padding: 20px 15px;
+    font-size: 18px;
+    line-height: 20px;
+    height: 60px;
+}
+.navbar-brand>img {
+    display: block;
+	max-width: 240px;
+	width: 100%;
+}
+.landing-content{
+position: absolute;
+    z-index: 20;
+    top: 20%;
+    left: 40%;
+    width: 600px;
+    color: #fff;
+    margin: 0 auto;
+}
+.landing-content p{
+	margin-bottom: 10px;
+}
+html, body, .banner, #carousel-example-generic, .carousel-inner, .carousel-inner>.item, .carousel-inner>.item>img, .carousel-inner>.item>a>img{
+	height:100%;
+}
+.carousel-inner>.item{
+	text-align:center
+}
+.carousel-inner>.item>img, .carousel-inner>.item>a>img{
+	max-width: inherit;
+	width:auto;
+}
+#slide1{
+	/* background-image:url('assets/given/img/nslide1.jpg'); */
+	background-position:top center;
+	background-size:cover;
+}
+#slide2{
+	/* background-image:url('/researgence-ui/src/assets/given/img/nslide2.jpg'); */
+	background-position:top center;
+	background-size:cover;
+}
+#slide3{
+	/* background-image:url('/researgence-ui/src/assets/given/img/nslide3.jpg'); */
+	background-position:top center;
+	background-size:cover;
+}
+.carousel-inner{
+	background:#000;
+}
+.item{
+	opacity:0.4;
+}
+.welcome-text{
+font-size: 28px;
+    color: #fff;
+    margin: 20px 0;
+    line-height: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    padding-bottom: 20px;
+	font-family: "lexia";
+}
+.welcome-text span{
+	font-size: 38px;
+	display:block;
+	line-height:52px;
+}
+.client-logo{
+	height: 120px;
+}
+.client-logo img{
+	height: 100%;
+	width: auto;
+}
+.footer-copyright {
+    border-top: none;
+}
+footer{
+	position: fixed;
+    z-index: 10;
+    bottom: 0;
+    width: 100%;
+}
+.contact-form .section-field input {
+   position: relative;
+    width: 100%;
+	margin: 0;
+    margin-bottom: 20px;
+    border-radius: 22px;
+    padding: 0 20px;
+    height: 42px;
+    line-height: 42px;
+    clear: both;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    font-size: 18px;
+    background: rgba(0,0,0,0.2);
+}
+
+.contact-form .section-field input::placeholder {
+  color: #fff;
+  opacity: 1; /* Firefox */
+	text-align: left;
+}
+
+.contact-form .section-field input::-ms-input-placeholder { /* Edge 12-18 */
+  color: #fff;
+	text-align: left;
+}
+.contact-form .section-field input:focus {
+   
+    color: #000;
+    border: 2px solid #ffffff;
+    font-size: 18px;
+    background: rgba(0,0,0,0.6);
+}
+.role-content{
+   
+    width: 600px;
+    color: #fff;
+    margin: 0 auto;
+	margin-top: 80px;
+}
+.role-content .client-logo {
+    height: 80px;
+    display: flex;
+    justify-content: center;flex-wrap: wrap;
+}
+.role-content .welcome-text {
+    font-size: 30px;
+text-align: center;
+	border: none;
+	padding: 0;
+}
+.bg-blur{
+position: absolute;
+    overflow: hidden;
+    background: #000;
+    top: 0;
+    z-index: -10;
+    left: 0;
+    right: 0;
+}
+.bg-blur img{
+	display: block;
+  
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  
+  /* Full height */
+  height: 100%; 
+  
+	opacity: 0.7;
+  /* Center and scale the image nicely */
+    margin: 0 auto;
+    scale: 1;
+}
+

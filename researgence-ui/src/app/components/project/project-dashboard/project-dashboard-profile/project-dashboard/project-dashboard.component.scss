@@ -1,0 +1,107 @@
+.opensideBar {
+  padding-left: 250px;
+  margin-left: 0px;
+}
+
+// .main_score::before {
+//   content: '';
+//   display: block;
+//   width: 60px;
+//   height: 60px;
+//   // background: url(../../../../../../assets/given/img/rupee-icon-white.png) no-repeat;
+//   position: absolute;
+//   left: -50px;
+//   top: 12px;
+// }
+
+// .main_score::after {
+//   content: '';
+//   display: block;
+//   width: 60px;
+//   height: 60px;
+//   // background: url(../../../../../../assets/given/img/crore-icon.png) no-repeat;
+//   position: absolute;
+//   right: -55px;
+//   top: 12px;
+// }
+
+.incremental-counter.main_score {
+  width: fit-content;
+  margin: 0 auto;
+  position: relative;
+}
+
+li{
+  cursor: pointer;
+}
+// .locations li{
+//   cursor: pointer;
+// }
+.locations li, .other-score li {
+  margin: 10px;
+  cursor: pointer;
+}
+
+.locations li .hover-text {
+display: none;
+}
+
+.locations li:hover .hover-text {
+display: block;
+}
+.locations li:hover p:not(.hover-text) {
+display: none;
+}
+
+.other-score li a{
+  width: 160px !important;
+}
+
+.num {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.unit {
+  font-size: 1rem;
+  font-weight: normal;
+  margin-left: 4px;
+}
+
+.main_score {
+  width: fit-content;
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.project-number {
+  font-size: 2em;
+  font-weight: bold;
+  color: #fff;
+}
+
+.project-unit {
+  font-size: 1em;
+  margin-left: 4px;
+  color: #ccc;
+  display: inline-block;
+}
+
+
+
+// <div class="row">
+//                                   <div class="col-lg-12">
+//                                       <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Projects</h3>
+//                                   <div class="incremental-counter main_score" >
+//                                   <ng-container *ngIf="digits && endCounterValue">
+//                                     <!-- <div class="num" *ngFor="let num of numbers">{{ num }}</div> -->
+//                                     <div class="num" *ngFor="let num of numbers">{{  projCount[0]?.projectCount  }}</div>
+//                                   </ng-container>
+//                                   </div>		
+//                                    <!-- <div class="main_score">
+//                                     <span class="num">{{ projCount[0]?.projectCount }}</span>
+//                                   </div>	 -->
+//                                   </div>
+//                                 </div>

@@ -1,0 +1,250 @@
+<div class="loader-wrapper" [class.loderhide]="enablePic" *ngIf="!enablePic" >
+  <div class="loader bg-white">
+    <div class="whirly-loader"> </div>
+    <br>
+    <br>
+       <p>Please Wait..Page is loading!</p>
+  </div>
+</div>
+
+<ng-template #demoModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title"></h4>
+      <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="closeCross()"></button>
+    </div>
+    <div class="modal-body" style="width: 500px;padding-left: 10px;">
+      <form>
+        <div class="form-group">
+         <div class="input-group">
+          <label><span class="important">*</span>UNIVERSITY</label>                     
+            <input style="border-radius: 8px;height: 30px;"  class="form-control" type="text"  placeholder="Enter the University" [(ngModel)]="univName" name="univName" autocomplete="off" (keyup)="SearchUnivName(univName)">        
+            <ul *ngIf="univEnable" class="alignDrop">
+                <li *ngFor="let n of fill" (click)="onSelectUniv(n.universityName,n.universityId)">
+                  {{ n.universityName }}
+                </li>
+              </ul>  
+        </div>
+          <br>
+          <div class="input-group">
+            <label><span class="important">*</span>FROM DATE</label>                     
+              <input style="border-radius: 8px;height: 30px;" name="fromDt" class="form-control" type="date" [(ngModel)]="fromDt">        
+            </div>
+            <br>
+            <div class="input-group">
+                <label><span class="important">*</span>TO DATE</label>                     
+                  <input style="border-radius: 8px;height: 30px;" name="toDt" class="form-control" type="date" [(ngModel)]="toDt">        
+                </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer" style="height: 55px;">
+      <p style="color: red;padding-right: 5px;" *ngIf="errormessage" >{{message}}</p>
+      <button style="margin-right: 20px;" type="button" class="but" (click)="submit()">PROCEED</button>
+      <button style="margin-right: 20px;" type="button" class="but" (click)="clearPopup()">CLEAR</button>
+    </div>
+    </ng-template>
+
+          <html xmlns="http://www.w3.org/1999/xhtml" *ngIf="enableResult" >
+            <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>Bulletin Report</title>
+            <link href="../../../assets/given/style.css" rel="stylesheet" />
+            </head>
+            <body >
+              <div id="contentToConvert">
+            <div class="content_wrapper" >
+              <div class="form_wrapper">
+                <div class="form_header">
+                  <div class="padding-20 padding-t-20">
+                    <div class="logo"><img [src]="logoImg" alt="jis-logo" style="height: 97px;" /> </div>
+                    <h3>Research Bulletin</h3>
+                  </div>
+                </div>
+                <div class="form_header2">
+                  <h3>Research ScoreBook</h3>
+                  <h4>{{monthName}} {{year}}</h4>
+                </div>
+                <div class="form" style="background: url('../../../assets/monthly-report-image/bg.jpg') !important">
+                  <div class="row" style="margin-left: -5px;margin-right: -5px;">
+                    <div class="column-4">
+                      <h4 class="sec_head">ScoreBook - Publications</h4>
+                      <div class="row padding-20" style="margin-left: unset;margin-right: unset;">
+                        <div class="row margin-b10" style="margin-bottom: 20px !important;">
+                          <div class="column-2">
+                            <p>&nbsp;</p>
+                          </div>
+                          <div class="column-2">
+                            <div class="column-2">
+                              <p class="text_bold">{{year}}</p>
+                            </div>
+                            <div class="column-2">
+                              <p class="text_bold">{{monthName}} {{year}}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row-glass margin-b10" *ngFor="let item of publicationList" >
+                          <div class="column-2">
+                            <h4 class="margin-0">{{item.metrics}}</h4>
+                          </div>
+                          <div class="column-2">
+                            <div class="column-2">
+                              <p class="text_green text_bold">{{item.yearCount}} ({{item.yearPercentage}}%)</p>
+                            </div>
+                            <div class="column-2">
+                              <p class="text_green text_bold">{{item.monthCount}} ({{item.monthPercentage}}%)</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <h4 class="sec_head padding-t-20">ScoreBook - Patents</h4>
+                      <div class="row padding-20" style="margin-left: -5px;margin-right: -5px;">
+                        <div class="row-glass margin-b10" *ngFor="let d of patentList" >
+                          <div class="column-2">
+                            <h4 class="margin-0">{{d.metrics}}</h4>
+                          </div>
+                          <div class="column-2">
+                            <div class="column-2">
+                              <p class="text_green text_bold">{{d.yearCount}} ({{d.yearPercentage}}%)</p>
+                            </div>
+                            <div class="column-2">
+                              <p class="text_green text_bold">{{d.monthCount}} ({{d.monthPercentage}}%)</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="form_header2 margin-top">
+                  <h3>Overall Research Statistics &amp; Key Points of Note</h3>
+                  <h4>{{monthName}} {{year}}</h4>
+                </div>
+                <div class="form" style="background: url('../../../assets/monthly-report-image/bg.jpg') !important">
+                  <div class="row" style="margin-left: -5px;margin-right: -5px;">
+                    <div class="column-4">
+                      <h4 class="sec_head text_center">Research Output Repository</h4>
+                      <div class="row padding-20" style="margin-left: unset;margin-right: unset;" *ngFor="let q of totalPublist" >
+                        <div class="row-glass margin-b10" *ngIf="q.moduleName=='Publications'">
+                          <div class="column-2">
+                            <div class="row">
+                              <div class="column-3">
+                                <h4 class="margin-0">{{q.moduleName}}</h4>
+                              </div>
+                              <div class="column-1">
+                                <p class="text_green text_bold text_xl">{{q.totalCount}}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="column-2">
+                            <div class="row margin-b10">
+                              <div class="column-3">
+                                <p class="margin-0">{{q.lineItem1Text}}</p>
+                              </div>
+                              <div class="column-1">
+                                <p class="text_green text_bold">{{q.lineItem1Count}}</p>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="column-3">
+                                <p class="margin-0">{{q.lineItem2Text}}</p>
+                              </div>
+                              <div class="column-1">
+                                <p class="text_green text_bold">{{q.lineItem2Count}}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="row-glass margin-b10" *ngIf="q.moduleName=='Patents'">
+                          <div class="column-2">
+                            <div class="row">
+                              <div class="column-3">
+                                <h4 class="margin-0">PATENTS</h4>
+                              </div>
+                              <div class="column-1">
+                                <p class="text_green text_bold text_xl">{{q.totalCount}}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="column-2">
+                            <div class="row margin-b10">
+                              <div class="column-3">
+                                <p class="margin-0">{{q.lineItem1Text}}</p>
+                              </div>
+                              <div class="column-1">
+                                <p class="text_green text_bold">{{q.lineItem1Count}}</p>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="column-3">
+                                <p class="margin-0">{{q.lineItem2Text}}</p>
+                              </div>
+                              <div class="column-1">
+                                <p class="text_green text_bold">{{q.lineItem2Count}}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                      </div>
+                      <h4 class="sec_head text_center margin-top">Research Trends</h4>
+                      <div class="row padding-20 narrow" style="flex-flow: row;margin: 0px 50px;">
+                        <div class="column-2">
+                          <p class="text_center margin-b10">Overall</p>
+                          <div class="row-glass">
+                            <table class="rsg_table">
+                              <tr *ngFor="let s of overaAllList" >
+                                <td>#{{s.technologyAreaName}}</td>
+                                <td>{{s.pubCount}}</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="column-2">
+                          <p class="text_center margin-b10">{{year}}</p>
+                          <div class="row-glass">
+                            <table class="rsg_table">
+                              <tr *ngFor="let s of yearlyList" >
+                                <td>#{{s.technologyAreaName}}</td>
+                                <td>{{s.pubCount}}</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="column-2">
+                          <p class="text_center margin-b10">{{monthName}} {{year}}</p>
+                          <div class="row-glass">
+                            <table class="rsg_table">
+                              <tr *ngFor="let t of monthlyList" >
+                                <td>#{{t.technologyAreaName}}</td>
+                                <td>{{t.pubCount}}</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="row padding-20 margin-top">
+                      <div class="column-4">
+                          <p>Key Points of Note:</p>
+                          <ol>
+                              <li>This Research Bulletin showcases key scores from Research Outputs. A full index of 150+ scores of the university can be found at Researgence/Home/ScoreBook</li>
+                              <li>Researgence captures all information from open sources and all key quality scores, indexes and metrics are calculated from open source information</li>
+                              <li>Sustainable Development Goals (SDG) is integrated on the platform on ScoreBook. You can access the same at Researgence/Home/ScoreBook/SDG</li>
+                              <li>Publications are updated on a daily-basis as it appears on our Search Engine</li>
+                              <li>Citations and Indexing are updated on a monthly basis</li>
+                          </ol>
+                      </div>
+                  </div>     
+                </div>  
+                <div class="buttons"  #buttons>
+                  <button (click)="generatePDF()" class="printbutton">Print</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </body>
+      </html>
+
+      <div *ngIf="showMsgScreen" >
+        <h1 style="color: red;font-weight: bold;text-align: center;margin-top: 200px;">No records found....</h1>
+      </div>

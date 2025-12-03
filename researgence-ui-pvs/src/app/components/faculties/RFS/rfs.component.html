@@ -1,0 +1,157 @@
+<div class="content-wrapper" [ngClass]="{'menu-open': !isMenuOpen, 'menu-closed': isMenuOpen}">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="content-container">
+          <div class="gradient-box">
+            <h3 class="text-white text-center">RESEARCH FILE SYSTEM</h3>
+          </div>
+          <div class="gradient-box">
+            <div class="bg-white">
+              <div class="row">
+                <div class="col-lg-12">
+                  <table class="form-table bg-dark-gray" style="background-color: #242424;">
+                    <tbody>
+                      <tr>
+                        <td style="padding-left: 30%;padding-top: 5px;"><input type="radio"  style="float: left;margin-top: 7px;" value="Title" class="check" [(ngModel)]="checkDTtitle" (ngModelChange)="updateValues('Title')"><button  class="Greenbg" style="margin-top: 3%;">TITLE</button></td>
+                        <td style="padding-left: 25%;"><input type="radio"  class="check" value="Doi" [(ngModel)]="checkDTtitle" (ngModelChange)="updateValues('Doi')"><button class="Greenbg" style="margin-top: 1%;">DOI</button></td>
+                      </tr>
+                      <tr>
+                      <td class="padding-all text-white" style="text-align: center;" width="200"><h3></h3></td>
+                      <td class="padding-all" width="50%"><input class="form-text" style="height: 40px;" [(ngModel)]="searchData" (keyup)="changeTitle(searchbar.value)"  #searchbar>
+                        <ul *ngIf="titleEnable"  class="alignDrop">
+                          <li *ngFor="let n of filterTitle"  (click)="onSelectTitle(n.name)">
+                             {{ n.name }}
+                          </li>
+                      </ul>
+                      </td>
+                      <td align="left"><button class="btn-green dark-bg" [disabled]="searchData==''" [ngStyle]="{'opacity': searchData==null ? '0.6' : ''}" (click)="search(demoModal)">Search</button></td>
+                    </tr>
+                  </tbody></table>
+                </div>
+              </div>
+              <ng-template #demoModal let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title" id="modal-basic-title"></h4>
+                  <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                </div>
+                <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                  <form>
+                    <div class="form-group">
+                     <div class="input-group">
+                      <label>TITLE</label>                     
+                        <input style="border-radius: 8px;height: 30px;" name="crossTitle" class="form-control" placeholder="Title" type="text" [(ngModel)]="crossTitle">        
+                      </div>
+                      <br>
+                      <div class="input-group">
+                        <label>SOURCE NAME</label>                    
+                          <input style="border-radius: 8px;height: 30px;" name="crossSourceName" class="form-control" placeholder="SourceName" type="text" [(ngModel)]="crossSourceName">        
+                        </div>            
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer" >
+                  <label style="margin-top: -18px;color: red;">{{popupAlert}}</label>
+                  <button style="margin-right: 20px;" type="button" class="but" (click)="processData()">PROCEED</button>
+                  <button style="margin-right: 20px;" type="button" class="but" (click)="clearPopUP()">CLOSE</button>
+                </div>
+                </ng-template>
+                <div style="margin-left: 30px;margin-top: 30px;margin-right: 30px;" *ngIf="showDOIlist" >
+                  <table class="table table-striped" style="border: 1px solid black;">
+                        <thead>
+                        <tr style="background:#254e99;">
+                          <th scope="col" class="name">S.NO</th>
+                          <th scope="col" class="name">Publication Title</th>
+                          <th scope="col" class="name">DOI</th>
+                          <th scope="col" class="name">Publication Source Name</th>
+                          <th *ngIf="doiEnable"  scope="col" class="name">Select</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of checkValue; let i=index">
+                            <td class="tl">{{i+1}}</td>
+                            <td class="tl">{{item.publicationTitle}}</td>
+                            <td class="tl">{{item.doi}}</td>
+                            <td class="tl">{{item.publicationSourceName}}</td>  
+                            <td *ngIf="doiEnable"  class="tl"><input type="checkbox" style="top: unset;left: unset;" [disabled]="enableCheck&&checkValue[i].publicationId!=pubId" (click)="selection(item.publicationId)"></td>                         
+                        </tr>
+                        </tbody>
+                      </table>    
+                      <br>     
+                      <div *ngIf="showMsg" >
+                         <label>Message:</label><p style="float: right;padding-right: 10%;color: red;">Multiple Publications Titles are found for given DOI. Kindly get in touch with Support Team, get the data checked/corrected and then procced with the link process.</p>
+                         <br>
+                         <br>
+                        </div>
+                      <div *ngIf="!showMsg"  class="center-block" style="width:300px;">
+                        <button class="btn-green big-btn" (click)="selectTitle(demoModal)">PROCEED</button>
+                        <button class="btn-green big-btn" style="margin-left: 10px;" (click)="clearAll()">CLEAR</button>
+                      </div>
+                </div>
+
+
+              <div class="row" *ngIf="showData">
+                <div class="col-lg-12">
+                  <table class="form-table" style="background: #f7f7f7">
+                    <tbody><tr>
+                     
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>TITLE<span style="color: red;" *ngIf="noDOI&&pdfEnable">*</span></label></td>
+                      <td><input class="form-text bg-transparent" [(ngModel)]="crossTitle" [readonly]="readOnly">
+                      <div *ngIf="!crossTitle && submitrequired" style="color: red;">Please fill the title field...!</div>
+                      </td>
+                    </tr>
+                 
+                    <tr>
+                      <td class="label-column"><label>SOURCE NAME<span style="color: red;" *ngIf="noDOI&&pdfEnable">*</span></label></td>
+                      <td><input class="form-text bg-transparent" [(ngModel)]="crossSourceName" [readonly]="readOnly">
+                       <div *ngIf="!crossSourceName && submitrequired" style="color: red;">Please fill the sourcename field  ...!</div>
+                      </td>
+                    </tr>
+                    <tr *ngIf="noDOI&&pdfEnable" >
+                      <td class="label-column"><label>DOI</label></td>
+                      <td><input class="form-text bg-transparent" [(ngModel)]="doi"></td>
+                    </tr>
+                    <tr *ngIf="noDOI&&pdfEnable">
+                      <td class="label-column"><label>WEB LINK<span style="color: red;">*</span></label></td>
+                      <td><input class="form-text bg-transparent" [(ngModel)]="webLink">
+                       <div *ngIf="!webLink && submitrequired" style="color: red;">Please fill the weblink field.....!</div>
+                      </td>
+                    </tr>
+                  
+                    <tr *ngIf="pdfEnable" >
+                      <td class="label-column"><label>UPLOAD PDF<span style="color: red;">*</span></label></td>
+                      <td>
+                        <input type="file" (change)="selectFile($event)" />
+                        <div *ngIf="!file && submitrequired" style="color: red;">Please choose pdf File....!</div>    
+                        <!-- <button class="btn-green dark-bg" (click)="uploadFile()">EXPORT PDF</button> -->
+                      </td>
+                    
+                    </tr>
+
+                    <tr *ngIf="showData&&!messageValue">
+                      <td class="label-column"><label>Message</label></td>
+                      <td>
+                        <label style="color: red;">{{userValues.messege}}</label>
+                      </td>
+                    </tr>
+
+            </tbody></table>	
+                </div>
+              </div>
+               <div class="row" *ngIf="showData&&messageValue">
+                  <div class="col-lg-12">
+                    <div class="center-block" style="width:300px;">
+                      <button class="btn-green big-btn" (click)="submit()">SUBMIT</button>
+                      <button class="btn-green big-btn" style="margin-left: 10px;" (click)="clearAll()">CLEAR</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

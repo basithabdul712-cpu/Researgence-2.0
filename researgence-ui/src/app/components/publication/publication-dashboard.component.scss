@@ -1,0 +1,102 @@
+.sideBarClose {
+  padding-left: 250px;
+  margin-left: 0px;
+  }
+  .sideBarOpen{
+    padding-left: 0px;
+  }
+  li{
+    cursor: pointer;
+  }
+  // .locations li{
+  //   cursor: pointer;
+  // }
+  .locations li, .other-score li {
+    margin: 10px;
+    cursor: pointer;
+}
+
+.locations li .hover-text {
+  display: none;
+}
+
+.locations li:hover .hover-text {
+  display: block;
+}
+.locations li:hover p:not(.hover-text) {
+display: none;
+}
+
+.block-btn-blue-container-sticky{
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  margin-left: 33%;
+  margin-top: -55px !important;
+  z-index: 1;
+}
+
+.block-btn-blue-container-sticky a{
+  background: #0051bf;
+  padding: 10px 20px;
+  border-radius: 0 0 10px 10px;
+  color: #fff;
+  display: block;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.block-btn-blue-container-sticky a:hover {
+  background: #d8dd0b;
+  color: #000;
+}
+
+// For disclaimer
+
+    p.SCOPUS{
+      display: none ;
+    }
+
+    a.SCOPUS:hover p.SCOPUS{
+      display: block !important;
+      font-size: 11px;
+      color: #d8dd0b;
+      font-style: italic;
+    }
+
+    span.SCOPUS{
+      display: block !important;
+    }
+
+    a.SCOPUS:hover{
+      width: 200px !important;
+      height: 160px !important;
+      transition: 0.05s !important;
+    }
+
+    p.WOS {
+      display: none ;
+
+    }
+    
+    a.WOS:hover{
+      width: 200px !important;
+      height: 160px !important;
+      transition: 0.05s !important;
+    }
+
+    a.WOS:hover p.WOS{
+      display: block !important;
+      font-size: 11px;
+      color: #d8dd0b;
+      font-style: italic;
+    }
+
+    span.WOS{
+      display: block !important;
+    }
+
+    .disclaim{
+      display: none;
+    }

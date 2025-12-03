@@ -1,0 +1,454 @@
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article</title>
+
+    <link rel="stylesheet" href="/assets/given/css/style.css" />
+  </head>
+
+  <div class="brand clearfix">
+    <div class="card-panel">
+      
+      <!-- <img src="/assets/given/img/alma.png" class="alma" alt="alma" /> -->
+
+      <img
+        class="reslogo"
+        src="/assets/given/img/researgence-logo.png"
+        alt="reslogo"
+      />
+
+      <p _ngcontent-ugh-c109="" style="width: -webkit-fill-available; text-align: center; margin-top: unset; margin-bottom: unset; line-height: unset; letter-spacing: unset; color: #0051bf; font-size: 13px;">Research Information Management System (RIMS)</p>
+      <a  class="header-link" style="margin-right: 40px;" (click)="backClicked()"><img src="../../../../assets/given/img/back-icon.png" alt="" class="icon"><img src="../../../../assets/given/img/back-icon-over.png" alt="" class="icon-over">Back</a>
+    </div>
+  </div>
+  <div *ngIf="slNo!='project'" >
+    <div class="content-wrapper" style="padding-left: unset !important;" *ngFor="let data of row" >
+      <div class="container-fluid">
+        <div class="row">
+          <div class="alert alert-dismissible alert-info">
+            <button type="button" class="close" data-dismiss="alert" style="border: unset !important;"><i class="fa fa-remove"></i></button>
+            Currently logged in as {{Name}}({{roleName}}) </div>
+        </div>
+        <div class="row" #content>
+          <div class="blue_hexa_bg">
+            <div class="container container-90">
+              <div class="row">
+                <div class="col-lg-12 flex flex-align-stretch text-white">
+                  <p><span *ngIf="data.isInHouse==1" >Home | </span><span *ngIf="data.isInHouse==0" >Away | </span>{{data.articleType}}</p>
+                  <!-- <p>Subscribed | Bronze</p> -->
+                </div>
+              </div>
+              <div class="row flex flex-wrap">
+                <div class="col-lg-10 col-md-10 col-sm-10 text-white">
+                  <p class="text-yellow mb-0x">Sl. No. {{slNo}}</p>
+                  <h3 class="text-lexia text-xl mb-0x mt-1x" style="line-height: 1.2em;">{{data.publicationTitle}}</h3>
+                </div>
+                <!-- <div class="col-lg-2 col-md-2 col-sm-2 flex flex-valign-bottom flex-align-right"> <a class="btn btn-outline" (click)="captureAsPDF()">Download PDF</a> </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container container-90" #content>
+        <div class="panel mt-2x article_detail">
+          <div class="row flex flex-wrap">
+            <div class="col-lg-8">
+              <div class="flex flex-column" style="flex-direction: unset !important;justify-content: unset !important;">
+                <div>
+                  <div class="year">YEAR {{data.year}}</div>
+                </div>
+                <div class="ml-20">
+                  <h4>{{data.sourcePublication}}</h4>
+                  <p class="text-bold text-lg">{{data.publicationTitle}}</p>
+                  <p class="mb-0x"><span class="text-bold" style="font-size: 1em;" *ngIf="data.volumeNumber" >Volume</span> <span *ngIf="data.volumeNumber">{{data.volumeNumber}},</span> <span class="text-bold" style="font-size: 1em;" *ngIf="data.issueNumber" >Issue</span> <span *ngIf="data.issueNumber" >{{data.issueNumber}},</span> <span class="text-bold" style="font-size: 1em;" *ngIf="data.bPage" >Pages</span> <span *ngIf="data.bPage" >{{data.bPage}}-{{data.ePage}}</span> </p>
+                  <p><span class="text-bold" style="font-size: 1em;" *ngIf="data.issn||data.eissn" >ISSN:</span> {{data.issn}} ; {{data.eissn}} <span *ngIf="data.isbn||data.eisbn" >| <span class="text-bold" style="font-size: 1em;" *ngIf="data.isbn||data.eisbn" >ISBN:</span> {{data.isbn}} ; {{data.eisbn}}</span></p>
+                  <!-- <p class="text-italic text-blue">Taylor and Francis, North Atlanta, Los Angeles, United States of America in coordination with Springer in Singapore.</p> -->
+                  <p class="box-gray text-sm">DOI: {{data.doi}}</p>
+                  <!-- <p class="box-gray text-sm">{{data.link}}</p> -->
+                  <p class="box-gray text-sm"><a href="{{data.link}}" target="_blank" style="text-decoration: underline;">Weblink</a></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <p class="text-lg mt-2x">CONTRIBUTORS:</p>
+                  <div class="faculty_list" *ngIf="groupedAuthorData.length>0">
+                    <div *ngFor="let group of groupedAuthorData">
+                      <div class="row mb">
+                        <div class="col-lg-6" *ngFor="let item of group" >
+                            <div class="profile_pic"><img src="../../../assets/given/img/profile-pic3.jpg" alt=""/></div>
+                            <div class="flex flex-align-top">
+                              <div class="faculty_names" [ngClass]="{'highlightedName': hasBrackets(item)}">
+                                <p class="text-bold">{{getNameWithoutBrackets(item)}}</p>
+                                <!-- <p class="text-bold">{{item.split(",")[0]}}</p> -->
+                                <p>{{item.split(",")[1]}}, {{item.split(",")[2]}}</p>               
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                <!-- Editors  -->
+
+                <div class="row" *ngIf="data.isEditedPublication=='1'" >
+                  <div class="col-lg-12">
+                    <p class="text-lg mt-2x">EDITORS:</p>
+                    <div class="faculty_list" *ngIf="groupedEditedAuthor.length>0">
+                      <div *ngFor="let group of groupedEditedAuthor">
+                        <div class="row mb">
+                          <div class="col-lg-6" *ngFor="let item of group" >
+                              <div class="profile_pic"><img src="../../../assets/given/img/profile-pic3.jpg" alt=""/></div>
+                              <div class="flex flex-align-top">
+                                <div class="faculty_names" [ngClass]="{'highlightedName': hasBrackets(item)}">
+                                  <p class="text-bold">{{getNameWithoutBrackets(item)}}</p>
+                                  <!-- <p class="text-bold">{{item.split(",")[0]}}</p> -->
+                                  <p>{{item.split(",")[1]}}, {{item.split(",")[2]}}</p>               
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+               <!-- <div class="row">
+                <div class="col-lg-12">
+                  <p class="text-lg mt-2x mb">CORREPONDING AUTHOR: </p>
+                    <p class="mb-0x">Mahesh P A</p>
+                    <a href="mailto:maheshpaduranga@jss.co.in" class="text-italic">maheshpaduranga@jss.co.in</a>
+                </div>    
+              </div>     -->
+                
+                 <div class="row">
+                <div class="col-lg-12">
+                  <p class="text-lg mt-2x mb">ABSTRACT: </p>
+                    <p class="mt-0x mb-0x">{{data.abstract}}</p>
+                </div>    
+              </div> 
+                
+               <div class="row" *ngIf="data.technologyAreas" >
+                <div class="col-lg-12">
+                  <p class="text-lg mt-2x mb">RESEARCH AREAS: </p>
+                    <p class="mt-0x">{{data.technologyAreas}}.</p>
+                </div>    
+              </div> 
+            </div>
+            <div class="col-lg-4 flex flex-valign-top flex-col">
+                <div class="flex flex-content-center">
+                 <div class="article_data detail_content  mt-0x" style="margin-left: 40px;margin-top: 35px !important;" >
+
+                  <div class="indexing-wrapper">
+                    <p [ngClass]="data.scopus == null || data.scopus == '-' ? 'not-available' : ''">
+                      SCS <span class="fa fa-info-circle control-btn" style="color: #d8dd0b;float: inline-end;margin-right: 18px;margin-top: 4px;" ></span>
+                    </p>
+                  <div class="disclaim">
+                    <a class="box-gray text-sm" style="color: #0051bf !important;padding: unset;">
+                      Indexing information is compiled from publicly available sources or user-provided data
+                    </a>
+                  </div>
+                </div>
+
+                <div class="indexing-wrapper-wos">
+                  <p [ngClass]="['wos', data.wos == null || data.wos == '-' ? 'not-available' : '']">
+                    WOS 
+                    <span class="fa fa-info-circle control-btn" 
+                          style="color: #d8dd0b; float: inline-end; margin-right: 18px; margin-top: 4px;"></span>
+                  </p>
+                  <div class="enable-wos">
+                    <a class="box-gray text-sm" style="color: #0051bf !important;padding: unset;">
+                      Indexing information is compiled from publicly available sources or user-provided data
+                    </a>
+                  </div>
+                </div>
+
+                  <!-- <p [ngClass]="{'not-available':data.scopus == null||data.scopus=='-'}">SCS 
+                    </p>
+                  <p [ngClass]="{'not-available':data.wos == null||data.wos=='-'}">WOS 
+                    </p> -->
+
+                  <p [ngClass]="{'not-available':data.ieee == null||data.ieee=='-'}">IEEE 
+                    <!-- <span *ngIf="data.ieee !== null||data.ieee!='-'">{{data.ieee}}</span> -->
+                    </p>
+                  <p [ngClass]="{'not-available':data.pubmed == null||data.pubmed=='-'}">PubMed 
+                    <!-- <span *ngIf="data.pubmed !== null||data.pubmed!='-'">{{data.pubmed}}</span> -->
+                    </p>
+                  <p [ngClass]="{'not-available':data.gs == null||data.gs=='-'}">Scholar 
+                    <!-- <span *ngIf="data.gs !== null||data.gs!='-'">{{data.gs}}</span> -->
+                    </p>
+                  <p [ngClass]="{'not-available':data.sd == null||data.sd=='-'}">SD 
+                    <!-- <span>INDEXED</span> -->
+                  </p>
+                  <p [ngClass]="{'not-available':data.abdc == null||data.abdc=='-'}">CROSSREF 
+                    <!-- <span *ngIf="data.abdc !== null||data.abdc!='-'">{{data.abdc}}</span> -->
+                    </p>
+                </div>
+                </div>
+             <div class="flex flex-row flex-align-evenly" style="justify-content: space-evenly;">
+              <div *ngIf="data.isIndex==1" ><img src="../../../assets/given/img/index.png" alt="" style="margin-right: 10px">Indexed</div>
+             <!-- <div><img src="../../../assets/given/img/index-no.png" alt="" style="margin-right: 10px">Non-Indexed</div> -->
+            </div>
+                
+                <p class="box-gray mt-2x text-center text-blue text-lg text-bold"> {{data.scsQuartile}} - {{data.wosQuartile}} </p>
+                <ul class="score">
+                    <li *ngFor="let item of data.publicationSourceDBMetrics" [ngClass]="{'text-grey':item.value=='-'}">{{item.name}}<span>{{item.value}}</span></li>
+                    
+                </ul>
+                <div class="flex flex-row flex-align-stretch mt-2x"><img src="../../../assets/images/logo1.png" alt=""><img src="../../../assets/images/logo2.png" alt="" ></div>
+                  <div class="box-gray mt-2x">
+                    <table class="article_dates">
+                        <tr>
+                            <td class="text-bold" style="font-size: 14px;">PRINT DATE</td>
+                            <td>:</td>
+                            <td>{{data.printDate| date: 'dd/MM/yyyy'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-bold" style="font-size: 14px;">ONLINE DATE</td>
+                            <td>:</td>
+                            <td>{{data.onlineDate| date: 'dd/MM/yyyy'}}</td>
+                        </tr>     
+                    </table>
+                    </div>
+                    <div class="box-gray mt-2x" *ngIf="data.rankingMetrics!=null" >
+                      <table class="article_dates" style="border: 1px solid black;">
+                          <thead style="border-bottom: 1px solid black;">
+                            <th style="border-right: 1px solid black;text-align: center;" *ngFor="let item of data.rankingMetrics">{{item.name}}</th>
+                          </thead>
+                          <tbody>
+                            <td style="border-right: 1px solid black;text-align: center;" *ngFor="let item of data.rankingMetrics">{{item.value}}</td>
+                          </tbody>
+                          
+                      </table>
+                    </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Project Detail Page -->
+  <div *ngIf="slNo=='project'" >
+    <div class="content-wrapper" style="padding-left: unset !important;" *ngFor="let data of projectList" >
+      <div class="container-fluid">
+        <div class="row">
+          <div class="alert alert-dismissible alert-info">
+            <button type="button" class="close" data-dismiss="alert" style="border: unset !important;"><i class="fa fa-remove"></i></button>
+            Currently logged in as {{Name}}({{roleName}}) </div>
+        </div>
+        <div class="row" #content>
+          <div class="blue_hexa_bg">
+            <div class="container container-90">
+              <div class="row">
+                <div class="col-lg-12 flex flex-align-stretch text-white">
+                  <p><span>{{data.projectFundingAgencyName}} | </span><span>{{data.projectFundingAgencyTypeName}} | </span>{{data.projectFundingTypeName}}</p>
+                  <!-- <p>Subscribed | Bronze</p> -->
+                </div>
+              </div>
+              <div class="row flex flex-wrap">
+                <div class="col-lg-10 col-md-10 col-sm-10 text-white">
+                  <!-- <p class="text-yellow mb-0x">Sl. No. {{slNo}}</p> -->
+                  <h3 class="text-lexia text-xl mb-0x mt-1x" style="line-height: 1.2em;">{{data.projectTitle}}</h3>
+                </div>
+                <!-- <div class="col-lg-2 col-md-2 col-sm-2 flex flex-valign-bottom flex-align-right"> <a class="btn btn-outline" (click)="captureAsPDF()">Download PDF</a> </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container container-90" #content>
+        <div class="panel mt-2x article_detail">
+          <div class="row flex flex-wrap">
+            <div class="col-lg-8">
+              <div class="flex flex-column" style="flex-direction: unset !important;justify-content: unset !important;">
+                <div>
+                  <!-- <div class="year">YEAR {{data.year}}</div> -->
+                </div>
+                <div class="ml-20">
+                  <!-- <h4>{{data.sourcePublication}}</h4> -->
+                  <p class="text-bold text-lg">{{data.projectTitle}}</p>
+                  <!-- <p class="mb-0x"><span class="text-bold" style="font-size: 1em;" *ngIf="data.volumeNumber" >Volume</span> <span *ngIf="data.volumeNumber">{{data.volumeNumber}},</span> <span class="text-bold" style="font-size: 1em;" *ngIf="data.issueNumber" >Issue</span> <span *ngIf="data.issueNumber" >{{data.issueNumber}},</span> <span class="text-bold" style="font-size: 1em;" *ngIf="data.bPage" >Pages</span> <span *ngIf="data.bPage" >{{data.bPage}}-{{data.ePage}}</span> </p>
+                  <p><span class="text-bold" style="font-size: 1em;" *ngIf="data.issn||data.eissn" >ISSN:</span> {{data.issn}} ; {{data.eissn}} <span *ngIf="data.isbn||data.eisbn" >| <span class="text-bold" style="font-size: 1em;" *ngIf="data.isbn||data.eisbn" >ISBN:</span> {{data.isbn}} ; {{data.eisbn}}</span></p>
+
+                  <p class="box-gray text-sm">DOI: {{data.doi}}</p>
+                  <p class="box-gray text-sm"><a href="{{data.link}}" target="_blank" style="text-decoration: underline;">Weblink</a></p> -->
+                </div>
+              </div>
+
+              <!-- Project Team -->
+              <div class="row">
+                <div class="col-lg-12">
+                  <p class="text-lg mt-2x">PROJECT TEAM:</p>
+                  <div class="faculty_list" *ngIf="groupedProjectTeam.length>0">
+                    <div *ngFor="let group of groupedProjectTeam">
+                      <div class="row mb">
+                        <div class="col-lg-6" *ngFor="let item of group" >
+                            <div class="profile_pic"><img src="../../../assets/given/img/profile-pic3.jpg" alt=""/></div>
+                            <div class="flex flex-align-top">
+                              <div class="faculty_names" [ngClass]="{'highlightedName': hasBrackets(item)}">
+                                <p class="text-bold">{{getNameWithoutBrackets(item)}}</p>
+                                <!-- <p class="text-bold">{{item.split(",")[0]}}</p> -->
+                                <p>{{item.split(",")[1]}}, {{item.split(",")[2]}}</p>               
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                <!-- Principal Investigator  -->
+
+                <div class="row"  >
+                  <div class="col-lg-12">
+                    <p class="text-lg mt-2x">PRINCIPAL INVESTIGATOR:</p>
+                    <div class="faculty_list" *ngIf="groupedPrincipalInv.length>0">
+                      <div *ngFor="let group of groupedPrincipalInv">
+                        <div class="row mb">
+                          <div class="col-lg-6" *ngFor="let item of group" >
+                              <div class="profile_pic"><img src="../../../assets/given/img/profile-pic3.jpg" alt=""/></div>
+                              <div class="flex flex-align-top">
+                                <div class="faculty_names" [ngClass]="{'highlightedName': hasBrackets(item)}">
+                                  <p class="text-bold">{{getNameWithoutBrackets(item)}}</p>
+                                  <!-- <p class="text-bold">{{item.split(",")[0]}}</p> -->
+                                  <p>{{item.split(",")[1]}}, {{item.split(",")[2]}}</p>               
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                 <!-- Co-Investigator  -->
+
+                 <div class="row"  >
+                  <div class="col-lg-12">
+                    <p class="text-lg mt-2x">CO-INVESTIGATOR:</p>
+                    <div class="faculty_list" *ngIf="groupedcoInv.length>0">
+                      <div *ngFor="let group of groupedcoInv">
+                        <div class="row mb">
+                          <div class="col-lg-6" *ngFor="let item of group" >
+                              <div class="profile_pic"><img src="../../../assets/given/img/profile-pic3.jpg" alt=""/></div>
+                              <div class="flex flex-align-top">
+                                <div class="faculty_names" [ngClass]="{'highlightedName': hasBrackets(item)}">
+                                  <p class="text-bold">{{getNameWithoutBrackets(item)}}</p>
+                                  <!-- <p class="text-bold">{{item.split(",")[0]}}</p> -->
+                                  <p>{{item.split(",")[1]}}, {{item.split(",")[2]}}</p>               
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+               <!-- <div class="row">
+                <div class="col-lg-12">
+                  <p class="text-lg mt-2x mb">CORREPONDING AUTHOR: </p>
+                    <p class="mb-0x">Mahesh P A</p>
+                    <a href="mailto:maheshpaduranga@jss.co.in" class="text-italic">maheshpaduranga@jss.co.in</a>
+                </div>    
+              </div>     -->
+                
+                 <!-- <div class="row">
+                <div class="col-lg-12">
+                  <p class="text-lg mt-2x mb">ABSTRACT: </p>
+                    <p class="mt-0x mb-0x">{{data.abstract}}</p>
+                </div>    
+              </div>  -->
+              <br>
+              <div class="row" *ngIf="data.grantTimeline!=null" style="display: flex;width: 100%;flex-flow: row-reverse;">
+                <table class="article_dates" style="border: 3px solid #f03636;">
+                    <thead style="border-bottom: 1px solid black;">
+                      <th style="border-right: 1px solid black;text-align: center;" *ngFor="let item of data.grantTimeline">{{item.name}}</th>
+                    </thead>
+                    <tbody>
+                      <td style="border-right: 1px solid black;text-align: center;" *ngFor="let item of data.grantTimeline">{{item.value}}</td>
+                    </tbody>
+                    
+                </table>
+              </div>
+                
+               <div class="row" *ngIf="data.technologyAreas" >
+                <div class="col-lg-12">
+                  <p class="text-lg mt-2x mb">RESEARCH AREAS: </p>
+                    <p class="mt-0x">{{data.technologyAreas}}.</p>
+                </div>    
+              </div> 
+            </div>
+            <div class="col-lg-4 flex flex-valign-top flex-col">
+                <div class="flex flex-content-center">
+                  <div class="article_data detail_content mt-0x" style="margin-left: 40px;margin-top: 35px !important;">
+                    <p [ngClass]="{'not-available':data.Patent == null||data.Patent=='-'}">Patents
+                      <span *ngIf="data.Patent !== null||data.Patent!='-'">{{data.Patent}}</span></p>
+                    <p [ngClass]="{'not-available':data.Conference == null||data.Conference=='-'}">Conference
+                      <span *ngIf="data.Conference !== null||data.Conference!='-'">{{data.Conference}}</span></p>
+                    <p [ngClass]="{'not-available':data.publication == null||data.publication=='-'}">Publication 
+                      <span *ngIf="data.publication !== null||data.publication!='-'">{{data.publication}}</span></p>
+                    <p class="none">Outcome</p>
+                    <p [ngClass]="{'not-available':data.Product == null||data.Product=='-'}">Product
+                      <span *ngIf="data.Product !== null||data.Product!='-'">{{data.Product}}</span></p>
+                    <p class="outline" class="not-available"></p>
+                    <p class="outline" class="not-available"></p>
+                   </div>
+                </div>
+             <!-- <div class="flex flex-row flex-align-evenly" style="justify-content: space-evenly;">
+                    <div><img src="../../../assets/given/img/index.png" alt="" style="margin-right: 10px">Indexed</div>
+                     <div><img src="../../../assets/given/img/index-no.png" alt="" style="margin-right: 10px">Non-Indexed</div>
+                  </div> -->
+                
+                <!-- <p class="box-gray mt-2x text-center text-blue text-lg text-bold"> {{data.scsQuartile}} - {{data.wosQuartile}} </p> -->
+                <!-- <ul class="score">
+                    <li *ngFor="let item of data.publicationSourceDBMetrics" [ngClass]="{'text-grey':item.value=='-'}">{{item.name}}<span>{{item.value}}</span></li>
+                    
+                </ul> -->
+                <div class="flex flex-row flex-align-stretch mt-2x">
+                  <!-- <img src="../../../assets/images/logo1.png" alt=""><img src="../../../assets/images/logo2.png" alt="" > -->
+                </div>
+                  <div class="box-gray mt-2x">
+                    <table class="article_dates">
+                            <tr>
+                                <td class="text-bold" style="font-size: 14px;">GRANT RECIEVED</td>
+                                <td>:</td>
+                                <td>{{data.grantReceived}}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-bold" style="font-size: 14px;">SANCTIONED AMOUNT</td>
+                                <td>:</td>
+                                <td>{{data.sanctionedAmount}}</td>
+                            </tr>     
+                            <tr>
+                              <td class="text-bold" style="font-size: 14px;">SANCTIONED DATE</td>
+                              <td>:</td>
+                              <td>{{data.sanctionedDate| date: 'dd/MM/yyyy'}}</td>
+                          </tr> 
+                          <tr>
+                            <td class="text-bold" style="font-size: 14px;">PROJECT PERIOD</td>
+                            <td>:</td>
+                            <td>{{data.projectPeriod}}</td>
+                        </tr> 
+                        <tr>
+                          <td class="text-bold" style="font-size: 14px;">COMPLETION DATE</td>
+                          <td>:</td>
+                          <td>{{data.completionDate| date: 'dd/MM/yyyy'}}</td>
+                      </tr> 
+                    
+                    </table>
+                    </div>
+              
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <br />
+</html>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">

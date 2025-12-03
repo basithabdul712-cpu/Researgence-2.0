@@ -1,0 +1,230 @@
+<div class="content-wrapper"  style="font-family: 'Red Hat Display', sans-serif;">
+  <div class="container-fluid" [ngClass]="{'menu-closeds': isMenuOpen}">
+    <div class="row">
+      <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -10px;"><i
+            class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}})
+      </div>
+    </div>
+    <div class="row">
+      <div class="video_bar bluebar_expand"[ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+      [ngStyle]="{
+    'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '':'unset','width':stickyEnable&&isMenuOpen? '95%':''
+  }" #blueheader style="padding-left: 50px;">
+           <div class="container container-90 ">
+          <div class="row">
+         <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '16px','margin-left' : stickyEnable ? '' : '-27px'}">
+                 <h2 style="font-size: 19px;">Welcome to the ROR - Publications - Insights page</h2>
+                 <p style="margin-top: 0;font-size: 12px;">Researgence harnesses connected data, capturing all details per publication. Explore key insights, charts, and graphs for an enhanced analysis of your data on this page.</p>
+           <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green"  href="/newrequest">here</a> to contact our team.</p>
+               </div>
+               <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"  href="/newrequest"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+              </div>
+       </div>
+      </div>
+       </div>
+     </div>
+
+  
+
+    <!-- <div class="container container-90" style="width: 97%;">
+        <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '100px' : '0px'}">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel-title" role="tab" id="headingOne" >
+                  <h4 class="panel-title"> <a style="color: #fff;" role="button" > Insight Reports  </a> </h4>
+                  <div id="collapseOne"   role="tabpanel" aria-labelledby="headingOne" style="background: white;">
+                    <div class="panel-body" style="padding: unset;">
+                      <div class="faculty_charts">
+                      <div class="col-lg-12">
+                        <div class="filter" style="margin-bottom: 40px;margin-top: -5px;"> -->
+                          <div class="container container-90">
+                            <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '100px' : '20px'}">
+                              <div class="row">
+                                <div class="col-lg-12">
+                                  <div class="inner-page-header gradient-box">
+                                    <div class="row">
+                                      <div class="col-lg-12">
+                                        <h3 class="page_title">Insight Reports</h3>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-12" class="profile-sticky-nav" id="profile-sticky-nav" [ngClass]="{'enableFreeze': isMenuOpen&&enableFreezeMenu}">
+                                  <div class="filter">
+                            <div  class="sort-narrow" *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'"> <span class="custom-dropdown" >
+                              <select style="width: 150px" name="Campusfiter" [(ngModel)]="Campusfiter" (change)="filters('loc')">
+                                <option  disabled selected value="undefined">Select Location</option>
+                                <option  value="">AllCampus</option>
+                                <option *ngFor="let data of layerCampus" >{{data}}</option>
+                              </select>
+                              </span> </div>
+                              <div  class="sort-narrow" *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'"> <span class="custom-dropdown" >
+                                <select style="width: 150px" name="Schoolfilter" [(ngModel)]="Schoolfilter" (change)="filters('scl')">
+                                  <option  disabled selected value="undefined">Select School</option>
+                                  <option  value="">AllSchool</option>
+                                  <option *ngFor="let data of layerSchool" >{{data}}</option>
+                                </select>
+                                </span> </div>
+                            <div  class="sort-narrow" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'"> <span class="custom-dropdown">
+                              <select style="width: 150px" name="Institutefilter" [(ngModel)]="Institutefilter" (change)="filters('inst')">
+                                <option disabled selected value="undefined">Select Institute</option>
+                                <option  value="">AllInstitute</option>
+                                <option *ngFor="let data of layerInst" >{{data}}</option>
+                             </select>
+                              </span> </div>
+                              <div  class="sort-narrow" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'"> <span class="custom-dropdown">
+                                <select style="width: 150px" name="departmentfilter" [(ngModel)]="departmentfilter" (change)="filters('dept')">
+                                  <option disabled selected value="undefined">Select Department</option>
+                                  <option  value="">AllDepartment</option>
+                                  <option *ngFor="let data of layerDept" [value]="data.departmentName">{{data.departmentName}}</option>                            
+                              </select>
+                                </span> </div>
+                                <div  class="sort"> <span class="custom-dropdown">
+                                  <label class="control-label heading_sm" style="text-transform: unset;">From Year</label>
+                                  <input type="text" style="width: 77px;height: 27px;margin:0px 0 0 0;" placeholder="FROM YEAR"   bsDatepicker [(ngModel)]="tempfromYear" [(bsValue)]="fromYear" [bsConfig]="{ dateInputFormat: 'YYYY',minMode: 'year',maxDate:maxDate }" (ngModelChange)="selectFromDt()">
+                                  </span> </div>
+                                <div  class="sort"> <span class="custom-dropdown">
+                                  <label class="control-label heading_sm" style="text-transform: unset;">To Year</label>
+                                  <input type="text" style="width: 70px;height: 27px;margin:0px 0 0 0;" placeholder="TO YEAR"   bsDatepicker [(ngModel)]="temptoYear" [(bsValue)]="toYear" [bsConfig]="{ dateInputFormat: 'YYYY',minMode: 'year',maxDate:maxDate }" (ngModelChange)="selectToDt()">
+                                  </span> </div>
+                          <input  type="button" class="btn-solid-black float-right ml-20" data-toggle="modal" data-target="#add_new" (click)="filter1()" value="Filter">
+                        </div>
+                  </div>                     
+                </div>
+                </div>
+                              
+          
+         
+        <div class="body1" style="margin-bottom: 40px;background: white;" >
+          <div class="row">       
+              <div class="col-lg-12">               
+                    <div class="col-lg-6">
+                             <h4 class="charthead">Publication Trend</h4>                         
+                           </div>
+                        </div>
+                     </div>
+                      
+                     <div id="chartTrends" [style.width.%]="80" [style.height.px]="500" style="background: white; margin: 0 auto;"></div>
+                     <!-- <h5 style="font-family: 'lexiabold';margin-top: 20px;padding-left: 10px;">About chart</h5>
+                <p style="padding-left: 10px;">Publication Trend.</p> -->
+                    </div>
+         
+         <div class="body1" style="margin-bottom: 40px;background: white;" >
+          <div class="row">
+                         <div class="col-lg-12">
+                           <div class="col-lg-6">
+                             <h4 class="charthead">Index vs Non-Index Counts</h4>
+                           </div>                          
+                         </div>
+                     </div>
+              <div id="chartlinediv" [style.width.%]="80" [style.height.px]="500" style="background: white; margin: 0 auto;"></div>
+              <!-- <h5 style="font-family: 'lexiabold';margin-top: 20px;padding-left: 10px;">About chart</h5>
+              <p style="padding-left: 10px;">Index vs Non-Index Counts.</p> -->
+         </div>
+         
+         <div class="body1" style="margin-bottom: 40px;background: white;" >
+         
+          <div class="row">
+                         <div class="col-lg-12">
+                           <div class="col-lg-6">
+                             <h4 class="charthead">Database Analysis</h4>
+                             <p style="font-size: 13px;padding-left: 15px;">Indexing information is compiled from publicly available sources or user-provided data</p>
+                           </div>
+                           </div>
+                         </div>           
+                 <div id="chartddiv" [style.width.%]="80" [style.height.px]="500" style="background: white; margin: 0 auto;"></div>
+                 <!-- <h5 style="font-family: 'lexiabold';margin-top: 20px;padding-left: 10px;">About chart</h5>
+                 <p style="padding-left: 10px;">Database Analysis.</p> -->
+         </div>
+                     <!-- <div class="body1" style="margin-bottom: 40px;background: white;" >
+                     <div class="row">
+                         <div class="col-lg-12">
+                           <div class="col-lg-6">
+                             <h4 class="charthead">Citation Trend</h4>
+                           </div>
+                     </div>
+                     </div>
+                     <div id="chartdbdiv" [style.width.%]="80" [style.height.px]="500" style="background: white; margin: 0 auto;"></div>
+                     </div>
+                     <div class="body1" style="margin-bottom: 40px;background: white;" >
+                        <div class="row">
+                         <div class="col-lg-12">
+                           <div class="col-lg-6" >
+                             <h4 class="charthead">Top Journal</h4>
+                           </div>
+                         </div>
+                     </div>
+                     <div id="chartbardiv" [style.width.%]="80" [style.height.px]="525" style="background: white; margin: 0 auto;"></div>
+                     </div>                       -->
+                   
+                     <div class="body1" style="margin-bottom: 40px;background: white;" >
+                    <div class="row">
+                         <div class="col-lg-12">
+                           <div class="col-lg-6">
+                             <h4 class="charthead">Country Collaborations
+                             </h4>
+                           </div>
+                          
+                         </div>
+                     </div>
+                    
+                     <div id="chartwdiv" [style.width.%]="80" [style.height.px]="500" style="background: white; margin: 0 auto;"></div>
+                     <!-- <h5 style="font-family: 'lexiabold';margin-top: 20px;padding-left: 10px;">About chart</h5>
+                     <p style="padding-left: 10px;">Country Collaborations.</p> -->
+                     </div>
+                     <div class="body1" style="margin-bottom: 40px;background: white;" >
+                      <div class="row">
+                       <div class="col-lg-12">
+                         <div class="col-lg-6">
+                           <h4 class="charthead">India Collaborations
+                           </h4>
+                         </div>
+                       </div>
+                     
+                   </div>
+                     <div id="chartinddiv" [style.width.%]="80" [style.height.px]="500" style="background: white; margin: 0 auto;"></div>
+                     <!-- <h5 style="font-family: 'lexiabold';margin-top: 20px;padding-left: 10px;">About chart</h5>
+                     <p style="padding-left: 10px;">India Collaborations.</p> -->
+                     </div>
+               </div>
+              </div> 
+                            
+       </div>
+              
+  
+
+
+<style>
+
+    ::ng-deep .am5exporting-menu.am5exporting-valign-top, .am5exporting-icon.am5exporting-valign-top, .am5exporting-list.am5exporting-align-top {
+        top: -25px !important;
+        right: 20px;
+    }
+
+   
+    .sort {
+float: left;
+margin-right: 23px;
+text-align: center;
+}
+.alert {
+padding: 5px;
+margin-bottom: -19px;
+border: none;
+border-radius: 0px;
+padding-right: 30px;
+}
+
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

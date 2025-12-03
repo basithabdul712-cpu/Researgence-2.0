@@ -1,0 +1,532 @@
+
+     <style>
+   .menu-closeds {
+        margin-left: 275px;
+      }
+     </style>
+  
+      <div class="container" [ngClass]="{'menu-opens': !isMenuOpen, 'menu-closeds': isMenuOpen}" >
+                        <div class="steps">
+                          <div 
+                            class="step" 
+                            [class.active]="currentStep === 0" 
+                            (click)="goToStep(0)">
+                            Basic Info
+                          </div>
+                          <div 
+                            class="step" 
+                            [class.active]="currentStep === 1" 
+                            (click)="goToStep(1)">
+                            Grant Info
+                          </div>
+                          <div 
+                          class="step" 
+                          [class.active]="currentStep === 2" 
+                          (click)="goToStep(2)">
+                          Team Info
+                          </div>
+                          <!-- <div 
+                            class="step" 
+                            [class.active]="currentStep === 3" 
+                            (click)="goToStep(3)">
+                            Outcomes
+                          </div> -->
+                        </div>
+                      
+                        <div *ngIf="currentStep === 0">
+                               
+                                            <div class="modal-body">
+                                                <form id="step-form">
+                                        
+                                                <fieldset>
+                                                    <div class="form-card" style="height: 700px;">
+                                        
+                                                    <div class="row">
+                                                        <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project Title<span style="color: red;"  >*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                        <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Enter the Title>" name="projectBasicDl.projectTitle" [(ngModel)]="projectBasicDl.projectTitle" >     
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div class="row">
+                                                        <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Funding Type<span style="color: red;"  >*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select style="margin-top: 10px;" class="custom-select line-select" name="projectBasicDl.projectFundingTypeName" [(ngModel)]="projectBasicDl.projectFundingTypeName" (ngModelChange)="changeFundType(projectBasicDl.projectFundingTypeName)"> 
+                                                            <option value="undefined" selected disabled>Select Funding Type</option>
+                                                            <option *ngFor="let item of projectFundingType" class="select-selected" [value]="item.value">{{item.value}}</option>
+                                                            </select>
+                                                        </div>
+                                        
+                                                        <div class="col-lg-1" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Funding Agency<span style="color: red;"  >*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <select style="margin-top: 10px;" class="custom-select line-select" name="projectBasicDl.projectFundingAgencyName" [(ngModel)]="projectBasicDl.projectFundingAgencyName" (ngModelChange)="changeFundAgency(projectBasicDl.projectFundingAgencyName)"> 
+                                                            <option value="undefined" selected disabled>Select Funding Agency</option>
+                                                            <option *ngFor="let item of projectFundingAgency" class="select-selected" [value]="item.value">{{item.value}}</option>
+                                                            </select>
+                                                        </div>
+                                        
+                                                            <div class="col-lg-1" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Agency Type<span style="color: red;"  >*</span></label>
+                                                            </div>
+                                                            <div class="col-lg-2" style="display: flex;flex-flow: row;">
+                                                            <select style="height: 30px;" class="custom-select line-select" name="projectBasicDl.projectFundingAgencyTypeName" [(ngModel)]="projectBasicDl.projectFundingAgencyTypeName" (ngModelChange)="changeFundAgencyType(projectBasicDl.projectFundingAgencyTypeName)"> 
+                                                                <option value="undefined" selected disabled>Select Agency Type</option>
+                                                                <option *ngFor="let item of projectFundingAgencyType" class="select-selected" [value]="item.value">{{item.value}}</option>
+                                                            </select> 
+                                                            </div>
+                                                        </div>
+                                        
+                                                    <div class="row">
+                                                        <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Technology Areas<span style="color: red;"  >*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <input style="border: 0;border-bottom: #ccc 2px solid;border: 1px solid lightgray;"  type="text" class="form-control" placeholder="Enter ResearchArea" [(ngModel)]="newTag" (keydown.enter)="addTag()" (keyup)="onResearcher(newTag)" #inputBox/>
+                                                            <ul *ngIf="researchDrop"  class="editDrop" style="background: #d2d4d6;">
+                                                            <li *ngFor="let list of researchname"  (click)="onInputTag(list.value)">
+                                                                {{ list.value }}
+                                                            </li>
+                                                        </ul>
+                                                        <div class="tag-list" style="margin-top: 5px;margin-bottom: 5px;">
+                                                            <span class="tag" *ngFor="let tag of tags">{{ tag }} <span class="remove" (click)="removeTag(tag)">&times;</span></span>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div class="row">
+                                                        <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project Description<span style="color: red;"  >*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                        <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Enter the project description>" name="projectBasicDl.projectDescription" [(ngModel)]="projectBasicDl.projectDescription" >     
+                                                        </div>
+                                                    </div>
+                                        
+                                                    <div class="row">
+                                                        <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Sanctioned Amount<span style="color: red;"  >*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-2" style="display: flex;flex-flow: row;">
+                                                        <input style="height: 35px;border: 1px solid lightgray;" type="number" id="" placeholder="<Enter the Amount>" name="projectBasicDl.projectSanctionedAmount" (keyup)="onAmountChange()" [(ngModel)]="projectBasicDl.projectSanctionedAmount" >   
+                                                            <span style="margin-top: 9px;">INR</span>  
+                                                        </div>
+                                        
+                                                        <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">In Words:<span style="color: red;"  >*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <span>{{projectBasicDl.projectSanctionedAmountInWords}}</span>
+                                                
+                                                            </div>
+                                                    </div>
+                                        
+                                                    <div class="row">
+                                                        <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project Start Date<span style="color: red;"  >*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                        <input style="height: 35px;border: 1px solid lightgray;" type="date" id=""  name="projectBasicDl.projectStartDate" [(ngModel)]="projectBasicDl.projectStartDate" (ngModelChange)="calcDuration()">   
+                                                        </div>
+                                        
+                                                        <div class="col-lg-2" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project End Date<span style="color: red;"  >*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <input style="height: 35px;border: 1px solid lightgray;" type="date" id="" name="projectBasicDl.projectEndDate" [(ngModel)]="projectBasicDl.projectEndDate" (ngModelChange)="calcDuration()">     
+                                                            </div>
+                                        
+                                                            <div class="col-lg-1" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Duration<span style="color: red;"  >*</span></label>
+                                                            </div>
+                                                            <div class="col-lg-2" style="display: flex;flex-flow: row;">
+                                                            <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" name="projectBasicDl.projectDurationInYears" [(ngModel)]="projectBasicDl.projectDurationInYears" readonly>   
+                                                                <span style="margin-top: 9px;">Yrs</span>  
+                                                            </div>
+                                                    </div>
+                                        
+                                                    <div class="row">
+                                                        <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Status<span style="color: red;"  >*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <select style="margin-top: 10px;" class="custom-select line-select" name="projectBasicDl.projectStatusName" [(ngModel)]="projectBasicDl.projectStatusName" (ngModelChange)="changeStatus(projectBasicDl.projectStatusName)"> 
+                                                                <option value="undefined" selected disabled>Select Status</option>
+                                                                <option *ngFor="let item of projectStatusList" class="select-selected" [value]="item.value">{{item.value}}</option>
+                                                            </select>   
+                                                        </div>
+                                        
+                                                        <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Completion Date<span style="color: red;"  >*</span></label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input style="height: 35px;border: 1px solid lightgray;" type="date" id=""  name="projectBasicDl.projectCompletionDate" [(ngModel)]="projectBasicDl.projectCompletionDate" >     
+                                                            </div>
+                                                    </div>
+                                        
+                                                    <div class="row">
+                                                        <div class="col-lg-3">&nbsp;</div>
+                                                        <div class="col-lg-9">
+                                                        <div class="row">
+                                                            <div class="col-lg-3">
+                                                            <input type="file" id="upload" (change)="selectFileProject($event)" hidden />
+                                                            <label for="upload" class="btn-upload" style="color: #0051bf">Upload</label>
+                                                            </div>
+                                                            <div class="col-lg-9">
+                                                            <p class="text-italic" *ngIf="pdfName" ><span class="text_bold">{{pdfName}}</span> is attached</p>
+                                                            <p class="text-sm text-grey">Only PDF file less than 10 MB is allowed</p>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" style="border-top: 2px solid #c5c5c5;">
+                                                      <div class="col-lg-12" style="margin-top: 20px;">
+                                                         <div class="col-lg-5">&nbsp;</div>
+                                                         <div class="col-lg-3">
+                                                          <button type="button" class="btn-solid-blue" style="width: 175px;" (click)="saveProjectDetail()">Submit Basic Info</button>
+                                                         </div>
+                                                         <div class="col-lg-4">&nbsp;</div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+          
+                                                </fieldset>
+                                                </form>
+                                            </div>
+                                    </div>
+          
+                     
+                        <div *ngIf="currentStep === 1">
+                            <div>
+                                <div style="display: flex;justify-content: center; align-items: center;">
+          
+                                    <div class="form1" >
+                                        <div style="padding-top: 10px; display: flex; align-items: center;">
+                                          <p style="margin: 0;">Adding Received Grants</p>
+                                          <button type="button"
+                                                  (click)="addGrant()"
+                                                  style="border-radius: 50%; margin-left: 8px; width: 43px; height: 43px; background-color: rgb(8, 56, 69); color: white;">
+                                            +
+                                          </button>
+                                        </div>
+                                        
+                                        <div *ngFor="let grant of grants; let i = index;" style="border-bottom: 1px solid #ccc; padding: 10px; margin-top: 10px; position: relative;">
+                                          <!-- <button type="button"
+                                                  (click)="removeGrant(i)"
+                                                  style="position: absolute; top: 5px; right: 5px; border-radius: 50%; width: 38px; height: 38px; background-color: brown; color: white;">
+                                            &times;
+                                          </button> -->
+                                      
+                                          <p class="grant" style="font-weight: bold;">Grant {{ grants.length - i }}</p>
+                                      
+                                          <form style="line-height: 2.3em;">
+                                            <div class="row"> 
+                                            <div class="col-lg-12">
+                                              <div class="col-lg-3">
+                                                  <label style="margin-right: 10px;">Financial Year</label>
+                                              </div>
+
+                                              <div class="col-lg-3">
+                                                  <input type="text" placeholder="From Year" [(ngModel)]="grant.fromYear" name="fromYear{{i}}" bsDatepicker [(bsValue)]="grant.fromYear"
+                                                  [bsConfig]="{ dateInputFormat: 'YYYY',minMode: 'year',maxDate:maxDate }" (ngModelChange)="changeFromDt(grant.fromYear,i)">
+                                                </div>
+
+                                                <div class="col-lg-4" style="margin-left: 80px;">
+                                                  <input type="text" placeholder="To Year" [(ngModel)]="grant.toYear" name="toYear{{i}}" bsDatepicker [(bsValue)]="grant.toYear"
+                                                   [bsConfig]="{ dateInputFormat: 'YYYY',minMode: 'year',maxDate:maxDate }" (ngModelChange)="changeToDt(grant.toYear,i)">
+                                                </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="row" style="margin-top: 10px;">
+                                            <div class="col-lg-12">
+                                              <div class="col-lg-3">
+                                                <label style="margin-right: 10px;">Duration</label>
+                                              </div>
+                                             <div class="col-lg-3">
+                                               <input type="text" [(ngModel)]="grant.duration" name="durDate{{i}}" style="margin-right: 10px;width: 120px;" readonly>
+                                               <span style="margin-left: -7px;">Yrs</span>
+                                             </div>
+                                              
+                                             <div class="col-lg-3">
+                                              <label style="margin-right: 10px;">Disbursement Date</label>
+                                            </div>
+                                           <div class="col-lg-3">
+                                             <input type="date" [(ngModel)]="grant.disbursementDate" name="disbDate{{i}}" style="margin-right: 10px;">
+                                           </div>
+                                            </div>
+                                        </div>
+                                          
+                                         <div class="row" style="margin-top: 10px;">
+                                            <div class="col-lg-12">
+                                              <div class="col-lg-3">
+                                                <label style="margin-right: 10px;">Disbursement Amt</label>
+                                               </div>
+                                                <div class="col-lg-3">
+                                                  <input type="number" [(ngModel)]="grant.disbursementAmt" name="disbAmt{{i}}" style="width: 75%;" (keyup)="onAmtChangeGrant(i)">
+                                                  <span>INR</span>
+                                                </div>
+                                                
+                                                <div class="col-lg-3">
+                                                  <label>In Words:</label>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                  <!-- <input type="number" [(ngModel)]="grant.inWords" name="inWords{{i}}" style="width: 75%;"> -->
+                                                  <p style="width: 260px;font-weight: 600;">{{grant.inWords}}</p>
+                                                </div>              
+                                            </div>
+                                          </div>
+
+                                          <div class="row" style="margin-top: 10px;">
+                                            <div class="col-lg-12">
+                                                <div class="col-lg-3">
+                                                  <label>Upload Disbursement Doc.</label>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                  <input type="file" id="upload{{i}}" (change)="selectFileGrantInfo($event, grant, grants.length - i)" hidden />
+                                                  <label [for]="'upload' + i" class="btn-upload" style="color: #0051bf">Upload</label>
+                                                
+                                                </div>
+                                                <div class="col-lg-3" *ngIf="grant.docUpload" style="font-size: 12px; color: green;">
+                                                  Selected: {{ grant.docUpload }}
+                                                </div>
+                                                <div class="col-lg-3" style="display: flex;">
+                                                  <button class="btn-solid-blue"  (click)="addGrant()">Add</button>
+                                                  <button class="btn-solid-blue" style="margin-left: 5px;" (click)="removeGrant(i)">Close</button>
+                                                  </div>             
+                                              </div>
+                                          </div>
+                                      </form>
+                                      
+                                        </div>
+
+                                        <div style="margin-top: 15px;" *ngIf="grants.length>0" >
+                                          <button class="btn-solid-blue" style="width: 200px;margin-left: 35%;height: 45px;" (click)="saveProjectDetail()">Submit Grant Info</button>    
+                                        </div>
+                                      </div>
+                                  </div>
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="currentStep === 2">
+                        
+          
+                              <div class="modal-body">
+                                <form id="step-form">
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <h1 style="font-size: 25px;text-align: justify;">Investigators List</h1>
+                                      <ol id="example1" class="list-group ol-list author_list" cdkDropList
+                                      (cdkDropListDropped)="onDrop($event)">
+                                      <ng-container *ngFor="let user of projectTeamDl;let i=index">
+                                        <li class="list-group-item" style="cursor: pointer;" cdkDrag cdkDragLockAxis="y"><span
+                                            style="font-weight: 900;">{{user.fullName}}</span>,{{user.departmentName}},{{user.instituteName}},<span
+                                            style="font-weight: 900;">{{user.universityName}}</span>,{{user.locationName}},{{user.stateName}},{{user.countryName}}<span
+                                            class="cor_author ml-20"></span>
+                                          <a class="edit" draggable="false" (click)="newEdit(i)">Edit</a>
+                                          <a class="fa fa-trash control-btn" style="padding-right: 15px;padding-top: 2px;"
+                                            (click)="delete(i)"></a>
+                                        </li>
+                                      </ng-container>
+                                    </ol>
+                                      <hr class="hr-grey">
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                          <div class="col-lg-12">
+                                            <div class="col-lg-5">
+                                               <h2 style="font-size: 20px;">Add Investigators</h2>
+                                            </div>
+                                            <div class="col-lg-7">  
+                                            </div>
+                                          </div>
+                                    </div>
+
+                                  <div *ngFor="let fieldset of fieldsets; let i = index" style="border-top: 2px solid cornflowerblue;border-bottom: 2px solid cornflowerblue;">
+                                    <fieldset>
+                                      <div class="form-card" style="height: auto; padding: 10px; margin-bottom: 10px;">
+                        
+                                        <div class="row">
+                                          <div class="col-lg-1" style="text-align: right;">
+                                            <label style="font-size: 14px; font-weight: 600; margin-left: -23px;">
+                                              University<span>:</span>
+                                            </label>
+                                          </div>
+                                          <div class="col-lg-2">
+                                              <div class="input">    
+                                                <input style="height: 35px; border: 1px solid lightgray;" type="text"
+                                                  placeholder="Enter University Name" [(ngModel)]="fieldset.universityName" name="fieldset.universityName" (keyup)="onKeyIP($event,fieldset.universityName,i)" autocomplete="off">
+                                              </div>
+                                              <ul class="editDrop" *ngIf="ipDropdown" style="background: #d2d4d6;" (mouseleave)="ipDropdown=false">
+                                                <li *ngFor="let n of fill"  (click)="onInput(n.universityName,n.universityId,i)">
+                                                   {{ n.universityName }}
+                                                </li>
+                                            </ul>
+                                            <!-- <input style="height: 35px; border: 1px solid lightgray;" type="text"
+                                              placeholder="" name="univName" [(ngModel)]="univName" readonly> -->
+                                              <!-- <p style="font-size: 13px;font-weight: 600;margin-top: 10px;">{{univName}}</p> -->
+                                          </div>
+
+                                          <div class="col-lg-1" style="text-align: right;">
+                                            <label style="font-size: 14px; font-weight: 600; margin-left: -23px;">
+                                              Name<span style="color: red;">*</span>
+                                            </label>
+                                          </div>
+                                          <div class="col-lg-2">
+                                            <div class="input">    
+                                                <input style="height: 35px; border: 1px solid lightgray;" type="text"
+                                                  placeholder="Enter Name" [(ngModel)]="fieldset.fullName" name="fieldset.fullName" (keyup)="SearchIPData($event,fieldset.fullName,i)">
+                                            </div>
+                                              <ul class="editAuthor" *ngIf="ipAutherDrop" style="background: #d2d4d6;"
+                                                    (mouseleave)="onLeaveAuthor(fieldset.fullName,i)">
+                                                  <li *ngFor="let a of Author"
+                                                    (click)="onAutherClick(a.universityId,a.userId,a.authorName,a.departmentId,a.department,a.instituteId,a.institute,a.locationId,a.location,a.countryId,a.country,a.email,a.coressauthor,i,a.stateId,a.state,a.schoolId,a.school,'Inventors')">
+                                                    {{a.authorName}}
+                                                  </li>
+                                              </ul>
+                                          </div>
+                                          <div class="col-lg-1" style="text-align: right;">
+                                            <label style="font-size: 14px; font-weight: 600; margin-left: -23px;">
+                                              Role<span style="color: red;">*</span>
+                                            </label>
+                                          </div>
+                                          <div class="col-lg-2">
+                                              <select class="custom-select line-select" name="fieldset.projectInvestigatorRoleName" [(ngModel)]="fieldset.projectInvestigatorRoleName" (ngModelChange)="changeRole(fieldset.projectInvestigatorRoleName,i)"> 
+                                                <option value="null" disabled selected>Select Role</option>
+                                                <option *ngFor="let item of projectInvRoleList" class="select-selected" >{{item.value}}</option>
+                                              </select>
+                                          </div>
+                                          <div class="col-lg-1" style="text-align: right;">
+                                            <label style="font-size: 14px; font-weight: 600; margin-left: -23px;">
+                                              Type<span style="color: red;">*</span>
+                                            </label>
+                                          </div>
+                                          <div class="col-lg-2">
+                                              <select class="custom-select line-select" name="fieldset.projectInvestigatortypeName" [(ngModel)]="fieldset.projectInvestigatortypeName" (ngModelChange)="changeType(fieldset.projectInvestigatortypeName,i)"> 
+                                                <option value="null" disabled selected>Select Type</option>
+                                                <option *ngFor="let item of projectInvTypeList" class="select-selected" >{{item.value}}</option>
+                                              </select>
+                                          </div>
+                                         
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="col-lg-1" style="text-align: right;" *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'">
+                                            <label style="font-size: 14px; font-weight: 600; margin-left: -23px;">
+                                              Location<span style="color: red;">*</span>
+                                            </label>
+                                          </div>
+                                          <div class="col-lg-2" *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'">
+                                            <select class="custom-select line-select" name="fieldset.locationName" [(ngModel)]="fieldset.locationName" (change)="filters('loc',i)"> 
+                                              <option value="" disabled selected>Select Location</option>
+                                              <option *ngFor="let item of layerCampus" class="select-selected">{{item}}</option>
+                                            </select>
+                                          </div>
+
+                                          <div class="col-lg-1" style="text-align: right;" *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'">
+                                            <label style="font-size: 14px; font-weight: 600; margin-left: -23px;">
+                                              School<span style="color: red;">*</span>
+                                            </label>
+                                          </div>
+                                          <div class="col-lg-2" *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'">
+                                            <select class="custom-select line-select" name="fieldset.schoolName" [(ngModel)]="fieldset.schoolName" (change)="filters('scl',i)"> 
+                                              <option value="" disabled selected>Select School</option>
+                                              <option *ngFor="let item of layerSchool" class="select-selected">{{item}}</option>
+                                            </select>
+                                          </div>
+                                          <div class="col-lg-1" style="text-align: right;" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'">
+                                            <label style="font-size: 14px; font-weight: 600; margin-left: -23px;">
+                                              Institute<span style="color: red;">*</span>
+                                            </label>
+                                          </div>
+                                          <div class="col-lg-2" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'">
+                                            <select class="custom-select line-select" name="fieldset.instituteName" [(ngModel)]="fieldset.instituteName" (change)="filters('inst',i)"> 
+                                              <option value="" disabled selected>Select Institute</option>
+                                              <option *ngFor="let item of layerInst" class="select-selected">{{item}}</option>
+                                            </select>
+                                          </div>
+                                          <div class="col-lg-1" style="text-align: right;" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'">
+                                            <label style="font-size: 14px; font-weight: 600; margin-left: -23px;">
+                                              Department<span style="color: red;">*</span>
+                                            </label>
+                                          </div>
+                                          <div class="col-lg-2" style="margin-left: 15px;" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'">
+                                            <select class="custom-select line-select" name="fieldset.departmentName" [(ngModel)]="fieldset.departmentName" (change)="filters('dept',i)"> 
+                                              <option value="" disabled selected>Select Department</option>
+                                              <option *ngFor="let item of layerDept" class="select-selected" >{{item.departmentName}}</option>
+                                            </select>
+                                          </div>                                      
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="col-lg-1" style="text-align: right;">
+                                            <label style="font-size: 14px; font-weight: 600; margin-left: -23px;">
+                                              Mobile No.
+                                            </label>
+                                          </div>
+                                          <div class="col-lg-2">
+                                            <input style="height: 35px; border: 1px solid lightgray;" type="text"
+                                              placeholder="Enter Mobile No." name="fieldset.mobileNo" [(ngModel)]="fieldset.mobileNo">
+                                          </div>
+
+                                          <div class="col-lg-1" style="text-align: right;">
+                                            <label style="font-size: 14px; font-weight: 600; margin-left: -23px;">
+                                              Email Id
+                                            </label>
+                                          </div>
+                                          <div class="col-lg-2">
+                                            <input style="height: 35px; border: 1px solid lightgray;" type="text"
+                                              placeholder="Enter Email Id" name="fieldset.emailId" [(ngModel)]="fieldset.emailId">
+                                          </div>
+
+                                          <div class="col-lg-2" style="text-align: right; margin-top: 10px;">
+                                            <button type="button" class="btn btn-primary btn-sm" (click)="addFieldset()">
+                                              Add
+                                            </button>
+                                          </div>
+  
+                                          <div class="col-lg-2" style="text-align: right; margin-top: 10px;">
+                                            <button type="button" class="btn btn-primary btn-sm" (click)="clearAll()">
+                                              clear
+                                            </button>
+                                          </div>
+                                        </div>
+                                  
+                                      </div>
+                                    </fieldset>
+                                  </div>
+                                  
+                                  <!-- Add button at bottom -->
+                                 
+                        
+                                </form>
+                            </div>
+                          </div>
+
+                        <!-- <div *ngIf="currentStep === 3">
+          
+                          <h2 style="font-size: 22px;">Outcomes<span style="color: red;">*</span></h2>
+                          <div class="checkbox-row">
+                                        <label *ngFor="let item of projectOutcomeList">
+                                            <input style="position: unset;" type="checkbox" [(ngModel)]="item.checked" (change)="onCheckboxChange(item,item.id,item.value)" />
+                                            {{ item.value }}
+                                        </label>
+                                        </div>
+          
+                                        <div class="inputs-container">
+                                            <ng-container *ngFor="let item of projectOutcomeList">
+                                                <div *ngIf="item.checked" class="input-container">
+                                                  <h4>{{ item.value }}</h4>
+                                                  <textarea
+                                                    [(ngModel)]="item.text"
+                                                    placeholder="Enter {{ item.value }} details..."
+                                                  ></textarea>
+                                                  <button type="button" (click)="removeInput(item)">Delete</button>
+                                                </div>
+                                              </ng-container>
+                                        </div>
+          
+                              </div> -->
+                      
+                        <div class="footer">
+                          <button (click)="nextStep()">
+                            {{ currentStep === steps.length - 1 ? 'Submit' : 'Next' }}
+                          </button>
+                        </div>
+                      </div>
+                   

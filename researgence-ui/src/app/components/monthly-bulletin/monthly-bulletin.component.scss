@@ -1,0 +1,196 @@
+
+// .content-wrapper{
+// background: var(--background-white) repeat top center;
+// }
+
+.menu-open {
+padding-left: 5%;
+}
+
+.menu-closed {
+padding-left: 12%;
+}
+
+.important{
+  color: red !important;
+}
+
+.alignDrop{
+    height: 100px;
+    overflow: scroll;
+    width: 90%;
+    background: white;
+  }
+  .alignDrop li:hover{
+  background-color: #c0bbbb;
+  color: #000; 
+  cursor: pointer;
+  }
+  .alignDrop1{
+  width: 90%;
+  height: 100px;
+  overflow: scroll;
+  background:#0051bf;
+  border: solid 1px #0051bf;
+  color: white;
+  }
+  .alignDrop1 li:hover {
+  background-color: #f5f5f5;
+  color: #000; 
+  cursor: pointer;
+  }
+  .but
+  {
+    width:100px;
+    height:30px;
+    border-radius: 10px;
+    background-color: #0051bf;
+    color: white;
+    border-color: #0051bf;
+    font-weight: bold;
+  }
+  .but:hover{
+    background: #dbdf08;
+    color: #000;
+    border-color: #dbdf08;
+  }
+
+  .editDrop{
+  height: 150px;
+  overflow: scroll;
+  }
+  .editAuthor{
+  height: 150px;
+  overflow: scroll;
+  }
+  .editDrop li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+  .editAuthor li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+
+.state-btn{
+  color: white;
+  float: right;
+  margin-right: 30px;
+  border-radius: 12px;
+  background: #0051bf;
+  border: unset;
+  height: 30px;
+  width: 10%;
+}
+
+.state-btn:hover{
+  background: #dbdf08;
+	color: #000;
+}
+.tab-container{
+  background-color: #f5f5f5;
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  height: 55px;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+  
+}
+.tab-container .tab-link{
+  width:33.33%;
+  position: relative;
+ height: 100%;
+ padding: 10px;
+ float: left;
+ text-align: center;
+ cursor: pointer;
+
+}
+.active{
+  border-bottom: 2px solid #0051bf;
+  transition: ease-in-out .3s;
+}
+.custom-input {
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px; /* Padding inside the input */
+  font-size: 14px; /* Font size */
+  width: 100%; /* Full width */
+}
+input[type=text]{
+  width: 331px;
+  height: 39px;
+  font-size: 14px;
+  margin: 10px 0 10px 21px;
+  padding: 0 0 0 5px;
+  border: 1px solid #555;
+  border-radius: 3px;
+}
+.break-after-space {
+  white-space: pre-wrap;
+}
+.horizontal-line {
+  border: none; /* Removes default border */
+  border-top: 2px solid #000000; /* Sets the top border to create the line */
+  margin: 10px 0; /* Adjust margin as needed */
+  }
+  // .custom-select {
+  //   border: 1px solid #ccc; /* Add border */
+  //   border-radius: 4px; /* Rounded corners */
+  //   padding: 10px; /* Padding inside the select */
+  //   font-size: 14px; /* Font size */
+  //   width: 100%; /* Full width */
+  // }
+  // .custom-input:focus {
+  //   border-color: #66afe9; /* Border color on focus */
+  //   outline: none; /* Remove outline */
+  //   box-shadow: 0 0 5px rgba(102, 175, 233, 0.6); /* Add shadow on focus */
+  // }
+  .custom-button{
+    background: #c2cf1d;
+    cursor: pointer;
+  }
+  .custom-button:hover{
+    background: black;
+    color: #ffffff;
+  }
+
+  .control-btn{
+  margin-right: 10px;
+  }
+  .control-btn:last-child{
+    margin-right: 0;
+  }
+  .centered-actions span.left {
+    display: block;
+    width: 600px;
+    height: 1px;
+    background: #ccc;
+   
+  }
+  .centered-actions span.right {
+    display: block;
+    width: 600px;
+    height: 1px;
+    background: #ccc;
+  
+}
+.centered-actions {
+  text-align: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.centered-actions .control-btn {
+  font-size: 1.5em;
+  margin: 0 10px;
+}
+.custom-input:focus {
+  border-color: #000000; /* Border color on focus */
+  outline: none; /* Remove outline */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6); /* Add shadow on focus */
+}

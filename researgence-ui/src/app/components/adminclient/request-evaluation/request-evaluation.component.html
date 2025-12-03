@@ -1,0 +1,111 @@
+
+<div class="content-wrapper">
+  <div class="container-fluid"  [ngClass]="{'menu-open': !isMenuOpen, 'menu-closed': isMenuOpen}">
+        <div class="container-fluid">
+          <div class="gradient-box">
+            <h3 class="text-white text-center" style="font-family: 'gothammedium';">REQUEST EVALUATION</h3>
+          </div>
+<div class="gradient-box" >
+    <div class="bg-white" >
+     <div class="row">
+      <form class="form">
+        
+       <div class="col-lg-12" >
+               
+        <table class="form-table">
+          <tbody>
+          
+            <tr>
+            <th colspan="4" class="label-column"></th>
+          </tr>
+          <tr >
+            <td colspan="1" class="label-column" ><label>TYPE</label></td>
+            <td colspan="1" > 
+              <select class="custom-select line-select" name="serviceTypeId" [(ngModel)]="serviceTypeId"> 
+                <option style="background-color: #004096;" disabled selected value="undefined">Select Type</option>
+                <option class="select-selected" style="background-color: #005bb3;" *ngFor="let item of uniqType"  [value]="item.serviceTypeId" >{{item.serviceTypeName}}</option>
+                 
+                </select>
+                </td>
+            <td colspan="1" class="label-column" ><label>CATEGORY</label></td>
+            <td colspan="1" > 
+              <select class="custom-select line-select" name="categoryId" [(ngModel)]="categoryId"> 
+                <option style="background-color: #004096;" disabled selected value="undefined">Select Category</option>
+                <option class="select-selected" style="background-color: #005bb3;" *ngFor="let item of typeList"  [value]="item.categoryId">{{item.categoryName}}</option>           
+                </select>
+              </td>
+            <td colspan="1" class="label-column" ><label >PRIORITY</label></td>
+            <td colspan="1" > 
+              <select class="custom-select line-select" style="width: 100%;"  name="priorityId" [(ngModel)]="priorityId"> 
+                <option style="background-color: #004096;"  disabled selected value="undefined">Select Priority</option>
+                <option class="select-selected" style="background-color: #005bb3;" *ngFor="let item of priorityList" [value]="item.id">{{item.value}}</option>
+                 
+                </select>
+        </td>
+          </tr>
+
+              <tr >
+                <td colspan="1" class="label-column"><label>REQUEST ID</label></td>
+                <td colspan="2">
+                  <input class="form-text" style="width:100%" name="serviceId" [(ngModel)]="serviceId" readonly>
+                </td>
+                <td colspan="1" class="label-column"><label>REQUEST</label></td>
+                <td colspan="2">
+                  <input class="form-text" style="width:100%" name="request" [(ngModel)]="request">
+                </td>
+              </tr>
+          <tr>
+            <div>
+            <h2 style="font-size: 20PX;font-weight: bold;">CONTACT DETAILS </h2>
+          </div>
+        </tr>
+          <tr>
+            <td colspan="1" class="label-column"><label>MOBILE</label></td>
+          <td colspan="2">
+            <input style="width:100%;" class="form-text" name="contact" [(ngModel)]="contact">
+            
+
+            </td>
+            <td colspan="1" class="label-column"><label>EMAIL</label></td>
+            <td colspan="2"><input  style="width:100%;" class="form-text" name="email" [(ngModel)]="email">
+           
+        </td>
+          </tr>
+          <tr  >
+            <td colspan="1" class="label-column"><label>REMARK <span style="color: red;">*</span></label></td>
+          <td colspan="5">
+            <input class="form-text" style="width:100%" name="remark" [(ngModel)]="remark">
+            </td>
+          </tr>
+          <tr >
+            <td colspan="1" class="label-column" ><label>STATUS <span style="color: red;">*</span></label></td>
+            <td colspan="1" > 
+              <select class="custom-select line-select" name="status" [(ngModel)]="status"> 
+                <option style="background-color: #004096;" disabled selected value="undefined">Select Status</option>
+                <option  class="select-selected" style="background-color: #005bb3;" *ngFor="let item of userStatusFilter" [value]="item.id">{{item.value}}</option>
+             
+            </select>
+                </td>
+                </tr>
+          <tr>
+            <td colspan="1"></td>
+            <td colspan="1"></td>
+            <td colspan="3">
+                <button style="margin-top: 1%; margin-top: 20px;display: inline;margin-left: 10px;" class="btn-green center-block" (click)="onSubmit()">SUBMIT</button>
+                <button style="margin-top: 1%;margin-top: 10px;display: inline;margin-left: 10px" class="btn-green center-block" (click)="cancel()">CANCEL</button>
+            </td>
+            
+          </tr>
+         
+         
+        </tbody></table>
+              </div>
+             
+
+      </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,47 @@
+.menu-closeds {   
+    padding-left: 263px;
+    transform: translateX(0.5);
+  }
+
+  a{
+    cursor: pointer !important;
+  }
+.content-wrapper{
+     font-family: 'Red Hat Display', sans-serif;
+  
+  font-size: 14px;
+  color: #000;
+  background-color: #ffffff;
+  /* letter-spacing: 0.4px; */
+  line-height: 1.3em;
+}
+textarea::after{
+  border: 1px solid black;
+}
+
+li{
+  cursor: pointer;
+}
+
+.locations li, .other-score li {
+  margin: 10px;
+  cursor: pointer;
+}
+
+.locations li .hover-text {
+display: none;
+}
+
+.locations li:hover .hover-text {
+display: block;
+}
+.locations li:hover p:not(.hover-text) {
+display: none;
+}
+.sideBarClose {
+  padding-left: 250px;
+  margin-left: 0px;
+  }
+  .sideBarOpen{
+    padding-left: 0px;
+  }

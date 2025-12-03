@@ -1,0 +1,43 @@
+.sideBarClose {
+    padding-left: 250px;
+    margin-left: 0px;
+    }
+    .sideBarOpen{
+      padding-left: 0px;
+    }
+
+    .block-btn-blue-container-sticky{
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      position: fixed;
+      margin-left: 33%;
+      margin-top: -40px !important;
+      z-index: 1;
+    }
+    
+    .block-btn-blue-container-sticky a{
+      background: #0051bf;
+      padding: 10px 20px;
+      border-radius: 0 0 10px 10px;
+      color: #fff;
+      display: block;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+    
+    .block-btn-blue-container-sticky a:hover {
+      background: #d8dd0b;
+      color: #000;
+    }    
+
+    .locations li .hover-text {
+      display: none;
+    }
+    
+    .locations li:hover .hover-text {
+      display: block;
+    }
+    .locations li:hover p:not(.hover-text) {
+    display: none;
+    }

@@ -1,0 +1,690 @@
+<body class="innerpage">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="header">
+                    <div class="logo"><img src="../../../../../assets/images/journalopedia/logo-white.png"
+                            alt="journalopedia logo" class="image"></div>
+                    <a routerLink="{{homeURL}}" target="_self" class="researgence_btn" style="text-decoration: none !important;"><img
+                            src="../../../../../assets/images/journalopedia/researgence-logo.png" alt="">
+                        <p >Back to<br>
+                            Researgence</p>
+                    </a>
+                    <div class="design">
+                        <div class="page-image"><img src="../../../../../assets/images/journalopedia/image3.png" alt=""
+                                class="image"></div>
+                    </div>
+                </div>
+                <div class="nav"> <a class="button" id="back_btn" (click)="onClickBack()">Back</a> <a class="button" id="fav_btn">Favourite</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="profile"> <img src="../../../../../assets/images/journalopedia/profile-image.jpg"
+                                alt="">
+                            <p class="profile_name">Welcome, {{Name}} !</p>
+                        </div>
+                        <div class="content-wrapper">
+                            <div class="page-title">
+                                <h5>Journal Detail</h5>
+                            </div>
+                            <div class="content detail">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p class="title">{{dataList.publicationSourceName}}</p>
+                                        <p class="font-italic">ISSN: {{dataList.issn}}; {{dataList.eissn}}</p>
+                                        <div class="row">
+                                            <div class="col-lg-12 databases">
+                                                <h6>Databases:</h6>
+                                                <p *ngFor="let d of dataList.journalDBMapping" >{{d}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row d-flex">
+                                    <div class="col-lg-5 mt-4 d-flex">
+                                        <div class="part-1">
+                                            <div class="mb-4">
+                                                <p class="head-text-small">PUBLISHER</p>
+                                                <p class="gray-text-18">{{dataList.publisherName}}</p>
+                                            </div>
+                                            <div class="mb-4">
+                                                <p class="head-text-small">FOLLOW ON</p>
+                                                <p class="gray-text-18">{{dataList.publisherName}}</p>
+                                            </div>
+                                            <div class="mb-4">
+                                                <p class="head-text-small">P ISSN</p>
+                                                <p class="gray-text-18">{{dataList.issn}}</p>
+                                            </div>
+                                            <div class="mb-4">
+                                                <p class="head-text-small">E ISSN</p>
+                                                <p class="gray-text-18">{{dataList.eissn}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="part-2 border-vertical">
+                                            <div class="mb-4">
+                                                <p class="head-text-small">PUBLISHER COUNTRY</p>
+                                                <p class="gray-text-18">{{dataList.publisherCountry}}</p>
+                                            </div>
+                                            <div class="mb-4">
+                                                <p class="head-text-small">JOURNAL TYPE</p>
+                                                <p class="gray-text-18">{{dataList.subscriptionTypeName}}</p>
+                                            </div>
+                                            <div class="mb-4">
+                                                <p class="head-text-small">FREQUENCY</p>
+                                                <p class="gray-text-18">{{dataList.frequency}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 mt-4 border-vertical">
+                                        <p class="head-text-small">AIM &amp; SCOPE</p>
+                                        <p>{{dataList.aimScope}}</p>
+                                    </div>
+                                    <div class="col-lg-3 mt-4 border-vertical">
+                                        <div [ngClass]="'score' + (dataList.snip == null||dataList.snip==='-' ? ' inactive' : '')">SNIP
+                                            <span class="value" *ngIf="dataList.snip !==null">{{dataList.snip}}</span></div>
+                                        <div [ngClass]="'score' + (dataList.imf == null||dataList.imf==='-' ? ' inactive' : '')">Impact Factor
+                                            <span class="value" *ngIf="dataList.imf !==null">{{dataList.imf}}</span></div>
+                                        <div [ngClass]="'score' + (dataList.sjr == null||dataList.sjr==='-' ? ' inactive' : '')">SJR
+                                            <span class="value" *ngIf="dataList.sjr !==null">{{dataList.sjr}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12" >
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="row d-flex">
+                                    <div class="col-lg-2 mt-2">
+                                        <p class="head-text-small">SUBMISSION TO ACCEPTANCE TIME</p>
+                                        <p class="gray-text-18">{{dataList.subnToAcc}}</p>
+                                    </div>
+                                    <div class="col-lg-2 mt-2">
+                                        <p class="head-text-small">ACCEPTANCE TO PUBNLISHING TIME</p>
+                                        <p class="gray-text-18">{{dataList.accToPublish}}</p>
+                                    </div>
+                                    <div class="col-lg-2 mt-2">
+                                        <p class="head-text-small">ACCEPTANCE<br>RATE</p>
+                                        <p class="gray-text-18">{{dataList.acceptanceRate}}</p>
+                                    </div>
+                                    <div class="col-lg-3 mt-2">
+                                        <p class="head-text-small">PEER REVIEW<br>TYPE</p>
+                                        <p class="gray-text-18">{{dataList.peerReviewType}}</p>
+                                    </div>
+                                    <div class="col-lg-3 pt-3 mt-2 d-flex justify-content-end">
+                                        <a  class="btn-small btn-outline-primary">CONTRIBUTE</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="price_band">
+                                            <img src="../../../../../assets/images/journalopedia/coin-icon.png"
+                                                width="27" height="27" alt="coin">
+                                            <p class="ml-2">FEE FOR AUTHORS</p>
+                                            <h5>{{dataList.currencyCost}}</h5>
+                                            <small>excluding TAX</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-7 mt-4">
+
+                                        <div class="d-flex align-items-center">
+                                            <div class="head-text-small" style="width: 35%; float: left">ALL SUBJECT
+                                                AREAS</div>
+                                            <div class="font-italic" style="width: 65%;">{{dataList.asjc}}</div>
+                                        </div>
+                                        <div class="d-flex align-items-center mt-3">
+                                            <div class="head-text-small" style="width: 35%; float: left">AUTHOR REACH
+                                            </div>
+                                            <div style="width: 65%;">{{dataList.authorReach}}</div>
+                                        </div>
+                                        <div class="d-flex align-items-center mt-3">
+                                            <div class="head-text-small" style="width: 35%; float: left">DOWNLOAD REACH
+                                            </div>
+                                            <div style="width: 65%;">{{dataList.downloadReach}}</div>
+                                        </div>
+                                        <div class="d-flex align-items-center mt-3">
+                                            <div class="head-text-small" style="width: 35%; float: left">REFREE LAYERS
+                                            </div>
+                                            <div style="width: 65%;">{{dataList.refreeLayers}}</div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-lg-5 mt-4 border-left">
+                                        <div class="d-flex align-items-center">
+                                            <div class="head-text-small" style="width: 55%; float: left">ONLINE
+                                                SUBMISSION</div>
+                                            <div style="width: 45%;" class="d-flex justify-content-end"><a 
+                                                    class="btn-small btn-outline-primary">REGISTER</a></div>
+                                        </div>
+                                        <div class="d-flex align-items-center mt-5">
+                                            <div class="head-text-small" style="width: 55%; float: left">AUTHOR
+                                                GUIDELINES</div>
+                                            <div style="width: 45%;" class="d-flex justify-content-end"><a 
+                                                    class="btn-small btn-outline-primary">READ ABOUT</a></div>
+                                        </div>
+                                        <div class="d-flex align-items-center mt-5">
+                                            <div class="head-text-small" style="width: 55%; float: left">EDITORIAL
+                                                GUIDELINES</div>
+                                            <div style="width: 45%;" class="d-flex justify-content-end"><a 
+                                                    class="btn-small btn-outline-primary">READ ABOUT</a></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12" >
+                                        <hr class="mt-4" >
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-lg-12" role="toolbar">
+                                        <h5 class="text-red text-center mb-5 mt-4">Editorial Board &amp; Members</h5>
+                                        <section class="slider member-card slick-initialized slick-slider slick-dotted">
+                                            <button type="button" data-role="none" class="slick-prev slick-arrow"
+                                                aria-label="Previous" role="button"
+                                                style="display: block;">Previous</button>
+                                            <div aria-live="polite" class="slick-list draggable">
+                                                <div class="slick-track" role="listbox"
+                                                    style="opacity: 1; width: 4960px; transform: translate3d(-3100px, 0px, 0px);">
+                                                    <div class="slick-slide slick-cloned" data-slick-index="-3"
+                                                        aria-hidden="true" tabindex="-1" style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide slick-cloned" data-slick-index="-2"
+                                                        aria-hidden="true" tabindex="-1" style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide slick-cloned" data-slick-index="-1"
+                                                        aria-hidden="true" tabindex="-1" style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide" data-slick-index="0" aria-hidden="true"
+                                                        tabindex="-1" role="option" aria-describedby="slick-slide00"
+                                                        style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide" data-slick-index="1" aria-hidden="true"
+                                                        tabindex="-1" role="option" aria-describedby="slick-slide01"
+                                                        style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide" data-slick-index="2" aria-hidden="true"
+                                                        tabindex="-1" role="option" aria-describedby="slick-slide02"
+                                                        style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide" data-slick-index="3" aria-hidden="true"
+                                                        tabindex="-1" role="option" aria-describedby="slick-slide03"
+                                                        style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide" data-slick-index="4" aria-hidden="true"
+                                                        tabindex="-1" role="option" aria-describedby="slick-slide04"
+                                                        style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide" data-slick-index="5" aria-hidden="true"
+                                                        tabindex="-1" role="option" aria-describedby="slick-slide05"
+                                                        style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide" data-slick-index="6" aria-hidden="true"
+                                                        tabindex="-1" role="option" aria-describedby="slick-slide06"
+                                                        style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide slick-active" data-slick-index="7"
+                                                        aria-hidden="false" tabindex="-1" role="option"
+                                                        aria-describedby="slick-slide07" style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide slick-active" data-slick-index="8"
+                                                        aria-hidden="false" tabindex="-1" role="option"
+                                                        aria-describedby="slick-slide08" style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide slick-current slick-active"
+                                                        data-slick-index="9" aria-hidden="false" tabindex="-1"
+                                                        role="option" aria-describedby="slick-slide09"
+                                                        style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide slick-cloned" data-slick-index="10"
+                                                        aria-hidden="true" tabindex="-1" style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide slick-cloned" data-slick-index="11"
+                                                        aria-hidden="true" tabindex="-1" style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                    <div class="slick-slide slick-cloned" data-slick-index="12"
+                                                        aria-hidden="true" tabindex="-1" style="width: 280px;">
+                                                        <img src="../../../../../assets/images/journalopedia/profile-placeholder.png" alt="">
+                                                        <h6 class="mt-2">Rich Nagurka</h6>
+                                                        <p class="head-text-small mt-3">DESIGNATION</p>
+                                                        <p>Senior Production Editor</p>
+                                                        <p class="head-text-small mt-3">AFFILIATION</p>
+                                                        <p>Wiley Blackwell</p>
+                                                        <p class="head-text-small mt-3">COUNTRY</p>
+                                                        <p>USA</p>
+                                                        <p class="head-text-small mt-3">CONTACT</p>
+                                                        <p class="text-underline mb-1">{{"xyz@gmail.com"}}</p>
+                                                        <p class="mb-1">TEL: (201)-748-5847</p>
+                                                        <p class="mb-1">FAX: (201)-748-6182</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button type="button" data-role="none" class="slick-next slick-arrow"
+                                                aria-label="Next" role="button" style="display: block;">Next</button>
+                                            <ul class="slick-dots" style="display: block;" role="tablist">
+                                                <li class="" aria-hidden="true" role="presentation" aria-selected="true"
+                                                    aria-controls="navigation00" id="slick-slide00"><button
+                                                        type="button" data-role="none" role="button"
+                                                        tabindex="0">1</button></li>
+                                                <li aria-hidden="true" role="presentation" aria-selected="false"
+                                                    aria-controls="navigation01" id="slick-slide01" class=""><button
+                                                        type="button" data-role="none" role="button"
+                                                        tabindex="0">2</button></li>
+                                                <li aria-hidden="true" role="presentation" aria-selected="false"
+                                                    aria-controls="navigation02" id="slick-slide02" class=""><button
+                                                        type="button" data-role="none" role="button"
+                                                        tabindex="0">3</button></li>
+                                                <li aria-hidden="false" role="presentation" aria-selected="false"
+                                                    aria-controls="navigation03" id="slick-slide03"
+                                                    class="slick-active"><button type="button" data-role="none"
+                                                        role="button" tabindex="0">4</button></li>
+                                            </ul>
+                                        </section>
+                                    </div>
+
+                                </div> -->
+                                <!-- <div class="row">
+                                    <div class="col-lg-12" >
+                                        <hr class="mt-4" >
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12" role="toolbar">
+                                        <h5 class="text-red text-center mb-5 mt-4">See what our researchers have to say
+                                        </h5>
+                                        <section class="slider testimonial slick-initialized slick-slider slick-dotted">
+                                            <div aria-live="polite" class="slick-list draggable">
+                                                <div class="slick-track" role="listbox"
+                                                    style="opacity: 1; width: 4650px; transform: translate3d(-930px, 0px, 0px);">
+                                                    <div class="good slick-slide slick-cloned" data-slick-index="-3"
+                                                        aria-hidden="true" tabindex="-1" style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                    <div class="bad slick-slide slick-cloned" data-slick-index="-2"
+                                                        aria-hidden="true" tabindex="-1" style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                    <div class="bad slick-slide slick-cloned" data-slick-index="-1"
+                                                        aria-hidden="true" tabindex="-1" style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                    <div class="good slick-slide slick-current slick-active"
+                                                        data-slick-index="0" aria-hidden="false" tabindex="-1"
+                                                        role="option" aria-describedby="slick-slide10"
+                                                        style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                    <div class="good slick-slide slick-active" data-slick-index="1"
+                                                        aria-hidden="false" tabindex="-1" role="option"
+                                                        aria-describedby="slick-slide11" style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                    <div class="bad slick-slide slick-active" data-slick-index="2"
+                                                        aria-hidden="false" tabindex="-1" role="option"
+                                                        aria-describedby="slick-slide12" style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                    <div class="bad slick-slide" data-slick-index="3" aria-hidden="true"
+                                                        tabindex="-1" role="option" aria-describedby="slick-slide13"
+                                                        style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                    <div class="good slick-slide" data-slick-index="4"
+                                                        aria-hidden="true" tabindex="-1" role="option"
+                                                        aria-describedby="slick-slide14" style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                    <div class="good slick-slide" data-slick-index="5"
+                                                        aria-hidden="true" tabindex="-1" role="option"
+                                                        aria-describedby="slick-slide15" style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                    <div class="good slick-slide" data-slick-index="6"
+                                                        aria-hidden="true" tabindex="-1" role="option"
+                                                        aria-describedby="slick-slide16" style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                    <div class="bad slick-slide" data-slick-index="7" aria-hidden="true"
+                                                        tabindex="-1" role="option" aria-describedby="slick-slide17"
+                                                        style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                    <div class="bad slick-slide" data-slick-index="8" aria-hidden="true"
+                                                        tabindex="-1" role="option" aria-describedby="slick-slide18"
+                                                        style="width: 280px;">
+                                                        <p class="mb-2">Lorem Ipsum is simply dummy text of the printing
+                                                            and typesetting industry. Lorem Ipsum has been the
+                                                            industry's standard dummy text ever since the 1500s, when an
+                                                            unknown printer took a galley of type and scrambled it to
+                                                            make a type specimen book.</p>
+                                                        <p class="font-italic">- James</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <ul class="slick-dots" style="display: block;" role="tablist">
+                                                <li class="slick-active" aria-hidden="false" role="presentation"
+                                                    aria-selected="true" aria-controls="navigation10"
+                                                    id="slick-slide10"><button type="button" data-role="none"
+                                                        role="button" tabindex="0">1</button></li>
+                                                <li aria-hidden="true" role="presentation" aria-selected="false"
+                                                    aria-controls="navigation11" id="slick-slide11" class=""><button
+                                                        type="button" data-role="none" role="button"
+                                                        tabindex="0">2</button></li>
+                                                <li aria-hidden="true" role="presentation" aria-selected="false"
+                                                    aria-controls="navigation12" id="slick-slide12" class=""><button
+                                                        type="button" data-role="none" role="button"
+                                                        tabindex="0">3</button></li>
+                                            </ul>
+                                        </section>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12" >
+                                        <hr class="mt-4" >
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h5 class="text-red text-center mb-5 mt-4">Let us know about your review</h5>
+                                        <div class="row d-flex">
+                                            <div class="col-lg-3">
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <textarea class="input100 feedback" type="textarea" name="feedback"
+                                                    placeholder="Max. 150 words are allowed"></textarea>
+                                            </div>
+
+                                            <div class="col-lg-3 d-flex align-items-center">
+                                                <div class="d-flex width-100">
+                                                    <label class="custom-radio"><i class="fa fa-thumbs-o-up"
+                                                            style="color:#3cbfb1; font-size: 24px;"></i>
+                                                        <input type="radio" checked="checked" name="radio">
+                                                        <span class="checkmark"></span> </label>
+                                                    <label class="custom-radio"><i class="fa fa-thumbs-o-down"
+                                                            style="color:#d92b53; font-size: 24px;"></i>
+                                                        <input type="radio" name="radio">
+                                                        <span class="checkmark"></span> </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 mt-3 d-flex justify-content-center">
+                                                <a href="#" class="btn-small btn-outline-primary">SUBMIT</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer">
+                    <div class="col-lg-6">Copyright © 2024. All rights reserved.</div>
+                    <div class="col-lg-6"></div>
+                </div>
+            </div>
+        </div>
+        <div id="wrapper">
+            <section>
+                <div class="data-container"></div>
+                <div id="pagination-demo2"></div>
+            </section>
+        </div>
+    </div>
+</body>

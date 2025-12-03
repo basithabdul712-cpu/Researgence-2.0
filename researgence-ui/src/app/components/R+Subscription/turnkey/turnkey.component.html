@@ -1,0 +1,208 @@
+ 
+ <div class="content-wrapper" style="background: var(--background-white) repeat-x top fixed;">
+    <div class="container-fluid" [ngClass]="{'menu-closeds': isMenuOpen}">
+      <div class="row">
+        <div class="alert alert-dismissible alert-info" style="margin-bottom: -20px;">
+            <button type="button" class="close" data-dismiss="alert" style="top: -11px;"><i class="fa fa-remove"></i></button>
+          Currently logged in as {{Name}}({{roleName}}) </div>
+      </div>
+      
+            <div class="row">
+              <div class="video_bar bluebar_expand"[ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+              [ngStyle]="{
+            'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '':'unset','width':stickyEnable&&isMenuOpen? '95%':''
+          }" #blueheader >
+                   <div class="container container-90 ">
+                  <div class="row">
+                 <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '19px'}"    >
+                         <h2 style="font-size: 19px;">Welcome to the ROR</h2>
+                         <p style="margin-top: 0;font-size: 12px;">Researgence captures publications from its AI-search Engine called Episteme which houses around 110 million meta-data. This is the place to mine your search further based on various qualitative and quantitative metrics.</p>
+                   <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" >here</a> to contact our team.</p>
+                       </div>
+                       <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                        <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+                      </div>
+               </div>
+              </div>
+               </div>
+             </div>
+    <div class="container container-90 content-pushed" style="padding-top: 66px;">
+      <div class="row" [ngStyle]="{'opacity': excelEnable ? '5%':'100%'}">
+        <div class="col-lg-12">
+          <div class="inner-page-header gradient-box">
+            <div class="row">
+              <div class="col-lg-8">
+                <h3 class="page_title">Turnkey Reports</h3>
+              </div>
+              <div class="col-lg-4">
+                 <!-- <a  class="btn-outline float-right">Add new</a>  -->
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" [ngStyle]="{'opacity': excelEnable ? '5%':'100%'}">
+        <div class="col-lg-12">
+          <div class="publication_list row">
+            <div class="result col-lg-12">
+              <article class="turnkey" *ngFor="let item of resultList" >
+                <div class="row flex">
+                  <div class="col-lg-8">
+                    <div class="article_header">
+                      <h2 class="a_title"><span class="sl_no">R{{item.turnkeyReportId}}</span><span>{{item.turnkeyReportName}}</span></h2>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-2 text-bold">Scope :</div>
+                      <div class="col-lg-10 scope">
+                        <p *ngFor="let d of item.scope" >{{d}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 flex flex-row flex-wrap" style="justify-content: flex-end;">
+                    <div class="text-align-r">{{item.versionName}} | Version {{item.versionNumber}}</div>
+                    <table>
+                      <tr>
+                        <td class="text-align-r colon-right">created on</td>
+                        <td>{{item.createdOn}}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-align-r colon-right">Latest update</td>
+                        <td>{{item.latestUpdated}}</td>
+                      </tr>
+                     
+                    </table>
+                    <div class="text-align-r" style="margin-top: 25px;"></div>
+					  <div class="flex" style="align-items: flex-end;">
+                        <!-- <a (click)="request()" class="btn-link-blue float-left">Request for Revision</a> -->
+                        <a (click)="Greports(item.turnkeyReportId,item.turnkeyReportName,item.versionNumber,item.turnkeyReportTypeName)" class="btn-solid-blue float-right ml-20" style="width: 100%;">Generate Report</a>
+					  </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal revision-->
+<div class="modal fade in" style="display: block;padding-right: 15px;opacity: unset; top: 62px; left: -45px;"  tabindex="-1" role="dialog" aria-labelledby="validate_modal" aria-hidden="true" *ngIf="requests">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 117%;">
+      <div class="modal-header" style="display: block; padding: 0;">
+        <button type="button"  class="close" data-dismiss="modal" aria-label="Close" style="border: unset;background: #0051bf00;" (click)="request()"><span aria-hidden="true">&times;</span> </button>
+        <p class="modal-title">Specify your criteria</p>
+      </div>
+      <div class="modal-body"> 
+        <!-- MultiStep Form -->
+        <form id="form">
+          <textarea placeholder="Enter your text here" class="text-area-full form-field"></textarea>
+            <button type="button" class="btn-solid-blue">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal report-->
+<div class="modal fade" style="display: block;padding-right: 15px;opacity: unset; top: 62px; left: -45px;" id="report" tabindex="-1" role="dialog" aria-labelledby="validate_modal" aria-hidden="true" *ngIf="reports" >
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 140%;">
+      <div class="modal-header" style="display: block; padding: 0;">
+        <button type="button"  class="close" data-dismiss="modal" aria-label="Close" style="border: unset;background: #0051bf00;" (click)="GreportsClose()"><span aria-hidden="true">&times;</span> </button>
+        <p class="modal-title">Refine your Download</p>
+      </div>
+      <div class="modal-body" [ngClass]="excelEnable ? 'loading' : ''"> 
+          <div class="d-flex align-items-center justify-content-center" *ngIf="excelEnable" style="width: 100%;height:100%;" >
+            <div class="d-flex flex-column align-items-center justify-content-center"  style="width: 300px;height:100px;">
+              <img style="width: 100px;height: 100px;" src="../../../../../assets/images/tree/throbber.gif">
+              <h5 style="margin-top: 10px;">Downloading Please Wait...</h5>
+            </div>
+          </div>  
+  
+        <!-- MultiStep Form -->
+        <form id="form2" [ngStyle]="{'display': excelEnable ? 'none' : 'block'}">
+          <table lass="mining-table" width="100%">
+				<tr *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'">
+			  		<td class="column-label" ><label>Campus</label></td>
+                  <td><select class="form-select" name="Campusfiter" [(ngModel)]="Campusfiter" (change)="filters('loc')">
+                      <option  disabled selected value="undefined">Select Campus</option>
+                      <option  value="">All Campus</option>
+                      <option *ngFor="let item of layerCampus">{{item}}</option>
+                    </select></td>
+			     </tr>
+        <tr *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'">
+			  	<td class="column-label"><label>School</label></td>
+                  <td><select class="form-select" name="filterSchool" [(ngModel)]="filterSchool" (change)="filters('scl')">
+                    <option  disabled selected value="undefined">Select School</option>
+                    <option  value="">All School</option>
+                    <option  *ngFor="let item of layerSchool" >{{item}}</option>
+                    </select></td>
+			  </tr>
+			  <tr *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'">
+			  	<td class="column-label"><label>Institute</label></td>
+                  <td><select class="form-select" name="Institutefilter" [(ngModel)]="Institutefilter" (change)="filters('inst')">
+                    <option  disabled selected value="undefined">Select Institute</option>
+                    <option  value="">All Institute</option>
+                    <option  *ngFor="let item of layerInst" >{{item}}</option>
+                    </select></td>
+			  </tr>
+			  
+			  <tr *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'">
+			  	<td class="column-label"><label>Department</label></td>
+                  <td><select class="form-select" name="departmentfilter" [(ngModel)]="departmentfilter" (change)="filters('dept')">
+                    <option disabled selected value="undefined">Select Department</option>
+                    <option value="">All Department</option>
+                    <option *ngFor="let item of layerDept" [value]="item.departmentName">{{item.departmentName}}</option>
+                    </select></td>
+			  </tr>
+			  <tr>
+			  	<td class="column-label" ><label>From</label></td>
+                  <td style="display: flex;flex-flow: row;">
+                    <input class="form-control" placeholder="Year" type="text" style="height: 39px; border-radius: 5px; border: #ccc 1px solid;float: left;margin-right: 15px;"  bsDatepicker [(ngModel)]="tempfromYear" [(bsValue)]="fromYear"
+                    [bsConfig]="{ dateInputFormat: 'YYYY',minMode: 'year',maxDate:maxDate }">
+        
+                    <select class="form-select time-drop" style="margin-right: -6px;"  name="pubdDateFrom" [(ngModel)]="pubDateMonthFrom">
+                      <option value="undefined" disabled selected>Select Month</option>
+                      <option  *ngFor="let item of month"  [value]="item.id">{{item.name}}</option>
+                    </select>
+                  </td> 
+			     </tr>
+
+			  <tr>
+			  	<td class="column-label" ><label>To</label></td>
+                  <td style="display: flex;flex-flow: row;">
+                    <input class="form-control" placeholder="Year" type="text" style="height: 39px; border-radius: 5px; border: #ccc 1px solid;float: left;margin-right: 15px;"  bsDatepicker [(ngModel)]="temptoYear" [(bsValue)]="toYear"
+                    [bsConfig]="{ dateInputFormat: 'YYYY',minMode: 'year',maxDate:maxDate }">
+                    
+                    <select class="form-select time-drop" style="margin-right: -6px;" name="pubDateMonthto" [(ngModel)]="pubDateMonthto">
+                      <option value="undefined" disabled selected>Select Month</option>
+                      <option  *ngFor="let item of month"  [value]="item.id">{{item.name}}</option>
+                    </select>
+                  </td>
+			  </tr>
+    
+			</table>
+            <button type="button" class="btn-solid-blue" (click)="reportDownload()">Download</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+    .modal-title {
+    margin: 6px;
+    line-height: 1.42857143;
+}
+.turnkey table {
+    width: 300px;
+    text-align: right;
+    display: grid;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+</style>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

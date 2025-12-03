@@ -1,0 +1,225 @@
+<style>
+  /* .menu-opens {
+  padding-left: 0%;
+} */
+ 
+.menu-closeds {
+  padding-left: 260px;
+}
+</style>
+<div class="content-wrapper" [ngClass]="{'menu-opens': !isMenuOpen, 'menu-closeds': isMenuOpen}"  style="font-family: 'Red Hat Display', sans-serif; background: var(--background-white);background-size: cover;background-attachment: fixed;">
+<div class="container-fluid" [ngClass]="{'pageBlur':enableBox}">
+  <div class="row" style="margin-bottom: -23px;">
+    <div class="alert alert-dismissible alert-info" >
+      <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;" ><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+    <div class="row" style="margin-left: -24px;">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 7px;">
+           <div class="container container-90 ">
+          <div class="row">
+         <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '20px'}" style="">
+                 <h2>Welcome to Your Researgence Repository</h2>
+                 <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+           <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" href="/newrequest">here</a> to contact our team.</p>
+               </div>
+               <div class="col-lg-5 col-md-5 col-sm-5" style="margin-left: -5px;"><a class="link-green help-btn" href="/newrequest"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+              </div>
+       </div>
+      </div>
+       </div>
+     </div>
+ 
+    <div class="container container-90" style="width: 2500px;">
+      <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '170px' : '20px'}">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="inner-page-header gradient-box">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h3 class="page_title" style="font-size: 24px;">Subscription Summary Report</h3>
+                </div>
+                            </div>
+            </div>
+          </div>
+        </div>
+           
+        <div class="row">
+          <div class="col-lg-12">
+       
+       <div class="result col-lg-12" style="padding-left: unset;padding-right: unset;">
+        <div class="content-wrapper-white" style="overflow: auto;margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+          
+           <table id="example" class="table table-bordered"  >
+            <thead style="    background: #0151be;
+            color: #fff;">
+              <tr>
+                    <th  scope="col" class="name">TotalAlerts</th>
+                    <th  scope="col" style="width: 8%;" class="name">ExpiredCount</th>
+                    <th  style="width:10%"  scope="col" class="name">CriticalCount</th>
+                    <th  style="width: 35%;" scope="col" class="name">HighCount</th>
+                    <th  style="width: 35%;" scope="col" class="name">MediumCount</th>
+                    <th  style="width: 35%;" scope="col" class="name">LowCount</th>
+                    <th  style="width: 50%;" scope="col" class="name">NextExpiryDate</th>
+                    <th  style="width: 35%;" scope="col" class="name">NextExpiryDays</th>
+                    
+                  </tr>
+                  </thead>
+                  <tbody *ngIf="list?.length">
+                  <!-- <tr *ngFor="let sum of list| slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i=index"> -->
+ 
+                    <tr *ngFor="let sum of list">
+ 
+                      <!-- <td>{{ i + 1 + (page - 1) * pageSize }}</td> -->
+                      <td>{{sum.totalAlerts}}</td>
+                      <td>
+                        <p >{{sum.expiredCount}}</p>
+                      </td>
+                      <td>
+                        <p>{{sum.criticalCount}}</p>
+                      </td>
+                      <td >{{sum.highCount}}</td>
+                      <td>{{sum.mediumCount}}</td>
+                      <td>{{sum.lowCount}}</td>
+                      <td>{{sum.nextExpiryDate}}</td>
+                      <td>{{sum.nextExpiryDays}}</td>
+                      
+ 
+                  </tr>
+                  </tbody>
+                </table>
+          
+          </div>     
+          <!-- <br>
+          <ngb-pagination style="float: right;" [maxSize]="3" [pageSize] = "pageSize" (pageChange)="onPageChange($event)"[collectionSize]="collectionSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+          <br> -->
+          <!-- <br>
+          <br>   -->
+                      </div>
+                  </div>
+                 </div>
+                </div>
+            
+             
+      <!-- <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '170px' : '20px'}"> -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="inner-page-header gradient-box">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h3 class="page_title" style="font-size: 24px;">Subscription Detail Report</h3>
+                </div>
+               <div class="col-lg-6">
+  <a class="btn-outline float-right ml-20" style="cursor: pointer;" (click)="exportexcel()">Export</a>
+  <!-- <a class="btn-outline float-right ml-20" style="cursor: pointer;" (click)="filterRecords()">Filter</a>
+  <a class="btn-outline float-right ml" style="cursor: pointer;" (click)="clearFilter()">Clear</a> -->
+</div>
+ 
+              </div>
+            </div>
+          </div>
+        </div>
+           
+        <div class="row">
+          <div class="col-lg-12">
+              <div class="filter" style="display: flex;flex-flow: row;align-items: flex-start;">
+ 
+            <div class="sort"> <span class="custom-dropdown">
+              <label class="control-label heading_sm">Show</label>
+              <select style="width: 80px"[(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                <option *ngFor="let size of pageSizes" [value]="size" [selected]="size == pageSize">{{ size }}</option>
+              </select>
+              </span> </div>
+ 
+            <div class="sort"*ngIf="userName===superadmin">
+                <label class="control-label heading_sm">University</label>
+                <input type="search" class="form-field" style="width:110px"[(ngModel)]="searchData" (keyup)="changeTitle(searchbar.value)" placeholder="Search University"  #searchbar>
+                <ul  class="dropdown-list" *ngIf="hideDrop&& filterTitle.length > 0" style="z-index: 10;">       
+                  <li *ngFor="let n of filterTitle"  (click)="onSelectTitle(n.universityId,n.universityName)">
+                    {{ n.universityName }}
+                  </li>
+                 </ul>
+              </div>
+ 
+              <div class="rounded-div" style="margin-right: 20px;" *ngIf="userName===superadmin">
+                <h6 style="margin-top: 5px;">{{ name }}</h6>
+              </div>
+ 
+            
+                <input type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" (click)="filterRecords()" value="Filter">
+                <input style="margin-left: 5px;" type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new"  value="Clear" (click)="clearFilter()">
+              </div>
+       
+       <div class="result col-lg-12" style="padding-left: unset;padding-right: unset;">
+        <div class="content-wrapper-white" style="overflow: auto;margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+          <div>
+            <h6 class="text"> Showing  {{ startrow + 1 }} to {{ endrow}} of {{this.collectionSize}} records</h6>
+           </div>
+          
+          <table id="example" class="table table-bordered"  >
+            <thead style="    background: #0151be;
+            color: #fff;">
+              <tr>
+                    <th style="width: 2%;">S.No</th>
+                    <th  scope="col" class="name" style="width: 2%;">UniversityId</th>
+                    <th  scope="col" style="width: 10%;" class="name">UniversityName</th>
+                    <th  style="width:2%"  scope="col" class="name">PlantypeId</th>
+                    <th  style="width: 2%;" scope="col" class="name">DaysLeft</th>
+                    <th  style="width: 2%;" scope="col" class="name">AlertLevel</th>
+                    <th  style="width: 2%;" scope="col" class="name">AlertColor</th>
+                    <!-- <th  style="width: 50%;" scope="col" class="name">AlertMessage</th> -->
+                    <th  style="width: 2%;" scope="col" class="name">IsExpired</th>
+                    <th  style="width: 2%;" scope="col" class="name">IsCritical</th>
+                    <th  style="width: 2%;" scope="col" class="name">StartDate</th>
+                    <th  style="width: 2%;" scope="col" class="name">EndDate</th>
+                    <th  style="width: 2%;" scope="col" class="name">CurrentDate</th>
+                     <th  style="width: 250px;" scope="col" class="name">AlertMessage</th>
+                  </tr>
+                  </thead>
+                  <tbody *ngIf="dataList?.length">
+                  <tr *ngFor="let item of dataList | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i=index">
+                      <!-- <td>{{ i + 1 + (page - 1) * pageSize }}</td> -->
+                       <td>{{ i + 1 + (page - 1) * pageSize }}</td>
+ 
+                      <td>{{item.universityId}}</td>
+                      <td>
+                        <p >{{item.universityName}}</p>
+                      </td>
+                      <td>
+                        <p>{{item.planTypeId}}</p>
+                      </td>
+                      <td >{{item.daysLeft}}</td>
+                      <td>{{item.alertLevel}}</td>
+                      <td>{{item.alertColor}}</td>
+                      <!-- <td>{{item.alertMessage}}</td> -->
+                      <td>{{item.isExpired}}</td>
+                      <td>{{item.isCritical}}</td>
+                      <td>{{item.startDate}}</td>
+                      <td>{{item.endDate}}</td>
+                      <td>{{ item.currentDate }}</td>
+                       <td>{{item.alertMessage}}</td>
+ 
+                  </tr>
+                  </tbody>
+                </table>
+          </div>     
+          <br>
+          <ngb-pagination style="float: right;" [maxSize]="3" [pageSize] = "pageSize" (pageChange)="onPageChange($event)"[collectionSize]="collectionSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+          <br>
+          <br>
+          <br>  
+                      </div>
+                  </div>
+                 </div>
+                <!-- </div> -->
+             </div>
+          </div>
+        </div>
+ 
+ 
+      
+ 
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

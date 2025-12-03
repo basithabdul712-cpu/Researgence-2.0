@@ -1,0 +1,2830 @@
+
+<div class="loader-wrapper" [class.loderhide]="enablePic" *ngIf="!enablePic" >
+  <div class="loader bg-white">
+    <div class="whirly-loader"> </div>
+    <br>
+    <br>
+       <p>Please Wait..Page is loading!</p>
+  </div>
+</div>
+
+<div class="ts-main-content">
+  <div class="content-wrapper" [ngClass]="{'sideBarOpen': !isMenuOpen, 'sideBarClose': isMenuOpen}">
+    <div class="container-fluid" [ngClass]="{'pageBlur':enableBox}">
+      <div class="row">
+        <div style="margin-top: -10px;margin-bottom: -10px;color: #000;" class="alert alert-dismissible alert-info"
+          *ngIf="!hideUser">
+          <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"
+              (click)="removeUser()"></i></button>
+          Currently logged in as {{Name}}({{roleName}})
+        </div>
+      </div>
+      <div class="row">
+        <div class="profile">
+          <div class="container container-90" style="width: 970px;">
+            <div class="row flex" [ngStyle] = "{'margin-left' : !isMenuOpen ? '-110px' : '-85px'}">
+              <div class="col-lg-12 flex flex-valign-center">
+                <div class="faculty_pic">
+                  <div class="photo">
+                    <img [src]="imageSrc" alt="">
+                  </div>
+                </div>
+                <div class="faculty_detail">
+                  <h3 class="name" style="text-align: start;">{{this.faculty?.name}}</h3>
+                  <p class="designation" style="text-align: start;margin-top: 0px;">{{this.faculty?.designation}}</p>
+                  <div *ngIf="checkRole!='faculty'&&roleId==2||roleId==18"  class="padbt-20 flex flex-row" style="padding-bottom: 0px;padding-top: 10px;"> <a class="btn-link text-white" (click)="toEdit()"><span><img src="../../../assets/given/img/edit_icon.png" alt="" style="margin-right: 10px;"></span>Edit Profile</a> 
+                    <a class="btn-link text-white" routerLink="{{requesturl}}"><span><img src="../../../assets/given/img/icon3.png" alt="" style="margin-right: 10px;height: 23px;width: 23px;"></span>Service Request</a>
+                  </div>
+                  <div class="detail" style="border-top: unset;border-bottom: unset;">
+                    <p style="margin-bottom: -5px;"><span style="display: contents;" *ngIf="universityName!=='Ashoka University'" >Employee ID:</span>
+                      <span style="display: contents;" *ngIf="universityName==='Ashoka University'" >Profile ID:</span>
+                      {{this.faculty?.employeeId}}</p>
+                    <p style="margin-bottom: -5px;"><span style="display: contents;">Department:</span> {{this.faculty?.department}}</p>
+                    <p style="margin-bottom: -5px;"><span style="display: contents;">Institute Name:</span> {{this.faculty?.institute}}</p>
+                  </div>
+                  <div class="scolar_btns flex">
+                    <a style="margin: 0px;cursor: pointer;" *ngIf="this.faculty?.googleScholarLink!=null" class="btn-outline"
+                      [href]="this.faculty?.googleScholarLink" target="_blank">Google Scholar</a>
+                    <a style="margin: 0px 5px;" *ngIf="this.faculty?.googleScholarLink==null" class="btn-outline" (click)="nullid(i)">Google Scholar</a>
+                    <a style="margin: 0px 5px;cursor: pointer;" *ngIf="this.faculty?.vidwanLink!=null" class="btn-outline" [href]="this.faculty?.vidwanLink"
+                      target="_blank">Vidwan ID</a>
+                    <a style="margin: 0px 5px;cursor: pointer;" *ngIf="this.faculty?.vidwanLink==null" class="btn-outline" (click)="nullid(i)">Vidwan ID</a>
+                    <a style="margin: 0px 5px;cursor: pointer;" *ngIf="this.faculty?.scopusLink!=null" class="btn-outline" [href]="this.faculty?.scopusLink"
+                      target="_blank">Scopus</a>
+                    <a style="margin: 0px 5px;cursor: pointer;" *ngIf="this.faculty?.scopusLink==null" class="btn-outline"(click)="nullid(i)">Scopus</a>
+                    <a *ngIf="this.faculty?.researcherLink!=null" class="btn-outline"
+                      [href]="this.faculty?.researcherLink" target="_blank" style="cursor: pointer;">Researcher ID</a>
+                    <a style="margin: 0px 5px;cursor: pointer;" *ngIf="this.faculty?.researcherLink==null" class="btn-outline" (click)="nullid(i)">Researcher ID</a>
+                    <a style="margin: 0px 5px;cursor: pointer;" *ngIf="this.faculty?.orcidLink!=null" class="btn-outline" [href]="this.faculty?.orcidLink"
+                      target="_blank">Orcid ID</a>
+                    <a style="margin: 0px 5px;cursor: pointer;" *ngIf="this.faculty?.orcidLink==null" class="btn-outline" (click)="nullid(i)">Orcid ID</a>
+                <!-- <a class="dropbox_btn" (click)="openDropBoxPub()" data-toggle="modal" data-target="#dropbox" style="padding: 5px 12px 5px 35px; cursor: pointer;">Dropbox</a>
+                          <div *ngIf="opendropBoxEnablePub" style="display: block;" class="modal fade modal_special in"
+                          id="validate" tabindex="-1" role="dialog">
+                          <div class="modal-dialog">
+                            <div class="modal-content" style="    margin-left: -124px;width: 800px;box-shadow: 0 0px 5px rgba(0,0,0,0.5) !important;">
+                              <div class="modal-header">
+                                <p class="modal-title" id="validate_modal" style="width: 100%;font-size: 18px;text-align: justify;">Publication Profile Drop Box</p>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                  (click)="closeDropboxPub()"><span aria-hidden="true">&times;</span> </button>
+                              </div>
+                              <div class="modal-body">
+
+                                <form id="step-form">
+                                  <fieldset>
+                                    <div class="form-card">
+                                      <div class="row" >
+                                        <div class="col-lg-2"><label style="font-size: 14px;">Scopus Profile ID<span style="color: red;" >*</span></label>
+                                        </div>
+                                        <div class="col-lg-10"><input type="text" id="" placeholder="<Enter the Scopus Profile ID>" name="crossTitle"></div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-lg-2"><label style="font-size: 14px;">Web of Science Researcher ID<span style="color: red;" >*</span></label>
+                                        </div>
+                                        <div class="col-lg-10"><input type="text" id="" placeholder="<Enter the Web of Science Researcher ID>" name="crossSourceName"></div>
+                                      </div>
+                                      <div class="row" >
+                                        <div class="col-lg-2"><label style="font-size: 14px;">Orcid ID</label></div>
+                                        <div class="col-lg-10"><input type="text" id="" placeholder="<Enter Orcid ID>" name="doi">
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-lg-2"><label style="font-size: 14px;">Vidwan ID<span style="color: red;">*</span></label></div>
+                                        <div class="col-lg-10"><input type="text" id="" placeholder="<Enter Vidwan ID>" name="webLink"></div>
+                                      </div>
+                                        <div class="row" >
+                                        <div class="col-lg-2"><label style="font-size: 14px;">Google Scholar ID</label></div>
+                                        <div class="col-lg-10"><input type="text" id="" placeholder="<Enter Google Scholar ID>" name="doi">
+                                        </div>
+                                      </div>
+                                      <div>
+                                        <button style="float: right;" type="button" name="next" class="next btn-outline-blue">Update</button>
+                                      </div>
+                                    </div>
+                                  </fieldset>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>                         -->
+                  </div>
+                  <p style="color: #8691a9; size: 12px; margin-bottom: 0;">All {{universityShortName}}-affiliated
+                    publications ONLY will be part of faculty Researgence Profile</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="profile-sticky-nav" id="profile-sticky-nav">
+          <ul >
+            <li *ngFor="let item of displayuser" (click)="toEnableModules(item.module,item.count)">
+              <a [ngClass]="{'tabEnable':enableModule==item.module}"><span>{{item.count}}</span>{{item.module}}</a></li>
+          </ul>
+          <div  [ngStyle] = "{'margin-left' : !isMenuOpen ? '-110px' : '3px'}" *ngIf="hoverMessage" class="hover-message">{{ hoverMessage }}</div>
+        </div>
+      
+      </div>
+      <div class="row" style="font-family: 'Open Sans', sans-serif;background-attachment: fixed !important;
+      background: var(--background-white) repeat top center;font-size: 14px;color: #000;" *ngIf="project">
+        <div [ngClass]="{'container container-w90': isMenuOpen, 'container': !isMenuOpen}" >
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel-title" role="tab" id="headingOne">
+                  <h4 class="panel-title"> <a style="color: #fff;" role="button" data-toggle="collapse"
+                      data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne"
+                      [ngClass]="{'': enableChart, 'collapsed': !enableChart}" (click)="showChart()"> Publications
+                      <span>({{pubCount}})</span> </a> </h4>
+                  <div id="collapseOne"
+                    [ngClass]="{'panel-collapse collapse in': enableChart, 'panel-collapse collapse': !enableChart}"
+                    role="tabpanel" aria-labelledby="headingOne" style="background: white;">
+                    <div class="panel-body">
+                      <div class="faculty_charts">
+                        <div class="col-lg-4">
+                          <p class="chart-head">Affiliation Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div id="chartContainer" width="100%" height="600px"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="chart-head">Article Type Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+
+                              <div class="col-md-12">
+                                <div id="chartdivArt" width="100%" height="600px"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="chart-head">Database Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div id="chartdiv" width="100%" height="auto"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <a class="newScores" style="float: right;color: #4466f2;text-decoration: underline;" *ngIf="enableScore" (click)="viewScores()">View Scores</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                 
+              </div>
+            </div>
+          </div>
+          <div class="view"><span class="custom-dropdown">
+            <h6 class="tweet" style="font-size: 16px;font-weight: bold;text-align: end;margin-top: unset;margin-bottom: unset;"> Showing {{ startrow + 1 }} to {{
+              endrow}} of {{this.collapsablesize}} records</h6>
+          </span></div> 
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="publication_list row">
+                <div class="col-lg-12">
+                  <div class="filter">
+                    <div class="sort"> <span class="custom-dropdown">
+                        <label class="control-label heading_sm" style="text-transform: unset;">Sort</label>
+                        <select [(ngModel)]="yearValue" (change)="changeYear(yearValue)">
+                          <option *ngFor="let yearorder of yearSort">
+                            {{yearorder}}
+                          </option>
+                        </select>
+                      </span> <span class="custom-dropdown">
+                        <select [(ngModel)]="ascendValue" (change)="changesOrder(ascendValue)">
+                          <option *ngFor="let order of orderSort">
+                            {{order}}
+                          </option>
+                        </select>
+                      </span> </div>
+                    <div class="view"> <span class="custom-dropdown">
+                        <label class="control-label heading_sm" style="text-transform: unset;">View</label>
+                        <select id="view_option" name="view_option" (change)="onViewChange($event)">
+                          <option value="detailed">Detailed</option>
+                          <option value="compact" selected>Compact</option>
+                        </select>
+                      </span> </div>
+                    <div class="view"> <span class="custom-dropdown">
+                        <label class="control-label" style="text-transform: unset;">Paginate</label>
+                        <select [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                          <option *ngFor="let dropcount of pageSizecount" [value]="dropcount">{{dropcount}}</option>
+                        </select>
+                      </span> </div>            
+                      <div class="sort" style="margin-bottom: 10px;">
+                        <label class="control-label heading_sm" style="text-transform: unset;">Search</label>
+                        <input type="search" class="form-field" style="width:250px" [(ngModel)]="searchQuery" (keyup)="searchGlobalData(searchQuery)">
+                      </div>
+                      <input *ngIf="enbleAddNew" type="button" class="btn-solid-blue float-right" data-toggle="modal"
+                      data-target="#add_new" (click)="resetForm()" value="+ Add New">
+                               
+                  </div>
+                </div>
+                <div class="result col-lg-12">
+                  <div *ngFor="let d of filteredItems | slice:(page-1)*pageSize:(page-1)*pageSize+pageSize;let i=index">
+                    <article
+                      [ngClass]="'tagged_' + (d.isInHouse == 1 ? 'home' : 'away') + ' ' + d.articleType + ' ' + selectedView">
+                      <div class="row">
+                        <div class="col-lg-9">
+                          <div class="article_header">
+                            <h2 class="a_title">
+                              <span class="sl_no"
+                                [ngClass]="{'homeColor':d.isInHouse == 1 , 'awayColor': d.isInHouse == 0}">{{ i + 1 +
+                                (page - 1) * pageSize }}</span>
+                              <span
+                                [routerLink]="['/article/art',d.publicationId,this.userIdparam || '',backbuttonflag]"
+                                style="cursor: pointer; font-weight: bold;font-family: 'Red Hat Display', sans-serif;">{{d.publicationTitle}}</span>
+                            </h2>
+                            <i style="font-family: 'Red Hat Display', sans-serif;font-style: normal;">{{d.year}} {{d.sourcePublication}}, <span *ngIf="d.volumeNumber" >Volume {{d.volumeNumber}},</span> <span *ngIf="d.issueNumber" >Issue {{d.issueNumber}},</span>
+                              <span *ngIf="d.bPage" >Page {{d.bPage}} - {{d.ePage}};</span> <span *ngIf="d.issn" >P-ISSN: {{d.issn}},</span><span *ngIf="d.eissn"> E-ISSN: {{d.eissn}}; </span></i>
+
+                          </div>
+                          <div class="detail_content article_body">
+                            <div class="article_scores flex" *ngIf="d.publicationSourceDBMetrics!=null" style="flex-wrap: wrap;">
+                              <div *ngFor="let item of d.publicationSourceDBMetrics">
+                                <p *ngIf="!item.includes('-')" style="border-left: unset !important;padding: 0px 3px !important;">{{item}};</p>
+                              </div>
+                              <br><br>
+                            </div>
+                            <div class="flex flex-row published">
+                                  <i *ngIf="d.onlineDate" style="font-family: 'Red Hat Display', sans-serif;font-style: normal;">Published Online: <span>{{d.onlineDate|date:'dd-MM-yyyy'}}</span></i> 
+                                  <i *ngIf="d.printDate" style="font-family: 'Red Hat Display', sans-serif;font-style: normal;">Published Print: <span>{{d.printDate|date:'dd-MM-yyyy'}}</span></i>
+                              </div>
+                            <p class="a_text" style="font-family: 'Red Hat Display', sans-serif;letter-spacing: unset;line-height: unset;">{{d.abstract}}</p>
+
+                          </div>
+
+                        </div>
+                        <div class="col-lg-3 flex flex-valign-stretch flex-wrap flex-align-right" >
+                          
+                         <div *ngIf="opendropBoxEnable" style="display: block;" class="modal fade modal_special in"
+                          id="validate" tabindex="-1" role="dialog">
+                          <div class="modal-dialog">
+                            <div class="modal-content" style="margin-left:-124px;width: 800px;box-shadow: 0 0px 5px rgba(0,0,0,0.5) !important;">
+                              <div class="modal-header">
+                                <p class="modal-title" id="validate_modal" style="width: 100%;">Publication Drop Box</p>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                  (click)="closeDropbox()"><span aria-hidden="true">&times;</span> </button>
+                              </div>
+                              <div class="modal-body">
+
+                                <form id="step-form">
+                                  <fieldset>
+                                    <div class="form-card">
+                                      <div class="row">
+                                        <div class="col-lg-12">
+                                          <h5 style="background: none; font-weight: normal; color: grey;">Please drop the below information, to help us track and manage your research output, better</h5>
+                                          <!-- <h5 style="background: none; font-weight: normal; color: red;">*denote mandatory fields</h5> -->
+                                        </div>
+                                      </div>
+                                      <div class="row" >
+                                        <div class="col-lg-4 d-flex align-items-center"><label style="font-size: 14px; font-weight: normal;" class="text-right w-100">Scopus ID</label>
+                                        </div>
+                                        <div class="col-lg-8"><input type="text"placeholder="Enter the Scopus ID of the paper" name="scopusEID" [(ngModel)]="publevel.scopusEID"></div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-lg-4 d-flex align-items-center"><label style="font-size: 14px; font-weight: normal;" class="text-right w-100">Web of Science Accession ID</label>
+                                        </div>
+                                        <div class="col-lg-8"><input type="text"  placeholder="Enter the Wos ID of the paper" name="wosAcessionID" [(ngModel)]="publevel.wosAcessionID"></div>
+                                      </div>
+                                      <div class="row" >
+                                        <div class="col-lg-4 d-flex align-items-center"><label style="font-size: 14px; font-weight: normal;" class="text-right w-100">PubMed ID</label></div>
+                                        <div class="col-lg-8"><input type="text"  placeholder="Enter the Pubmed ID of the paper" name="pubMEDId" [(ngModel)]="publevel.pubMEDId">
+                                        </div>
+                                      
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-lg-4 d-flex align-items-center"><label style="font-size: 14px; font-weight: normal;" class="text-right w-100">Link to PDF if open Access</label></div> 
+                                       <div class="col-lg-8"><input type="text"  placeholder="Link to PDF of the paper" name="pdfLink" [(ngModel)]="publevel.pdfLink" ></div> 
+                                      </div>
+                                      <div class="row" >
+                                        <div class="col-lg-6">
+                                          <label style="font-size: 14px; font-weight: normal;" class="text-right ">Upload Your full text  Pre-print PDF copy of full text paper</label>
+                                          <label style="font-size: 12px; font-weight: normal;" class="text-right ">*note that this is only for internal sharing with library and not for external sharing</label>
+                                        </div> 
+                                        <div class="col-lg-6" style="padding-top: 13px;">
+                                          <input type="file" [(ngModel)]="publevel.pubUserPDFLocation" (change)="pdfdropbox($event)"  />
+                                          <!-- <label for="upload" class="btn-upload" style="color: #0051bf">Upload</label> -->
+                                          <div *ngIf="publevel.pubUserPDFLocation" class="label-column fa fa-file-pdf-o" style="overflow-wrap: break-word;"> {{filetypename}}</div>
+                                        </div>
+                                          <div >                                
+                                          </div>                                  
+                                      </div>                                  
+                                      <div>
+                                        <button style="float: right;" type="button" name="next" class="next btn-outline-blue" (click)="updatebox()">Update</button>
+                                      </div>
+                                    </div>
+                                  </fieldset>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>                        
+                        <div class="flex flex-align-stretch" style="height: fit-content;" [ngStyle]="{'display': checkRole!='faculty'&&roleId==2||roleId==3||roleId==4||roleId==17||roleId==18? '' : 'block'}">
+                          <a  *ngIf="checkRole!='faculty'&&roleId==2||roleId==3||roleId==4||roleId==17||roleId==18"  class="dropbox_btn" (click)="openDropBox(d.publicationId,userid)" data-toggle="modal" data-target="#dropbox"  style="cursor: pointer;">Dropbox</a>
+                          <a class="validate_btn" data-toggle="modal" data-target="#validate" style="cursor: pointer;"
+                            *ngIf="checkRole!='faculty'&&d.authorVerifiedStatus==null&& (roleId == 2 || roleId == 3 || roleId == 4 || roleId == 17)" (click)="openbox(d.publicationId)">Validate</a>
+                          <div *ngIf="openvalidate" style="display: block;" class="modal fade modal_special in"
+                            id="validate" tabindex="-1" role="dialog">
+                            <div class="modal-dialog">
+                              <div class="modal-content" style="width: 800px;">
+                                <div class="modal-header">
+                                  <p class="modal-title" id="validate_modal" style="width: 100%;">Validation of your
+                                    publication</p>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    (click)="closebox()"><span aria-hidden="true">&times;</span> </button>
+                                </div>
+                                <div class="modal-body">
+                                  <!-- MultiStep Form -->
+
+                                  <form id="step-form">
+
+                                    <!-- fieldsets -->
+                                    <fieldset *ngIf="validateapprove">
+                                      <div class="form-card">
+                                        <div class="form_header text-center">
+                                          <h2 class="fs-title">Please Approve or Decline Authorship to this paper</h2>
+                                        </div>
+                                      </div>
+                                      <button type="button" name="next" class="next btn-outline-blue"
+                                        (click)="approvebox(d.publicationId)">Approve</button>
+                                      <button type="button" name="next" class="next btn-outline-red"
+                                        style="margin-left: 20px;" (click)=" deletebox()">Deny</button>
+                                    </fieldset>
+                                    <fieldset *ngIf="validateyesno">
+                                      <div class="form-card">
+                                        <div class="form_header text-center"> <span
+                                            class="fa fa-trash text-3x text-blue"></span>
+                                          <h2 class="fs-title">Are you sure you want to delete this Article?</h2>
+                                        </div>
+                                      </div>
+                                      <button type="button" name="next" class="next btn-outline-blue"
+                                        (click)="yesornobox(d.publicationId)">Yes</button>
+                                    </fieldset>
+                                    <fieldset *ngIf="done">
+                                      <div class="form-card">
+                                        <div class="form_header text-center"> <span><img
+                                              src="assets/given/img/success-icon.gif" alt="" /></span>
+                                          <h2 class="fs-title"><strong>Congratulations !</strong><br>
+                                            You have verified the Authorship of this publication</h2>
+                                        </div>
+                                      </div>
+                                      <button type="button" class="btn-outline-blue" data-dismiss="modal"
+                                        aria-label="Close" (click)=" donebox()">Done</button>
+                                    </fieldset>
+                                    <fieldset *ngIf="validatedeny">
+                                      <div class="form-card">
+                                        <div class="form_header text-center">
+                                          <h2 class="fs-title">Your Article is Deleted !</h2>
+                                        </div>
+                                      </div>
+                                      <button type="button" class="btn-outline-blue" data-dismiss="modal"
+                                        aria-label="Close" (click)=" donebox()">Done</button>
+                                    </fieldset>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <p class="validated" *ngIf="d.authorVerifiedStatus!=null">Validated</p>
+                          </div>
+
+                          <div class="article_data detail_content">
+                            <div class="indexing-wrapper">
+                              <p [ngClass]="d.scopus == null || d.scopus == '-' ? 'not-available' : ''">
+                                SCS <span class="fa fa-info-circle control-btn" style="color: #d8dd0b;float: inline-end;margin-right: 18px;margin-top: 4px;" ></span>
+                              </p>
+                            <div class="disclaim">
+                              <a class="box-gray text-sm" style="color: #0051bf !important;">
+                                Indexing information is compiled from publicly available sources or user-provided data
+                              </a>
+                            </div>
+                          </div>
+
+                          <div class="indexing-wrapper-wos">
+                            <p [ngClass]="['wos', d.wos == null || d.wos == '-' ? 'not-available' : '']">
+                              WOS 
+                              <span class="fa fa-info-circle control-btn" 
+                                    style="color: #d8dd0b; float: inline-end; margin-right: 18px; margin-top: 4px;"></span>
+                            </p>
+                            <div class="enable-wos">
+                              <a class="box-gray text-sm" style="color: #0051bf !important;">
+                                Indexing information is compiled from publicly available sources or user-provided data
+                              </a>
+                            </div>
+                          </div>
+                          
+                            <p [ngClass]="{'not-available':d.ieee == null||d.ieee=='-'}">IEEE 
+                              <!-- <span *ngIf="d.ieee !== null||d.ieee!='-'">{{d.ieee}}</span> -->
+                              </p>
+                            <p [ngClass]="{'not-available':d.pubmed == null||d.pubmed=='-'}">PubMed 
+                              <!-- <span *ngIf="d.pubmed !== null||d.pubmed!='-'">{{d.pubmed}}</span> -->
+                              </p>
+                            <p [ngClass]="{'not-available':d.gs == null||d.gs=='-'}">GS 
+                              <!-- <span *ngIf="d.gs !== null||d.gs!='-'">{{d.gs}}</span> -->
+                            </p>
+                            <p [ngClass]="{'not-available':d.sd == null||d.sd=='-'}">SD 
+                              <!-- <span>INDEXED</span> -->
+                            </p>
+                            <p [ngClass]="{'not-available':d.abdc == null||d.abdc=='-'}">CROSSREF 
+                              <!-- <span *ngIf="d.abdc !== null||d.abdc!='-'">{{d.abdc}}</span> -->
+                              </p>
+                          </div>          
+
+                        </div>
+                      </div>
+                      <div class="row flex flex-valign-bottom">
+                        <div class="col-lg-9">
+                          <div class="article_footer" *ngIf="d.authorAffiliation != null">
+                            <div class="a_author" *ngIf="d.authorAffiliation.length > 1">
+                              <a class="tooltip1" 
+                                *ngFor="let t of (expandedItems.includes(d) ? d.authorAffiliation : d.authorAffiliation.slice(0, 5))" 
+                                (click)="printNumber(t)" 
+                                [ngClass]="{'highlightedName': hasBrackets(t)}">
+                                {{ getNameWithoutBrackets(t) | titlecase }}
+                                <span class="tooltiptext">{{ getAffiliationWithoutBrackets(t) }}</span>
+                              </a>
+                              <ng-container *ngIf="d.authorAffiliation.length > 5">
+                                <a class="showMore" (click)="toggleExpansion(d)">{{ expandedItems.includes(d) ? 'Show Less' : 'Show More' }}</a>
+                              </ng-container>                
+                            </div>
+                            <div class="a_author" *ngIf="d.authorAffiliation.length === 1">
+                              <a class="tooltip1" (click)="printNumber(d.authorAffiliation[0])" [ngClass]="{'highlightedName': hasBrackets(d.authorAffiliation[0])}">{{getNameWithoutBrackets(d.authorAffiliation[0])| titlecase }}<span
+                                  class="tooltiptext">{{getAffiliationWithoutBrackets(d.authorAffiliation[0])}}</span></a>
+                            </div>
+                          </div>
+
+                          <div class="detail_content article_footer">
+                            <p class="a_data" style="margin-bottom: 15px;line-height: unset;letter-spacing: unset;font-family: 'Red Hat Display', sans-serif;">DOI: {{d.doi}}</p>
+                            <a [href]="d.link" target="_blank" style="margin-bottom: 15px;line-height: unset;letter-spacing: unset;font-family: 'Red Hat Display', sans-serif;color: #0051bf !important;">WebLink: <span  class="doiLink">{{d.link}}</span></a>
+                            <p class="heading_sm">Research Focus Areas: </p>
+                            <p style="line-height: unset;letter-spacing: unset;font-family: 'Red Hat Display', sans-serif;">{{d.technologyAreas}}</p>
+                          </div>
+                        </div>
+                        <div class="col-lg-3" [ngStyle]="{'margin-top' : selectedView=='detailed' ? '75px' : ''}">
+                          <div class="article_btn">
+                            <!-- <a class="link_btn share" (click)="showshare(i,d.publicationId,userid)">
+                              Share
+                            </a> -->
+                            <a class="link_btn cite" data-toggle="modal" data-target="#myModal1"
+                              (click)="opencite(showModal)">Cite</a>
+                            <div *ngIf="showIcons&&i==editshare">
+                              <p style="display:inline-block">
+                                <share-buttons
+                                  style="background-color:rgb(0, 0, 0);width: 60px;border-radius: 70%;margin-right: 5px;"
+                                  [theme]="'default'" [include]="['twitter']" [show]="9" [size]="1"
+                                  [url]=" getShareUrl(d.publicationId,userid) " [autoSetMeta]="false">
+                                </share-buttons>
+                                <share-buttons
+                                  style="background-color:blue;width: 60px;border-radius: 70%;margin-right: 5px"
+                                  theme="default" [include]="['facebook']" [showIcon]="true"
+                                  [url]="getShareUrl(d.publicationId,userid)"> </share-buttons>
+                                <share-buttons
+                                  style="background-color:rgb(87,246,117);width: 60px;border-radius: 70%;margin-right: 5px"
+                                  [theme]="'default'" [include]="['whatsapp']" [show]="9" [size]="1" [url]="fullUrl"
+                                  [autoSetMeta]="true" [description]="d.title"> </share-buttons>
+                              </p>
+                            </div>
+                            <!-- Modal -->
+                            <ng-template #showModal let-modal style="position: relative;">
+                              <div style="position:fixed;display:block;width: 800px;top: 150px;">
+                                <div>
+                                  <div class="modal-content" style="position: relative;">
+                                    <div class="modal-header">
+                                      <p class="modal-title" id="myModalLabel1" style="width: 100%;">Cite Formats
+                                      </p>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                        #closebutton (click)="modal.dismiss('Cross click')"><span
+                                          aria-hidden="true">&times;</span> </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <div role="tabpanel">
+
+                                        <ul class="nav nav-tabs" role="tablist">
+                                          <li role="presentation" class="active" (click)="selectedTab = 'apa'"
+                                            [class.active]="selectedTab === 'apa'">
+                                            <a role="tab" data-toggle="tab" aria-controls="apa">APA</a>
+                                          </li>
+                                          <li role="presentation" (click)="selectedTab = 'mla'"
+                                            [class.active]="selectedTab === 'mla'">
+                                            <a role="tab" data-toggle="tab" aria-controls="mla">MLA</a>
+                                          </li>
+                                          <li role="presentation" (click)="selectedTab = 'chicago'"
+                                            [class.active]="selectedTab === 'chicago'">
+                                            <a role="tab" data-toggle="tab" aria-controls="chicago">Chicago</a>
+                                          </li>
+                                          <li role="presentation" (click)="selectedTab = 'harvard'"
+                                            [class.active]="selectedTab === 'harvard'">
+                                            <a role="tab" data-toggle="tab" aria-controls="harvard">Harvard</a>
+                                          </li>
+                                          <li role="presentation" (click)="selectedTab = 'vancouver'"
+                                            [class.active]="selectedTab === 'vancouver'">
+                                            <a role="tab" data-toggle="tab" aria-controls="vancouver">Vancouver</a>
+                                          </li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content" style="display: block;">
+                                          <div [ngSwitch]="selectedTab">
+                                            <div role="tabpanel" class="tab-pane current" *ngSwitchCase="'apa'">
+                                               <p><span *ngFor="let t of d.authorAffiliation" [ngClass]="{'highlightedNameCite' : hasBrackets(t)}" >{{getNameWithoutBrackets(t) | titlecase}},
+                                                </span></p>
+                                              <p><span>({{d.year}})-"{{d.publicationTitle}}". {{d.sourcePublication}},
+                                                  {{d.volumeNumber}}({{d.issueNumber}}),Page
+                                                  {{d.bPage}} - {{d.ePage}}.</span></p>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" *ngSwitchCase="'mla'">
+                                              <p><span *ngFor="let t of d.authorAffiliation" [ngClass]="{'highlightedNameCite' : hasBrackets(t)}">{{getNameWithoutBrackets(t) | titlecase}},
+                                                </span></p>
+                                              <p>
+                                                ({{d.year}})-"{{d.publicationTitle}}".{{d.sourcePublication}},{{d.volumeNumber}}({{d.issueNumber}}),Page
+                                                {{d.bPage}} - {{d.ePage}}.</p>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" *ngSwitchCase="'chicago'">
+                                              <p><span *ngFor="let t of d.authorAffiliation" [ngClass]="{'highlightedNameCite' : hasBrackets(t)}" >{{getNameWithoutBrackets(t) | titlecase}},
+                                                </span></p>
+                                              <p>
+                                                "{{d.publicationTitle}}".{{d.sourcePublication}},{{d.volumeNumber}}({{d.issueNumber}}),Page
+                                                {{d.bPage}} - {{d.ePage}}.</p>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" *ngSwitchCase="'harvard'">
+                                              <p><span *ngFor="let t of d.authorAffiliation" [ngClass]="{'highlightedNameCite' : hasBrackets(t)}" >{{getNameWithoutBrackets(t) | titlecase}},
+                                                </span></p>
+                                              <p> ({{d.year}})-"{{d.publicationTitle}}",Available from doi:{{d.link}}
+                                              </p>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" *ngSwitchCase="'vancouver'">
+                                              <p><span *ngFor="let t of d.authorAffiliation" [ngClass]="{'highlightedNameCite' : hasBrackets(t)}" >{{getNameWithoutBrackets(t) | titlecase}},
+                                                </span></p>
+                                              <p> "{{d.publicationTitle}}",Available from
+                                                doi:{{d.link}}</p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                  <div class="paginate" style="margin-left: 50%;margin-top: 3%;">
+                    <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="collapsablesize"
+                      (pageChange)="onPageChange($event)" [maxSize]="3">
+                    </ngb-pagination>
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Project Detail Page-->
+      <div class="row" style="font-family: 'Open Sans', sans-serif;background-attachment: fixed !important;
+      background: var(--background-white) repeat top center;font-size: 14px;color: #000;" *ngIf="publication">
+        <div [ngClass]="{'container container-w90': isMenuOpen, 'container': !isMenuOpen}">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel-title" role="tab" id="headingOne">
+                  <h4 class="panel-title"> <a style="color: #fff;" role="button" data-toggle="collapse"
+                      data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne"
+                      [ngClass]="{'': enableChartPat, 'collapsed': !enableChartPat}" (click)="showChartPatents()"> Projects
+                      <span>({{collapsablesizeProj}})</span> </a> </h4>
+                  <div id="collapseOne"
+                    [ngClass]="{'panel-collapse collapse in': enableChartPat, 'panel-collapse collapse': !enableChartPat}"
+                    role="tabpanel" aria-labelledby="headingOne" style="background: white;">
+                    <div class="panel-body">
+                      <div class="faculty_charts">
+                        <div class="col-lg-4">
+                          <p class="chart-head">Affiliation Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="chart-head">Article Type Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+
+                              <div class="col-md-12">
+                                <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="chart-head">Database Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <!-- <div id="chartdiv" width="100%" height="auto"></div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="publication_list row">
+                <div class="col-lg-12">
+                  <div class="filter">
+                    <div class="sort"> <span class="custom-dropdown">
+                      <label class="control-label heading_sm">Sort</label>
+                    </span> <span class="custom-dropdown">
+                      <select [(ngModel)]="ascendValueProj" (change)="changesOrderProject(ascendValueProj)">
+                        <option *ngFor="let order of orderSort">
+                          {{order}}
+                        </option>
+                      </select>
+                    </span> </div>
+                    <div class="view"> <span class="custom-dropdown">
+                        <label class="control-label heading_sm">View</label>
+                        <select id="view_option" name="view_option" (change)="onViewChangeProject($event)">
+                          <option value="detailed">Detailed</option>
+                          <option value="compact" selected>Compact</option>
+                        </select>
+                      </span> </div>
+                      <div class="view"> <span class="custom-dropdown">
+                        <label class="control-label">Paginate</label>
+                        <select [(ngModel)]="pageSizeProj" (change)="onPageSizeChangeProject($event.target.value)">
+                          <option *ngFor="let dropcount of pageSizecountPat" [value]="dropcount">{{dropcount}}</option>
+                        </select>
+                      </span> </div>
+                    <div class="view"><span class="custom-dropdown">
+                        <h6 class="tweet" style="font-size: 18px;font-weight: bold;"> Showing {{ startrowProj + 1 }} to {{
+                          endrowProj}} of {{this.collapsablesizeProj}} records</h6>
+                      </span></div>
+                    <input *ngIf="roleId==2||roleId==18" type="button" class="btn-solid-blue float-right" data-toggle="modal"
+                      data-target="#add_new" (click)="enableAddProject()" value="+ Add New">
+                  </div>
+                </div>
+                <div class="result col-lg-12">
+                  <div *ngFor="let item of projList | slice:(pageProj-1)*pageSizeProj:(pageProj-1)*pageSizeProj+pageSizeProj;let i=index">
+                  <article class="tagged compact">
+                    <div style="display: flex;">
+                      <p class="tag_text" > {{item.projectFundingAgencyName}} | </p>
+                      <p class="tag_text" >{{item.projectFundingTypeName}}</p>
+                    </div>
+                    
+                    <div class="row flex">
+                      <div class="col-lg-9">
+                        <div class="article_header">
+                          <h2 class="a_title"><span class="sl_no">{{ i + 1 +(pageProj - 1) * pageSizeProj }}</span>
+                            <span  [routerLink]="['/article/art',item.projectId,'project' || '',backbuttonflag]"
+                            style="cursor: pointer; font-weight: bold;font-family: 'Red Hat Display', sans-serif;">{{item.projectTitle}}</span></h2>
+                          <div class="article_scores flex">
+                            <table>
+                              <tr>
+                                <td>Sanctioned Amount</td>
+                                <td>:</td>
+                                <td>{{item.sanctionedAmount}}</td>
+                                <td>Period</td>
+                                <td>:</td>
+                                <td>{{item.projectPeriod}}</td>
+                              </tr>
+                              <tr>
+                                <td>Sanctioned Date</td>
+                                <td>:</td>
+                                <td>{{item.sanctionedDate}}</td>
+                                <td>Grant Received</td>
+                                <td>:</td>
+                                <td>{{item.grantReceived}}</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="article_footer">
+                          <div class="a_author">
+                            <table>
+                              <tr>
+                                <td>Project Team:</td>
+                                <div *ngIf="item.projectTeam!=null">
+                                <td *ngIf="item.projectTeam.length>1" >
+                                  <a class="tooltip1" *ngFor="let r of item.projectTeam" >{{r.split(',')[0]}} 
+                                  <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                                </a>
+                                 </td>
+                                 <td *ngIf="item.projectTeam.length===1" >
+                                  <a class="tooltip1">{{item.projectTeam[0].split(',')[0]}} 
+                                  <span class="tooltiptext">{{item.projectTeam[0].split(',')[1]}},{{item.projectTeam[0].split(',')[2]}},{{item.projectTeam[0].split(',')[3]}},{{item.projectTeam[0].split(',')[4]}}</span>
+                                </a>
+                                 </td>
+                              </div>
+                              </tr>
+                            </table>
+                          </div>
+                          <div class="a_author">
+                            <table>
+                              <tr>
+                                <td>Principal Investigator:</td>
+                                <div *ngIf="item.principalInvestigator!=null">
+                                  <td *ngIf="item.principalInvestigator.length>1" >
+                                    <a class="tooltip1" *ngFor="let r of item.principalInvestigator" >{{r.split(',')[0]}} 
+                                    <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                                  </a>
+                                   </td>
+                                   <td *ngIf="item.principalInvestigator.length===1" >
+                                    <a class="tooltip1">{{item.principalInvestigator[0].split(',')[0]}} 
+                                    <span class="tooltiptext">{{item.principalInvestigator[0].split(',')[1]}},{{item.principalInvestigator[0].split(',')[2]}},{{item.principalInvestigator[0].split(',')[3]}},{{item.principalInvestigator[0].split(',')[4]}}</span>
+                                  </a>
+                                   </td>
+                                </div>
+                              </tr>
+                            </table>
+                          </div>
+                          <div class="a_author co_investigator">
+                            <table>
+                              <tr>
+                                <td>Co-Investigator:</td>
+                                <div *ngIf="item.coInvestigator!=null">
+                                  <td *ngIf="item.coInvestigator.length>1" >
+                                    <a class="tooltip1" *ngFor="let r of item.coInvestigator" >{{r.split(',')[0]}} 
+                                    <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                                  </a>
+                                   </td>
+                                   <td *ngIf="item.coInvestigator.length===1" >
+                                    <a class="tooltip1">{{item.coInvestigator[0].split(',')[0]}} 
+                                    <span class="tooltiptext">{{item.coInvestigator[0].split(',')[1]}},{{item.coInvestigator[0].split(',')[2]}},{{item.coInvestigator[0].split(',')[3]}},{{item.coInvestigator[0].split(',')[4]}}</span>
+                                  </a>
+                                   </td>
+                                </div>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                        <div class="detail_content article_footer">
+                          <p class="a_data" style="margin-bottom: 15px;"><strong>URL:</strong> <a [href]="item.projectURL" target="_blank" class="btn-link-black">{{item.projectURL}}</a></p>
+                          <p class="heading_sm">Research Focus Areas:</p>
+                          <p style="margin-bottom: 0;">{{item.technologyAreas}} </p>
+                          <p class="heading_sm mt">Grant Timeline:</p>
+                          <table>
+                            <tr>
+                              <th *ngFor="let header of item.headers" style="padding-right: 8px;">{{ header }}</th>
+                            </tr>
+                            <tr>
+                              <td *ngFor="let value of item.values">{{ value }}</td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 flex flex-col flex-valign-stretch">
+                        <div *ngIf="selectedViewProject=='compact'">
+                        <div class="article_data compact_content" style="background: none;" *ngIf="checkRole!='faculty'&&roleId==2||roleId==3||roleId==18" >
+                          <p style="width: 130px;padding-top: 10px;font-size: 13px;"> Project Detailing</p>
+                          <div class="progress">
+                            <div class="progress-bar" role="progressbar"[ngStyle]="{ 'width': item.projectEntryCompletionPercentage + '%' }"
+                            [attr.aria-valuenow]="item.projectEntryCompletionPercentage" aria-valuemin="0" aria-valuemax="100" style="background-color: mediumseagreen !important;">{{item.projectEntryCompletionPercentage}}%</div>
+                          </div>
+                          <a class="fa fa-edit control-btn" style="font-size: xx-large;" (click)="toEditProject(item.projectId)"></a>   
+                         </div>
+                      </div>
+
+                             <div class="article_data detail_content">
+                                  <p [ngClass]="{'not-available':item.Patent == null||item.Patent=='-'}">Patents
+                                    <span *ngIf="item.Patent !== null||item.Patent!='-'">{{item.Patent}}</span></p>
+                                  <p [ngClass]="{'not-available':item.Conference == null||item.Conference=='-'}">Conference
+                                    <span *ngIf="item.Conference !== null||item.Conference!='-'">{{item.Conference}}</span></p>
+                                  <p [ngClass]="{'not-available':item.publication == null||item.publication=='-'}">Publication 
+                                    <span *ngIf="item.publication !== null||item.publication!='-'">{{item.publication}}</span></p>
+                                  <p class="none">Outcome</p>
+                                  <p [ngClass]="{'not-available':item.Product == null||item.Product=='-'}">Product
+                                    <span *ngIf="item.Product !== null||item.Product!='-'">{{item.Product}}</span></p>
+                                  <p class="outline" class="not-available"></p>
+                                  <p class="outline" class="not-available"></p>
+                        </div>
+						  
+                      </div>
+                      <!-- <div class="article_btn"> 
+                        <a href="#" class="link_btn share">Share</a> 
+                        <a class="link_btn cite" data-toggle="modal" data-target="#myModal1" (click)="openciteProject(showModalPatent)">Cite</a> 
+                                            
+                                      <ng-template #showModalPatent let-modal style="position: relative;">
+                                        <div style="position:fixed;display:block;width: 800px;top: 150px;">
+                                          <div>
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <p class="modal-title" id="myModalLabel1" style="width: 100%;">Citation Model 1</p>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span> </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <div role="tabpanel"> 
+                                         
+                                            <ul class="nav nav-tabs" role="tablist">
+                                              <li role="presentation" class="active" (click)="selectedTabPatent = 'apa'"
+                                                [class.active]="selectedTabPatent === 'apa'">
+                                                <a role="tab" data-toggle="tab" aria-controls="apa">APA</a>
+                                              </li>
+                                              <li role="presentation" (click)="selectedTabPatent = 'mla'"
+                                                [class.active]="selectedTabPatent === 'mla'">
+                                                <a role="tab" data-toggle="tab" aria-controls="mla">MLA</a>
+                                              </li>
+                                              <li role="presentation" (click)="selectedTabPatent = 'chicago'"
+                                                [class.active]="selectedTabPatent === 'chicago'">
+                                                <a role="tab" data-toggle="tab" aria-controls="chicago">Chicago</a>
+                                              </li>
+                                              <li role="presentation" (click)="selectedTabPatent = 'harvard'"
+                                                [class.active]="selectedTabPatent === 'harvard'">
+                                                <a role="tab" data-toggle="tab" aria-controls="harvard">Harvard</a>
+                                              </li>
+                                              <li role="presentation" (click)="selectedTabPatent = 'vancouver'"
+                                                [class.active]="selectedTabPatent === 'vancouver'">
+                                                <a role="tab" data-toggle="tab" aria-controls="vancouver">Vancouver</a>
+                                              </li>
+                                            </ul>
+            
+                                           
+                                            <div class="tab-content" style="display: block;">
+                                              <div [ngSwitch]="selectedTabPatent">
+                                                <div role="tabpanel" class="tab-pane current" *ngSwitchCase="'apa'">
+                                               
+                                                  <p><span>("{{item.patentTitle}}"
+                                        
+                                                    </span></p>
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane" *ngSwitchCase="'mla'">
+                                         
+                                                    <p><span>("{{item.domain}}"
+                                                
+                                                      </span></p>
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane" *ngSwitchCase="'chicago'">
+                                              
+                                                    <p><span>("{{item.patentTitle}}"
+                                                
+                                                      </span></p>
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane" *ngSwitchCase="'harvard'">
+                                               
+                                                    <p><span>("{{item.patentTitle}}"
+                                                
+                                                      </span></p>
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane" *ngSwitchCase="'vancouver'">
+                                                
+                                                    <p><span>("{{item.patentTitle}}"
+                                        
+                                                      </span></p>
+                                                </div>
+                                              </div>
+                                            </div>   
+                                          </div>
+                                        </div>
+                                      </div>
+                                      </div>
+                                      </div>
+                                  </ng-template>
+                                </div> -->
+                    </div>
+                    
+                  </article>
+                  </div>
+                  <div class="paginate" style="padding-left: 50%;margin-top: 3%;">
+                    <ngb-pagination [(page)]="pageProj" [pageSize]="pageSizeProj" [collectionSize]="collapsablesizeProj"
+                      (pageChange)="onPageChangePatent($event)">
+                    </ngb-pagination>
+                    <br>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Patent -->
+
+        <div class="row" style="font-family: 'Open Sans', sans-serif;background-attachment: fixed !important;
+      background: var(--background-white) repeat top center;font-size: 14px;color: #000;" *ngIf="patent">
+        <div [ngClass]="{'container container-w90': isMenuOpen, 'container': !isMenuOpen}">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel-title" role="tab" id="headingOne">
+                  <h4 class="panel-title"> <a style="color: #fff;" role="button" data-toggle="collapse"
+                      data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne"
+                      [ngClass]="{'': enableChartPat, 'collapsed': !enableChartPat}" (click)="showChartPatents()"> Patents
+                      <span>({{collapsablesizePat}})</span> </a> </h4>
+                  <div id="collapseOne"
+                    [ngClass]="{'panel-collapse collapse in': enableChartPat, 'panel-collapse collapse': !enableChartPat}"
+                    role="tabpanel" aria-labelledby="headingOne" style="background: white;">
+                    <div class="panel-body">
+                      <div class="faculty_charts">
+                        <div class="col-lg-4">
+                          <p class="chart-head">Affiliation Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="chart-head">Article Type Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+
+                              <div class="col-md-12">
+                                <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="chart-head">Database Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <!-- <div id="chartdiv" width="100%" height="auto"></div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="publication_list row">
+                <div class="col-lg-12">
+                  <div class="filter">
+                    <div class="sort"> <span class="custom-dropdown">
+                      <label class="control-label heading_sm">Sort</label>
+                    </span> <span class="custom-dropdown">
+                      <select [(ngModel)]="ascendValue" (change)="changesOrderPatent(ascendValue)">
+                        <option *ngFor="let order of orderSort">
+                          {{order}}
+                        </option>
+                      </select>
+                    </span> </div>
+                    <div class="view"> <span class="custom-dropdown">
+                        <label class="control-label heading_sm">View</label>
+                        <select id="view_option" name="view_option" (change)="onViewChangePatent($event)">
+                          <option value="detailed">Detailed</option>
+                          <option value="compact" selected>Compact</option>
+                        </select>
+                      </span> </div>
+                      <div class="view"> <span class="custom-dropdown">
+                        <label class="control-label">Paginate</label>
+                        <select [(ngModel)]="pageSizePat" (change)="onPageSizeChangePatent($event.target.value)">
+                          <option *ngFor="let dropcount of pageSizecountPat" [value]="dropcount">{{dropcount}}</option>
+                        </select>
+                      </span> </div>
+                    <div class="view"><span class="custom-dropdown">
+                        <h6 class="tweet" style="font-size: 18px;font-weight: bold;"> Showing {{ startrowPat + 1 }} to {{
+                          endrowPat}} of {{this.collapsablesizePat}} records</h6>
+                      </span></div>
+                    <input *ngIf="roleId==2||roleId==18" type="button" class="btn-solid-blue float-right" data-toggle="modal"
+                      data-target="#add_new" (click)="enableAddPatent()" value="+ Add New">
+                  </div>
+                </div>
+                <div class="result col-lg-12" *ngFor="let item of patentList| slice:(pagePat-1)*pageSizePat:(pagePat-1)*pageSizePat+pageSizePat;let i=index">
+                  <article class="compact">
+                    <div style="display: flex;flex-wrap: nowrap;">
+                    <p class="tag_text" style="font-size: 12px;">{{item.patentApplicantTypeName}} |</p>
+                    <p class="tag_text" style="font-size: 12px;padding-left: 20px;">{{item.patentStageName}}</p>
+					           <p class="text-sm mb-0x" style="padding-left: 20px;">{{item.patentOfficeName}}</p>
+                    </div>
+                    <div class="row flex">
+                      <div class="col-lg-9">
+                        <div class="article_header">
+                          <h2 class="a_title" style="font-weight: bold;flex-wrap: nowrap;font-size: 16px;"><span class="sl_no">{{ i + 1 +(pagePat - 1) * pageSizePat }}</span>
+								<div style="margin-right: 15px;"><span>{{item.applicationNumber}}</span><span>{{item.patentNumber}}</span></div>
+							<span>{{item.patentTitle}}</span>			
+							</h2>
+							 <i style="display: flex;width: 100%;"><span style="display: block;float: left;padding: 0 15px;">Filing Date: {{item.filingDate}}</span>
+                <span style="display: block;float: left;padding: 0 15px;">Published Date: {{item.publishedDate}}</span>
+                <span style="display: block;float: left;padding: 0 15px;">Grant Date: {{item.grantDate}}</span></i>  
+                        </div>
+                        <div class="detail_content article_footer">
+                          <p>{{item.abstract}}</p>
+                        </div>
+                        <div class="article_footer">					            	
+                          <div class="a_author">
+                            <table>
+                              <tbody><tr>
+                                <td>Inventors:</td>
+                                <div *ngIf="item.inventorAffiliation!=null" >
+                                  <td *ngIf="item.inventorAffiliation.length>1" >
+                                    <a class="tooltip1" *ngFor="let r of item.inventorAffiliation" >{{r.split(',')[0]}} 
+                                    <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                                  </a>
+                                   </td>
+                                   <td *ngIf="item.inventorAffiliation.length===1" >
+                                    <a class="tooltip1">{{item.inventorAffiliation[0].split(',')[0]}} 
+                                    <span class="tooltiptext">{{item.inventorAffiliation[0].split(',')[1]}},{{item.inventorAffiliation[0].split(',')[2]}},{{item.inventorAffiliation[0].split(',')[3]}},{{item.inventorAffiliation[0].split(',')[4]}}</span>
+                                  </a>
+                                   </td>
+                                  </div>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <div class="a_author applicant"><table><tbody>
+                            <tr><td>Applicants:</td>
+                              <div *ngIf="item.applicantAffiliation!=null" >
+                            <td *ngIf="item.applicantAffiliation.length>1" >
+                              <a class="tooltip1" *ngFor="let r of item.applicantAffiliation" >{{r.split(',')[0]}} 
+                              <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                            </a>
+                             </td>
+                             <td *ngIf="item.applicantAffiliation.length===1" >
+                              <a class="tooltip1">{{item.applicantAffiliation[0].split(',')[0]}} 
+                              <span class="tooltiptext">{{item.applicantAffiliation[0].split(',')[1]}},{{item.applicantAffiliation[0].split(',')[2]}},{{item.applicantAffiliation[0].split(',')[3]}},{{item.applicantAffiliation[0].split(',')[4]}}</span>
+                            </a>
+                             </td>
+                            </div>
+                            </tr></tbody></table></div>	
+                        </div>
+
+                        <div class="detail_content article_footer">
+                          <!-- <p class="a_data" style="margin-bottom: 15px;"><strong>URL:</strong> <a  target="_blank" class="btn-link-black"></a></p> -->
+                          <p class="heading_sm">Research Focus Areas:</p>
+                          <p style="margin-bottom: 0;">{{item.technologAreas}} </p>
+                          
+                        </div>
+                      </div>
+                      <div class="col-lg-3 flex flex-col flex-valign-stretch">
+                        <div class="flex flex-align-stretch" style="height: fit-content;" [ngStyle]="{'display': checkRole!='faculty'&&roleId==2||roleId==3||roleId==4||roleId==17||roleId==18? '' : 'block'}">
+                          <a class="validate_btn" data-toggle="modal" data-target="#validate" style="cursor: pointer;height: 35px;"
+                            *ngIf="checkRole!='faculty'&&item.authorVerifiedStatus==null&& (roleId == 2 || roleId == 3 || roleId == 4 || roleId == 17 || roleId==18)"  (click)="openboxPatent(item.patentId)">Validate</a>
+                            <!-- &&d.authorVerifiedStatus==null -->
+                          <div *ngIf="openvalidatePatent" style="display: block;" class="modal fade modal_special in"
+                            id="validate" tabindex="-1" role="dialog">
+                            <div class="modal-dialog">
+                              <div class="modal-content" style="width: 800px;">
+                                <div class="modal-header">
+                                  <p class="modal-title" id="validate_modal" style="width: 100%;">Validation of your
+                                    patent</p>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    (click)="closeboxPatent()"><span aria-hidden="true">&times;</span> </button>
+                                </div>
+                                <div class="modal-body">
+                                  <!-- MultiStep Form -->
+
+                                  <form id="step-form">
+
+                                    <!-- fieldsets -->
+                                    <fieldset *ngIf="validateapprovePatent">
+                                      <div class="form-card">
+                                        <div class="form_header text-center">
+                                          <h2 class="fs-title">Please Approve or Decline Authorship to this paper</h2>
+                                        </div>
+                                      </div>
+                                      <button type="button" name="next" class="next btn-outline-blue"
+                                        (click)="approveboxPatent(item.patentId)">Approve</button>
+                                      <button type="button" name="next" class="next btn-outline-red"
+                                        style="margin-left: 20px;" (click)="deleteboxPatent()">Deny</button>
+                                    </fieldset>
+                                    <fieldset *ngIf="validateyesnoPatent">
+                                      <div class="form-card">
+                                        <div class="form_header text-center"> <span
+                                            class="fa fa-trash text-3x text-blue"></span>
+                                          <h2 class="fs-title">Are you sure you want to delete this patent?</h2>
+                                        </div>
+                                      </div>
+                                      <button type="button" name="next" class="next btn-outline-blue"
+                                        (click)="yesornoboxPatent(item.patentId)">Yes</button>
+                                    </fieldset>
+                                    <fieldset *ngIf="donePat">
+                                      <div class="form-card">
+                                        <div class="form_header text-center"> <span><img
+                                              src="assets/given/img/success-icon.gif" alt="" /></span>
+                                          <h2 class="fs-title"><strong>Congratulations !</strong><br>
+                                            You have verified the Authorship of this patent</h2>
+                                        </div>
+                                      </div>
+                                      <button type="button" class="btn-outline-blue" data-dismiss="modal"
+                                        aria-label="Close" (click)=" doneboxPatent()">Done</button>
+                                    </fieldset>
+                                    <fieldset *ngIf="validatedenyPatent">
+                                      <div class="form-card">
+                                        <div class="form_header text-center">
+                                          <h2 class="fs-title">Your Patent is Deleted !</h2>
+                                        </div>
+                                      </div>
+                                      <button type="button" class="btn-outline-blue" data-dismiss="modal"
+                                        aria-label="Close" (click)=" doneboxPatent()">Done</button>
+                                    </fieldset>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <p class="validated" *ngIf="item.authorVerifiedStatus!=null">Validated</p>
+                        
+                          </div>
+                        <!-- <div class="block"> <a href="#" class="dropbox_btn" data-toggle="modal" data-target="#dropbox">Dropbox</a> <a href="#" class="validate_btn" data-toggle="modal" data-target="#validate">Validate</a> </div> -->
+                        <div class="article_data detail_content">
+                          <p [ngClass]="{'not-available':item.filed == 0||item.filed=='-'}">Filed</p>
+                          <p [ngClass]="{'not-available':item.published == 0||item.published=='-'}">Published</p>
+                          <p [ngClass]="{'not-available':item.ferIssued == 0||item.ferIssued=='-'}">FER<br>Issued</p>
+                          <p class="none">Stages</p>
+                          <p [ngClass]="{'not-available':item.ferReply == 0||item.ferReply=='-'}">FER<br>Replied</p>
+                          <p [ngClass]="{'not-available':item.hearNotice == 0||item.hearNotice=='-'}">Hearing<br>Notice</p>
+						            	<p [ngClass]="{'not-available':item.granted == 0||item.granted=='-'}">Granted</p>
+                        </div>
+						  <div class="article_btn"> 
+                <!-- <a href="#" class="link_btn share">Share</a>  -->
+                <!-- <a class="link_btn cite" data-toggle="modal" data-target="#myModal1" (click)="opencitePatent(showModalPatent)">Cite</a>  -->
+                          <!-- Modal -->           
+                              <ng-template #showModalPatent let-modal style="position: relative;">
+                                <div style="position:fixed;display:block;width: 800px;top: 150px;">
+                                  <div>
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <p class="modal-title" id="myModalLabel1" style="width: 100%;">Citation Model 1</p>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span> </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div role="tabpanel"> 
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                      <li role="presentation" class="active" (click)="selectedTabPatent = 'apa'"
+                                        [class.active]="selectedTabPatent === 'apa'">
+                                        <a role="tab" data-toggle="tab" aria-controls="apa">APA</a>
+                                      </li>
+                                      <li role="presentation" (click)="selectedTabPatent = 'mla'"
+                                        [class.active]="selectedTabPatent === 'mla'">
+                                        <a role="tab" data-toggle="tab" aria-controls="mla">MLA</a>
+                                      </li>
+                                      <li role="presentation" (click)="selectedTabPatent = 'chicago'"
+                                        [class.active]="selectedTabPatent === 'chicago'">
+                                        <a role="tab" data-toggle="tab" aria-controls="chicago">Chicago</a>
+                                      </li>
+                                      <li role="presentation" (click)="selectedTabPatent = 'harvard'"
+                                        [class.active]="selectedTabPatent === 'harvard'">
+                                        <a role="tab" data-toggle="tab" aria-controls="harvard">Harvard</a>
+                                      </li>
+                                      <li role="presentation" (click)="selectedTabPatent = 'vancouver'"
+                                        [class.active]="selectedTabPatent === 'vancouver'">
+                                        <a role="tab" data-toggle="tab" aria-controls="vancouver">Vancouver</a>
+                                      </li>
+                                    </ul>
+    
+                                    <!-- Tab panes -->
+                                    <div class="tab-content" style="display: block;">
+                                      <div [ngSwitch]="selectedTabPatent">
+                                        <div role="tabpanel" class="tab-pane current" *ngSwitchCase="'apa'">
+                                          <!-- <p><span *ngFor="let t of item.applicantAffiliation">{{t.split(',')[0]}},
+                                            </span></p> -->
+                                          <p><span>("{{item.patentTitle}}"
+                                            <!-- . {{d.sourcePublication}},
+                                              {{d.volumeNumber}}({{d.issueNumber}}),Page
+                                              {{d.bPage}} - {{d.ePage}}. -->
+                                            </span></p>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" *ngSwitchCase="'mla'">
+                                          <!-- <p><span *ngFor="let t of item.applicants">{{t}},
+                                            </span></p> -->
+                                            <p><span>("{{item.domain}}"
+                                              <!-- . {{d.sourcePublication}},
+                                                {{d.volumeNumber}}({{d.issueNumber}}),Page
+                                                {{d.bPage}} - {{d.ePage}}. -->
+                                              </span></p>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" *ngSwitchCase="'chicago'">
+                                          <!-- <p><span *ngFor="let t of d.authorAffiliation">{{t.split(',')[0]}},
+                                            </span></p> -->
+                                            <p><span>("{{item.patentTitle}}"
+                                              <!-- . {{d.sourcePublication}},
+                                                {{d.volumeNumber}}({{d.issueNumber}}),Page
+                                                {{d.bPage}} - {{d.ePage}}. -->
+                                              </span></p>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" *ngSwitchCase="'harvard'">
+                                          <!-- <p><span *ngFor="let t of d.authorAffiliation">{{t.split(',')[0]}},
+                                            </span></p> -->
+                                            <p><span>("{{item.patentTitle}}"
+                                              <!-- . {{d.sourcePublication}},
+                                                {{d.volumeNumber}}({{d.issueNumber}}),Page
+                                                {{d.bPage}} - {{d.ePage}}. -->
+                                              </span></p>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" *ngSwitchCase="'vancouver'">
+                                          <!-- <p><span *ngFor="let t of d.authorAffiliation">{{t.split(',')[0]}},
+                                            </span></p> -->
+                                            <p><span>("{{item.patentTitle}}"
+                                              <!-- . {{d.sourcePublication}},
+                                                {{d.volumeNumber}}({{d.issueNumber}}),Page
+                                                {{d.bPage}} - {{d.ePage}}. -->
+                                              </span></p>
+                                        </div>
+                                      </div>
+                                    </div>   
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              </div>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </div> 
+                  </article>
+                </div>
+                <div class="paginate" style="padding-left: 50%;margin-top: 3%;">
+                  <ngb-pagination [(page)]="pagePat" [pageSize]="pageSizePat" [collectionSize]="collapsablesizePat"
+                    (pageChange)="onPageChangePatent($event)">
+                  </ngb-pagination>
+                  <br>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+           <!-- Edited Publications -->
+
+           <div class="row" style="font-family: 'Open Sans', sans-serif;background-attachment: fixed !important;
+           background: var(--background-white) repeat top center;font-size: 14px;color: #000;" *ngIf="enableEditedPub">
+             <div [ngClass]="{'container container-w90': isMenuOpen, 'container': !isMenuOpen}">
+               <div class="row">
+                 <div class="col-lg-12">
+                   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                     <div class="panel-title" role="tab" id="headingOne">
+                       <h4 class="panel-title"> <a style="color: #fff;" role="button" data-toggle="collapse"
+                           data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne"
+                           [ngClass]="{'': enableChartEditedPub, 'collapsed': !enableChartEditedPub}" (click)="showChartEditedPub()"> Edited Publications
+                           <span>({{collapsablesizeEditPub}})</span> </a> </h4>
+                       <div id="collapseOne"
+                         [ngClass]="{'panel-collapse collapse in': enableChartEditedPub, 'panel-collapse collapse': !enableChartEditedPub}"
+                         role="tabpanel" aria-labelledby="headingOne" style="background: white;">
+                         <div class="panel-body">
+                           <div class="faculty_charts">
+                             <div class="col-lg-4">
+                               <p class="chart-head">Affiliation Scorecard</p>
+                               <div class="chart">
+                                 <div class="row">
+                                   <div class="col-md-12">
+                                     <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+                             <div class="col-lg-4">
+                               <p class="chart-head">Article Type Scorecard</p>
+                               <div class="chart">
+                                 <div class="row">
+     
+                                   <div class="col-md-12">
+                                     <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+                             <div class="col-lg-4">
+                               <p class="chart-head">Database Scorecard</p>
+                               <div class="chart">
+                                 <div class="row">
+                                   <div class="col-md-12">
+                                     <!-- <div id="chartdiv" width="100%" height="auto"></div> -->
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+     
+                   </div>
+                 </div>
+               </div>
+               <div class="row">
+                 <div class="col-lg-12">
+                   <div class="publication_list row">
+                     <div class="col-lg-12">
+                       <div class="filter">
+                         <div class="sort"> <span class="custom-dropdown">
+                           <label class="control-label heading_sm">Sort</label>
+                         </span> <span class="custom-dropdown">
+                           <select [(ngModel)]="ascendValueEditPub" (change)="changesOrderEditPub(ascendValueEditPub)">
+                             <option *ngFor="let order of orderSort">
+                               {{order}}
+                             </option>
+                           </select>
+                         </span> </div>
+                         <!-- <div class="view"> <span class="custom-dropdown">
+                             <label class="control-label heading_sm">View</label>
+                             <select id="view_option" name="view_option" (change)="onViewChangePatent($event)">
+                               <option value="detailed">Detailed</option>
+                               <option value="compact" selected>Compact</option>
+                             </select>
+                           </span> </div> -->
+                           <div class="view"> <span class="custom-dropdown">
+                             <label class="control-label">Paginate</label>
+                             <select [(ngModel)]="pageSizeEditPub" (change)="onPageSizeChangeEditPub($event.target.value)">
+                               <option *ngFor="let dropcount of pageSizecountEditPub" [value]="dropcount">{{dropcount}}</option>
+                             </select>
+                           </span> </div>
+                         <div class="view"><span class="custom-dropdown">
+                             <h6 class="tweet" style="font-size: 18px;font-weight: bold;"> Showing {{ startrowEditPub + 1 }} to {{
+                               endrowEditPub}} of {{this.collapsablesizeEditPub}} records</h6>
+                           </span></div>
+                        
+                       </div>
+                     </div>
+                     <div class="result col-lg-12">
+                      <div *ngFor="let d of editedPubList | slice:(pageEditPub-1)*pageSizeEditPub:(pageEditPub-1)*pageSizeEditPub+pageSizeEditPub;let i=index">
+                        <article
+                          [ngClass]="'tagged_' + (d.isInHouse == 1 ? 'home' : 'away') + ' ' + d.articleType + ' ' + selectedView">
+                          <div class="row">
+                            <div class="col-lg-9">
+                              <div class="article_header">
+                                <h2 class="a_title">
+                                  <span class="sl_no"
+                                    [ngClass]="{'homeColor':d.isInHouse == 1 , 'awayColor': d.isInHouse == 0}">{{ i + 1 +
+                                    (page - 1) * pageSize }}</span>
+                                  <span
+                                    [routerLink]="['/article/art',d.publicationId,this.userIdparam || '',backbuttonflag]"
+                                    style="cursor: pointer; font-weight: bold;font-family: 'Red Hat Display', sans-serif;">{{d.publicationTitle}}</span>
+                                </h2>
+                                <i style="font-family: 'Red Hat Display', sans-serif;font-style: normal;">{{d.year}} {{d.sourcePublication}}, <span *ngIf="d.volumeNumber" >Volume {{d.volumeNumber}},</span> <span *ngIf="d.issueNumber" >Issue {{d.issueNumber}},</span>
+                                  <span *ngIf="d.bPage" >Page {{d.bPage}} - {{d.ePage}};</span> <span *ngIf="d.issn" >P-ISSN: {{d.issn}},</span><span *ngIf="d.eissn"> E-ISSN: {{d.eissn}}; </span></i>
+    
+                              </div>
+                              <!-- <div class="detail_content article_body">
+                                <div class="article_scores flex" *ngIf="d.publicationSourceDBMetrics!=null" style="flex-wrap: wrap;">
+                                  <div *ngFor="let item of d.publicationSourceDBMetrics">
+                                    <p *ngIf="!item.includes('-')" style="border-left: unset !important;padding: 0px 3px !important;">{{item}};</p>
+                                  </div>
+                                  <br><br>
+                                </div>
+                                <div class="flex flex-row published">
+                                      <i *ngIf="d.onlineDate" style="font-family: 'Red Hat Display', sans-serif;font-style: normal;">Published Online: <span>{{d.onlineDate|date:'dd-MM-yyyy'}}</span></i> 
+                                      <i *ngIf="d.printDate" style="font-family: 'Red Hat Display', sans-serif;font-style: normal;">Published Print: <span>{{d.printDate|date:'dd-MM-yyyy'}}</span></i>
+                                  </div>
+                                <p class="a_text" style="font-family: 'Red Hat Display', sans-serif;letter-spacing: unset;line-height: unset;">{{d.abstract}}</p>
+    
+                              </div> -->
+    
+                            </div>
+                            <div class="col-lg-3 flex flex-valign-stretch flex-wrap flex-align-right" >                      
+                            </div>
+                          </div>
+                          <div class="row flex flex-valign-bottom">
+                            <div class="col-lg-9">
+                              <div class="article_footer" *ngIf="d.authorAffiliation != null">
+                                <div *ngIf="d.authorAffiliation.length > 1">
+                                <div class="a_author_editpub" >
+                                </div>
+                                  <a class="tooltip1" 
+                                    *ngFor="let t of (expandedItems.includes(d) ? d.authorAffiliation : d.authorAffiliation.slice(0, 5))" 
+                                    (click)="printNumber(t)" 
+                                    [ngClass]="{'highlightedName': hasBrackets(t)}">
+                                    {{ getNameWithoutBrackets(t) | titlecase }}
+                                    <span class="tooltiptext">{{ getAffiliationWithoutBrackets(t) }}</span>
+                                  </a>
+                                  <ng-container *ngIf="d.authorAffiliation.length > 5">
+                                    <a class="showMore" (click)="toggleExpansion(d)">{{ expandedItems.includes(d) ? 'Show Less' : 'Show More' }}</a>
+                                  </ng-container>                                           
+                              </div>
+                              <div *ngIf="d.authorAffiliation.length === 1">
+                                <div class="a_author_editpub" >
+                                </div>
+                                  <a class="tooltip1" (click)="printNumber(d.authorAffiliation[0])" [ngClass]="{'highlightedName': hasBrackets(d.authorAffiliation[0])}">{{getNameWithoutBrackets(d.authorAffiliation[0])| titlecase }}<span
+                                      class="tooltiptext">{{getAffiliationWithoutBrackets(d.authorAffiliation[0])}}</span></a>
+                                </div>
+                              </div>
+
+                              <!-- Edit  -->
+
+                            <div class="article_footer" *ngIf="d.editorAffiliation != null &&d.isEditedPublication=='1'">
+                              <div *ngIf="d.editorAffiliation.length > 1">
+                              <div  class="a_edit_author">
+                              </div>
+                                <a class="tooltip1" 
+                                  *ngFor="let t of (expandedItems.includes(d) ? d.editorAffiliation : d.editorAffiliation.slice(0, 5))" 
+                                  (click)="printNumber(t)" 
+                                  [ngClass]="{'highlightedName': hasBrackets(t)}">
+                                  {{ getNameWithoutBrackets(t) | titlecase }}
+                                  <span class="tooltiptext">{{ getAffiliationWithoutBrackets(t) }}</span>
+                                </a>
+                                <ng-container *ngIf="d.editorAffiliation.length > 5">
+                                  <a class="showMore" (click)="toggleExpansion(d)">{{ expandedItems.includes(d) ? 'Show Less' : 'Show More' }}</a>
+                                </ng-container>                
+                              
+                            </div>
+                            <div *ngIf="d.editorAffiliation.length === 1">
+                              <div class="a_edit_author">
+                              </div>
+                                <a class="tooltip1" (click)="printNumber(d.editorAffiliation[0])" [ngClass]="{'highlightedName': hasBrackets(d.editorAffiliation[0])}">{{getNameWithoutBrackets(d.editorAffiliation[0])| titlecase }}<span
+                                    class="tooltiptext">{{getAffiliationWithoutBrackets(d.editorAffiliation[0])}}</span></a>
+                              </div>
+                            </div>
+                              <!-- <div class="detail_content article_footer">
+                                <p class="a_data" style="margin-bottom: 15px;line-height: unset;letter-spacing: unset;font-family: 'Red Hat Display', sans-serif;">DOI: {{d.doi}}</p>
+                                <a [href]="d.link" target="_blank" style="margin-bottom: 15px;line-height: unset;letter-spacing: unset;font-family: 'Red Hat Display', sans-serif;color: #0051bf !important;">WebLink: <span  class="doiLink">{{d.link}}</span></a>
+                                <p class="heading_sm">Research Focus Areas: </p>
+                                <p style="line-height: unset;letter-spacing: unset;font-family: 'Red Hat Display', sans-serif;">{{d.technologyAreas}}</p>
+                              </div> -->
+
+                            </div>
+                          </div>
+                        </article>
+                      </div>
+                      <div class="paginate" style="margin-left: 50%;margin-top: 3%;">
+                        <ngb-pagination [(page)]="pageEditPub" [pageSize]="pageSizeEditPub" [collectionSize]="collapsablesizeEditPub"
+                          (pageChange)="onPageChangeEditPub($event)" [maxSize]="3">
+                        </ngb-pagination>
+                        <br>
+                      </div>
+                    </div>
+                   </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             <!-- Design patent -->
+             <div class="row" style="font-family: 'Open Sans', sans-serif;background-attachment: fixed !important;
+             background: var(--background-white) repeat top center;font-size: 14px;color: #000;" *ngIf="designpatent">
+               <div [ngClass]="{'container container-w90': isMenuOpen, 'container': !isMenuOpen}">
+                 <div class="row">
+                   <div class="col-lg-12">
+                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                       <div class="panel-title" role="tab" id="headingOne">
+                         <h4 class="panel-title"> <a style="color: #fff;" role="button" data-toggle="collapse"
+                             data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne"
+                             [ngClass]="{'': enableChartdesignPat, 'collapsed': !enableChartdesignPat}" (click)="showChartdesignPatents()"> Design Patent
+                             <span>({{collapsablesizedesignPat}})</span> </a> </h4>
+                         <div id="collapseOne"
+                           [ngClass]="{'panel-collapse collapse in': enableChartdesignPat, 'panel-collapse collapse': !enableChartdesignPat}"
+                           role="tabpanel" aria-labelledby="headingOne" style="background: white;">
+                           <div class="panel-body">
+                             <div class="faculty_charts">
+                               <div class="col-lg-4">
+                                 <p class="chart-head">Affiliation Scorecard</p>
+                                 <div class="chart">
+                                   <div class="row">
+                                     <div class="col-md-12">
+                                       <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-lg-4">
+                                 <p class="chart-head">Article Type Scorecard</p>
+                                 <div class="chart">
+                                   <div class="row">
+             
+                                     <div class="col-md-12">
+                                       <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-lg-4">
+                                 <p class="chart-head">Database Scorecard</p>
+                                 <div class="chart">
+                                   <div class="row">
+                                     <div class="col-md-12">
+                                       <!-- <div id="chartdiv" width="100%" height="auto"></div> -->
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+             
+                     </div>
+                   </div>
+                 </div>
+                 <div class="row">
+                   <div class="col-lg-12">
+                     <div class="publication_list row">
+                       <div class="col-lg-12">
+                         <div class="filter">
+                           <div class="sort"> <span class="custom-dropdown">
+                             <label class="control-label heading_sm">Sort</label>
+                           </span> <span class="custom-dropdown">
+                             <select [(ngModel)]="ascendValue" (change)="changesOrderdesignPatent(ascendValue)">
+                               <option *ngFor="let order of orderSort">
+                                 {{order}}
+                               </option>
+                             </select>
+                           </span> </div>
+                           <div class="view"> <span class="custom-dropdown">
+                               <label class="control-label heading_sm">View</label>
+                               <select id="view_option" name="view_option" (change)="onViewChangedesignPatent($event)">
+                                 <option value="detailed">Detailed</option>
+                                 <option value="compact" selected>Compact</option>
+                               </select>
+                             </span> </div>
+                             <div class="view"> <span class="custom-dropdown">
+                               <label class="control-label">Paginate</label>
+                               <select [(ngModel)]="pageSizedesignPat" (change)="onPageSizeChangedesignPatent($event.target.value)">
+                                 <option *ngFor="let dropcount of pageSizecountdesignPat" [value]="dropcount">{{dropcount}}</option>
+                               </select>
+                             </span> </div>
+                           <div class="view"><span class="custom-dropdown">
+                               <h6 class="tweet" style="font-size: 18px;font-weight: bold;"> Showing {{ startrowdesignPat + 1 }} to {{
+                                 endrowdesignPat}} of {{this.collapsablesizedesignPat}} records</h6>
+                             </span></div>
+                           <!-- <input *ngIf="roleId==2" type="button" class="btn-solid-blue float-right" data-toggle="modal"
+                             data-target="#add_new" (click)="enableAddPatent()" value="+ Add New"> -->
+                         </div>
+                       </div>
+                       <div class="result col-lg-12" *ngFor="let item of dataList| slice:(pagedesignPat-1)*pageSizedesignPat:(pagedesignPat-1)*pageSizedesignPat+pageSizedesignPat;let i=index">
+                         <article class="compact">
+                           <div style="display: flex;flex-wrap: nowrap;">
+                            <!-- <p class="tag_text" style="font-size: 12px;">{{item.patentApplicantTypeName}} |</p> -->
+                           <p class="tag_text" style="font-size: 12px;padding-left: 20px;">{{item.designPatentStageName}} | </p>
+                            <p class="text-sm mb-0x" style="padding-left: 20px;">{{item.designPatentOfficeName}}</p>
+                           </div>
+                           <div class="row flex">
+                             <div class="col-lg-8">
+                               <div class="article_header">
+
+                                 <h2 class="a_title" style="font-weight: bold;flex-wrap: nowrap;font-size: 16px;">
+                                  <span class="sl_no">{{ i + 1 +(page - 1) * pageSize }}</span>   
+                                    <span style="width: 25%;">{{item.designPatentNumber}}</span>
+                                    <span>{{item.designPatentTitle}}</span>			
+                                  </h2>
+
+                                    <i style="display: flex;width: 100%;"><span style="display: block;float: left;padding: 0 15px;">Filing Date: {{item.filingDate}}</span>
+                                    <span style="display: block;float: left;padding: 0 15px;">Accepted Date: {{item.acceptedDate}}</span>
+                                    <span style="display: block;float: left;padding: 0 15px;">RenewalDate Date: {{item.renewalDate}}</span></i>
+                                            </div>
+                                            <div class="article_footer">
+                                
+                                              <div class="a_author applicant"><table><tbody>
+                                                <tr><td>Applicants:</td>
+                                                  <div *ngIf="item.applicantAffiliation!=null" >
+                                                <td *ngIf="item.applicantAffiliation.length>1" >
+                                                  <a class="tooltip1" *ngFor="let r of item.applicantAffiliation" >{{r.split(',')[0]}} 
+                                                  <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                                                </a>
+                                                  </td>
+                                                  <td *ngIf="item.applicantAffiliation.length===1" >
+                                                  <a class="tooltip1">{{item.applicantAffiliation[0].split(',')[0]}} 
+                                                  <span class="tooltiptext">{{item.applicantAffiliation[0].split(',')[1]}},{{item.applicantAffiliation[0].split(',')[2]}},{{item.applicantAffiliation[0].split(',')[3]}},{{item.applicantAffiliation[0].split(',')[4]}},{{item.applicantAffiliation[1].split(',')[5]}}</span>
+                                                </a>
+                                                  </td>
+                                                </div>
+                                                </tr></tbody></table></div>	
+                                              
+                                            </div>
+                                            <div class="detail_content article_footer">
+                                              <!-- <p class="a_data" style="margin-bottom: 15px;"><strong>URL:</strong> <a  target="_blank" class="btn-link-black"></a></p> -->
+                                              <p class="heading_sm">Research Focus Areas:</p>
+                                              <p style="margin-bottom: 0;">{{item.technologyAreas}} </p>
+                                
+                              </div>
+
+                             </div>
+
+                             <div class="col-lg-2">
+                                   <img *ngIf="item.enabledesignImage"  [src]="item.designPatentImagePath" style="height: 120px;width: 100%;image-rendering: -webkit-optimize-contrast;" alt="">
+                             </div>
+
+                             <div class="col-lg-2 flex flex-valign-center">         
+                                      <table class="project score">
+                                        <tbody>
+                                          <tr [ngClass]="{'not-available':item.filed == 0||item.designPatentStageLifeCycle==null}">
+                                          <td class="text-align-r colon-right">Filed</td>
+                                          <td *ngIf="item.filed == 1" >Yes</td>
+                                          <td *ngIf="item.filed == 0||item.designPatentStageLifeCycle==null" >-</td>
+                                        </tr>
+                                        <tr [ngClass]="{'not-available':item.Accepted == 0||item.designPatentStageLifeCycle==null}">
+                                          <td class="text-align-r colon-right">Accepted</td>
+                                          <td *ngIf="item.Accepted == 1" >Yes</td>
+                                          <td *ngIf="item.Accepted== 0||item.designPatentStageLifeCycle==null" >-</td>
+                                        </tr>
+
+                                        <!-- <tr [ngClass]="{'not-available':item.Renewed== 0||item.designPatentStageLifeCycle==null}">
+                                          <td class="text-align-r colon-right">Renewed</td>
+                                          <td *ngIf="item.Renewed == 1" >Yes</td>
+                                          <td *ngIf="item.Renewed == 0||item.designPatentStageLifeCycle==null" >-</td>
+                                        </tr>								 -->
+                                      </tbody></table>                    
+                             </div>
+                          
+                           </div> 
+                         </article>
+                       </div>
+                       <div class="paginate" style="padding-left: 50%;margin-top: 3%;">
+                         <ngb-pagination [(page)]="pagedesignPat" [pageSize]="pageSizedesignPat" [collectionSize]="collapsablesizedesignPat"
+                           (pageChange)="onPageChangedesignPatent($event)">
+                         </ngb-pagination>
+                         <br>
+                       </div>
+                     </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+
+             <!-- Trademark -->
+               <div class="row" style="font-family: 'Open Sans', sans-serif;background-attachment: fixed !important;
+               background: var(--background-white) repeat top center;font-size: 14px;color: #000;" *ngIf="trademarkTabenable">
+                 <div [ngClass]="{'container container-w90': isMenuOpen, 'container': !isMenuOpen}">
+                   <div class="row">
+                     <div class="col-lg-12">
+                       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                         <div class="panel-title" role="tab" id="headingOne">
+                           <h4 class="panel-title"> <a style="color: #fff;" role="button" data-toggle="collapse"
+                               data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne"
+                               [ngClass]="{'': enableChartTM, 'collapsed': !enableChartTM}" (click)="showChartTM()"> Trademarks
+                               <span>({{collapsablesizeTm}})</span> </a> </h4>
+                           <div id="collapseOne"
+                             [ngClass]="{'panel-collapse collapse in': enableChartTM, 'panel-collapse collapse': !enableChartTM}"
+                             role="tabpanel" aria-labelledby="headingOne" style="background: white;">
+                             <div class="panel-body">
+                               <div class="faculty_charts">
+                                 <div class="col-lg-4">
+                                   <p class="chart-head">Affiliation Scorecard</p>
+                                   <div class="chart">
+                                     <div class="row">
+                                       <div class="col-md-12">
+                                         <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                                       </div>
+                                     </div>
+                                   </div>
+                                 </div>
+                                 <div class="col-lg-4">
+                                   <p class="chart-head">Article Type Scorecard</p>
+                                   <div class="chart">
+                                     <div class="row">
+               
+                                       <div class="col-md-12">
+                                         <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                                       </div>
+                                     </div>
+                                   </div>
+                                 </div>
+                                 <div class="col-lg-4">
+                                   <p class="chart-head">Database Scorecard</p>
+                                   <div class="chart">
+                                     <div class="row">
+                                       <div class="col-md-12">
+                                         <!-- <div id="chartdiv" width="100%" height="auto"></div> -->
+                                       </div>
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+               
+                       </div>
+                     </div>
+                   </div>
+                   <div class="row">
+                     <div class="col-lg-12">
+                       <div class="publication_list row">
+                         <div class="col-lg-12">
+                           <div class="filter">
+                             <div class="sort"> <span class="custom-dropdown">
+                               <label class="control-label heading_sm">Sort</label>
+                             </span> <span class="custom-dropdown">
+                               <select [(ngModel)]="ascendValueTm" (change)="changesOrderTm(ascendValueTm)">
+                                 <option *ngFor="let order of orderSort">
+                                   {{order}}
+                                 </option>
+                               </select>
+                             </span> </div>
+                             <div class="view"> <span class="custom-dropdown">
+                                 <label class="control-label heading_sm">View</label>
+                                 <select id="view_option" name="view_option" (change)="onViewChangeTm($event)">
+                                   <option value="detailed">Detailed</option>
+                                   <option value="compact" selected>Compact</option>
+                                 </select>
+                               </span> </div>
+                               <div class="view"> <span class="custom-dropdown">
+                                 <label class="control-label">Paginate</label>
+                                 <select [(ngModel)]="pageSizeTm" (change)="onPageSizeChangeTM($event.target.value)">
+                                   <option *ngFor="let dropcount of pageSizecountdesignPat" [value]="dropcount">{{dropcount}}</option>
+                                 </select>
+                               </span> </div>
+                             <div class="view"><span class="custom-dropdown">
+                                 <h6 class="tweet" style="font-size: 18px;font-weight: bold;"> Showing {{ startrowTm + 1 }} to {{
+                                   endrowTm}} of {{this.collapsablesizeTm}} records</h6>
+                               </span></div>
+                             <!-- <input *ngIf="roleId==2" type="button" class="btn-solid-blue float-right" data-toggle="modal"
+                               data-target="#add_new" (click)="enableAddPatent()" value="+ Add New"> -->
+                           </div>
+                         </div>
+                         <div class="result col-lg-12" *ngFor="let item of tradeList| slice:(pageTm-1)*pageSizeTm:(pageTm-1)*pageSizeTm+pageSizeTm;let i=index">
+                           <article class="compact">
+                             <div style="display: flex;flex-wrap: nowrap;">
+                              <p class="tag_text" style="font-size: 12px;">{{item.trademarkTypeName}} |</p>
+                             <p class="tag_text" style="font-size: 12px;padding-left: 20px;" *ngIf="item.trademarkStageName!=null" >{{item.trademarkStageName}} | </p>
+                              <p class="text-sm mb-0x" style="padding-left: 20px;">{{item.trademarkOfficeName}}</p>
+                             </div>
+                             <div class="row flex">
+                               <div class="col-lg-8">
+                                 <div class="article_header">
+                                   <h2 class="a_title" style="font-weight: bold;flex-wrap: nowrap;font-size: 16px;"><span class="sl_no">{{ i + 1 +(page - 1) * pageSize }}</span>
+                                          <!-- <div style="margin-right: 15px;"> -->
+                                            <span style="margin-right: 25px;width: max-content;">{{item.applicationNumber}}</span>
+                                          <!-- </div> -->
+                                        <span>{{item.trademarkTitle}}</span>			
+                                        </h2>
+                                          <i style="display: flex;width: 100%;"><span style="display: block;float: left;padding: 0 15px;">Filing Date: {{item.filingDate}}</span>
+                                          <span style="display: block;float: left;padding: 0 15px;">Registered Date: {{item.registeredDate}}</span>
+                                          <span style="display: block;float: left;padding: 0 15px;">Expiry Date: {{item.expiryDate}}</span></i>
+                                                  </div>
+                                                  <div class="article_footer">
+                                      
+                                                    <div class="a_author applicant"><table><tbody>
+                                                      <tr><td>Applicants:</td>
+                                                        <div *ngIf="item.applicantAffiliation!=null" >
+                                                      <td>
+                                                        <a class="tooltip1" *ngFor="let r of item.applicantAffiliation" >{{r.split(',')[0]}} 
+                                                        <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                                                      </a>
+                                                        </td>
+                                                        <!-- <td *ngIf="item.applicantAffiliation.length===1" >
+                                                        <a class="tooltip1">{{item.applicantAffiliation[0].split(',')[0]}} 
+                                                        <span class="tooltiptext">{{item.applicantAffiliation[0].split(',')[1]}},{{item.applicantAffiliation[0].split(',')[2]}},{{item.applicantAffiliation[0].split(',')[3]}},{{item.applicantAffiliation[0].split(',')[4]}},{{item.applicantAffiliation[1].split(',')[5]}}</span>
+                                                      </a>
+                                                        </td> -->
+                                                      </div>
+                                                      </tr></tbody></table></div>	
+                                                    
+                                                  </div>
+                                                  <!-- <div class="detail_content article_footer">
+                                                    
+                                                    <p class="heading_sm">Research Focus Areas:</p>
+                                                    <p style="margin-bottom: 0;">{{item.technologyAreas}} </p>
+                                                    
+                                                  </div> -->
+  
+                               </div>
+
+                               <div class="col-lg-2">
+                                <img *ngIf="item.enableTradeImage"  [src]="item.trademarkImagePath" style="height: 120px;width: 100%;image-rendering: -webkit-optimize-contrast;" alt="">
+                              </div>
+
+                               <div class="col-lg-2 flex flex-valign-center">         
+                                <table class="project score">
+                                  <tbody>
+                                    <tr [ngClass]="{'not-available':item.filed == 0||item.trademarkStageLifeCycle==null}">
+                                    <td class="text-align-r colon-right">Filed</td>
+                                    <td *ngIf="item.filed == 1" >Yes</td>
+                                    <td *ngIf="item.filed == 0||item.trademarkStageLifeCycle==null" >-</td>
+                                  </tr>
+                                  <tr [ngClass]="{'not-available':item.Examined == 0||item.trademarkStageLifeCycle==null}">
+                                    <td class="text-align-r colon-right">Examined</td>
+                                    <td *ngIf="item.Examined == 1" >Yes</td>
+                                    <td *ngIf="item.Examined== 0||item.trademarkStageLifeCycle==null" >-</td>
+                                  </tr>
+            
+                                  <tr [ngClass]="{'not-available':item.Registered== 0||item.trademarkStageLifeCycle==null}">
+                                    <td class="text-align-r colon-right">Registered</td>
+                                    <td *ngIf="item.Registered == 1" >Yes</td>
+                                    <td *ngIf="item.Registered == 0||item.trademarkStageLifeCycle==null" >-</td>
+                                  </tr>	
+                                  
+                                  <tr [ngClass]="{'not-available':item.Expired== 0||item.trademarkStageLifeCycle==null}">
+                                    <td class="text-align-r colon-right">Expired</td>
+                                    <td *ngIf="item.Expired == 1" >Yes</td>
+                                    <td *ngIf="item.Expired == 0||item.trademarkStageLifeCycle==null" >-</td>
+                                  </tr>
+                                </tbody></table>                    
+                                        </div>
+                                      
+                                      </div> 
+                                    </article>
+                         </div>
+                         <div class="paginate" style="padding-left: 50%;margin-top: 3%;">
+                           <ngb-pagination [(page)]="pageTm" [pageSize]="pageSizeTm" [collectionSize]="collapsablesizeTm"
+                             (pageChange)="onPageChangeTM($event)">
+                           </ngb-pagination>
+                           <br>
+                         </div>
+                       </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+
+             <!-- Copyrights -->
+
+             <div class="row" style="font-family: 'Open Sans', sans-serif;background-attachment: fixed !important;
+      background: var(--background-white) repeat top center;font-size: 14px;color: #000;" *ngIf="enableCopyright">
+        <div [ngClass]="{'container container-w90': isMenuOpen, 'container': !isMenuOpen}">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel-title" role="tab" id="headingOne">
+                  <h4 class="panel-title"> <a style="color: #fff;" role="button" data-toggle="collapse"
+                      data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne"
+                      [ngClass]="{'': enableChartCpy, 'collapsed': !enableChartCpy}" (click)="showChartCopyright()"> Copyrights
+                      <span>({{collapsablesizeCpy}})</span> </a> </h4>
+                  <div id="collapseOne"
+                    [ngClass]="{'panel-collapse collapse in': enableChartCpy, 'panel-collapse collapse': !enableChartCpy}"
+                    role="tabpanel" aria-labelledby="headingOne" style="background: white;">
+                    <div class="panel-body">
+                      <div class="faculty_charts">
+                        <div class="col-lg-4">
+                          <p class="chart-head">Affiliation Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="chart-head">Article Type Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+
+                              <div class="col-md-12">
+                                <!-- <div id="chartdiv" width="100%" height="600px"></div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="chart-head">Database Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <!-- <div id="chartdiv" width="100%" height="auto"></div> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="publication_list row">
+                <div class="col-lg-12">
+                  <div class="filter">
+                    <div class="sort"> <span class="custom-dropdown">
+                      <label class="control-label heading_sm">Sort</label>
+                    </span> <span class="custom-dropdown">
+                      <select [(ngModel)]="ascendValueCpy" (change)="changesOrderCpy(ascendValueCpy)">
+                        <option *ngFor="let order of orderSort">
+                          {{order}}
+                        </option>
+                      </select>
+                    </span> </div>
+                    <div class="view"> <span class="custom-dropdown">
+                        <label class="control-label heading_sm">View</label>
+                        <select id="view_option" name="view_option" (change)="onViewChangeCpy($event)">
+                          <option value="detailed">Detailed</option>
+                          <option value="compact" selected>Compact</option>
+                        </select>
+                      </span> </div>
+                      <div class="view"> <span class="custom-dropdown">
+                        <label class="control-label">Paginate</label>
+                        <select [(ngModel)]="pageSizeCpy" (change)="onPageSizeChangeCpy($event.target.value)">
+                          <option *ngFor="let dropcount of pageSizecountPat" [value]="dropcount">{{dropcount}}</option>
+                        </select>
+                      </span> 
+                     </div>
+                    <div class="view"><span class="custom-dropdown">
+                        <h6 class="tweet" style="font-size: 18px;font-weight: bold;"> Showing {{ startrowCpy + 1 }} to {{
+                          endrowCpy}} of {{this.collapsablesizeCpy}} records</h6>
+                      </span></div>
+       
+                  </div>
+                </div>
+                <div class="result col-lg-12" *ngFor="let item of cpyRightList| slice:(pageCpy-1)*pageSizeCpy:(pageCpy-1)*pageSizeCpy+pageSizeCpy;let i=index">
+                  <article class="compact">
+                    <div style="display: flex;flex-wrap: nowrap;">
+                    <p class="tag_text" style="font-size: 12px;">{{item.copyrightTypeName}} |</p>
+                    <p class="tag_text" style="font-size: 12px;padding-left: 20px;">{{item.copyrightStatusName}} |</p>
+					           <p class="text-sm mb-0x" style="padding-left: 20px;">{{item.copyrightOfficeName}}</p>
+                    </div>
+                    <div class="row flex">
+                      <div class="col-lg-9">
+                        <div class="article_header">
+                          <h2 class="a_title" style="font-weight: bold;flex-wrap: nowrap;font-size: 16px;"><span class="sl_no">{{ i + 1 +(pageCpy - 1) * pageSizeCpy }}</span>
+								<div style="margin-right: 15px;">
+                  <span style="width: max-content;">{{item.applicationNumber}}</span>
+                  <span style="width: max-content;">{{item.rocNumber}}</span></div>
+							<span>{{item.copyrightTitle}}</span>			
+							</h2>
+							 <i style="display: flex;width: 100%;"><span style="display: block;float: left;padding: 0 15px;">Filing Date: {{item.filingDate}}</span>
+                <span style="display: block;float: left;padding: 0 15px;">ROC Date: {{item.rocDate}}</span>
+                 </i>  
+                        </div>
+                        <div class="article_footer">
+						            	<!-- <p>{{item.abstract}}</p> -->
+                          <div class="a_author">
+                            <table>
+                              <tbody><tr>
+                                <td>Inventors:</td>
+                                <div *ngIf="item.inventorAffiliation!=null" >
+                                  <td *ngIf="item.inventorAffiliation.length>1" >
+                                    <a class="tooltip1" *ngFor="let r of item.inventorAffiliation" >{{r.split(',')[0]}} 
+                                    <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                                  </a>
+                                   </td>
+                                   <td *ngIf="item.inventorAffiliation.length===1" >
+                                    <a class="tooltip1">{{item.inventorAffiliation[0].split(',')[0]}} 
+                                    <span class="tooltiptext">{{item.inventorAffiliation[0].split(',')[1]}},{{item.inventorAffiliation[0].split(',')[2]}},{{item.inventorAffiliation[0].split(',')[3]}},{{item.inventorAffiliation[0].split(',')[4]}}</span>
+                                  </a>
+                                   </td>
+                                  </div>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <div class="a_author applicant"><table><tbody>
+                            <tr><td>Applicants:</td>
+                              <div *ngIf="item.applicantAffiliation!=null" >
+                            <td *ngIf="item.applicantAffiliation.length>1" >
+                              <a class="tooltip1" *ngFor="let r of item.applicantAffiliation" >{{r.split(',')[0]}} 
+                              <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                            </a>
+                             </td>
+                             <td *ngIf="item.applicantAffiliation.length===1" >
+                              <a class="tooltip1">{{item.applicantAffiliation[0].split(',')[0]}} 
+                              <span class="tooltiptext">{{item.applicantAffiliation[0].split(',')[1]}},{{item.applicantAffiliation[0].split(',')[2]}},{{item.applicantAffiliation[0].split(',')[3]}},{{item.applicantAffiliation[0].split(',')[4]}}</span>
+                            </a>
+                             </td>
+                            </div>
+                            </tr></tbody></table></div>	
+                        </div>
+                        <!-- <div class="detail_content article_footer">
+
+                          <p class="heading_sm">Research Focus Areas:</p>
+                          <p style="margin-bottom: 0;">{{item.technologAreas}} </p>
+                          
+                        </div> -->
+                      </div>
+                      <div class="col-lg-3 flex flex-col flex-valign-stretch">
+				
+                      </div>
+                    </div> 
+                  </article>
+                </div>
+                <div class="paginate" style="padding-left: 50%;margin-top: 3%;">
+                  <ngb-pagination [(page)]="pageCpy" [pageSize]="pageSizeCpy" [collectionSize]="collapsablesizeCpy"
+                    (pageChange)="onPageChangeCpy($event)">
+                  </ngb-pagination>
+                  <br>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Model for Adding new records -->
+<div class="modal fade modal_special in" style="display: block;" id="add_new_form" tabindex="-1" role="dialog"
+  aria-labelledby="add_new_modal" aria-hidden="true" *ngIf="enableBox">
+  <div class="modal-dialog">
+    <div class="modal-content" style="    width: 800px;
+    left: -149px;
+    top: 51px;" [ngClass]="{'enableModelScroll': enableUnmatch}">
+      <div class="modal-header" >
+        <p class="modal-title" id="add_new_modal" style="left: -20%;width: 100%;">Add new article/journal</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeAdd()"><span
+            aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+
+        <form id="step-form">
+
+          <fieldset *ngIf="enableAdd">
+            <div class="form-card">
+              <div class="form_header">
+                <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                <h2 class="fs-title">Would you like to add your missing paper to your profile?</h2>
+              </div>
+            </div>
+            <input type="button" name="next" style="margin-top: 50px;" class="next btn-outline-blue float-right"
+              (click)="enableDoi()" value="Yes, Continue" />
+          </fieldset>
+
+          <fieldset *ngIf="EnableDoi">
+            <div class="form-card">
+              <div class="form_header">
+                <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                <h2 class="fs-title">Enter the Title or the DOI number</h2>
+              </div>
+              <div class="radio">
+                <div class="col-lg-3" style="cursor: default;">
+                  <input type="radio" value="Title"
+                    style="z-index: 3;cursor: pointer;margin-top: 13px;margin-left: -15px;" [(ngModel)]="checkDTtitle"
+                    (ngModelChange)="updateValues('Title')">
+                  <label for="radio_title">Title</label>
+                </div>
+                <div class="col-lg-9" style="cursor: default;">
+                  <input type="radio" value="Doi"
+                    style="z-index: 3;cursor: pointer;margin-top: 13px;margin-left: -15px;" [(ngModel)]="checkDTtitle"
+                    (ngModelChange)="updateValues('Doi')">
+                  <label for="radio_doi">DOI</label>
+                </div>
+              </div>
+              <br>
+              <input type="text" placeholder="enter value" name="searchData" [(ngModel)]="searchData"
+                (keyup)="changeTitle(searchData)">
+              <ul *ngIf="titleEnable" class="alignDrop">
+                <li *ngFor="let n of filterTitle" (click)="onSelectTitle(n.name)">
+                  {{ n.name }}
+                </li>
+              </ul>
+            </div>
+            <input type="button" name="next" [disabled]="searchData==''" style="margin-top: 50px;"
+              class="next btn-outline-blue float-right" (click)="searchMatch()" value="Search for Match" />
+          </fieldset>
+          <fieldset *ngIf="enableUnmatch">
+            <div class="form-card">
+              <div class="row form_header">
+                <div class="col-lg-2"><img src="assets/given/img/add-new-icon.jpg" alt="" width="80"></div>
+                <div class="col-lg-10">
+                  <p class="error" *ngIf="noDOI&&pdfEnable"><span class="text-bold">No matching record is found</span>
+                    in Researgence database.</p>
+                  <h2 *ngIf="!readOnly" class="fs-title">Please enter details of your publication</h2>
+                  <h2 *ngIf="readOnly" class="fs-title">Proceed to add details of your publication</h2>
+                </div>
+
+              </div>
+              <div class="row" style="padding-right: 40px;">
+                <div class="col-lg-2">&nbsp;</div>
+                <div class="col-lg-10">
+                  <p class="small-text" *ngIf="noDOI&&pdfEnable">All fields are mandatory along with document upload</p>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="showData">
+                <div class="col-lg-2"><label>Title<span style="color: red;" *ngIf="noDOI&&pdfEnable">*</span></label>
+                </div>
+                <div class="col-lg-10"><input type="text" id="" placeholder="<Enter the title>" name="crossTitle"
+                    [(ngModel)]="crossTitle" [readonly]="readOnly"></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-2"><label>Source<span style="color: red;" *ngIf="noDOI&&pdfEnable">*</span></label>
+                </div>
+                <div class="col-lg-10"><input type="text" id="" placeholder="<Enter the source>" name="crossSourceName"
+                    [(ngModel)]="crossSourceName" [readonly]="readOnly"></div>
+              </div>
+              <div class="row" *ngIf="noDOI&&pdfEnable">
+                <div class="col-lg-2"><label>DOI</label></div>
+                <div class="col-lg-10"><input type="text" id="" placeholder="<Enter DOI>" name="doi" [(ngModel)]="doi">
+                </div>
+              </div>
+              <div class="row" *ngIf="noDOI&&pdfEnable">
+                <div class="col-lg-2"><label>Weblink<span style="color: red;">*</span></label></div>
+                <div class="col-lg-10"><input type="text" id="" placeholder="<Enter Weblink>" name="webLink"
+                    [(ngModel)]="webLink"></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-2">&nbsp;</div>
+                <div class="col-lg-10">
+                  <div class="row" *ngIf="pdfEnable">
+                    <div class="col-lg-3">
+                      <input type="file" id="upload" (change)="selectFile($event)" hidden />
+                      <label for="upload" class="btn-upload" style="color: #0051bf">Upload</label>
+                    </div>
+                    <div class="col-lg-9">
+                      <p class="text-italic" *ngIf="file"><span class="text_bold">{{file.name}}</span> is attached</p>
+                      <p class="text-sm text-grey">Only PDF file less than 10 MB is allowed</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div *ngIf="showData&&!messageValue">
+              <div class="col-lg-2"> <label for="text">message: </label></div>
+              <div class="col-lg-10"><label style="color: red;"> {{userValues.messege}}</label></div>
+
+            </div>
+            <div>
+              <input type="button" class="btn-outline-blue" value="Go Back" style="float: right;" (click)="enableDoi()">
+            </div>
+            <div *ngIf="showData&&messageValue">
+              <input type="button" name="next" class="next btn-solid-blue" value="Submit" (click)="submitRfs()"
+                style="margin-left: 10px;float: right;height: 37px;margin-right: 7px;" />
+              <input type="button" class="btn-outline-blue" value="Close" style="float: right" (click)="clearAll()" />
+            </div>
+          </fieldset>
+          <fieldset *ngIf="rfsDone">
+            <div class="form-card">
+              <div class="row form_header justify-content-center">
+
+
+                <div class="col-lg-3">
+                  <img src="assets/given/img/success-icon.gif" alt="" width="128">
+                </div>
+                <div class="col-lg-8">
+                  <h2 class="fs-title">Your submission has been successfully registered</h2>
+                  <p>We shall validate the submission and credit the paper into your profile shortly.</p>
+                </div>
+              </div>
+              <button type="button" class="btn-outline-blue float-right" data-dismiss="modal" aria-label="Close"
+                (click)="doneRFS()">Done</button>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal_special in" style="display: block;" id="add_new_form" tabindex="-1" role="dialog"
+  aria-labelledby="add_new_modal" aria-hidden="true" *ngIf="enablePatentBox">
+  <div class="modal-dialog">
+    <div class="modal-content" style="    width: 800px;
+    left: -149px;
+    top: 51px;" [ngClass]="{'enableModelScroll': enableUnmatch}">
+      <div class="modal-header" >
+        <p class="modal-title" id="add_new_modal" style="left: -20%;width: 100%;">Add new Patent</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closePatent()"><span
+            aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+
+        <form id="step-form">
+
+          <fieldset *ngIf="enablePatentAdd">
+            <div class="form-card">
+              <div class="form_header">
+                <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                <h2 class="fs-title">Would you like to add your missing patent to your profile?</h2>
+              </div>
+            </div>
+            <input type="button" name="next" style="margin-top: 50px;" class="next btn-outline-blue float-right"
+              (click)="enablePatentAppNum()" value="Yes, Continue" />
+          </fieldset>
+
+          <fieldset *ngIf="enablePatentNum">
+            <div class="form-card">
+              <div class="form_header">
+                <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                <h2 class="fs-title">Enter the Patent Application Number</h2>
+              </div>
+              <br>
+              <div>
+                <select style="width: 30%;margin-right: 15px;" class="custom-select line-select" name="countryCode" [(ngModel)]="countryCode"> 
+                  <option value="null" selected disabled>Select Office Code</option>
+                  <option *ngFor="let item of patCountryList" class="select-selected" [value]="item.id">{{item.value}}</option>
+                </select>
+              <input style="height: 35px;width: 65%;border: 1px solid lightgray;" type="text" placeholder="Enter the Patent Application Number" name="searchPatentAppNum" [(ngModel)]="searchPatentAppNum">
+             </div>
+            </div>
+            <input type="button" name="next" [disabled]="searchPatentAppNum==''" style="margin-top: 50px;"
+              class="next btn-outline-blue float-right" (click)="searchPatentNum()" value="Search for Match" />
+          </fieldset>
+          <fieldset *ngIf="enableUnmatch">
+            <div class="form-card">
+              <div class="row form_header">
+                <div class="col-lg-2"><img src="assets/given/img/add-new-icon.jpg" alt="" width="80"></div>
+                <div class="col-lg-10">
+                  <h2 class="fs-title">Proceed to add details of your patent</h2>
+                </div>
+
+              </div>
+              <div class="row" style="padding-right: 40px;">
+                <div class="col-lg-2">&nbsp;</div>
+                <div class="col-lg-10">
+                  <p class="small-text" *ngIf="!enablepatData" >All fields are mandatory along with document upload</p>
+                </div>
+              </div>
+
+              <div class="row" >
+                <div class="col-lg-3" style="text-align: right;"><label>Application No.<span style="color: red;" *ngIf="!enablepatData" >*</span></label>
+                </div>
+                <div class="col-lg-9">
+                  <div>
+                    <select style="width: 30%;margin-right: 15px;" class="custom-select line-select" name="manualCountryCode" [(ngModel)]="manualCountryCode" *ngIf="!enablepatData" > 
+                      <option value="undefined" selected disabled>Select Office Code</option>
+                      <option *ngFor="let item of patCountryList" class="select-selected" [value]="item.id">{{item.value}}</option>
+                    </select>
+                   <input style="height: 35px;width: 65%;border: 1px solid lightgray;" type="text" placeholder="<Enter the App No>" name="patAppNo" [(ngModel)]="patAppNo" [readOnly]="enablepatData">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3" style="text-align: right;"><label>Title<span style="color: red;" *ngIf="!enablepatData" >*</span></label>
+                </div>
+                <div class="col-lg-9">
+                  <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Enter the Title>" name="patTitle" [(ngModel)]="patTitle" [readOnly]="enablepatData">     
+                  </div>
+              </div>
+              <div class="row" *ngIf="!enablepatData" >
+                <div class="col-lg-3"><label></label></div>
+                <div class="col-lg-9"><p>Is your Patent got Published?</p> 
+                  <div class="form-check form-check-inline">
+                    <input mdbRadio class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes" [(ngModel)]="patPubEnable"/>
+                    <label style="margin-top: 0px;" class="form-check-label" for="inlineRadio1">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input mdbRadio class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="no" [(ngModel)]="patPubEnable"/>
+                    <label style="margin-top: 0px;" class="form-check-label" for="inlineRadio2">No</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="!enablepatData && patPubEnable=='yes'" >
+                <div class="col-lg-3"><label></label></div>
+                <div class="col-lg-9"><p>Have your patent been published in any of the Jurisdictions?</p> 
+                  <div class="form-check form-check-inline">
+                    <input mdbRadio class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio3" value="yes" [(ngModel)]="patPubIndEnable"/>
+                    <label style="margin-top: 0px;" class="form-check-label" for="inlineRadio3">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input mdbRadio class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio4" value="no" [(ngModel)]="patPubIndEnable"/>
+                    <label style="margin-top: 0px;" class="form-check-label" for="inlineRadio4">No</label>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="!enablepatData && patPubEnable=='no'||patPubIndEnable=='no'">
+              <div class="col-lg-2"> <label for="text">message: </label></div>
+              <div class="col-lg-10"><label style="color: red;">Please upload Form 1 or Form 5</label></div>
+            </div>
+
+              <div class="row" *ngIf="!enablepatData&&patPubEnable">
+                <div class="col-lg-3">&nbsp;</div>
+                <div class="col-lg-9">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <input type="file" id="upload" (change)="selectFilePatent($event)" hidden />
+                      <label for="upload" class="btn-upload" style="color: #0051bf">Upload</label>
+                    </div>
+                    <div class="col-lg-9">
+                      <p class="text-italic" *ngIf="file"><span class="text_bold">{{file.name}}</span> is attached</p>
+                      <p class="text-sm text-grey">Only PDF file less than 10 MB is allowed</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div *ngIf="enableMessage">
+                <div class="col-lg-10"><label style="color: red;">{{checkPatAvailability.messege}}</label></div>
+              </div>
+
+            </div>
+            
+            <div>
+              <input type="button" class="btn-outline-blue" value="Go Back" style="float: right;" (click)="returnToSearch()">
+            </div>
+            <div *ngIf="enablepatData&&!enableMessage" >
+              <input style="margin-right: 10px;" type="button" class="btn-outline-blue" value="Link" style="float: right;" (click)="linkPatent()">
+            </div>
+            <div *ngIf="!enablepatData&&!enableMessage" >
+              <input type="button" name="next" class="next btn-solid-blue" value="Submit" (click)="submitPatentDetail()"
+                style="margin-left: 10px;float: right;height: 37px;margin-right: 7px;" />
+              <input type="button" class="btn-outline-blue" value="Close" style="float: right" (click)="closePatent()" />
+            </div>
+          </fieldset>
+          <fieldset *ngIf="patSubmitEnable">
+            <div class="form-card">
+              <div class="row form_header justify-content-center">
+
+
+                <div class="col-lg-3">
+                  <img src="assets/given/img/success-icon.gif" alt="" width="128">
+                </div>
+                <div class="col-lg-8">
+                  <h2 class="fs-title">Your submission has been successfully registered</h2>
+                  <p>We shall validate the submission and credit the patent into your profile shortly.</p>
+                </div>
+              </div>
+              <button type="button" class="btn-outline-blue float-right" data-dismiss="modal" aria-label="Close"
+                (click)="donePatent()">Done</button>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+ <!----------------------------- Add new Project  ------------------------->
+<div class="modal fade modal_special in" style="display: block;" id="add_new_form" tabindex="-1" role="dialog"
+  aria-labelledby="add_new_modal" aria-hidden="true" *ngIf="enableProjectNew">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 1000px;left: -149px;top: 51px;" [ngClass]="{'enableModelScroll': enableUnmatch}">
+      <div class="modal-header" >
+        <p class="modal-title" id="add_new_modal" style="left: -20%;width: 100%;">Add Project</p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeProject()"><span
+            aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body">
+
+        <form id="step-form">
+
+          <fieldset *ngIf="enableProjectAdd">
+            <div class="form-card">
+              <div class="form_header">
+                <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                <h2 class="fs-title">Was this funded project awarded while working with your current university or elsewhere?</h2>
+              </div>
+              <div class="radio">
+                <div class="col-lg-3" style="cursor: default;">
+                  <input type="radio" value="Yes"
+                    style="z-index: 3;cursor: pointer;margin-top: 13px;margin-left: -15px;" [(ngModel)]="checkProjectTitle"
+                    (ngModelChange)="updateValuesProject()">
+                  <label for="radio_title">Yes</label>
+                </div>
+                <div class="col-lg-9" style="cursor: default;">
+                  <input type="radio" value="No"
+                    style="z-index: 3;cursor: pointer;margin-top: 13px;margin-left: -15px;" [(ngModel)]="checkProjectTitle"
+                    (ngModelChange)="updateValuesProject()">
+                  <label for="radio_doi">No</label>
+                </div>
+              </div>
+              <br>
+              <input *ngIf="enableProjectUniv"  type="text" placeholder="Enter the university" name="searchUnivProj" [(ngModel)]="searchUnivProj" (keyup)="changeTitleProject(searchUnivProj)">
+              <ul *ngIf="titleEnableProject" class="alignDrop">
+                <li *ngFor="let n of fill" (click)="onSelectUnivProj(n.universityName,n.universityId)">
+                  {{ n.universityName }}
+                </li>
+              </ul>
+            </div>
+            <input type="button" name="next" [disabled]="checkProjectTitle==undefined" style="margin-top: 50px;"
+              class="next btn-outline-blue float-right" (click)="searchBasic()" value="Continue" />
+          </fieldset>
+
+          <fieldset *ngIf="enableProjectNum">
+            <div class="form-card" style="height: 400px; overflow-y: auto; overflow-x: hidden;">
+              <div class="row form_header" style="max-width: max-content;float: none;">
+                <div class="col-lg-2"><img src="assets/given/img/add-new-icon.jpg" alt="" width="80"></div>
+                <div class="col-lg-10">
+                  <h2 class="fs-title">Proceed to add details of your project</h2>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-lg-2">&nbsp;</div>
+                <div class="col-lg-10">
+                  <!-- <p class="small-text">All fields are mandatory along with document upload</p> -->
+                </div>
+              </div>
+
+              <div class="row" style="width: 95%;">
+                <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project Title<span style="color: red;"  >*</span></label>
+                </div>
+                <div class="col-lg-9">
+                  <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Enter the Title>" name="projectBasicDl.projectTitle" [(ngModel)]="projectBasicDl.projectTitle" >     
+                  </div>
+              </div>
+
+              <div class="row" style="width: 95%;">
+                <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Funding Type<span style="color: red;"  >*</span></label>
+                </div>
+                <div class="col-lg-3">
+                    <select style="margin-top: 10px;" class="custom-select line-select" name="projectBasicDl.projectFundingTypeName" [(ngModel)]="projectBasicDl.projectFundingTypeName" (ngModelChange)="changeFundType(projectBasicDl.projectFundingTypeName)"> 
+                      <option value="undefined" selected disabled>Select Funding Type</option>
+                      <option *ngFor="let item of projectFundingType" class="select-selected" [value]="item.value">{{item.value}}</option>
+                    </select>
+                  </div>
+
+                  <div class="col-lg-1" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Funding Agency<span style="color: red;"  >*</span></label>
+                  </div>
+                  <div class="col-lg-2">
+                    <select style="margin-top: 10px;" class="custom-select line-select" name="projectBasicDl.projectFundingAgencyName" [(ngModel)]="projectBasicDl.projectFundingAgencyName" (ngModelChange)="changeFundAgency(projectBasicDl.projectFundingAgencyName)"> 
+                      <option value="undefined" selected disabled>Select Funding Agency</option>
+                      <option *ngFor="let item of projectFundingAgency" class="select-selected" [value]="item.value">{{item.value}}</option>
+                    </select>
+                  </div>
+
+                    <div class="col-lg-1" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Agency Type<span style="color: red;"  >*</span></label>
+                      </div>
+                    <div class="col-lg-2" style="display: flex;flex-flow: row;">
+                      <select style="margin-top: 0px;height: 30px;" class="custom-select line-select" name="projectBasicDl.projectFundingAgencyTypeName" [(ngModel)]="projectBasicDl.projectFundingAgencyTypeName" (ngModelChange)="changeFundAgencyType(projectBasicDl.projectFundingAgencyTypeName)"> 
+                        <option value="undefined" selected disabled>Select Agency Type</option>
+                        <option *ngFor="let item of projectFundingAgencyType" class="select-selected" [value]="item.value">{{item.value}}</option>
+                      </select> 
+                      </div>
+                   </div>
+
+              <div class="row" style="width: 95%;">
+                <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Technology Areas</label>
+                </div>
+                <div class="col-lg-9">
+                  <!-- <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Enter the Technology Areas>" name="patTitle" [(ngModel)]="projectBasicDl" >      -->
+                    <input style="border: 0;border-bottom: #ccc 2px solid;border: 1px solid lightgray;"  type="text" class="form-control" placeholder="Enter ResearchArea" [(ngModel)]="newTag" (keydown.enter)="addTag()" (keyup)="onResearcher(newTag)" #inputBox/>
+                    <ul *ngIf="researchDrop"  class="editDrop" style="background: #d2d4d6;">
+                      <li *ngFor="let list of researchname"  (click)="onInputTag(list.value)">
+                         {{ list.value }}
+                      </li>
+                   </ul>
+                   <div class="tag-list" style="margin-top: 5px;margin-bottom: 5px;">
+                    <span class="tag" *ngFor="let tag of tags">{{ tag }} <span class="remove" (click)="removeTag(tag)">&times;</span></span>
+                  </div>
+                  </div>
+              </div>
+
+              <div class="row" style="width: 95%;">
+                <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project Description<span style="color: red;"  >*</span></label>
+                </div>
+                <div class="col-lg-9">
+                  <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Enter the project description>" name="projectBasicDl.projectDescription" [(ngModel)]="projectBasicDl.projectDescription" >     
+                  </div>
+              </div>
+
+              <div class="row" style="width: 95%;">
+                <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Sanctioned Amount<span style="color: red;"  >*</span></label>
+                </div>
+                <div class="col-lg-2" style="display: flex;flex-flow: row;">
+                  <input style="height: 35px;border: 1px solid lightgray;" type="number" id="" placeholder="<Enter the Amount>" name="projectBasicDl.projectSanctionedAmount" (keyup)="onAmountChange()" [(ngModel)]="projectBasicDl.projectSanctionedAmount" >   
+                    <span style="margin-top: 9px;">INR</span>  
+                  </div>
+
+                  <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">In Words</label>
+                  </div>
+                  <div class="col-lg-4">
+                    <span>{{projectBasicDl.projectSanctionedAmountInWords}}</span>
+                    <!-- <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Amount in words>" name="projectBasicDl.projectSanctionedAmountInWords" [(ngModel)]="projectBasicDl.projectSanctionedAmountInWords" readOnly>      -->
+                    </div>
+              </div>
+
+              <div class="row" style="width: 95%;">
+                <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project Start Date<span style="color: red;"  >*</span></label>
+                </div>
+                <div class="col-lg-2">
+                  <input style="height: 35px;border: 1px solid lightgray;" type="date" id=""  name="projectBasicDl.projectStartDate" [(ngModel)]="projectBasicDl.projectStartDate" (ngModelChange)="calcDuration()">   
+                  </div>
+
+                  <div class="col-lg-2" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project End Date<span style="color: red;"  >*</span></label>
+                  </div>
+                  <div class="col-lg-2">
+                    <input style="height: 35px;border: 1px solid lightgray;" type="date" id="" name="projectBasicDl.projectEndDate" [(ngModel)]="projectBasicDl.projectEndDate" (ngModelChange)="calcDuration()">     
+                    </div>
+
+                    <div class="col-lg-1" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Duration</label>
+                    </div>
+                    <div class="col-lg-2" style="display: flex;flex-flow: row;">
+                      <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" name="projectBasicDl.projectDurationInYears" [(ngModel)]="projectBasicDl.projectDurationInYears" readonly>   
+                        <span style="margin-top: 9px;">Yrs</span>  
+                      </div>
+              </div>
+
+              <div class="row" style="width: 95%;">
+                <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Status<span style="color: red;"  >*</span></label>
+                </div>
+                <div class="col-lg-3">
+                      <select style="margin-top: 10px;" class="custom-select line-select" name="projectBasicDl.projectStatusName" [(ngModel)]="projectBasicDl.projectStatusName" (ngModelChange)="changeStatus(projectBasicDl.projectStatusName)"> 
+                        <option value="undefined" selected disabled>Select Status</option>
+                        <option *ngFor="let item of projectStatusList" class="select-selected" [value]="item.value">{{item.value}}</option>
+                      </select>   
+                  </div>
+
+                  <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Completion Date<span style="color: red;"  >*</span></label>
+                  </div>
+                  <div class="col-lg-3">
+                    <input style="height: 35px;border: 1px solid lightgray;" type="date" id=""  name="projectBasicDl.projectCompletionDate" [(ngModel)]="projectBasicDl.projectCompletionDate" >     
+                    </div>
+              </div>
+
+              <!-- <div class="row">
+                <div class="col-lg-3">&nbsp;</div>
+                <div class="col-lg-9">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <input type="file" id="upload" (change)="selectFileProject($event)" hidden />
+                      <label for="upload" class="btn-upload" style="color: #0051bf">Upload</label>
+                    </div>
+                    <div class="col-lg-9">
+                      <p class="text-italic" *ngIf="fileProj"><span class="text_bold">{{fileProj.name}}</span> is attached</p>
+                      <p class="text-sm text-grey">Only PDF file less than 10 MB is allowed</p>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+
+              <!-- <div *ngIf="enableMessage">
+                <div class="col-lg-10"><label style="color: red;">{{checkPatAvailability.messege}}</label></div>
+              </div> -->
+
+            </div>
+            
+            <div>
+              <input type="button" name="next" class="next btn-solid-blue" value="Submit" (click)="saveProjectDetail()"
+                style="margin-left: 10px;float: right;height: 37px;margin-right: 7px;" />
+              <input type="button" class="btn-outline-blue" value="Close" style="float: right" (click)="closeProject()" />
+            </div>
+          </fieldset>
+          <fieldset *ngIf="projectSubmitEnable">
+            <div class="form-card">
+              <div class="row form_header justify-content-center">
+
+
+                <div class="col-lg-3">
+                  <img src="assets/given/img/success-icon.gif" alt="" width="128">
+                </div>
+                <div class="col-lg-8">
+                  <h2 class="fs-title">Your submission has been successfully registered</h2>
+                  <p>We shall validate the submission and credit the project into your profile shortly.</p>
+                </div>
+              </div>
+              <button type="button" class="btn-outline-blue float-right" data-dismiss="modal" aria-label="Close"
+                (click)="doneProject()">Done</button>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<style>
+  .modal-content {
+    border: unset;
+  }
+
+  .sideBarClose {
+    padding-left: 250px;
+    margin-left: 0px;
+  }
+
+  .sideBarOpen {
+    padding-left: 0px;
+  }
+
+  .container-w90 {
+    width: 90%;
+    margin-left: 60px;
+  }
+
+  .enableModelScroll {
+    overflow-y: scroll;
+    height: 500px;
+  }
+
+  .alignDrop {
+    height: 100px;
+    overflow: scroll;
+    width: 90%;
+    background: white;
+  }
+
+  .alignDrop li:hover {
+    background-color: #c0bbbb;
+    color: #000;
+    cursor: pointer;
+  }
+
+  .pageBlur {
+    opacity: 0.2;
+  }
+  .article_footer a:nth-child(2):after {
+    content: "";
+    display: unset;
+    width: unset;
+    height: unset;
+    position: unset;
+    background: unset;
+    right: unset;
+    top: unset;
+}
+.hover-message {
+  position: fixed;
+  bottom: 215px;
+  left: 58%;
+  transform: translateX(-50%);
+  background-color: rgb(78, 78, 77);
+  color: rgb(255, 254, 254);
+  font-weight: bold;
+  padding: 10px;
+
+}
+.disabled-button {
+  pointer-events: none; /* Disables click events */
+  opacity: 0.5; /* Makes the button look disabled */
+  cursor: not-allowed; /* Changes cursor to indicate the button is disabled */
+}
+
+/* new */
+/* article.tagged_homepatent {
+    border-left: 3px solid #93c54b;
+}
+article.tagged_awaypatent {
+    border-left: 3px solid #ff6c00;
+}
+article.tagged_homepatent::before {
+    content: "Home | ";
+    font-size: 12px;
+    float: left;
+    margin-right: 4px;
+}
+article.tagged_awaypatent::before {
+    content: "Away | ";
+    font-size: 12px;
+    float: left;
+    margin-right: 4px;
+} */
+.patent .tag_text {
+    font-size: 12px;
+    margin: 0;
+    margin-left: 10px;
+    float: left;
+    margin-right: 36px;
+}
+
+article .article_footer .a_author.applicant:before {
+    width: 17px;
+    height: 23px;
+    background: url(../../../../assets/given/img/applicant_icon.jpg) no-repeat;
+    background-size: contain;
+}
+.tabEnable{
+  background: #0051bf;
+  color: white !important;
+}
+.highlightedName{
+  text-decoration: underline #0051bf;
+  font-weight: 600;
+}
+.highlightedNameCite{
+  font-weight: 500;
+}
+.newScores:hover{
+  color: #dbdf08 !important;
+}
+.showMore{
+  text-decoration: none;
+    color: #adc12e;
+}
+.showMore:after{
+  content: unset !important;
+}
+.showMore:hover{
+  color: #0051bf;
+}
+.doiLink:hover{
+  color: #0051bf;
+  text-decoration: underline;
+}
+
+
+.box-gray {
+    background: #f2f2f2;
+    /* padding: 15px; */
+}
+.text-sm {
+    font-size: 13px;
+}
+.disclaim {
+  display: none;
+  background-color: #f0f0f0;
+  padding: 8px;
+  border-radius: 4px;
+  color: #333;
+  position: absolute;
+  top: -85px;
+}
+
+.indexing-wrapper:hover .disclaim {
+  display: block !important;
+}
+
+.indexing-wrapper-wos {
+  position: relative;
+  display: inline-block;
+  margin-left: 80px;
+}
+
+.enable-wos {
+    position: relative;
+    top: -76px;
+    left: -65px;
+    background-color: #f0f0f0;
+    width: 150%;
+    z-index: 1;
+    opacity: 0;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.enable-wos:hover{
+  opacity: 0 !important;
+}
+
+.indexing-wrapper-wos:hover .enable-wos {
+  opacity: 1;
+}
+
+.a_edit_author:before {
+    content: '';
+    display: block;
+    background: url(../../../../assets/given/img/author_edit_icon.jpg) no-repeat ;
+    background-size: contain;
+    width: 14px;
+    height: 23px;
+    float: left;
+    margin-right: 10px;
+}
+
+.a_edit_author:hover::after {
+  content: 'Editors'; 
+  position: absolute;
+  left: 5px;
+  top: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 12px;
+  z-index: 10;
+}
+
+.a_author_editpub:before {
+    content: '';
+    display: block;
+    background: url(../../../../assets/given/img/author_icon.jpg) no-repeat ;
+    background-size: contain;
+    width: 14px;
+    height: 23px;
+    float: left;
+    margin-right: 10px;
+}
+
+.a_author_editpub:hover::after {
+  content: 'Contributers'; 
+  position: absolute;
+  left: 5px;
+  top: -15px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 12px;
+  z-index: 10;
+}
+
+
+.tooltip1{
+margin-right: 10px;
+font-size: 14px;
+}
+
+.tooltip1::after{
+  content: ";" !important;
+}
+
+.editDrop{
+  height: 100px;
+  overflow: scroll;
+  }
+  .editDrop li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+
+  .tag{
+    border: 2px solid #0051bf;
+    border-radius: 8px;
+    background: #0051bf;
+    color: white;
+    margin-left: 5px;
+  }
+
+</style>

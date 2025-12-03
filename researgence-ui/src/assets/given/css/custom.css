@@ -1,0 +1,103 @@
+@media (min-width: 768px){
+.navbar-header {
+    float: right;
+}
+}
+.landing-content{
+	position:absolute;
+	z-index:10;
+	top: 20%;
+    left: 20%;
+    width: 50%;
+	color:#fff;
+}
+
+html, body, .banner, #carousel-example-generic, .carousel-inner, .carousel-inner>.item, .carousel-inner>.item>img, .carousel-inner>.item>a>img{
+	height:100%;
+}
+.carousel-inner>.item{
+	text-align:center
+}
+.carousel-inner>.item>img, .carousel-inner>.item>a>img{
+	max-width: inherit;
+	width:auto;
+}
+#slide1{
+	background-image:url(../images/slide1.jpg);
+	background-position:top center;
+	background-size:cover;
+}
+#slide2{
+	background-image:url(../images/slide2.jpg);
+	background-position:top center;
+	background-size:cover;
+}
+#slide3{
+	background-image:url(../images/slide3.jpg);
+	background-position:top center;
+	background-size:cover;
+}
+.carousel-inner{
+	background:#000;
+}
+.item{
+	opacity:0.4;
+}
+.welcome-text{
+font-size: 32px;
+    color: #fff;
+    margin: 20px 0;
+    line-height: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    padding-bottom: 40px;
+}
+.welcome-text span{
+	font-size: 50px;
+	display:block;
+	line-height:52px;
+}
+.footer-copyright {
+    border-top: none;
+}
+footer{
+	position: fixed;
+    z-index: 9;
+    bottom: 0;
+    width: 100%;
+}
+.contact-form .section-field input {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 90px;
+    padding-left: 20px;
+    height: 48px;
+    line-height: 48px;
+    clear: both;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    font-size: 18px;
+    background: rgba(0,0,0,0.4);
+}
+.contact-form .section-field input:focus {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 90px;
+    padding-left: 20px;
+    height: 48px;
+    line-height: 48px;
+    clear: both;
+    color: #000;
+    border: 2px solid #ffffff;
+    font-size: 18px;
+    background: rgba(255,255,255,0.8);
+}
+#forget{
+	background:none;
+	color:#fff;
+	font-size:14px;
+}
+.button{
+	font-size:18px;
+}

@@ -1,0 +1,55 @@
+.menu-closeds {
+    
+    padding-left: 263px;
+    transform: translateX(0.5);
+
+  }
+
+  a{
+    cursor: pointer !important;
+  }
+.content-wrapper{
+     font-family: 'Red Hat Display', sans-serif;
+  
+  font-size: 14px;
+  color: #000;
+  background-color: #ffffff;
+  /* letter-spacing: 0.4px; */
+  line-height: 1.3em;
+}
+textarea::after{
+
+    border: 1px solid black;
+}
+
+::ng-deep bs-datepicker-container.bottom {
+  z-index: 1050 !important;
+}
+
+//yearpicker
+::ng-deep .bs-datepicker-body {
+  background-color: #f0f0f0;
+  width: 200px;
+  height: 115px;
+  padding: 10px;
+  }
+  
+  ::ng-deep .bs-datepicker-body :hover {
+  cursor: pointer;
+  }
+  
+  ::ng-deep td.ng-star-inserted {
+  
+  padding-left: 10px;
+  }
+  ::ng-deep bs-datepicker-navigation-view {
+  padding-left: 27px;
+  }
+.bottom {
+  z-index: 1050 !important;
+}  
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

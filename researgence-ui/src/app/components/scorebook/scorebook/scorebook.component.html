@@ -1,0 +1,172 @@
+
+<div class="loader-wrapper" [class.loderhide]="enablePic" *ngIf="!enablePic" >
+  <div class="loader bg-white">
+    <div class="whirly-loader"> </div>
+    <br>
+    <br>
+       <p>Please Wait..Page is loading!</p>
+  </div>
+</div>
+
+<div class="content-wrapper" [ngClass]="{'content-expand': !isMenuOpen, 'content-wrapper': isMenuOpen}" style="background: var(--background-blue);background-size: cover;background-attachment: fixed;">
+  <div class="container-fluid" >
+    <div class="row" [ngStyle]="{'margin-top': !isMenuOpen ? '' : '-10px'}">
+      <div class="alert alert-dismissible alert-info" style="background-color: #ececec;border-color: #ececec;color:#000;">
+        <button type="button" class="close" data-dismiss="alert" style="background: unset;border: unset;"><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+    
+    <div class="row">
+    <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+      'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset','padding-left':isMenuOpen? '70px':'120px'
+    }" #blueheader>
+      
+    <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '10px'}">
+      <h2>Welcome to Your Researgence Repository</h2>
+      <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+<p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green"  href="/newrequest">here</a> to contact our team.</p>
+    </div>
+    <div class="col-lg-5 col-md-5 col-sm-5" style="margin-left: -56px;" ><a class="link-green help-btn"  href="/newrequest"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+      <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+    </div>  
+    </div>
+  </div>
+  </div>
+
+  <div class="container container-90 content-pushed" [ngStyle]="{'width': !isMenuOpen ? '90%' : '','padding-top' : stickyEnable ? '170px' : '20px'}">
+    <div class="text-center" style="color: white;font-family: 'Red Hat Display', sans-serif;">
+      <!-- <h5  >Full feature to be enabled soon!</h5> -->
+    </div>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="excelEnable" style="width: 100%;height:100%;" >
+      <div class="d-flex flex-column align-items-center justify-content-center"  style="width: 300px;height:100px;">
+        <img style="width: 100px;height: 100px;" src="../../../../../assets/images/tree/throbber.gif">
+        <h5 style="margin-top: 10px;color: white;">Downloading Please Wait...</h5>
+      </div>
+  </div>
+    
+    
+    <div class="row" [ngStyle]="{'opacity': excelEnable ? '5%':'100%'}">
+      <div class="col-lg-12">
+        <div class="inner-page-header gradient-box">
+          
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- <div class="col-lg-10">
+                <h3 class="page_title" style="font-size: 22px;">Scorebook</h3>
+              </div>
+              <div class="col-lg-2">
+                <a *ngIf="userRole=='6'&&enableScore=='True'"  class="page_title" [href]="univUrl" target="_blank" style="font-size: 17px;">Scorebook 2.0</a>
+              </div> -->
+
+              <div class="scorebook-row">
+                <div class="left-title" [ngStyle]="{'padding-top' : (userRole == '6' || userRole == '7' || userRole == '8' || userRole == '9' || userRole == '10')&&enableScore=='True' ? '20px' : ''}">Scorebook</div>
+               
+                <div class="arrow-wrapper" *ngIf="(userRole == '6' || userRole == '7' || userRole == '8' || userRole == '9' || userRole == '10')&&enableScore=='True'" >
+                  <div class="arrow-label">Click on Scorebook 2.0 for more!</div>
+                  <div class="long-right-arrow">
+                    <span class="arrow-body"></span>
+                    <span class="arrow-head"></span>
+                  </div>
+                </div>
+               
+                <div class="right-title-wrap" *ngIf="(userRole == '6' || userRole == '7' || userRole == '8' || userRole == '9' || userRole == '10')&&enableScore=='True'">
+                  <a class="right-title" style="cursor: pointer;" [href]="univUrl" target="_blank">Scorebook 2.0</a>
+                  <div class="beta-label">Currently In Beta</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" [ngStyle]="{'opacity': excelEnable ? '5%':'100%'}">
+      <div class="col-lg-12">
+        <div class="dbcontainer"  style="padding-top: 1%;">
+          <div class="scorebook"  style="margin-bottom: 20px;">
+            <div class="scorebook_tab" style="background: rgba(255,255,255,0.1);border: 1px solid rgba(255,255,255,0.3);padding: 20px;">
+              <div class="tabs-container">
+                <nav class="tabs">
+                  <ul>
+                    <ng-template ngFor let-score [ngForOf]="scorebookrecord" let-i="index">
+                      <li [attr.id]="'li-' + i" [attr.data-tab]="'tab-' + i" [attr.data-scoreNo]="i" [class.active]="i == 0"  (click)="clicked($event)">{{score.scorebookSection}}</li>
+                    </ng-template>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <div class="scorebook_content">
+            <div class="bg-gray-lt" style="width: 100%;background: none;">
+              <ng-template ngFor let-score [ngForOf]="scorebookrecord" let-i="index">
+             <div [attr.id]="'tab-' + i" [attr.data-tab]="'tab-' + i" class="tab-content" [class.current]="i == 0" style="padding: 15px;margin-top: -15px;">
+              <div class="row">
+                <div class="col-lg-12">
+                <div class="row">
+                  <div class="scorebook_name">
+                    <span style="font-family: 'lexiabold';font-size: 18px;">{{score.scorebookSection}}</span>
+                    <div class="score_cta">
+                      
+                          <ul>
+                             <!-- <li><a *ngIf="!isScorebookSectionDisabled(score.scorebookSection)" style="padding: 5px 15px;"><img src="/assets/given/img/visualize.png" width="43" height="41" alt="">Visualize</a></li> -->
+                             <li><a *ngIf="univName==='SRM University AP'&&!isScorebookSectionDisabled(score.scorebookSection)" style="padding: 5px 15px;" (click)="fetchheader(score.scorebookSection)"><img src="/assets/given/img/compare.png" width="38" height="36" alt="">Compare</a></li>
+                          </ul>             
+                         </div>
+                    </div>
+                
+                </div>
+                  <div class="float-left padding-bt-50" style="width: 100%;">
+                    <div class="col-lg-12">
+                      <div class="score-table">
+                        <ul>
+                          <ng-template ngFor let-sParam [ngForOf]="score.scoreParameters" let-i="index">
+                            <ng-template [ngIf]="i<25 && sParam.lineItemType!='Faculty' && sParam.lineItemType!='Scholar'" >
+                              <li>
+                                <a style="cursor: default;height: 60px;" class="hoverScore"><p style="line-height: unset;letter-spacing: unset;width: 43%;">{{sParam.lineItemText}}</p>
+                                  <span style="font-size:16px;width: auto;" ><b >{{sParam.lineitemcount}}</b> </span> 
+                                  <span style="font-size:13px;color: white;width: unset;display: none;float: left;" class="content-hide" *ngIf="sParam.content!=null" >{{sParam.content}}</span> 
+                                  <span style="font-size: 18px;cursor: pointer;float: inline-end;color: white;" (click)="viewDetail(score.scorebookSection,sParam.lineItemText,sParam.lineitemcount)">Download></span>
+                                </a>
+                              </li>
+                            </ng-template>
+                          </ng-template>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <!-- <section class="splide scorebook_slide splide--slide splide--ltr splide--draggable is-active is-overflow is-initialized" aria-labelledby="carousel-heading" id="splide01" aria-roledescription="carousel">
+                      <h5 id="carousel-heading" class="text-yellow text-normal text-center">Badge of Honour - Total Publication</h5>
+                      <div class="splide__arrows splide__arrows--ltr">
+                        <button *ngIf="score.scoreDescription.length>0" class="splide__arrow splide__arrow--prev" type="button"  aria-label="Previous slide" (click)="prevSlide(score.scorebookSection)" aria-controls="splide01-track"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" focusable="false"><path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path></svg></button>
+                        <button *ngIf="score.scoreDescription.length>0" class="splide__arrow splide__arrow--next" type="button" aria-label="Next slide" aria-controls="splide01-track" (click)="nextSlide(score.scorebookSection)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" focusable="false"><path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path></svg></button></div>
+                        <div class="splide__track splide__track--slide splide__track--ltr splide__track--draggable" id="splide01-track" style="padding-left: 0px; padding-right: 0px;" aria-live="polite" aria-atomic="true">
+                        <ul class="splide__list text-white" id="splide01-list" role="presentation" style="transform: translateX(0px);">
+                        <ng-template ngFor let-description [ngForOf]="score.scoreDescription" let-i="index">
+                          <ng-template [ngIf]="description.lineItemType=='Faculty' || description.lineItemType=='Scholar'">
+                          <li class="splide__slide is-active is-visible" id="splide01-slide01" role="tabpanel" aria-roledescription="slide" aria-label="1 of 3" style="width: calc(100%);" [style.display]="i === currentIndex ? '' : 'none'">
+                           
+                            <div class="profile_pic">
+                                <img src="/assets/given/img/reward-icon.png" class="reward_icon" alt="">
+                                <img src="/assets/given/img/profile-pic1.jpg" alt="" style="width: 75px;height: 75px;"></div>
+                            <div class="name">
+                              <p style="font-size: 18px;">{{description.lineItemText}}</p>
+                            </div>
+                            <div class="text-3x" style="font-size: 18px;"> {{ description.lineitemcount }}
+                              <p>Publications</p>
+                            </div>
+                          </li>
+                        </ng-template>
+                        </ng-template>
+                        </ul>
+                      </div>
+                  </section> -->
+                 </div>
+               </div>
+             </div>
+            </div>
+           </ng-template>
+         </div>
+       </div>
+      </div>
+     </div>
+    </div> 
+   </div>
+  </div>

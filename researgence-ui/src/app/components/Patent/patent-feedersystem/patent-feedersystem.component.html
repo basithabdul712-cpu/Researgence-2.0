@@ -1,0 +1,1129 @@
+<div class="content-wrapper" [ngClass]="{'sideBarOpen': !isMenuOpen, 'sideBarClose': isMenuOpen}"
+  style="background: var(--background-white);background-size: cover;background-attachment: fixed; font-family: 'Red Hat Display', sans-serif;"
+  [ngStyle]="{'opacity' : enableBox ? '0.3' : ''}">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="alert alert-dismissible alert-info"
+        style="margin-bottom: unset;background-color: #ececec;border-color: transparent;color: #000000;text-align: right;font-size: 12px;padding: 5px;">
+        <button type="button" class="close" data-dismiss="alert" style="background: unset;border: unset;right: 0px;"><i
+            class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}})
+      </div>
+    </div>
+    <div class="row">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+        [ngStyle]="{
+      'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '':'unset','width':stickyEnable&&isMenuOpen? '95%':'100%'
+    }" #blueheader style="padding-left: 50px;">
+        <div class="container container-90" style="width: 90%;">
+          <div class="row">
+            <div class="col-lg-7 col-md-7 col-sm-7 text-white">
+              <h2>Welcome to Your Researgence Repository</h2>
+              <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+              <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30"
+                  style="margin-right: 15px;">For support, click <a class="link-green" href="/newrequest">here</a> to
+                contact our team.</p>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5"><a style="color: #adc12e " href="/newrequest"
+                class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png"
+                  alt="help" width="20" style="margin-right: 10px;">Support</a>
+                  <!-- <a
+                href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank"
+                class="video_btn mediabox"><span>Watch Video</span><img
+                  src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video"
+                  class="head-video-cover"></a> -->
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container container-90 content-pushed" [ngStyle]="{'padding-top' : stickyEnable ? '100px' : '30px'}"
+    style="width: 90%;">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-page-header gradient-box">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="col-lg-9">
+                <h3 class="page_title" *ngIf="typeName!='RFS'">Daily Feeder System (DFS)</h3>
+                <h3 class="page_title" *ngIf="typeName=='RFS'" >Researcher Feeder System (RFS)</h3>    
+              </div>
+              <div class="col-lg-3">
+                <p class="page_title">{{showUnivName}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="checkDFSorRFS!=null" >
+      <div class="col-lg-12">
+        <table class="table table-striped" style="border: 1px solid;margin-top: 15px;">
+          <tr style="height:70px">
+            <td>
+              <p><span style="font-weight: bold;">Application No.:</span>{{rfsList.applicationNumber}}<br>
+                <span style="font-weight: bold;">Title:</span>{{rfsList.patentTitle}}<br>
+               </p>
+            </td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="row" (click)="markTouchedIfEmpty()">
+      <div class="col-lg-12">
+        <form class="form">
+          <div class="input-wrapper">
+              <!-- Popup for Application No -->
+            <div class="col-lg-12 bg-white" style="border: 1px solid #ccc; margin-bottom: 50px;"  *ngIf="!checkAppno">
+              <div class="row" >
+                  <div class="col-lg-9 mt-1x">
+                    <div class="input">
+                      <input type="text" placeholder="" autocomplete="off" name="searchAppNO" [(ngModel)]="searchAppNO">
+                      <label>Application No.</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <a class="btn-solid-blue float-right  btn-show-update" [ngStyle]="{'opacity': searchAppNO==null ? '0.6' : ''}" (click)="searchMatchAppNo(demoModal)">Search</a>
+                  </div>
+                </div>
+
+                <br><br>     
+                
+                <ng-template #demoModal let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title"></h4>
+                    <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                  </div>
+                  <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                    <form>
+                      <div class="form-group">
+                       <div class="input-group">
+                        <label>Application Number</label>                     
+                          <input style="border-radius: 8px;height: 30px;" name="crossTitle" class="form-control" placeholder="Title" type="text" [(ngModel)]="searchAppNO" readonly>        
+                        </div>
+                      </div>
+                    </form>
+                    <p style="color: red;padding-right: 60px;" *ngIf="erromessage" >{{erromessage}}</p>
+                  </div>
+                  <div class="modal-footer" style="height: 55px;"> 
+                    <button [disabled]="erromessage=='Application Number already exist'" style="margin-right: 20px;" type="button" class="but" (click)="proceedMatch()" [ngStyle]="{'opacity': erromessage=='Application Number already exist' ? '0.6' : ''}">PROCEED</button>
+                    <button style="margin-right: 20px;" type="button" class="but" (click)="close()">CLOSE</button>
+                  </div>
+                  </ng-template>
+          </div>
+
+              <!-- Detail -->
+            <div class="col-lg-12 bg-white" style="border: 1px solid #ccc; margin-bottom: 50px;" *ngIf="checkAppno">
+              <div class="row">
+                <h1>Application Details</h1>
+                <div class="col-lg-3 mt-1x">
+                  <div class="input">
+                    <select class="form-select" name="dfsPublication.patentOfficeId" [(ngModel)]="dfsPublication.patentOfficeId" (ngModelChange)="changetype(dfsPublication.patentOfficeId)" required #ofzCode="ngModel">
+                      <option value="undefined" selected disabled>Select Office Code</option>
+                      <option *ngFor="let item of patCountryList" [value]="item.id">{{item.value}}</option>                      
+                    </select>
+                  </div>
+                  <div class="text-danger" *ngIf="ofzCode.invalid && ofzCode.touched">
+                   Please select Office
+                  </div>
+                </div>
+                <div class="col-lg-3 mt-1x">
+                  <div class="input">
+                    <input type="text" placeholder="" autocomplete="off" name="dfsPublication.applicationNumber" [(ngModel)]="dfsPublication.applicationNumber" required #appNo="ngModel">
+                    <label>Application No.</label>
+                  </div>
+                  <div class="text-danger" *ngIf="appNo.invalid && appNo.touched">
+                    Application Number is required.
+                  </div>
+                </div>
+                <div class="col-lg-3 mt-1x">
+                  <div class="input">
+                    <input type="text" autocomplete="off" placeholder="" name="dfsPublication.patentNumber" [(ngModel)]="dfsPublication.patentNumber">
+                    <label>Patent Grant No.</label>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+
+                <div class="col-lg-12 mt-1x">
+                  <div class="input">
+                    <input type="text" autocomplete="off" placeholder=" " name="dfsPublication.patentTitle" [(ngModel)]="dfsPublication.patentTitle" required #titleInv="ngModel">
+                    <label>Title of the Invention</label>
+                  </div>
+                  <div class="text-danger" *ngIf="titleInv.invalid && titleInv.touched">
+                    Title of the Invention is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <h1>Technical Details</h1>
+                <div class="col-lg-6 mt-1x">
+                  <div class="input">
+                    <select class="form-select" name="dfsPublication.patentDomainId" [(ngModel)]="dfsPublication.patentDomainId" (ngModelChange)="changeDomain(dfsPublication.patentDomainId)">
+                      <option value="undefined" selected disabled>Select Domain</option>
+                      <option *ngFor="let item of domainList" [value]="item.id">{{item.value}}</option>                      
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-6 mt-1x">
+                  <div class="input">
+                    <input type="text" autocomplete="off" placeholder="" name="dfsPublication.domain" [(ngModel)]="dfsPublication.domain">
+                    <label>Fields Of Invention</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 mt-1x">
+                  <div class="input grow-wrap">
+                    <textarea [(ngModel)]="dfsPublication.abstract" name="dfsPublication.abstract" type="text" oninput="this.parentNode.dataset.replicatedValue = this.value"></textarea>
+                    <label>Abstract</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="author_detail" style="margin-top: 10px;">
+                <div class="row">
+                  <div class="col-lg-7">
+                    <h4>Inventors</h4>
+                    <p class="text-sm">[default information coming from crossref will be shown here]</p>
+                  </div>
+                  <div class="col-lg-5 flex flex-align-right" style="height: fit-content;">
+                    <a class="btn-outline-blue" style="margin-right: 10px;" (click)="newStateModel(addState)">Add
+                      Location</a>
+                    <a class="btn-outline-blue" (click)="addHomeAuthor('Inventors')">Add Home</a>
+                    <a class="btn-outline-blue" (click)="addAwayAuthor('Inventors')" style="margin-left: 10px;">Add Away</a>
+                  </div>
+                </div>
+                <ng-template #addState let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title"
+                      style="line-height: unset;letter-spacing: unset;font-weight: 600;">Add Location</h4>
+                    <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton
+                      data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                  </div>
+                  <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                    <form>
+                      <div class="form-group">
+                        <div class="input-group p-set">
+                          <label>COUNTRY</label>
+                          <select class="form-select"style="position: relative;z-index: 0;" 
+                            [(ngModel)]="countryModel" style="border: 1px solid #555;"
+                            (ngModelChange)="countryModelFilter(countryModel)">
+                            <option disabled selected value="undefined">Select Country</option>
+                            <option *ngFor="let item of countryList">{{item.countryName}}</option>
+                        </select>
+
+                        </div>
+                        <br>
+                        <div class="input-group" *ngIf="!enableState">
+                          <label>STATE</label>
+                          <input style="border-radius: 8px;height: 30px;" (keyup)="SearchStateModel(stateModel)"
+                            [(ngModel)]="stateModel" name="state" class="form-control" placeholder="Enter the State..."
+                            type="text">
+                          <ul class="editAuthor" *ngIf="stateModelEnable"
+                            style="background: #d2d4d6;float: left;width: 100%;">
+                            <li *ngFor="let a of filterStateList" (click)="selectStateModel(a.stateName,a.stateId)">
+                              {{a.stateName}}
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="input-group p-set" *ngIf="enableState">
+                          <label>STATE</label>
+                          <br>
+                          <select class="custom-select line-select" [(ngModel)]="stateModel"
+                            (ngModelChange)="stateModelFilter(stateModel)">
+                            <option disabled selected value="">Select State</option>
+                            <option *ngFor="let item of filteredStateModel">{{item.stateName}}</option>
+                          </select>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                          <label>LOCATION</label>
+                          <input style="border-radius: 8px;height: 30px;" name="location" [(ngModel)]="newLocationName"
+                            class="form-control" placeholder="Enter the Location..." type="text">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer" style="height: 55px;">
+                    <button style="margin-right: 20px;" type="button" class="but"
+                      (click)="addLocation()">SUBMIT</button>
+                  </div>
+                </ng-template>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <ol id="example1" class="list-group ol-list author_list" cdkDropList
+                    (cdkDropListDropped)="onDrop($event)">
+                    <ng-container *ngFor="let user of tempusers;let i=index">
+                      <li [ngStyle]="{'border-left' : user.enableHome ? '5px solid limegreen' : '5px solid red'}"
+                        class="list-group-item" style="cursor: pointer;" cdkDrag cdkDragLockAxis="y"><span
+                          style="font-weight: 900;">{{user.fullName}}</span>,{{user.departmentName}},{{user.instituteName}},<span
+                          style="font-weight: 900;">{{user.universityName}}</span>,{{user.locationName}},{{user.stateName}},{{user.countryName}}<span
+                          class="cor_author ml-20"></span>
+                        <a class="edit" draggable="false" (click)="newEdit(i,'Inventors')">Edit</a>
+                        <a class="fa fa-trash control-btn" style="padding-right: 15px;padding-top: 2px;"
+                          (click)="delete(i)"></a>
+                      </li>
+                    </ng-container>
+                  </ol>
+                    <hr class="hr-grey">
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="col-lg-3">
+                      <h4>Add New Inventor</h4>
+                    </div>
+                    <div class="col-lg-9" style="display: flex;flex-flow: row;">
+                      <a class="fa fa-user" style="color: green;margin-top: 12px;margin-right: 15px;cursor: pointer;"
+                        (click)="addHomeAuthor('Inventors')"></a>
+                      <p style="width: 5%;margin-top: 8px;margin-right: 15px;cursor: pointer;"
+                        (click)="addHomeAuthor('Inventors')">Home</p>
+                      <a class="fa fa-user" style="color: red;margin-top: 12px;margin-right: 15px;cursor: pointer;"
+                        (click)="addAwayAuthor('Inventors')"></a>
+                      <p style="width: 5%;margin-top: 8px;margin-right: 15px;cursor: pointer;"
+                        (click)="addAwayAuthor('Inventors')">Away</p>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="enableHome">
+                  <div *ngFor="let f of feeders;let i=index;" style="border-left: 3px solid mediumseagreen;">
+                    <div class="row">
+                      <div class="col-lg-5 mt-1x">
+                        <span
+                          style="float: inline-end;margin-top: 10px;font-weight: 900;color: lightseagreen;cursor: pointer;"
+                          (click)="homeUniv()">H</span>
+                        <div class="input" [ngClass]="{ 'filled': f.universityName }" style="color: black;width: 90%;">
+                          <input type="text" placeholder="" name="f.universityName" [(ngModel)]="f.universityName"
+                            (keyup)="onKeyIP($event,f.universityName,i)" autocomplete="off">
+                          <label>University</label>
+                        </div>
+                        <ul class="editDrop" *ngIf="ipDropdown&&i==checkData" style="background: #d2d4d6;"
+                          (mouseleave)="ipDropdown=false">
+                          <li *ngFor="let n of fill" (click)="onInput(n.universityName,n.universityId,i,'Inventors')">
+                            {{ n.universityName }}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-5 mt-1x">
+                        <div class="input">
+                          <input type="text" placeholder="" name="f.fullName" [(ngModel)]="f.fullName"
+                            (keyup)="SearchIPData($event,f.fullName,i,'Inventors')" autocomplete="off"
+                            (mouseleave)="onLeaveAuthorIp(f.fullName,i,'Inventors')">
+                          <label>Inventor</label>
+                        </div>
+                        <ul class="editAuthor" *ngIf="ipAutherDrop&&i==checkDataauthor" style="background: #d2d4d6;"
+                          (mouseleave)="onLeaveAuthor(f.fullName,i,'Inventors')">
+                          <li *ngFor="let a of Author"
+                            (click)="onAutherClick(a.universityId,a.userId,a.authorName,a.departmentId,a.department,a.instituteId,a.institute,a.locationId,a.location,a.countryId,a.country,a.email,a.coressauthor,i,a.stateId,a.state,a.schoolId,a.school,'Inventors')">
+                            {{a.authorName}}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-2 mt-1x" (mouseover)="leaveAuthor()">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.countryName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.countryName" [(ngModel)]="f.countryName" readonly>
+                          <label>Country</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.countryName" [(ngModel)]="f.countryName"
+                            (ngModelChange)="countryFilterHome(f.countryName,i,'Inventors')">
+                            <option value="" selected disabled>Select Country</option>
+                            <option *ngFor="let item of uniqCountry">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !==editRowId" [ngClass]="{ 'filled': f.stateName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.stateName" [(ngModel)]="f.stateName" readonly>
+                          <label>State</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.stateName" [(ngModel)]="f.stateName"
+                            (ngModelChange)="stateFiltersHome(f.stateName,i,'Inventors')">
+                            <option value="" selected disabled>Select State</option>
+                            <option *ngFor="let item of uniqState">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.locationName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.locationName" [(ngModel)]="f.locationName" readonly>
+                          <label>Location</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.locationName" [(ngModel)]="f.locationName"
+                            (ngModelChange)="baseLocfilter(f.locationName,i,'Inventors')">
+                            <option value="" selected disabled>Select Location</option>
+                            <option *ngFor="let item of uniqueLocationNames">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x" *ngIf="i !== editRowId&&f.schoolEnable!=false">
+                        <div class="input" [ngClass]="{ 'filled': f.schoolName }" style="color: black;">
+                          <input type="text" placeholder="" name="f.schoolName" [(ngModel)]="f.schoolName" readonly>
+                          <label>School</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x" *ngIf="i === editRowId&&f.schoolEnable!=false">
+                        <div class="input p-set">
+                          <select class="form-select" name="f.schoolName" [(ngModel)]="f.schoolName"
+                            (ngModelChange)="baseSchfilter(f.schoolName,i,'Inventors')">
+                            <option value="" selected disabled>Select School</option>
+                            <option *ngFor="let item of layerSchool">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.instituteName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.instituteName" [(ngModel)]="f.instituteName"
+                            readonly>
+                          <label>Institute</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.instituteName" [(ngModel)]="f.instituteName"
+                            (ngModelChange)="baseInstfilter(f.instituteName,i,'Inventors')">
+                            <option value="" selected disabled>Select Institute</option>
+                            <option *ngFor="let item of layerIns">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.departmentName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.departmentName" [(ngModel)]="f.departmentName"
+                            readonly>
+                          <label>Department</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.departmentName" [(ngModel)]="f.departmentName"
+                            (ngModelChange)="baseDeptfilter(f.departmentName,i,'Inventors')">
+                            <option value="" selected disabled>Select Department</option>
+                            <option *ngFor="let item of layerDept">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input">
+                          <select class="form-select" [(ngModel)]="f.PatentAplicntInvntrTypeId" name="f.PatentAplicntInvntrTypeId">
+                            <option value="" disabled selected>Select Type</option>
+                            <option *ngFor="let item of appInvTypeList" [value]="item.id">{{item.value}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input">
+                          <input type="text" placeholder="" name="f.linkName" [(ngModel)]="f.linkName" (keyup)="aliasid(f.linkName,i,'Inventors')" autocomplete="off">
+                          <label>Link Author</label>
+                        </div>
+                        <ul class="editAuthor" *ngIf="isalias&&i==enableLink" style="background: #d2d4d6;" >
+                          <li *ngFor="let a of linkauthor"  (click)="Onlink(a.authorName,i,a.userId,'Inventors')">
+                             {{a.authorName}}
+                          </li>
+                      </ul>
+                      </div>
+
+                      <div class="col-lg-3 mt-1x" style="display: flex;flex-flow: row-reverse;align-items: baseline;">
+                        <button class="btn-solid-blue float-right" style="margin-left: 5px;"
+                          (click)="clearDetails('Inventors',i)">Clear</button>
+                        <button class="btn-solid-blue float-right" style="margin-left: 5px;"
+                          (click)="editDetailsHome(i,'Inventors')">Edit</button>
+                        <button class="btn-solid-blue float-right" (click)="addNewDetails('home')">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Away author -->
+                <div *ngIf="enableAway">
+                  <div *ngFor="let f of feeders;let i=index;" style="border-left: 3px solid red;">
+                    <div class="row">
+                      <div class="col-lg-5 mt-1x">
+                        <div class="input" [ngClass]="{ 'filled': f.universityName }" style="color: black;width: 90%;">
+                          <input type="text" placeholder="" name="f.universityName" [(ngModel)]="f.universityName"
+                            (keyup)="onKeyIPAway($event,f.universityName,i,'Inventors')" autocomplete="off">
+                          <label>University</label>
+                        </div>
+                        <ul class="editDrop" *ngIf="ipDropdown&&i==checkData" style="background: #d2d4d6;"
+                          (mouseleave)="ipDropdown=false">
+                          <li *ngFor="let n of fillNonCus" (click)="onInputAway(n.universityName,n.universityId,i,'Inventors')">
+                            {{ n.universityName }}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-5 mt-1x">
+                        <div class="input">
+                          <input type="text" placeholder="" name="f.fullName" [(ngModel)]="f.fullName"
+                            (keyup)="SearchIPDataAway($event,f.fullName,i,'Inventors')" autocomplete="off"
+                            (mouseleave)="onLeaveAuthorIp(f.fullName,i,'Inventors')">
+                          <label>Inventor</label>
+                        </div>
+                        <!-- <ul class="editAuthor" *ngIf="ipAutherDrop&&i==checkDataauthor" style="background: #d2d4d6;" (mouseleave)="onLeaveAuthor(f.fullName,i)">
+                      <li *ngFor="let a of Author"  (click)="onAutherClick(a.universityId,a.userId,a.authorName,a.departmentId,a.department,a.instituteId,a.institute,a.locationId,a.location,a.countryId,a.country,a.email,a.coressauthor,i,a.stateId,a.state,a.schoolId,a.school)">
+                         {{a.authorName}}
+                      </li>
+                  </ul> -->
+                      </div>
+                      <div class="col-lg-2 mt-1x" (mouseover)="leaveAuthor()">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.countryName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.countryName" [(ngModel)]="f.countryName" readonly>
+                          <label>Country</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.countryName" [(ngModel)]="f.countryName"
+                            (ngModelChange)="countryFilter(f.countryName,i,'Inventors')">
+                            <option value="" selected disabled>Select Country</option>
+                            <option *ngFor="let item of countryList">{{item.countryName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !==editRowId" [ngClass]="{ 'filled': f.stateName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.stateName" [(ngModel)]="f.stateName" readonly>
+                          <label>State</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.stateName" [(ngModel)]="f.stateName"
+                            (ngModelChange)="stateFilters(f.stateName,i,'Inventors')">
+                            <option value="" selected disabled>Select State</option>
+                            <option *ngFor="let item of filteredState">{{item.stateName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.locationName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.locationName" [(ngModel)]="f.locationName" readonly>
+                          <label>Location</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.locationName" [(ngModel)]="f.locationName"
+                            (ngModelChange)="LocationFilter(f.locationName,i,'Inventors')">
+                            <option value="" selected disabled>Select Location</option>
+                            <option *ngFor="let item of filterLocation">{{item.locationName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x" *ngIf="i !== editRowId&&f.schoolEnable!=false">
+                        <div class="input" [ngClass]="{ 'filled': f.schoolName }" style="color: black;">
+                          <input type="text" placeholder="" name="f.schoolName" [(ngModel)]="f.schoolName" readonly>
+                          <label>School</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x" *ngIf="i === editRowId&&f.schoolEnable!=false">
+                        <div class="input">
+                          <input type="text" placeholder="" name="f.schoolName" [(ngModel)]="f.schoolName"
+                            (keyup)="SearchSchool(f.schoolName,i,'Inventors')" autocomplete="off">
+                          <label>School</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.instituteName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.instituteName" [(ngModel)]="f.instituteName"
+                            readonly>
+                          <label>Institute</label>
+                        </div>
+                        <div class="input" *ngIf="i === editRowId">
+                          <input autocomplete="off" type="text" placeholder="" name="f.instituteName"
+                            [(ngModel)]="f.instituteName" (keyup)="SearchInstitute(f.instituteName,i,'Inventors')">
+                          <label>Institute</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.departmentName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.departmentName" [(ngModel)]="f.departmentName"
+                            readonly>
+                          <label>Department</label>
+                        </div>
+                        <div class="input" *ngIf="i === editRowId">
+                          <input autocomplete="off" type="text" placeholder="" name="f.departmentName"
+                            [(ngModel)]="f.departmentName" (keyup)="SearchDepartment(f.departmentName,i,'Inventors')">
+                          <label>Department</label>
+                        </div>
+                        <ul class="editAuthor" *ngIf="ipDepartmentDrop&&i==editRowId" style="background: #d2d4d6;">
+                          <li *ngFor="let a of departmentList" (click)="onselectDepartment(a.name,a.id,i,'Inventors')">
+                            {{a.name}}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input">
+                          <select class="form-select" [(ngModel)]="f.PatentAplicntInvntrTypeId" name="f.PatentAplicntInvntrTypeId">
+                            <option value="" disabled selected>Select Type</option>
+                            <option *ngFor="let item of appInvTypeList" [value]="item.id">{{item.value}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input">
+                          <input type="text" placeholder="" name="f.linkName" [(ngModel)]="f.linkName" (keyup)="aliasidAway(f.linkName,i,'Inventors')" autocomplete="off">
+                          <label>Link Author</label>
+                        </div>
+                        <ul class="editAuthor" *ngIf="isaliasAway&&i==enableLinkAway" style="background: #d2d4d6;" >
+                          <li *ngFor="let a of linkauthorAway"  (click)="OnlinkAway(a.authorName,i,a.userId,'Inventors')">
+                             {{a.authorName}}
+                          </li>
+                      </ul>
+                      </div>
+                      <div class="col-lg-3 mt-1x" style="display: flex;flex-flow: row-reverse;align-items: baseline;">
+                        <button class="btn-solid-blue float-right" style="margin-left: 5px;"
+                          (click)="clearDetails('Inventors',i)">Clear</button>
+                        <button class="btn-solid-blue float-right" style="margin-left: 5px;"
+                          (click)="editDetails(i,'Inventors')">Edit</button>
+                        <button class="btn-solid-blue float-right" (click)="addNewDetails('away')">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <hr class="hr-grey">
+                </div>
+                <div class="col-lg-12">
+                  <div class="col-lg-3">
+                    <h4>Are the Applicants same as the Inventors ?</h4>
+                  </div>
+                  <div class="col-lg-9" style="display: flex;flex-flow: row;">
+                    <!-- <p class="btn-outline-blue" style="width: 8%;margin-top: 8px;margin-right: 15px;cursor: pointer;"
+                      (click)="addInventorAsApplicant()">Yes</p>
+                    <p class="btn-outline-blue" style="width: 8%;margin-top: 8px;margin-right: 15px;cursor: pointer;"
+                      >No</p> -->
+                      <input type="checkbox" style="width: 30px;margin-top: 20px;" name="enableCheckBox" [(ngModel)]="enableCheckBox" (ngModelChange)="addInventorAsApplicant(enableCheckBox)">
+                  </div>
+                </div>
+              </div>
+
+              <div class="author_detail" style="margin-top: 10px;">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <hr class="hr-grey">
+                  </div>
+                  <div class="col-lg-7">
+                    <h4>Applicants</h4>
+                    <p class="text-sm">[default information coming from crossref will be shown here]</p>
+                  </div>
+                  <div class="col-lg-5 flex flex-align-right" style="height: fit-content;">
+                    <a class="btn-outline-blue" style="margin-right: 10px;" (click)="newStateModel(addState)">Add
+                      Location</a>
+                    <a class="btn-outline-blue" (click)="addHomeAuthor('Applicants')">Add Home</a>
+                    <a  class="btn-outline-blue" (click)="addAwayAuthor('Applicants')" style="margin-left: 10px;">Add Away</a>
+                  </div>
+                </div>
+                <ng-template #addState let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title"
+                      style="line-height: unset;letter-spacing: unset;font-weight: 600;">Add Location</h4>
+                    <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton
+                      data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                  </div>
+                  <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                    <form>
+                      <div class="form-group">
+                        <div class="input-group p-set">
+                          <label>COUNTRY</label>
+                          <select style="border: 1px solid #555;" class="custom-select line-select" [(ngModel)]="countryModel"
+                            (ngModelChange)="countryModelFilter(countryModel)">
+                            <option disabled selected value="undefined">Select Country</option>
+                            <option *ngFor="let item of countryList">{{item.countryName}}</option>
+                          </select>
+                        </div>
+                        <br>
+                        <div class="input-group" *ngIf="!enableState">
+                          <label>STATE</label>
+                          <input style="border-radius: 8px;height: 30px;" (keyup)="SearchStateModel(stateModel)"
+                            [(ngModel)]="stateModel" name="state" class="form-control" placeholder="Enter the State..."
+                            type="text">
+                          <ul class="editAuthor" *ngIf="stateModelEnable"
+                            style="background: #d2d4d6;float: left;width: 100%;">
+                            <li *ngFor="let a of filterStateList" (click)="selectStateModel(a.stateName,a.stateId)">
+                              {{a.stateName}}
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="input-group p-set" *ngIf="enableState">
+                          <label>STATE</label>
+                          <br>
+                          <select class="custom-select line-select" [(ngModel)]="stateModel"
+                            (ngModelChange)="stateModelFilter(stateModel)">
+                            <option disabled selected value="">Select State</option>
+                            <option *ngFor="let item of filteredStateModel">{{item.stateName}}</option>
+                          </select>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                          <label>LOCATION</label>
+                          <input style="border-radius: 8px;height: 30px;" name="location" [(ngModel)]="newLocationName"
+                            class="form-control" placeholder="Enter the Location..." type="text">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer" style="height: 55px;">
+                    <button style="margin-right: 20px;" type="button" class="but"
+                      (click)="addLocation()">SUBMIT</button>
+                  </div>
+                </ng-template>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <ol id="example1" class="list-group ol-list author_list" cdkDropList
+                    (cdkDropListDropped)="onDropApp($event)">
+                    <ng-container *ngFor="let user of tempAppUsers;let i=index">
+                      <li [ngStyle]="{'border-left' : user.enableAppHome ? '5px solid limegreen' : '5px solid red'}"
+                        class="list-group-item" style="cursor: pointer;" cdkDrag cdkDragLockAxis="y"><span
+                          style="font-weight: 900;">{{user.fullName}}</span>,{{user.departmentName}},{{user.instituteName}},<span
+                          style="font-weight: 900;">{{user.universityName}}</span>,{{user.locationName}},{{user.stateName}},{{user.countryName}}<span
+                          class="cor_author ml-20"></span>
+                        <a  class="edit" draggable="false" (click)="newEdit(i,'Applicants')">Edit</a>
+                        <a  class="fa fa-trash control-btn" style="padding-right: 15px;padding-top: 2px;" (click)="deleteApp(i)"></a>
+                      </li>
+                    </ng-container>
+                  </ol>
+                    <hr class="hr-grey">
+                  </div>
+                  <div class="col-lg-12" >
+                    <div class="col-lg-3">
+                      <h4>Add New Applicant</h4>
+                    </div>
+                    <div class="col-lg-9" style="display: flex;flex-flow: row;">
+                      <a class="fa fa-user" style="color: green;margin-top: 12px;margin-right: 15px;cursor: pointer;"
+                        (click)="addHomeAuthor('Applicants')"></a>
+                      <p style="width: 5%;margin-top: 8px;margin-right: 15px;cursor: pointer;"
+                        (click)="addHomeAuthor('Applicants')">Home</p>
+                      <a class="fa fa-user" style="color: red;margin-top: 12px;margin-right: 15px;cursor: pointer;"
+                        (click)="addAwayAuthor('Applicants')"></a>
+                      <p style="width: 5%;margin-top: 8px;margin-right: 15px;cursor: pointer;"
+                        (click)="addAwayAuthor('Applicants')">Away</p>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="enableAppHome">
+                  <div *ngFor="let f of applicantFeeders;let i=index;" style="border-left: 3px solid mediumseagreen;">
+                    <div class="row">
+                      <div class="col-lg-5 mt-1x">
+                        <span
+                          style="float: inline-end;margin-top: 10px;font-weight: 900;color: lightseagreen;cursor: pointer;"
+                          (click)="homeUniv()">H</span>
+                        <div class="input" [ngClass]="{ 'filled': f.universityName }" style="color: black;width: 90%;">
+                          <input type="text" placeholder="" name="f.universityName" [(ngModel)]="f.universityName"
+                            (keyup)="onKeyIP($event,f.universityName,i,'Applicants')" autocomplete="off">
+                          <label>University</label>
+                        </div>
+                        <ul class="editDrop" *ngIf="ipDropdown&&i==checkData" style="background: #d2d4d6;"
+                          (mouseleave)="ipDropdown=false">
+                          <li *ngFor="let n of fill" (click)="onInput(n.universityName,n.universityId,i,'Applicants')">
+                            {{ n.universityName }}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-5 mt-1x">
+                        <div class="input">
+                          <input type="text" placeholder="" name="f.fullName" [(ngModel)]="f.fullName"
+                            (keyup)="SearchIPData($event,f.fullName,i,'Applicants')" autocomplete="off"
+                            (mouseleave)="onLeaveAuthorIp(f.fullName,i,'Applicants')">
+                          <label>Applicant</label>
+                        </div>
+                        <ul class="editAuthor" *ngIf="ipAutherDrop&&i==checkDataauthor" style="background: #d2d4d6;"
+                          (mouseleave)="onLeaveAuthor(f.fullName,i,'Applicants')">
+                          <li *ngFor="let a of Author"
+                            (click)="onAutherClick(a.universityId,a.userId,a.authorName,a.departmentId,a.department,a.instituteId,a.institute,a.locationId,a.location,a.countryId,a.country,a.email,a.coressauthor,i,a.stateId,a.state,a.schoolId,a.school,'Applicants')">
+                            {{a.authorName}}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-2 mt-1x" (mouseover)="leaveAuthor()">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.countryName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.countryName" [(ngModel)]="f.countryName" readonly>
+                          <label>Country</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.countryName" [(ngModel)]="f.countryName"
+                            (ngModelChange)="countryFilterHome(f.countryName,i,'Applicants')">
+                            <option value="" selected disabled>Select Country</option>
+                            <option *ngFor="let item of uniqCountry">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !==editRowId" [ngClass]="{ 'filled': f.stateName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.stateName" [(ngModel)]="f.stateName" readonly>
+                          <label>State</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.stateName" [(ngModel)]="f.stateName"
+                            (ngModelChange)="stateFiltersHome(f.stateName,i,'Applicants')">
+                            <option value="" selected disabled>Select State</option>
+                            <option *ngFor="let item of uniqState">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.locationName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.locationName" [(ngModel)]="f.locationName" readonly>
+                          <label>Location</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.locationName" [(ngModel)]="f.locationName"
+                            (ngModelChange)="baseLocfilter(f.locationName,i,'Applicants')">
+                            <option value="" selected disabled>Select Location</option>
+                            <option *ngFor="let item of uniqueLocationNames">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x" *ngIf="i !== editRowId && f.schoolEnable!=false">
+                        <div class="input" [ngClass]="{ 'filled': f.schoolName }" style="color: black;">
+                          <input type="text" placeholder="" name="f.schoolName" [(ngModel)]="f.schoolName" readonly>
+                          <label>School</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x" *ngIf="i === editRowId && f.schoolEnable!=false">
+                        <div class="input p-set">
+                          <select class="form-select" name="f.schoolName" [(ngModel)]="f.schoolName"
+                            (ngModelChange)="baseSchfilter(f.schoolName,i,'Applicants')">
+                            <option value="" selected disabled>Select School</option>
+                            <option *ngFor="let item of layerSchool">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.instituteName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.instituteName" [(ngModel)]="f.instituteName"
+                            readonly>
+                          <label>Institute</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.instituteName" [(ngModel)]="f.instituteName"
+                            (ngModelChange)="baseInstfilter(f.instituteName,i,'Applicants')">
+                            <option value="" selected disabled>Select Institute</option>
+                            <option *ngFor="let item of layerIns">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.departmentName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.departmentName" [(ngModel)]="f.departmentName"
+                            readonly>
+                          <label>Department</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.departmentName" [(ngModel)]="f.departmentName"
+                            (ngModelChange)="baseDeptfilter(f.departmentName,i,'Applicants')">
+                            <option value="" selected disabled>Select Department</option>
+                            <option *ngFor="let item of layerDept">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input">
+                          <select class="form-select" [(ngModel)]="f.PatentAplicntInvntrTypeId" name="f.PatentAplicntInvntrTypeId">
+                            <option value="" disabled selected>Select Type</option>
+                            <option *ngFor="let item of appTypeList" [value]="item.id">{{item.value}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">   
+                        <div class="input">
+                          <input type="text" placeholder="" name="f.linkName" [(ngModel)]="f.linkName" (keyup)="aliasid(f.linkName,i,'Applicants')" autocomplete="off">
+                          <label>Link Author</label>
+                        </div>
+                        <ul class="editAuthor" *ngIf="isalias&&i==enableLink" style="background: #d2d4d6;" >
+                          <li *ngFor="let a of linkauthor"  (click)="Onlink(a.authorName,i,a.userId,'Applicants')">
+                             {{a.authorName}}
+                          </li>
+                      </ul>             
+                      </div>
+
+                      <div class="col-lg-3 mt-1x" style="display: flex;flex-flow: row-reverse;align-items: baseline;">
+                        <button class="btn-solid-blue float-right" style="margin-left: 5px;"
+                          (click)="clearDetails('Applicants',i)">Clear</button>
+                        <button class="btn-solid-blue float-right" style="margin-left: 5px;"
+                          (click)="editDetailsHome(i,'Applicants')">Edit</button>
+                        <button class="btn-solid-blue float-right" (click)="addNewApplicantDetails('home')">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Away author -->
+                <div *ngIf="enableAppAway">
+                  <div *ngFor="let f of applicantFeeders;let i=index;" style="border-left: 3px solid red;">
+                    <div class="row">
+                      <div class="col-lg-5 mt-1x">
+                        <div class="input" [ngClass]="{ 'filled': f.universityName }" style="color: black;width: 90%;">
+                          <input type="text" placeholder="" name="f.universityName" [(ngModel)]="f.universityName"
+                            (keyup)="onKeyIPAway($event,f.universityName,i,'Applicants')" autocomplete="off">
+                          <label>University</label>
+                        </div>
+                        <ul class="editDrop" *ngIf="ipDropdown&&i==checkData" style="background: #d2d4d6;"
+                          (mouseleave)="ipDropdown=false">
+                          <li *ngFor="let n of fillNonCus" (click)="onInputAway(n.universityName,n.universityId,i,'Applicants')">
+                            {{ n.universityName }}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-5 mt-1x">
+                        <div class="input">
+                          <input type="text" placeholder="" name="f.fullName" [(ngModel)]="f.fullName"
+                            (keyup)="SearchIPDataAway($event,f.fullName,i,'Applicants')" autocomplete="off"
+                            (mouseleave)="onLeaveAuthorIp(f.fullName,i,'Applicants')">
+                          <label>Applicant</label>
+                        </div>
+                        <!-- <ul class="editAuthor" *ngIf="ipAutherDrop&&i==checkDataauthor" style="background: #d2d4d6;" (mouseleave)="onLeaveAuthor(f.fullName,i)">
+                      <li *ngFor="let a of Author"  (click)="onAutherClick(a.universityId,a.userId,a.authorName,a.departmentId,a.department,a.instituteId,a.institute,a.locationId,a.location,a.countryId,a.country,a.email,a.coressauthor,i,a.stateId,a.state,a.schoolId,a.school)">
+                         {{a.authorName}}
+                      </li>
+                  </ul> -->
+                      </div>
+                      <div class="col-lg-2 mt-1x" (mouseover)="leaveAuthor()">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.countryName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.countryName" [(ngModel)]="f.countryName" readonly>
+                          <label>Country</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.countryName" [(ngModel)]="f.countryName"
+                            (ngModelChange)="countryFilter(f.countryName,i,'Applicants')">
+                            <option value="" selected disabled>Select Country</option>
+                            <option *ngFor="let item of countryList">{{item.countryName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !==editRowId" [ngClass]="{ 'filled': f.stateName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.stateName" [(ngModel)]="f.stateName" readonly>
+                          <label>State</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.stateName" [(ngModel)]="f.stateName"
+                            (ngModelChange)="stateFilters(f.stateName,i,'Applicants')">
+                            <option value="" selected disabled>Select State</option>
+                            <option *ngFor="let item of filteredState">{{item.stateName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.locationName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.locationName" [(ngModel)]="f.locationName" readonly>
+                          <label>Location</label>
+                        </div>
+                        <div class="input p-set" *ngIf="i === editRowId">
+                          <select class="form-select" name="f.locationName" [(ngModel)]="f.locationName"
+                            (ngModelChange)="LocationFilter(f.locationName,i,'Applicants')">
+                            <option value="" selected disabled>Select Location</option>
+                            <option *ngFor="let item of filterLocation">{{item.locationName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x" *ngIf="i !== editRowId && f.schoolEnable!=false">
+                        <div class="input" [ngClass]="{ 'filled': f.schoolName }" style="color: black;">
+                          <input type="text" placeholder="" name="f.schoolName" [(ngModel)]="f.schoolName" readonly>
+                          <label>School</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x" *ngIf="i === editRowId && f.schoolEnable!=false">
+                        <div class="input">
+                          <input type="text" placeholder="" name="f.schoolName" [(ngModel)]="f.schoolName"
+                            (keyup)="SearchSchool(f.schoolName,i,'Applicants')" autocomplete="off">
+                          <label>School</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.instituteName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.instituteName" [(ngModel)]="f.instituteName"
+                            readonly>
+                          <label>Institute</label>
+                        </div>
+                        <div class="input" *ngIf="i === editRowId">
+                          <input autocomplete="off" type="text" placeholder="" name="f.instituteName"
+                            [(ngModel)]="f.instituteName" (keyup)="SearchInstitute(f.instituteName,i,'Applicants')">
+                          <label>Institute</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.departmentName }"
+                          style="color: black;">
+                          <input type="text" placeholder="" name="f.departmentName" [(ngModel)]="f.departmentName"
+                            readonly>
+                          <label>Department</label>
+                        </div>
+                        <div class="input" *ngIf="i === editRowId">
+                          <input autocomplete="off" type="text" placeholder="" name="f.departmentName"
+                            [(ngModel)]="f.departmentName" (keyup)="SearchDepartment(f.departmentName,i,'Applicants')">
+                          <label>Department</label>
+                        </div>
+                        <ul class="editAuthor" *ngIf="ipDepartmentDrop&&i==editRowId" style="background: #d2d4d6;">
+                          <li *ngFor="let a of departmentList" (click)="onselectDepartment(a.name,a.id,i,'Applicants')">
+                            {{a.name}}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input">
+                          <select class="form-select" [(ngModel)]="f.PatentAplicntInvntrTypeId" name="f.PatentAplicntInvntrTypeId">
+                            <option value="" disabled selected>Select Type</option>
+                            <option *ngFor="let item of appTypeList" [value]="item.id">{{item.value}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 mt-1x">
+                        <div class="input">
+                          <input type="text" placeholder="" name="f.linkName" [(ngModel)]="f.linkName" (keyup)="aliasidAway(f.linkName,i,'Applicants')" autocomplete="off">
+                          <label>Link Author</label>
+                        </div>
+                        <ul class="editAuthor" *ngIf="isaliasAway&&i==enableLinkAway" style="background: #d2d4d6;" >
+                          <li *ngFor="let a of linkauthorAway"  (click)="OnlinkAway(a.authorName,i,a.userId,'Applicants')">
+                             {{a.authorName}}
+                          </li>
+                      </ul>
+                      </div>
+                      <div class="col-lg-3 mt-1x"  style="display: flex;flex-flow: row-reverse;align-items: baseline;">
+                        <button class="btn-solid-blue float-right" style="margin-left: 5px;"
+                          (click)="clearDetails('Applicants',i)">Clear</button>
+                        <button class="btn-solid-blue float-right" style="margin-left: 5px;"
+                          (click)="editDetails(i,'Applicants')">Edit</button>
+                        <button class="btn-solid-blue float-right" (click)="addNewApplicantDetails('away')">Add</button>
+                      </div>                     
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <hr class="hr-grey">
+                  </div>
+                  <div class="row">
+                    <h4>Technical Details</h4>
+                    <div class="col-lg-6 mt-1x">
+                      <div class="input">
+                        <select class="form-select" name="dfsPublication.patentStatusId" [(ngModel)]="dfsPublication.patentStatusId" (ngModelChange)="changeAppStatus(dfsPublication.patentStatusId)" required #appStatus="ngModel">
+                          <option value="undefined" selected disabled>Select ApplicationStatus</option>
+                          <option *ngFor="let item of appStatusList" [value]="item.applicationStatusId">{{item.applicationStatus}}</option>                      
+                        </select>
+                      </div>
+                      <div class="text-danger" *ngIf="appStatus.invalid && appStatus.touched">
+                       Please select Application Status
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mt-1x">
+                      <div class="input">
+                        <input type="text" autocomplete="off" placeholder="" name="dfsPublication.patentStageName" [(ngModel)]="dfsPublication.patentStageName" readonly>
+                        <label for="Patent Stage">Patent Stage</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mt-1x">
+                      <div class="input">
+                        <input type="email" autocomplete="off" placeholder="" name="dfsPublication.correspondance" [(ngModel)]="dfsPublication.correspondance">
+                        <label>Correspondence mail ID</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <h4>Patent Timeline</h4>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                      <input autocomplete="off"  required #filingDt="ngModel" type="date" id="" name="filingDtTemp" [(ngModel)]="filingDtTemp" (ngModelChange)="changeFilDt(filingDtTemp)">
+                      <label>Filing Date</label>
+                    </div>
+                    <div class="text-danger" *ngIf="filingDt.invalid && filingDt.touched">
+                      Please select Filing Date
+                     </div>
+                  </div>
+
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                      <input type="date" id="" name="pubDtTemp" [(ngModel)]="pubDtTemp" (ngModelChange)="changePubDt(pubDtTemp)">
+                      <label>Published Date</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                      <input type="date" id="" name="reqDtTemp" [(ngModel)]="reqDtTemp" (ngModelChange)="changeReqDt(reqDtTemp)">
+                      <label>Request from Exam Date</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                      <input type="date" id="" name="ferIssDtTemp" [(ngModel)]="ferIssDtTemp" (ngModelChange)="changeFerIssDt(ferIssDtTemp)">
+                      <label>FER Issued Date</label>
+                    </div>
+                  </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 mt-1x">
+                  <div class="input">
+                    <input type="date" id="" name="ferRplDtTemp" [(ngModel)]="ferRplDtTemp" (ngModelChange)="changeRplDt(ferRplDtTemp)">
+                    <label>FER Reply Date</label>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 mt-1x">
+                  <div class="input">
+                    <input type="date" id="" name="herDtTemp" [(ngModel)]="herDtTemp" (ngModelChange)="changeHerDt(herDtTemp)">
+                    <label>Hearing Date</label>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 mt-1x">
+                  <div class="input">
+                    <input type="date" id="" name="granDtTemp" [(ngModel)]="granDtTemp" (ngModelChange)="changeGranDt(granDtTemp)">
+                    <label>Grant Date</label>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <br>
+            <div class="gradient-box mt-2x">
+              <a class="btn-white text-center width-100 center-block" (click)="submitAll()">SUBMIT</a>
+            </div>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

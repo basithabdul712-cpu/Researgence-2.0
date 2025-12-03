@@ -1,0 +1,60 @@
+<body class="home">
+    <div class="container-fluid">
+        <div class="row d-flex">
+            <div class="col-lg-6">
+                <div class="card1 pb-5">
+                    <div class="row"> <img src="../../../../../assets//images/journalopedia/logo.png" class="logo"
+                            alt=""> </div>
+                    <div class="row px-3 justify-content-center mt-4 mb-5 login-image"> <img
+                            src="../../../../../assets//images/journalopedia/search-image.jpg" class="hero-image"
+                            alt=""> </div>
+                </div>
+            </div>
+            <div class="col-lg-6 login-bg search-panel" >
+                <div class="border-0 py-5 form-container" >
+                    <div class="row px-3">
+                        <h3 class="mb-5" >Search your journal</h3>
+                        <h5 class="mb-4">
+                            <div class="profile">
+                                <img src="../../../../../assets//images/journalopedia/profile-image.jpg" alt="">
+                                Welcome,
+                                {{Name}}
+                            </div>
+                        </h5>
+                    </div>
+                  
+                    <div class ="radio-group">
+                        <label>
+                          <input style="cursor: pointer;" type="radio"  value="title" [(ngModel)]="checkDTtitle" (ngModelChange)="updateValues('title')"/>
+                          Enter Title
+                        </label>
+                        <label>
+                          <input style="cursor: pointer;" type="radio"  value="technology" [(ngModel)]="checkDTtitle" (ngModelChange)="updateValues('technology')"/>
+                          Technology Area
+                        </label>
+                        <label>
+                          <input style="cursor: pointer;" type="radio"  value="issn" [(ngModel)]="checkDTtitle" (ngModelChange)="updateValues('issn')"/>
+                          ISSN Number
+                        </label>
+                        </div>
+                <div class="row px-3">
+                        <label class="mb-1 search-label"> </label>
+                        <input class="mb-5 search" type="text" name="email"
+                            placeholder="Enter Title / Technology area / ISSN Number" [(ngModel)]="searchInput">
+                    </div>
+                    <div class="row mb-5 px-3">
+                        <button type="submit" class="btn button btn-yellow text-center" (click)="submitSearch()" >Search</button>
+                    </div>
+                    <div class="row mb-4 px-3">
+                        <p class=" text-center"><a (click)="onAdvanceSearch()" class="btn-small"><img
+                                    src="../../../../../assets//images/journalopedia/adv-search-icon.png" alt="">Advance
+                                Search</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row px-3">
+            <div class="col-lg-12 footer">Copyright © 2024. All rights reserved.</div>
+        </div>
+    </div>
+</body>

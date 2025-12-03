@@ -1,0 +1,1043 @@
+<div class="content-wrapper" [ngClass]="{'opensideBar': isMenuOpen}" style="background: var(--background-white);background-size: cover;background-attachment: fixed;min-height: calc(100vh - 80px);transition: padding-left 0.3s ease, margin-left 0.3s ease;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="alert alert-dismissible alert-info">
+          <button type="button" style="border: none;" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
+          Currently logged in as VALIAPARAMPIL JOSEPH SEBASTIAN(Management) </div>
+      </div>
+      <div class="row">
+        <div class="profile">
+          <div class="container">
+            <div class="row flex">
+              <div class="col-lg-12 flex flex-valign-center">
+                <div class="faculty_pic">
+                  <div class="photo"> <img src="./Project-profile_files/profile-pic.jpg" alt=""> </div>
+                </div>
+                <div class="faculty_detail">
+                  <h3 class="name">Dr. Ramakrishnan Iyer</h3>
+                  <p class="designation">Professor</p>
+                  <div class="padbt-20 flex flex-row"> <a  class="btn-link text-white"><span><img src="../../../../../assets/images/edit-icon.png" alt="" style="margin-right: 10px;width: 20px;"></span>Edit Profile</a> 
+                    <!-- <a href="#" class="btn-link text-white"><span><img src="img/download_icon.png" alt="" style="margin-right: 10px;"></span>Download Profile</a>--> 
+                  </div>
+                  <div class="detail">
+                    <p><span>Employee ID:</span> TEST1000</p>
+                    <p><span>Department:</span> Department of Chemistry, Faculty of Science</p>
+                    <p><span>Institute Name:</span> Department of Chemistry, Faculty of Science</p>
+                  </div>
+                  <div class="scolar_btns flex"> <a  class="btn-outline">Google Scholar</a> <a  class="btn-outline">Vidwan ID</a> <a  class="btn-outline">Scopus</a> <a  class="btn-outline">Researcher ID</a> <a  class="btn-outline">Orcid ID</a> </div>
+                  <p style="color: #8691a9; font-size: 12px; margin-bottom: 0;">All ANNAMALAI-affiliated publications ONLY will be part of faculty Researgence Profile</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="profile-sticky-nav" id="profile-sticky-nav">
+          <ul>
+            <li><a ><span>21</span>Overview</a></li>
+            <li><a ><span>21</span>Publications</a></li>
+            <li><a ><span>29</span>Projects</a></li>
+            <li><a ><span>19</span>Intellectual Property</a></li>
+            <li><a ><span>08</span>Books </a></li>
+            <li><a ><span>674</span>Conferences </a></li>
+            <li><a ><span>365</span>Collaborations</a></li>
+            <li><a ><span>47</span>Awards</a></li>
+            <li><a ><span>9</span>Products</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default" style="width: 1305px;">
+                  <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title"> <a role="button" data-toggle="collapse" data-parent="#accordion" href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Publications <span>(19)</span> </a> </h4>
+                  </div>
+                  <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                      <div class="faculty_charts">
+                        <div class="col-lg-4">
+                          <p class="chart-head">Affiliation Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <ul class="chart-dot-list">
+                                  <li class="a1">date 1</li>
+                                  <li class="a2">data 2</li>
+                                  <li class="a3">data 3</li>
+                                </ul>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="chart chart-doughnut">
+                                  <canvas id="chart-area1" width="171" height="128" style="width: 171px; height: 128px;">
+                                    </canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="chart-head">Article Type Scorecard</p>
+                          <div class="chart">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <ul class="chart-dot-list">
+                                  <li class="a1">date 1</li>
+                                  <li class="a2">data 2</li>
+                                  <li class="a3">data 3</li>
+                                </ul>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="chart chart-doughnut">
+                                  <canvas id="chart-area2" width="171" height="128" style="width: 171px; height: 128px;">
+                                </canvas></div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <p class="chart-head">Database Scorecard</p>
+                          <div class="chart">
+                            <div class="chart">
+                              <canvas id="chart-bar" height="90" width="271" style="width: 271px; height: 90px;"></canvas>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="publication_list row">
+                <div class="col-lg-12">
+                  <div class="filter">
+                    <div class="sort"> <span class="custom-dropdown">
+                      <label class="control-label heading_sm">Sort</label>
+                      <select>
+                        <option>Month</option>
+                        <option>Year</option>
+                        <option>Day</option>
+                      </select>
+                      </span> <span class="custom-dropdown">
+                      <select>
+                        <option>Ascending</option>
+                        <option>Descending</option>
+                      </select>
+                      </span> </div>
+                    <div class="view"> <span class="custom-dropdown">
+                      <label class="control-label heading_sm">View</label>
+                      <select id="view_option" name="view_option">
+                        <option value="detailed">Detailed</option>
+                        <option value="compact" selected="">Compact</option>
+                      </select>
+                      </span> </div>
+                    <input type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" onclick="resetForm()" value="+ Add New">
+                  </div>
+                </div>
+                <div class="result col-lg-12">
+                  <article class="tagged_internal compact">
+                    <p class="tag_text">Name of Agency</p>
+                    <div class="row flex">
+                      <div class="col-lg-9">
+                        <div class="article_header">
+                          <h2 class="a_title"><span class="sl_no">01</span><span>Title of the Projects comes here in one or two lines. Title of the Projects comes here in one or two lines. Title of the Projects comes here in one or two lines. </span></h2>
+                          <div class="article_scores flex">
+                            <table>
+                              <tbody><tr>
+                                <td>Sanctioned Amount</td>
+                                <td>:</td>
+                                <td>164,651,1321</td>
+                                <td>Period</td>
+                                <td>:</td>
+                                <td>01 Mar’22 - 31 Mar’24</td>
+                              </tr>
+                              <tr>
+                                <td>Sanctioned Date</td>
+                                <td>:</td>
+                                <td>20th May 2024</td>
+                                <td>Grant Received</td>
+                                <td>:</td>
+                                <td>Yes</td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                        </div>
+                        <div class="detail_content article_footer">
+                          <div class="a_author">
+                            <table>
+                              <tbody><tr>
+                                <td>Project Team:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <div class="a_author">
+                            <table>
+                              <tbody><tr>
+                                <td>Principal Investigator:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <div class="a_author co_investigator">
+                            <table>
+                              <tbody><tr>
+                                <td>Co-Investigator:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                        </div>
+                        <div class="detail_content article_footer">
+                          <p class="a_data" style="margin-bottom: 15px;"><strong>URL:</strong> <a href="https://patents.google.com/patent/US9599917B2/en?q=(jis+university)&amp;oq=jis+university" target="_blank" class="btn-link-black">https://patents.google.com/patent/US9599917B2/en?q=(jis+university)&amp;oq=jis+university</a></p>
+                          <p class="heading_sm">Technology Areas:</p>
+                          <p style="margin-bottom: 0;">Science; Social; Politics; Mathematics; </p>
+                          <p class="heading_sm mt">Grant Timeline:</p>
+                          <table>
+                            <tbody><tr>
+                              <th>Financial Year</th>
+                              <th>Amount Received</th>
+                              <th>Date of Disbursement</th>
+                              <th>Grant Letter</th>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                          </tbody></table>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 flex flex-col flex-valign-stretch">
+                        <div class="block"> <a  class="dropbox_btn" data-toggle="modal" data-target="#dropbox">Dropbox</a> <a  class="validate_btn" data-toggle="modal" data-target="#validate">Validate</a> </div>
+                        <div class="article_data detail_content">
+                          <p>Patents<span>3</span></p>
+                          <p>Conference<span>1</span></p>
+                          <p>Publication <span>1</span></p>
+                          <p class="none">Outcome</p>
+                          <p>Product<span>2</span></p>
+                          <p class="outline"></p>
+                          <p class="outline"></p>
+                        </div>
+						  <div class="article_btn"> <a  class="link_btn share">Share</a> <a class="link_btn cite" data-toggle="modal" data-target="#myModal1">Cite</a> 
+                          <!-- Modal -->
+                          <div class="modal fade citation" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span> </button>
+                                  <p class="modal-title" id="myModalLabel1">Citation Model 1</p>
+                                </div>
+                                <div class="modal-body">
+                                  <div role="tabpanel"> 
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                      <li role="presentation" class="active"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab1" aria-controls="Tab1" role="tab" data-toggle="tab">APA</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab2" aria-controls="Tab2" role="tab" data-toggle="tab">MLA</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab3" aria-controls="Tab3" role="tab" data-toggle="tab">Chicago</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab4" aria-controls="Tab4" role="tab" data-toggle="tab">Harvard</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab5" aria-controls="Tab5" role="tab" data-toggle="tab">Vancouver</a> </li>
+                                    </ul>
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                      <div role="tabpanel" class="tab-pane active" id="Tab1">
+                                        <p>Author 1, Author 2, Author n. (YEAR). “TITLE”. JOURNAL NAME, VOLUME NO (ISSUE NO), BPAGE-EPAGE</p>
+                                        <p>Annapurna, M. M., Mohapatro, C., Narendra, A. (2012). “Stability-indicating liquid chromatographic method for the determination of Letrozole in pharmaceutical formulations”. Journal of Pharmaceutical Analysis, 2(4), 298-305</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab2">
+                                        <p>Author 1, Author 2, Author n. “TITLE”. JOURNAL NAME, vol. VOLUME NUMBER, no. ISSUE NO, YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. “Stability-indicating
+                                          liquid chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations”. Journal of Pharmaceutical Analysis, Vol.2,
+                                          no.4, 2012, pp.298-305, doi: 10.1016/j.jpha.2012.01.010.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab3">
+                                        <p>Author 1, Author 2, Author n. “TITLE”. JOURNAL NAME, VOLUME NO (ISSUE
+                                          
+                                          TITLE
+                                          
+                                          JOURNAL NAME
+                                          YEAR VOLUME NO ISSUE NO PAGE NOS ISSN NO
+                                          
+                                          AUTHORS
+                                          
+                                          NO), YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. 2012. “Stability-indicating
+                                          liquid chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations”. Journal of Pharmaceutical Analysis, 2(4),
+                                          298-305. doi: 10.1016/j.jpha.2012.01.010.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab4">
+                                        <p>Author 1, Author 2, Author n. (YEAR). “TITLE”. JOURNAL NAME, VOLUME NO
+                                          
+                                          (ISSUE NO), YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. (2012). “Stability-
+                                          indicating liquid chromatographic method for the determination of
+                                          Letrozole in pharmaceutical formulations”. Journal of Pharmaceutical
+                                          Analysis, 2(4), 298-305. doi:10.1086/599247.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab5">
+                                        <p>Author 1, Author 2, Author n. TITLE. JOURNAL NAME, YEAR, VOLUME NO (ISSUE
+                                          
+                                          NO), BPAGE-EPAGE, Available from: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. Stability-indicating liquid
+                                          chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations. Journal of Pharmaceutical Analysis, 2012,
+                                          2(4):298-305. Available from: doi.org/10.1016/j.jpha.2012.01.010</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </article>
+					<article class="tagged_internal compact">
+                    <p class="tag_text">Name of Agency</p>
+                    <div class="row flex">
+                      <div class="col-lg-9">
+                        <div class="article_header">
+                          <h2 class="a_title"><span class="sl_no">01</span><span>Title of the Projects comes here in one or two lines. Title of the Projects comes here in one or two lines. Title of the Projects comes here in one or two lines. </span></h2>
+                          <div class="article_scores flex">
+                            <table>
+                              <tbody><tr>
+                                <td>Sanctioned Amount</td>
+                                <td>:</td>
+                                <td>164,651,1321</td>
+                                <td>Period</td>
+                                <td>:</td>
+                                <td>01 Mar’22 - 31 Mar’24</td>
+                              </tr>
+                              <tr>
+                                <td>Sanctioned Date</td>
+                                <td>:</td>
+                                <td>20th May 2024</td>
+                                <td>Grant Received</td>
+                                <td>:</td>
+                                <td>Yes</td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                        </div>
+                        <div class="detail_content article_footer">
+                          <div class="a_author">
+                            <table>
+                              <tbody><tr>
+                                <td>Project Team:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <div class="a_author">
+                            <table>
+                              <tbody><tr>
+                                <td>Principal Investigator:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <div class="a_author co_investigator">
+                            <table>
+                              <tbody><tr>
+                                <td>Co-Investigator:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                        </div>
+                        <div class="detail_content article_footer">
+                          <p class="a_data" style="margin-bottom: 15px;"><strong>URL:</strong> <a href="https://patents.google.com/patent/US9599917B2/en?q=(jis+university)&amp;oq=jis+university" target="_blank" class="btn-link-black">https://patents.google.com/patent/US9599917B2/en?q=(jis+university)&amp;oq=jis+university</a></p>
+                          <p class="heading_sm">Technology Areas:</p>
+                          <p style="margin-bottom: 0;">Science; Social; Politics; Mathematics; </p>
+                          <p class="heading_sm mt">Grant Timeline:</p>
+                          <table>
+                            <tbody><tr>
+                              <th>Financial Year</th>
+                              <th>Amount Received</th>
+                              <th>Date of Disbursement</th>
+                              <th>Grant Letter</th>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                          </tbody></table>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 flex flex-col flex-valign-stretch">
+                        <div class="block"> <a  class="dropbox_btn" data-toggle="modal" data-target="#dropbox">Dropbox</a> <a  class="validate_btn" data-toggle="modal" data-target="#validate">Validate</a> </div>
+                        <div class="article_data detail_content">
+                          <p>Patents<span>3</span></p>
+                          <p>Conference<span>1</span></p>
+                          <p>Publication <span>1</span></p>
+                          <p class="none">Outcome</p>
+                          <p>Product<span>2</span></p>
+                          <p class="outline"></p>
+                          <p class="outline"></p>
+                        </div>
+						  <div class="article_btn"> <a  class="link_btn share">Share</a> <a class="link_btn cite" data-toggle="modal" data-target="#myModal1">Cite</a> 
+                          <!-- Modal -->
+                          <div class="modal fade citation" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span> </button>
+                                  <p class="modal-title" id="myModalLabel1">Citation Model 1</p>
+                                </div>
+                                <div class="modal-body">
+                                  <div role="tabpanel"> 
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                      <li role="presentation" class="active"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab1" aria-controls="Tab1" role="tab" data-toggle="tab">APA</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab2" aria-controls="Tab2" role="tab" data-toggle="tab">MLA</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab3" aria-controls="Tab3" role="tab" data-toggle="tab">Chicago</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab4" aria-controls="Tab4" role="tab" data-toggle="tab">Harvard</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab5" aria-controls="Tab5" role="tab" data-toggle="tab">Vancouver</a> </li>
+                                    </ul>
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                      <div role="tabpanel" class="tab-pane active" id="Tab1">
+                                        <p>Author 1, Author 2, Author n. (YEAR). “TITLE”. JOURNAL NAME, VOLUME NO (ISSUE NO), BPAGE-EPAGE</p>
+                                        <p>Annapurna, M. M., Mohapatro, C., Narendra, A. (2012). “Stability-indicating liquid chromatographic method for the determination of Letrozole in pharmaceutical formulations”. Journal of Pharmaceutical Analysis, 2(4), 298-305</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab2">
+                                        <p>Author 1, Author 2, Author n. “TITLE”. JOURNAL NAME, vol. VOLUME NUMBER, no. ISSUE NO, YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. “Stability-indicating
+                                          liquid chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations”. Journal of Pharmaceutical Analysis, Vol.2,
+                                          no.4, 2012, pp.298-305, doi: 10.1016/j.jpha.2012.01.010.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab3">
+                                        <p>Author 1, Author 2, Author n. “TITLE”. JOURNAL NAME, VOLUME NO (ISSUE
+                                          
+                                          TITLE
+                                          
+                                          JOURNAL NAME
+                                          YEAR VOLUME NO ISSUE NO PAGE NOS ISSN NO
+                                          
+                                          AUTHORS
+                                          
+                                          NO), YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. 2012. “Stability-indicating
+                                          liquid chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations”. Journal of Pharmaceutical Analysis, 2(4),
+                                          298-305. doi: 10.1016/j.jpha.2012.01.010.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab4">
+                                        <p>Author 1, Author 2, Author n. (YEAR). “TITLE”. JOURNAL NAME, VOLUME NO
+                                          
+                                          (ISSUE NO), YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. (2012). “Stability-
+                                          indicating liquid chromatographic method for the determination of
+                                          Letrozole in pharmaceutical formulations”. Journal of Pharmaceutical
+                                          Analysis, 2(4), 298-305. doi:10.1086/599247.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab5">
+                                        <p>Author 1, Author 2, Author n. TITLE. JOURNAL NAME, YEAR, VOLUME NO (ISSUE
+                                          
+                                          NO), BPAGE-EPAGE, Available from: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. Stability-indicating liquid
+                                          chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations. Journal of Pharmaceutical Analysis, 2012,
+                                          2(4):298-305. Available from: doi.org/10.1016/j.jpha.2012.01.010</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </article>
+					<article class="tagged_internal compact">
+                    <p class="tag_text">Name of Agency</p>
+                    <div class="row flex">
+                      <div class="col-lg-9">
+                        <div class="article_header">
+                          <h2 class="a_title"><span class="sl_no">01</span><span>Title of the Projects comes here in one or two lines. Title of the Projects comes here in one or two lines. Title of the Projects comes here in one or two lines. </span></h2>
+                          <div class="article_scores flex">
+                            <table>
+                              <tbody><tr>
+                                <td>Sanctioned Amount</td>
+                                <td>:</td>
+                                <td>164,651,1321</td>
+                                <td>Period</td>
+                                <td>:</td>
+                                <td>01 Mar’22 - 31 Mar’24</td>
+                              </tr>
+                              <tr>
+                                <td>Sanctioned Date</td>
+                                <td>:</td>
+                                <td>20th May 2024</td>
+                                <td>Grant Received</td>
+                                <td>:</td>
+                                <td>Yes</td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                        </div>
+                        <div class="detail_content article_footer">
+                          <div class="a_author">
+                            <table>
+                              <tbody><tr>
+                                <td>Project Team:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <div class="a_author">
+                            <table>
+                              <tbody><tr>
+                                <td>Principal Investigator:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <div class="a_author co_investigator">
+                            <table>
+                              <tbody><tr>
+                                <td>Co-Investigator:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                        </div>
+                        <div class="detail_content article_footer">
+                          <p class="a_data" style="margin-bottom: 15px;"><strong>URL:</strong> <a href="https://patents.google.com/patent/US9599917B2/en?q=(jis+university)&amp;oq=jis+university" target="_blank" class="btn-link-black">https://patents.google.com/patent/US9599917B2/en?q=(jis+university)&amp;oq=jis+university</a></p>
+                          <p class="heading_sm">Technology Areas:</p>
+                          <p style="margin-bottom: 0;">Science; Social; Politics; Mathematics; </p>
+                          <p class="heading_sm mt">Grant Timeline:</p>
+                          <table>
+                            <tbody><tr>
+                              <th>Financial Year</th>
+                              <th>Amount Received</th>
+                              <th>Date of Disbursement</th>
+                              <th>Grant Letter</th>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                          </tbody></table>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 flex flex-col flex-valign-stretch">
+                        <div class="block"> <a  class="dropbox_btn" data-toggle="modal" data-target="#dropbox">Dropbox</a> <a  class="validate_btn" data-toggle="modal" data-target="#validate">Validate</a> </div>
+                        <div class="article_data detail_content">
+                          <p>Patents<span>3</span></p>
+                          <p>Conference<span>1</span></p>
+                          <p>Publication <span>1</span></p>
+                          <p class="none">Outcome</p>
+                          <p>Product<span>2</span></p>
+                          <p class="outline"></p>
+                          <p class="outline"></p>
+                        </div>
+						  <div class="article_btn"> <a  class="link_btn share">Share</a> <a class="link_btn cite" data-toggle="modal" data-target="#myModal1">Cite</a> 
+                          <!-- Modal -->
+                          <div class="modal fade citation" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span> </button>
+                                  <p class="modal-title" id="myModalLabel1">Citation Model 1</p>
+                                </div>
+                                <div class="modal-body">
+                                  <div role="tabpanel"> 
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                      <li role="presentation" class="active"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab1" aria-controls="Tab1" role="tab" data-toggle="tab">APA</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab2" aria-controls="Tab2" role="tab" data-toggle="tab">MLA</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab3" aria-controls="Tab3" role="tab" data-toggle="tab">Chicago</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab4" aria-controls="Tab4" role="tab" data-toggle="tab">Harvard</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab5" aria-controls="Tab5" role="tab" data-toggle="tab">Vancouver</a> </li>
+                                    </ul>
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                      <div role="tabpanel" class="tab-pane active" id="Tab1">
+                                        <p>Author 1, Author 2, Author n. (YEAR). “TITLE”. JOURNAL NAME, VOLUME NO (ISSUE NO), BPAGE-EPAGE</p>
+                                        <p>Annapurna, M. M., Mohapatro, C., Narendra, A. (2012). “Stability-indicating liquid chromatographic method for the determination of Letrozole in pharmaceutical formulations”. Journal of Pharmaceutical Analysis, 2(4), 298-305</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab2">
+                                        <p>Author 1, Author 2, Author n. “TITLE”. JOURNAL NAME, vol. VOLUME NUMBER, no. ISSUE NO, YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. “Stability-indicating
+                                          liquid chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations”. Journal of Pharmaceutical Analysis, Vol.2,
+                                          no.4, 2012, pp.298-305, doi: 10.1016/j.jpha.2012.01.010.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab3">
+                                        <p>Author 1, Author 2, Author n. “TITLE”. JOURNAL NAME, VOLUME NO (ISSUE
+                                          
+                                          TITLE
+                                          
+                                          JOURNAL NAME
+                                          YEAR VOLUME NO ISSUE NO PAGE NOS ISSN NO
+                                          
+                                          AUTHORS
+                                          
+                                          NO), YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. 2012. “Stability-indicating
+                                          liquid chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations”. Journal of Pharmaceutical Analysis, 2(4),
+                                          298-305. doi: 10.1016/j.jpha.2012.01.010.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab4">
+                                        <p>Author 1, Author 2, Author n. (YEAR). “TITLE”. JOURNAL NAME, VOLUME NO
+                                          
+                                          (ISSUE NO), YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. (2012). “Stability-
+                                          indicating liquid chromatographic method for the determination of
+                                          Letrozole in pharmaceutical formulations”. Journal of Pharmaceutical
+                                          Analysis, 2(4), 298-305. doi:10.1086/599247.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab5">
+                                        <p>Author 1, Author 2, Author n. TITLE. JOURNAL NAME, YEAR, VOLUME NO (ISSUE
+                                          
+                                          NO), BPAGE-EPAGE, Available from: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. Stability-indicating liquid
+                                          chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations. Journal of Pharmaceutical Analysis, 2012,
+                                          2(4):298-305. Available from: doi.org/10.1016/j.jpha.2012.01.010</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </article>
+					<article class="tagged_internal compact">
+                    <p class="tag_text">Name of Agency</p>
+                    <div class="row flex">
+                      <div class="col-lg-9">
+                        <div class="article_header">
+                          <h2 class="a_title"><span class="sl_no">01</span><span>Title of the Projects comes here in one or two lines. Title of the Projects comes here in one or two lines. Title of the Projects comes here in one or two lines. </span></h2>
+                          <div class="article_scores flex">
+                            <table>
+                              <tbody><tr>
+                                <td>Sanctioned Amount</td>
+                                <td>:</td>
+                                <td>164,651,1321</td>
+                                <td>Period</td>
+                                <td>:</td>
+                                <td>01 Mar’22 - 31 Mar’24</td>
+                              </tr>
+                              <tr>
+                                <td>Sanctioned Date</td>
+                                <td>:</td>
+                                <td>20th May 2024</td>
+                                <td>Grant Received</td>
+                                <td>:</td>
+                                <td>Yes</td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                        </div>
+                        <div class="detail_content article_footer">
+                          <div class="a_author">
+                            <table>
+                              <tbody><tr>
+                                <td>Project Team:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <div class="a_author">
+                            <table>
+                              <tbody><tr>
+                                <td>Principal Investigator:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                          <div class="a_author co_investigator">
+                            <table>
+                              <tbody><tr>
+                                <td>Co-Investigator:</td>
+                                <td><a  class="tooltip1">Annapurna <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1 cor_author">Mahapatro <span class="tooltiptext">Tooltip text</span></a><a  class="tooltip1">Narendra <span class="tooltiptext">Tooltip text comes here with 2 lines</span></a></td>
+                              </tr>
+                            </tbody></table>
+                          </div>
+                        </div>
+                        <div class="detail_content article_footer">
+                          <p class="a_data" style="margin-bottom: 15px;"><strong>URL:</strong> <a href="https://patents.google.com/patent/US9599917B2/en?q=(jis+university)&amp;oq=jis+university" target="_blank" class="btn-link-black">https://patents.google.com/patent/US9599917B2/en?q=(jis+university)&amp;oq=jis+university</a></p>
+                          <p class="heading_sm">Technology Areas:</p>
+                          <p style="margin-bottom: 0;">Science; Social; Politics; Mathematics; </p>
+                          <p class="heading_sm mt">Grant Timeline:</p>
+                          <table>
+                            <tbody><tr>
+                              <th>Financial Year</th>
+                              <th>Amount Received</th>
+                              <th>Date of Disbursement</th>
+                              <th>Grant Letter</th>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                            <tr>
+                              <td>2022-23</td>
+                              <td>35,233,573</td>
+                              <td>20th May 2024</td>
+                              <td><a  class="btn-link-blue">Download</a></td>
+                            </tr>
+                          </tbody></table>
+                        </div>
+                      </div>
+                      <div class="col-lg-3 flex flex-col flex-valign-stretch">
+                        <div class="block"> <a  class="dropbox_btn" data-toggle="modal" data-target="#dropbox">Dropbox</a> <a  class="validate_btn" data-toggle="modal" data-target="#validate">Validate</a> </div>
+                        <div class="article_data detail_content">
+                          <p>Patents<span>3</span></p>
+                          <p>Conference<span>1</span></p>
+                          <p>Publication <span>1</span></p>
+                          <p class="none">Outcome</p>
+                          <p>Product<span>2</span></p>
+                          <p class="outline"></p>
+                          <p class="outline"></p>
+                        </div>
+						  <div class="article_btn"> <a  class="link_btn share">Share</a> <a class="link_btn cite" data-toggle="modal" data-target="#myModal1">Cite</a> 
+                          <!-- Modal -->
+                          <div class="modal fade citation" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span> </button>
+                                  <p class="modal-title" id="myModalLabel1">Citation Model 1</p>
+                                </div>
+                                <div class="modal-body">
+                                  <div role="tabpanel"> 
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                      <li role="presentation" class="active"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab1" aria-controls="Tab1" role="tab" data-toggle="tab">APA</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab2" aria-controls="Tab2" role="tab" data-toggle="tab">MLA</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab3" aria-controls="Tab3" role="tab" data-toggle="tab">Chicago</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab4" aria-controls="Tab4" role="tab" data-toggle="tab">Harvard</a> </li>
+                                      <li role="presentation"><a href="https://jaguarcreatives.in/researgence/project-faculty-profile.html#Tab5" aria-controls="Tab5" role="tab" data-toggle="tab">Vancouver</a> </li>
+                                    </ul>
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                      <div role="tabpanel" class="tab-pane active" id="Tab1">
+                                        <p>Author 1, Author 2, Author n. (YEAR). “TITLE”. JOURNAL NAME, VOLUME NO (ISSUE NO), BPAGE-EPAGE</p>
+                                        <p>Annapurna, M. M., Mohapatro, C., Narendra, A. (2012). “Stability-indicating liquid chromatographic method for the determination of Letrozole in pharmaceutical formulations”. Journal of Pharmaceutical Analysis, 2(4), 298-305</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab2">
+                                        <p>Author 1, Author 2, Author n. “TITLE”. JOURNAL NAME, vol. VOLUME NUMBER, no. ISSUE NO, YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. “Stability-indicating
+                                          liquid chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations”. Journal of Pharmaceutical Analysis, Vol.2,
+                                          no.4, 2012, pp.298-305, doi: 10.1016/j.jpha.2012.01.010.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab3">
+                                        <p>Author 1, Author 2, Author n. “TITLE”. JOURNAL NAME, VOLUME NO (ISSUE
+                                          
+                                          TITLE
+                                          
+                                          JOURNAL NAME
+                                          YEAR VOLUME NO ISSUE NO PAGE NOS ISSN NO
+                                          
+                                          AUTHORS
+                                          
+                                          NO), YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. 2012. “Stability-indicating
+                                          liquid chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations”. Journal of Pharmaceutical Analysis, 2(4),
+                                          298-305. doi: 10.1016/j.jpha.2012.01.010.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab4">
+                                        <p>Author 1, Author 2, Author n. (YEAR). “TITLE”. JOURNAL NAME, VOLUME NO
+                                          
+                                          (ISSUE NO), YEAR, BPAGE-EPAGE, doi: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. (2012). “Stability-
+                                          indicating liquid chromatographic method for the determination of
+                                          Letrozole in pharmaceutical formulations”. Journal of Pharmaceutical
+                                          Analysis, 2(4), 298-305. doi:10.1086/599247.</p>
+                                      </div>
+                                      <div role="tabpanel" class="tab-pane" id="Tab5">
+                                        <p>Author 1, Author 2, Author n. TITLE. JOURNAL NAME, YEAR, VOLUME NO (ISSUE
+                                          
+                                          NO), BPAGE-EPAGE, Available from: DOI NUMBER</p>
+                                        <p> Annapurna, M. M., Mohapatro, C., Narendra, A. Stability-indicating liquid
+                                          chromatographic method for the determination of Letrozole in
+                                          pharmaceutical formulations. Journal of Pharmaceutical Analysis, 2012,
+                                          2(4):298-305. Available from: doi.org/10.1016/j.jpha.2012.01.010</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Validate-->
+<div class="modal fade" id="validate" tabindex="-1" role="dialog" aria-labelledby="validate_modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span> </button>
+        <p class="modal-title" id="validate_modal">Validation of your publication</p>
+      </div>
+      <div class="modal-body"> 
+        <!-- MultiStep Form -->
+        
+        <form id="step-form">
+          
+          <!-- fieldsets -->
+          <fieldset>
+            <div class="form-card">
+              <div class="form_header text-center">
+                <h2 class="fs-title">Please Approve or Decline Authorship to this paper</h2>
+              </div>
+            </div>
+            <button type="button" name="next" class="next btn-outline-blue">Approve</button>
+            <button type="button" name="next" class="next btn-outline-red" style="margin-left: 20px;">Deny</button>
+          </fieldset>
+          <fieldset>
+            <div class="form-card">
+              <div class="form_header text-center"> <span class="fa fa-trash text-3x text-blue"></span>
+                <h2 class="fs-title">Are you sure you want to delete this Article?</h2>
+              </div>
+            </div>
+            <button type="button" name="next" class="next btn-outline-blue">Yes</button>
+          </fieldset>
+          <fieldset>
+            <div class="form-card">
+              <div class="form_header text-center"> <span><img src="./Project-profile_files/success-icon.gif" alt=""></span>
+                <h2 class="fs-title"><strong>Congratulations !</strong><br>
+                  You have verified the Authorship of this publication</h2>
+              </div>
+            </div>
+            <button type="button" class="btn-outline-blue" data-dismiss="modal" aria-label="Close">Done</button>
+          </fieldset>
+          <fieldset>
+            <div class="form-card">
+              <div class="form_header text-center">
+                <h2 class="fs-title">Your Article is Deleted !</h2>
+              </div>
+            </div>
+            <button type="button" class="btn-outline-blue" data-dismiss="modal" aria-label="Close">Done</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Add New-->
+<div class="modal fade modal_special" id="add_new" tabindex="-1" role="dialog" aria-labelledby="add_new_modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span> </button>
+        <p class="modal-title" id="add_new_modal">Add new article/journal</p>
+      </div>
+      <div class="modal-body"> 
+        <!-- MultiStep Form -->
+        
+        <form id="step-form">
+          
+          <!-- fieldsets -->
+          <fieldset>
+            <div class="form-card">
+              <div class="form_header"> <img src="./Project-profile_files/add-new-icon.jpg" alt="" width="80" class="img-block">
+                <h2 class="fs-title">Would you like to add your missing paper to your profile?</h2>
+              </div>
+            </div>
+            <input type="button" name="next" style="margin-top: 50px;" class="next btn-outline-blue float-right" value="Yes, Continue">
+          </fieldset>
+          <fieldset>
+            <div class="form-card">
+              <div class="form_header"> <img src="./Project-profile_files/add-new-icon.jpg" alt="" width="80" class="img-block">
+                <h2 class="fs-title">Enter the Title or the DOI number</h2>
+              </div>
+              <div class="radio">
+                <div class="col-lg-3">
+                  <input type="radio" name="type1" id="radio_title">
+                  <label for="radio_title">Title</label>
+                </div>
+                <div class="col-lg-9">
+                  <input type="radio" name="type1" id="radio_doi">
+                  <label for="radio_doi">DOI</label>
+                </div>
+              </div>
+              <input type="text" id="search_name" placeholder="enter value">
+            </div>
+            <input type="button" name="next" style="margin-top: 50px;" class="next btn-outline-blue float-right" value="Search for Match">
+          </fieldset>
+          <fieldset>
+            <div class="form-card">
+              <div class="row form_header">
+                <div class="col-lg-2"><img src="./Project-profile_files/add-new-icon.jpg" alt="" width="80"></div>
+                <div class="col-lg-10">
+                  <p class="error"><span class="text-bold">No matching record is found</span> in Researgence database.</p>
+                  <h2 class="fs-title">Please enter details of your publication</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-2">&nbsp;</div>
+                <div class="col-lg-10">
+                  <p class="small-text">All fields are mandatory along with document upload</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-2">
+                  <label>Title</label>
+                </div>
+                <div class="col-lg-10">
+                  <input type="text" id="" placeholder="&lt;Enter the title&gt;">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-2">
+                  <label>Source</label>
+                </div>
+                <div class="col-lg-10">
+                  <input type="text" id="" placeholder="&lt;Enter the source&gt;">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-2">
+                  <label>DOI</label>
+                </div>
+                <div class="col-lg-10">
+                  <input type="text" id="" placeholder="&lt;Enter DOI&gt;">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-2">
+                  <label>Weblink</label>
+                </div>
+                <div class="col-lg-10">
+                  <input type="text" id="" placeholder="&lt;Enter Weblink&gt;">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-2">&nbsp;</div>
+                <div class="col-lg-10">
+                  <div class="row">
+                    <div class="col-lg-3"> <a  class="btn-upload">Upload</a> </div>
+                    <div class="col-lg-9">
+                      <p class="text-italic"><span class="text_bold">My journal name.pdf</span> is attached</p>
+                      <p class="text-sm text-grey">Only PDF file less than 10 MB is allowed</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input type="button" name="next" class="next btn-solid-blue" value="Submit" style="margin-left: 20px; float: right">
+            <input type="button" class="btn-outline-blue" value="Clear" style="float: right">
+          </fieldset>
+          <fieldset>
+            <div class="form-card">
+              <div class="row form_header justify-content-center">
+                <div class="col-lg-3"> <img src="./Project-profile_files/success-icon.gif" alt="" width="128"> </div>
+                <div class="col-lg-8">
+                  <h2 class="fs-title">Your submission has been successfully registered</h2>
+                  <p>We shall validate the submission and credit the paper into your profile shortly.</p>
+                </div>
+              </div>
+              <button type="button" class="btn-outline-blue float-right" data-dismiss="modal" aria-label="Close">Done</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>

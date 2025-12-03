@@ -1,0 +1,219 @@
+<style>
+  .menu-open {
+    width: 100%;
+    margin-left: -7%;
+    margin-top: 3%;
+  }
+
+  .menu-closed {
+    width: 95%;
+    margin-left: 3%;
+    margin-top: 3%;
+  }
+</style>
+
+<div class="content-wrapper">
+  <div class="container-fluid" [ngClass]="{'menu-open': !isMenuOpen, 'menu-closed': isMenuOpen}">
+    <div class="container-fluid">
+      <div class="gradient-box">
+        <div class="bg-white">
+          <div class="row">
+            <form class="form">
+              <div>
+                <h2 style="text-align: center;font-size: x-large;font-style: italic;">SERVICE REQUEST - Advanced Search
+                </h2>
+              </div>
+              <div class="col-lg-6">
+
+                <table class="form-table">
+                  <tbody>
+
+                    <tr>
+                      <th colspan="2" class="label-column"></th>
+                    </tr>
+                    <tr>
+                      <!-- <td class="label-column"><label>UNIVERSITY</label></td>
+                      <td>
+
+                        <select class="custom-select line-select" name="universityId" [(ngModel)]="universityId"
+                          (change)="selectUniv(universityId)">
+                          <option style="background-color: #004096;" disabled selected value="undefined">Select
+                            University</option>
+                          <option value="">All University</option>
+                          <option class="select-selected" style="background-color: #005bb3;"
+                            *ngFor="let item of universityList" [value]="item.id">{{item.name}}</option>
+                        </select>
+
+                      </td> -->
+
+                      <td class="label-column"><label>UNIVERSITY</label></td>
+                      <td>
+                        <div class="dropdown-container">
+                          <!-- Button to toggle dropdown -->
+                          <div class="custom-select line-select" style="position:relative;" (click)="toggleDropdown()">
+                            {{ selectedUniversityName || 'Select University' }}
+                            <span class="arrow-icon" >&#8964;</span> <!-- Unicode Down Arrow -->
+                          </div>
+
+                          <!-- Dropdown list with virtual scrolling -->
+                          <div class="dropdown-list_1 " *ngIf="isDropdownOpen">
+                            <cdk-virtual-scroll-viewport itemSize="40" class="scroll-viewport">
+                              <div
+                                *cdkVirtualFor="let item of universityList"
+                                (click)="selectUniversity(item.universityName,item.universityId)"
+                                class="dropdown-item"
+                              >
+                                {{ item.universityName }}
+                              </div>
+                            </cdk-virtual-scroll-viewport>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="label-column"><label>STATUS</label></td>
+                      <td>
+                        <select class="custom-select line-select" name="status" [(ngModel)]="status">
+                          <option style="background-color: #004096;" disabled selected value="undefined">Select Status
+                          </option>
+                          <option value="">All Status</option>
+                          <option class="select-selected" style="background-color: #005bb3;"
+                            *ngFor="let item of userStatusFilter" [value]="item.id">{{item.value}}</option>
+
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>CREATED ON</label></td>
+                      <td><input type="date" id="createdDateFrom" name="createdOn" class="form-text"
+                          [(ngModel)]="createdOn"></td>
+                    </tr>
+
+
+                    <tr>
+                      <td class="label-column"><label>PRIORITY</label></td>
+                      <td>
+                        <select class="custom-select line-select" name="priorityId" [(ngModel)]="priorityId">
+                          <option value="">All Priority</option>
+                          <option class="select-selected" style="background-color: #005bb3;"
+                            *ngFor="let item of priortyList" [value]="item.id">{{item.value}}</option>
+
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>RESOLVED BY</label></td>
+                      <td>
+                        <select class="custom-select line-select" name="resolvedBy" [(ngModel)]="resolvedBy">
+                          <option value="">All Resolved</option>
+                          <option class="select-selected" style="background-color: #005bb3;"
+                            *ngFor="let item of resolverList" [value]="item.id">{{item.value}}</option>
+
+                        </select>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-lg-6">
+
+                <table class="form-table">
+                  <tbody>
+                    <tr>
+                      <th colspan="2" class="label-column"></th>
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>TYPE</label></td>
+                      <td>
+                        <select class="custom-select line-select" name="type" [(ngModel)]="type"
+                          (ngModelChange)="changeType(type)">
+                          <option value="">All Type</option>
+                          <option class="select-selected" style="background-color: #005bb3;"
+                            *ngFor="let item of uniqType" [value]="item.serviceTypeId">{{item.serviceTypeName}}</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>CATEGORY</label></td>
+                      <td>
+                        <select class="custom-select line-select" name="category" [(ngModel)]="category">
+                          <option value="">All Category</option>
+                          <option class="select-selected" style="background-color: #005bb3;"
+                            *ngFor="let item of categoryList" [value]="item.categoryId">{{item.categoryName}}</option>
+
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>RESOLVED ON</label></td>
+                      <td><input type="date" id="createdDateTo" name="resolvedOn" class="form-text"
+                          [(ngModel)]="resolvedOn"></td>
+                    </tr>
+                    <tr>
+                      <td class="label-column"><label>ASSIGNED TO</label></td>
+                      <td>
+                        <select class="custom-select line-select" name="assignedBy" [(ngModel)]="assignedTo">
+                          <option value="">All</option>
+                          <option class="select-selected" style="background-color: #005bb3;"
+                            *ngFor="let item of resolverList" [value]="item.id">{{item.value}}</option>
+
+                        </select>
+                      </td>
+                    </tr>
+
+                    <br>
+                    <div class="col-lg-12" style="margin-bottom: 1%;">
+                      <button style="margin-top: 1%;float: left;" class="btn-green center-block"
+                        (click)="advSearch()">Search</button>
+                      <button style="margin-top: 1%;" class="btn-green center-block" (click)="refresh()">Reset</button>
+                    </div>
+                  </tbody>
+                </table>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div  style="margin-top: 40px; margin-bottom: 40px;" class="table-container">
+        <table class="table table-striped" >
+          <thead>
+            <tr style="background:#254e99;">
+              <th scope="col" class="name">S.NO</th>
+              <th style="width: 15%;" scope="col" class="name">UNIVERSITY</th>
+              <th style="width: 15%" scope="col" class="name">REQUESTED BY</th>
+              <th scope="col" class="name">TYPE</th>
+              <th style="width: 20%" scope="col" class="name">CATEGORY</th>
+              <th style="width: 20%" scope="col" class="name">QUERY</th>
+              <th scope="col" class="name">PRIORITY</th>
+              <th scope="col" class="name">STATUS</th>
+              <th style="width: 10%" scope="col" class="name">CREATED ON</th>
+              <th scope="col" style="width: 10%" class="name">RESOLVED ON</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of dataList; let i=index">
+              <td class="td">{{i+1}}</td>
+              <td class="td">{{item.universityName}}</td>
+              <td class="td">{{item.raisedBy}}</td>
+              <td class="td">{{item.serviceType}}</td>
+              <td class="td">{{item.category}}</td>
+              <td class="td">{{item.requestDescription}}</td>
+              <td class="td">{{item.priority}}</td>
+              <td class="td">{{item.status}}</td>
+              <td class="td">{{item.createdOn}}</td>
+              <td class="td">{{item.resolvedOn}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

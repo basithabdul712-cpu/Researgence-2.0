@@ -1,0 +1,417 @@
+
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+<div class="container-fluid" [ngClass]="{'menu-closed': isMenuOpen}" style=" font-family: 'Red Hat Display', sans-serif;">
+  <div class="row" style="margin-bottom: -23px;">
+    <div class="alert alert-dismissible alert-info">
+      <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;"><i
+          class="fa fa-remove"></i></button>
+      Currently logged in as {{Name}}({{roleName}})
+    </div>
+  </div>
+  <div class="row">
+    <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+      [ngStyle]="{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 50px;">
+      <div class="container container-90 ">
+        <div class="row">
+          <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle]="{'margin-top' : stickyEnable ? '' : '20px'}"
+            style="padding-left: 0px;margin-left: -20px;">
+            <h2>Welcome to Your Researgence Repository</h2>
+            <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+            <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For
+              support, click <a class="link-green">here</a> to contact our team.</p>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"><img
+                src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20"
+                style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo"
+              target="_blank" class="video_btn mediabox"><span>Watch Video</span><img
+                src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container container-90">
+    <div class="content-pushed" [ngStyle]="{'padding-top' : stickyEnable ? '150px' : '30px'}">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner-page-header gradient-box">
+            <div class="row">
+              <div class="col-lg-6">
+                <h3 class="page_title" style="font-size: 24px;">USER MANAGEMENT</h3>
+              </div>
+              <div class="col-lg-6">
+                <input type="button" class="btn-outline float-right ml-20" (click)="exportExcel()"
+                  value="Download Excel">
+                <input type="button" class="btn-outline float-right ml-20" (click)="downloadPdf()" value="Download Pdf">
+                <input type="button" class="btn-outline float-right ml-20" routerLink="{{newuserurl}}" value="New User">
+              </div>
+            </div>
+          </div>
+          <div class="sort" style="float: right;margin-top: 5px;margin-right: 10px;">
+            <h6 class="tweet" style="font-size: 13px;"> Showing {{ startrow +num }} to {{ endrow}} of
+              {{this.tcollectionSize}} records</h6>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="filter">
+          
+                <div class="sort"> <span class="custom-dropdown">                 
+                    <select class="form-control input-sm ts" [(ngModel)]="pageSize"
+                      (change)="onPageSizeChange($event.target.value)">
+                      <option *ngFor="let size of pageSizes" [value]="size" [selected]="size == pageSize">{{ size }}</option>
+                      <option *ngIf="tcollectionSize>100"  [value]="tcollectionSize">All</option>
+                    </select>
+                  </span>
+                </div>
+                <div class="sort-narrow" *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'">
+                  <select style="width: 150px" [(ngModel)]="filterCamp"
+                    (change)="filtertable('loc')" >
+                    <option  disabled selected value="undefined">Select Campus
+                    </option>
+                    <option value="">AllCampus</option>
+                    <option *ngFor="let data of layerCampus" style="">{{data}}</option>
+                  </select>
+                </div>
+                <div class="sort-narrow" *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'">
+                  <select style="width: 150px" [(ngModel)]="filterSchl"
+                    placeholder="Filter by Institute" (change)="filtertable('scl')">
+                    <option disabled selected value="undefined">Select School
+                    </option>
+                    <option value="">AllSchool</option>
+                    <option *ngFor="let data of layerSchool" style="background-color: #ffffff;">{{data}}</option>
+                  </select>
+                </div>
+                <div class="sort-narrow"
+                  *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'">
+                  <select style="width: 150px" [(ngModel)]="filterInst"
+                    placeholder="Filter by Institute" (change)="filtertable('inst')">
+                    <option style="" disabled selected value="undefined">Select Institute
+                    </option>
+                    <option style="" value="">AllInstitute</option>
+                    <option *ngFor="let data of layerInst" style="">{{data}}</option>
+                  </select>
+                </div>
+                <div class="sort-narrow"*ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'">
+                  <select style="width: 150px" [(ngModel)]="filterDepart"
+                    placeholder="Filter by Department" (change)="filtertable('dept')">
+                    <option style="" disabled selected value="undefined">Select Department
+                    </option>
+                    <option style="" value="">AllDepartment</option>
+                    <option *ngFor="let data of layerDept">{{data.departmentName}}</option>
+                  </select>
+                </div>
+
+                <div class="sort" *ngIf="userRole=='12'" style="float: right; width: 30%;">            
+                  <input type="search" #searchbar [(ngModel)]="searchData" name="search" class="form-control"
+                    placeholder="Search University" (keyup)="showTitle(searchData)" autocomplete="off">
+                  <ul class="dropdown-list" *ngIf="hideDrop" style=" z-index: 10;height: 100px;overflow: scroll;">
+                    <li *ngFor="let n of customerUniv" (click)="onSelectTitle(n.universityId,n.universityName)">
+                      {{ n.universityName }}
+                    </li>
+                  </ul>
+                </div>
+                  <div class="sort" style="margin-top: 10px;" *ngIf="filtereduserdata" [ngStyle]="{'margin-left':userRole=='12'? '':'130px'}">
+                      <label class="control-label heading_sm" style="text-transform: unset;">Search Name / ID</label>
+                      <input type="search" class="form-field" style="width:170px"  [(ngModel)]="searchQueryTemp" (keyup)="searchDataTemp(searchQueryTemp)">
+                    </div>
+              </div>
+            </div>
+          </div>
+
+                  <div class="result col-lg-12" *ngIf="filtereduserdata" >
+                    <div class="content-wrapper-white" style="margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+                      <div class="scrollClass">                 
+                        <table id="example" class="table table-bordered" style="width:100%" >
+                          <thead style="    background: #0151be;
+                          color: #fff;">
+                            <tr>
+                  <th tabindex="0" aria-controls="compare_table" rowspan="1" colspan="1"
+                    style="width: 68.0156px;text-align: center;" aria-label="Sl No.: activate to sort column ascending">
+                    SL.NO</th>
+                  <th 
+                    aria-label="Sl No.: activate to sort column ascending" (click)="sort('userId')" [ngClass]="{
+                              'ascending': currentSortColumn === 'userId' && currentSortDirection === 'asc',
+                              'descending': currentSortColumn === 'userId' && currentSortDirection === 'desc'
+                            }">USER ID<span class="sorting"></span></th>
+                  <th 
+                    aria-label="Sl No.: activate to sort column ascending" (click)="sort('employeeId')" [ngClass]="{
+                              'ascending': currentSortColumn === 'employeeId' && currentSortDirection === 'asc',
+                              'descending': currentSortColumn === 'employeeId' && currentSortDirection === 'desc'
+                            }">EMP.NO <span class="sorting"></span></th>
+                  <th tabindex="0" aria-controls="compare_table" rowspan="1" colspan="1" style="width: 10%;"
+                    aria-label="Sl No.: activate to sort column ascending" (click)="sort('fullName')" [ngClass]="{
+                              'ascending': currentSortColumn === 'fullName' && currentSortDirection === 'asc',
+                              'descending': currentSortColumn === 'fullName' && currentSortDirection === 'desc'
+                            }">FACULTY NAME<span class="sortings"></span></th>
+                  <th *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'" tabindex="0"
+                    aria-controls="compare_table" rowspan="1" colspan="1" style="width: 10%;"
+                    aria-label="Sl No.: activate to sort column ascending" (click)="sort('locationName')" [ngClass]="{
+                              'ascending': currentSortColumn === 'locationName' && currentSortDirection === 'asc',
+                              'descending': currentSortColumn === 'locationName' && currentSortDirection === 'desc'
+                            }">LOCATION <span class="sorting"></span></th>
+                  <th *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'" tabindex="0"
+                    aria-controls="compare_table" rowspan="1" colspan="1" style="width: 10%;"
+                    aria-label="Sl No.: activate to sort column ascending" (click)="sort('schoolName')" [ngClass]="{
+                              'ascending': currentSortColumn === 'schoolName' && currentSortDirection === 'asc',
+                              'descending': currentSortColumn === 'schoolName' && currentSortDirection === 'desc'
+                            }">SCHOOL <span class="sorting"></span></th>
+                  <th
+                    *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'"
+                    tabindex="0" aria-controls="compare_table" rowspan="1" colspan="1" style="width: 10%;"
+                    aria-label="School Name.: activate to sort column ascending" (click)="sort('instituteName')"
+                    [ngClass]="{
+                              'ascending': currentSortColumn === 'instituteName' && currentSortDirection === 'asc',
+                              'descending': currentSortColumn === 'instituteName' && currentSortDirection === 'desc'
+                            }">INSTITUTE <span class="sortings"></span></th>
+                  <th
+                    *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'"
+                    tabindex="0" aria-controls="compare_table" rowspan="1" colspan="1" style="width: 10%;"
+                    aria-label="Sl No.: activate to sort column ascending" (click)="sort('departmentName')" [ngClass]="{
+                              'ascending': currentSortColumn === 'departmentName' && currentSortDirection === 'asc',
+                              'descending': currentSortColumn === 'departmentName' && currentSortDirection === 'desc'
+                            }">DEPARTMENT <span class="sortings"></span></th>
+
+                  <th tabindex="0" aria-controls="compare_table" rowspan="1" colspan="1" style="width: 10%;"
+                    aria-label="Sl No.: activate to sort column ascending" (click)="sort('userStatus')" [ngClass]="{
+                              'ascending': currentSortColumn === 'userStatus' && currentSortDirection === 'asc',
+                              'descending': currentSortColumn === 'userStatus' && currentSortDirection === 'desc'
+                            }">STATUS<span class="sorting"></span></th>
+                  <th tabindex="0" aria-controls="compare_table" rowspan="1" colspan="1" style="width: 10%;"
+                    aria-label="Sl No.: activate to sort column ascending" (click)="sort('roles')" [ngClass]="{
+                              'ascending': currentSortColumn === 'roles' && currentSortDirection === 'asc',
+                              'descending': currentSortColumn === 'roles' && currentSortDirection === 'desc'
+                            }">TYPE<span class="sortingtype"></span></th>
+                  <th tabindex="0" aria-controls="compare_table" rowspan="1" colspan="1"
+                    aria-label="Sl No.: activate to sort column ascending" class="sticky-column-right bg-light" style="width: 10%;background-color: #0151be !important;color: #fff !important;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr
+                  *ngFor="let data of filtereduserdata | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize ; let i=index"
+                  [ngClass]="{ 'odd-row': i % 2 !== 0 ,'even-row': i % 2 === 0 }">
+                  <!-- <td style="padding-left: 40px;">{{data.rowNumber}}</td> -->
+                  <td style="text-align: center;">{{ i + 1 + (this.startrow) }}</td>
+                  <td>{{data.userId }}</td>
+                  <td>{{data.employeeId }}</td>
+                  <td><a class="a" style="cursor: pointer;"
+                      (click)="gotoview(data.universityId,data.userId)">{{data.fullName}}</a></td>
+                  <td *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'">{{data.locationName}}
+                  </td>
+                  <td *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'">{{data.schoolName}}</td>
+                  <td
+                    *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'">
+                    {{data.instituteName }}</td>
+                  <td
+                    *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'">
+                    {{data.departmentName }}</td>
+                  <td>{{data.userStatus}}</td>
+                  <td>{{data.roles}}</td>
+                  <td class="sticky-column-right bg-light">
+                    <input type="button" (click)="gotoedit(data.universityId,data.userId)"
+                      style="width: 70px;border-radius: 15px;background: #0051bf;color: white;font-weight: 700;cursor: pointer;"
+                      class="btn-solid-blue float-left" value="EDIT">
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="paginate" *ngIf="filtereduserdata">
+        <div class="row" style="width: 75%;">
+          <tr>
+            <p class="pages-link" style="text-decoration: none;margin-left: 20px;"
+            [class.disabled]="tpage == totalPages" (click)="onPageChange(tpage+1)">Next</p>
+            <ngb-pagination class="pagination1" (pageChange)="onPageChange($event)" [maxSize]="3" [(page)]="tpage"
+              [pageSize]="pageSize" [collectionSize]="tcollectionSize" style="float: right; ">
+            </ngb-pagination>
+            <p class="pages-link" [class.disabled]="tpage === 1" (click)="onPageChange(tpage-1)">Previous</p>
+          </tr>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+  <style>
+
+
+    span.sortings:before {
+      /* float: right;
+      margin-left: 95px;
+      margin-top: 0px;
+      margin-bottom: -13px;
+      content: "▼" / "";
+      padding-top: 5%; */
+      float: right;
+      margin-top: 9px;
+      margin-bottom: -10px;
+      content: "▼" / "";
+      margin-left: -10px;
+    }
+
+    span.sortings:after {
+      /* float: right;
+      content: "▲" / "";
+      margin-left: 63px;
+      margin-top: -18px;
+      margin-bottom: 9px; */
+      float: right;
+      content: "▲" / "";
+      margin-left: 140px;
+      margin-top: -26px;
+      margin-bottom: 9px;
+    }
+
+    span.sorting:before {
+      float: right;
+      margin-top: 9px;
+      margin-bottom: -10px;
+      content: "▼" / "";
+      margin-left: -10px;
+    }
+
+    span.sorting:after {
+      /* top: 50%; */
+      float: right;
+      content: "▲" / "";
+      margin-left: 100px;
+      margin-top: -26px;
+      margin-bottom: 9px;
+    }
+
+
+    span.sortingtype:before {
+      /* bottom: 50%; */
+      float: right;
+      /* margin-left: 51px; */
+      margin-top: 9px;
+      margin-bottom: -10px;
+      content: "▼" / "";
+      margin-left: -14px;
+    }
+
+    span.sortingtype:after {
+      /* top: 50%; */
+      float: right;
+      content: "▲" / "";
+      margin-left: 100px;
+      margin-top: -3px;
+      margin-bottom: 9px;
+    }
+
+ 
+
+    .pages-link {
+      float: right;
+      border: 1px solid grey;
+      color: darkgray;
+      padding-bottom: 6px;
+      padding-top: 6px;
+      margin-right: 21px;
+      border-radius: 0.15rem;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+
+    .page-item.active .page-link {
+      float: right;
+      background-color: red;
+      border-color: #c3d01d;
+    }
+
+    .pagination1.page-item.active .page-link {
+      background-color: #c3d01d;
+      border-color: #c3d01d;
+    }
+
+ 
+
+   
+
+    .a {
+      color: #337ab7;
+      text-decoration: none;
+    }
+
+    .a:hover {
+      text-decoration: none;
+      color: #dbdf08;
+    }
+
+
+
+    /* Styling for sorting arrow */
+    span.sorting:before,
+    span.sorting:after {
+      font-size: 14px;
+      color: rgb(189, 184, 184);
+      opacity: 1px;
+    }
+
+    /* Styling for ascending arrow */
+    th.ascending span.sorting:before {
+      color: white;
+    }
+
+    /* Styling for descending arrow */
+    th.descending span.sorting:after {
+      color: white;
+    }
+
+
+
+    /* Styling for sorting arrow */
+    span.sortings:before,
+    span.sortings:after {
+      font-size: 14px;
+      color: rgb(189, 184, 184);
+      opacity: 1px;
+    }
+
+    span.sortingtype:before,
+    span.sortingtype:after {
+      font-size: 14px;
+      color: rgb(189, 184, 184);
+      opacity: 1px;
+    }
+    /* Styling for ascending arrow */
+    th.ascending span.sortingtype:before {
+      color: white;
+    }
+
+    /* Styling for descending arrow */
+    th.descending span.sortingtype:after {
+      color: white;
+    }
+
+    /* Styling for ascending arrow */
+    th.ascending span.sortings:before {
+      color: white;
+    }
+
+    /* Styling for descending arrow */
+    th.descending span.sortings:after {
+      color: white;
+    }
+
+  </style>

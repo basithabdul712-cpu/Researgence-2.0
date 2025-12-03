@@ -1,0 +1,26 @@
+
+.dropdown-list li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+}
+.scrollClass {
+    overflow-x: scroll;
+  }
+
+  th{
+    color: white;
+  }
+
+.menu-closed 
+{
+    padding-left: 265px;
+    transform: translateX(0.5);
+   
+}
+.sticky-column-right {
+  position: sticky;
+  right: -1px; /* Sticky to the right side */
+  z-index: 0; /* Ensure it's above other elements */
+  background-color: #f8f9fa; /* Optional: background color for sticky visibility */
+}

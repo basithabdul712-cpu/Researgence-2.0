@@ -1,0 +1,310 @@
+<style>
+  .sidemenu-open {
+  padding-left: 0%;
+}
+
+.menu-closed {
+  padding-left: 250px;
+}
+</style>
+<div class="content-wrapper" [ngClass]="{'sidemenu-open': !isMenuOpen, 'menu-closed': isMenuOpen}">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="alert alert-dismissible alert-info" >
+        <button type="button" class="close" data-dismiss="alert" style="background: unset;border: unset;position: absolute;top: -6px;"><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+    <div class="row">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 50px;">
+           <div class="container container-90 ">
+          <div class="row"  style="padding-right: 29px;margin-left: -36px;">
+         <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '20px'}">
+                 <h2>Welcome to Your Researgence Repository</h2>
+                 <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+           <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" >here</a> to contact our team.</p>
+               </div>
+               <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+              </div>
+       </div>
+      </div>
+       </div>
+     </div>
+  </div>
+
+<div class="container container-90" style="width: 97%;">
+  <div class="content-pushed"  [ngStyle] = "{'padding-top' : stickyEnable ? '170px' : '20px'}">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-page-header gradient-box">
+          <div class="row">
+            <div class="col-lg-6">
+              <h3 class="page_title" style="font-size: 24px;">DASHBOARD COMPARE</h3>
+            </div>
+            <div class="col-lg-6">
+              <input type="button" class="btn-outline float-right ml-20" data-toggle="modal" data-target="#add_new" style="cursor: pointer;" routerLink="/Dashboard" value="Back">
+              <input type="button" class="btn-outline float-right ml-20" data-toggle="modal" data-target="#add_new" style="cursor: pointer;" (click)="exportExcel()" value="Download Excel">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="publication_list row">
+          <div class="col-lg-12">
+            <div class="filter">
+
+              <div class="sort"> <span class="custom-dropdown">
+                <label class="control-label heading_sm"> Showing  {{ startrow +1  }} to {{ endrow}} of {{this.tcollectionSize}} records</label>
+                </span> </div>
+
+                <div class="sort"> <span class="custom-dropdown">
+                  <div>
+                    <label class="control-label heading_sm">Show</label>
+                    <label>
+                      <select class="form-control input-sm ts" [(ngModel)]="pageSize"
+                        (change)="onPageSizeChange($event.target.value)">
+                        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+                      </select>
+                      <span class="caret"></span>
+                    </label>
+                  </div>
+                </span> </div>
+
+              <div>
+                <label class="control-label heading_sm" style="float: inline-start;">Year</label>
+                <input style="width: 70px;float: inline-start;margin-right: 10px;" [(ngModel)]="fromMonthYear" autocomplete="off" class="form-control" name="date" bsDatepicker [bsConfig]="{dateInputFormat: 'MM/YYYY',monthLabel: 'MMM',maxDate:maxDate}" (onShown)="onOpenCalendar($event)" (ngModelChange)="getFromYear('from')">
+                <input style="width: 70px;" [(ngModel)]="toMonthYear" autocomplete="off" class="form-control" name="date" bsDatepicker [bsConfig]="{dateInputFormat: 'MM/YYYY',monthLabel: 'MMM',maxDate:maxDate}" (onShown)="onOpenCalendar($event)" (ngModelChange)="getToYear('to')">
+              </div>
+            <br>
+               
+              <div class="sort" *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">Campus</label>
+                <select style="width: 150px" [(ngModel)]="filterCamp"  (change)="filters('loc')">
+                  <option  disabled selected value="undefined">Select Campus</option>
+                  <option  value="">All Campus</option>
+                  <option *ngFor="let item of layerCampus">{{item}}</option>
+                </select>
+                </span> </div>
+
+              <div class="sort" *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">School</label>
+                <select style="width: 100px" [(ngModel)]="filterSchool" (change)="filters('scl')">
+                  <option  disabled selected value="undefined">Select School</option>
+                  <option  value="">All School</option>
+                  <option  *ngFor="let item of layerSchool">{{item}}</option>
+                </select>
+                </span> </div>
+
+              <div class="sort" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">Institute</label>
+                <select style="width: 100px" [(ngModel)]="filterInst" (change)="filters('inst')">
+                  <option  disabled selected value="undefined">Select Institute</option>
+                  <option  value="">All Institute</option>
+                  <option  *ngFor="let item of layerInst">{{item}}</option>
+                </select>
+                </span> </div>
+
+              <div class="sort" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">Department</label>
+                <select style="width: 100px" [(ngModel)]="filterDepart" (change)="filters('dept')">
+                  <option disabled selected value="undefined">Select Department</option>
+                      <option value="">All Department</option>
+                      <option *ngFor="let item of layerDept" [value]="item.departmentName">{{item.departmentName}}</option>
+                </select>
+                </span> </div>
+
+            </div>
+          </div>
+          <div class="result col-lg-12">
+            <div class="content-wrapper-white" style="overflow: auto;margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+              <table id="example" class="table table-bordered" style="width:100%">
+                <thead style="    background: #0151be;
+                color: #fff;">
+                  <tr>
+                    <th>Sl No </th>
+                    <th (click)="sort('universityName')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'universityName' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'universityName' && currentSortDirection === 'desc'
+                    }">University <span class="sorting"></span></th>
+                    <th *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'" (click)="sort('locationName')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'locationName' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'locationName' && currentSortDirection === 'desc'
+                    }">LOCATION <span class="sorting"></span></th>
+                    <th *ngIf="layerType=='4LType1'||layerType=='4LType2'" (click)="sort('schoolName')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'schoolName' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'schoolName' && currentSortDirection === 'desc'
+                    }">SCHOOL <span class="sorting"></span></th>
+                    <th *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'" (click)="sort('instituteName')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'instituteName' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'instituteName' && currentSortDirection === 'desc'
+                    }">INSTITUTE <span class="sorting"></span></th>
+                    <th *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'" (click)="sort('departmentName')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'departmentName' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'departmentName' && currentSortDirection === 'desc'
+                    }">DEPARTMENT <span class="sorting"></span></th>
+                    <th (click)="sort('publications')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'publications' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'publications' && currentSortDirection === 'desc'
+                    }">Publications <span class="sorting"></span></th>
+                    <th (click)="sort('projects')" 
+                    [ngClass]="{'ascending': currentSortColumn === 'projects' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'projects' && currentSortDirection === 'desc'
+                    }">Projects <span class="sorting"></span></th>
+                    <th  (click)="sort('consultancy')"[ngClass]="{
+                      'ascending': currentSortColumn === 'consultancy' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'consultancy' && currentSortDirection === 'desc'
+                    }">Consultancy <span class="sorting"></span></th>
+                    <th  (click)="sort('faculty')"[ngClass]="{
+                      'ascending': currentSortColumn === 'faculty' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'faculty' && currentSortDirection === 'desc'
+                    }">Faculty <span class="sorting"></span></th>
+                    <th  (click)="sort('scholars')"[ngClass]="{
+                      'ascending': currentSortColumn === 'scholars' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'scholars' && currentSortDirection === 'desc'
+                    }">Scholar <span class="sorting"></span></th>
+                    <th  (click)="sort('startups')"[ngClass]="{
+                      'ascending': currentSortColumn === 'startups' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'startups' && currentSortDirection === 'desc'
+                    }">Startups <span class="sorting"></span></th>
+                    <th  (click)="sort('patents')"[ngClass]="{
+                      'ascending': currentSortColumn === 'patents' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'patents' && currentSortDirection === 'desc'
+                    }">Patents <span class="sorting"></span></th>
+                    <th  (click)="sort('copyrights')"[ngClass]="{
+                      'ascending': currentSortColumn === 'copyrights' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'copyrights' && currentSortDirection === 'desc'
+                    }">Copyrights <span class="sorting"></span></th>
+                    <th  (click)="sort('trademarks')"[ngClass]="{
+                      'ascending': currentSortColumn === 'trademarks' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'trademarks' && currentSortDirection === 'desc'
+                    }">Trademarks <span class="sorting"></span></th>
+                    <th  (click)="sort('conferences')"[ngClass]="{
+                      'ascending': currentSortColumn === 'conferences' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'conferences' && currentSortDirection === 'desc'
+                    }">Conferences <span class="sorting"></span></th>
+                    <th  (click)="sort('books')"[ngClass]="{
+                      'ascending': currentSortColumn === 'books' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'books' && currentSortDirection === 'desc'
+                    }">Books <span class="sorting"></span></th>
+                    <th  (click)="sort('guideship')"[ngClass]="{
+                      'ascending': currentSortColumn === 'guideship' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'guideship' && currentSortDirection === 'desc'
+                    }">Guideship <span class="sorting"></span></th>
+                    <th  (click)="sort('editorship')"[ngClass]="{
+                      'ascending': currentSortColumn === 'editorship' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'editorship' && currentSortDirection === 'desc'
+                    }">Editorship <span class="sorting"></span></th>
+                    <th (click)="sort('membership')"[ngClass]="{
+                      'ascending': currentSortColumn === 'membership' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'membership' && currentSortDirection === 'desc'
+                    }">Membership <span class="sorting"></span></th>
+                    <th (click)="sort('fellowships')"[ngClass]="{
+                      'ascending': currentSortColumn === 'fellowships' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'fellowships' && currentSortDirection === 'desc'
+                    }">Fellowships <span class="sorting"></span></th>
+                    <th (click)="sort('collaborations')"[ngClass]="{
+                      'ascending': currentSortColumn === 'collaborations' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'collaborations' && currentSortDirection === 'desc'
+                    }">Collabrations <span class="sorting"></span></th>
+                    <th (click)="sort('fdPs')"[ngClass]="{
+                      'ascending': currentSortColumn === 'fdPs' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'fdPs' && currentSortDirection === 'desc'
+                    }">FDPs <span class="sorting"></span></th>
+                    <th (click)="sort('clinicalTrials')"[ngClass]="{
+                      'ascending': currentSortColumn === 'clinicalTrials' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'clinicalTrials' && currentSortDirection === 'desc'
+                    }">Clinical Trials <span class="sorting"></span></th>
+                    <th (click)="sort('digitalLearning')"[ngClass]="{
+                      'ascending': currentSortColumn === 'digitalLearning' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'digitalLearning' && currentSortDirection === 'desc'
+                    }">Digital Learning <span class="sorting"></span></th>
+                    <th (click)="sort('extensionActivities')"[ngClass]="{
+                      'ascending': currentSortColumn === 'extensionActivities' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'extensionActivities' && currentSortDirection === 'desc'
+                    }">Extension Activities <span class="sorting"></span></th>
+                    <th (click)="sort('libraryResources')"[ngClass]="{
+                      'ascending': currentSortColumn === 'libraryResources' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'libraryResources' && currentSortDirection === 'desc'
+                    }">Library Resources <span class="sorting"></span></th>
+                    <th  (click)="sort('perception')"[ngClass]="{
+                      'ascending': currentSortColumn === 'perception' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'perception' && currentSortDirection === 'desc'
+                    }">Perception <span class="sorting"></span></th>
+                    <th  (click)="sort('sponsoredProjects')"[ngClass]="{
+                      'ascending': currentSortColumn === 'sponsoredProjects' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'sponsoredProjects' && currentSortDirection === 'desc'
+                    }">Sponsored Projects <span class="sorting"></span></th>
+                    <th  (click)="sort('awardsRecognitions')"[ngClass]="{
+                      'ascending': currentSortColumn === 'awardsRecognitions' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'awardsRecognitions' && currentSortDirection === 'desc'
+                    }">Award Recognitions <span class="sorting"></span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let c of facultiesListdata | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i=index" >
+                    <td >{{ i + 1 + (this.startrow) }}</td>
+                    <td >{{c.universityName}}</td>
+                    <td  *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'">{{c.locationName}}</td>
+                    <td  *ngIf="layerType=='4LType1'||layerType=='4LType2'">{{c.schoolName}}</td>
+                    <td  *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'">{{c.instituteName}}</td>
+                    <td  *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'">{{c.departmentName}}</td>
+                    <td >{{c.publications}}</td>
+                    <td >{{c.projects}}</td> 
+                    <td >{{c.consultancy}}</td>
+                    <td >{{c.faculty}}</td>
+                    <td >{{c.scholars}}</td>
+                    <td >{{c.startups}}</td>
+                    <td >{{c.patents}}</td>
+                    <td >{{c.copyrights}}</td>
+                    <td >{{c.trademarks}}</td>
+                    <td >{{c.conferences}}</td>
+                    <td >{{c.books}}</td>
+                    <td >{{c.guideship}}</td>
+                    <td >{{c.editorship}}</td>
+                    <td >{{c.membership}}</td>
+                    <td >{{c.fellowships}}</td>
+                    <td >{{c.collaborations}}</td>
+                    <td >{{c.fdPs}}</td>
+                    <td >{{c.clinicalTrials}}</td>
+                    <td >{{c.digitalLearning}}</td>
+                    <td >{{c.extensionActivities}}</td>
+                    <td >{{c.libraryResources}}</td>
+                    <td >{{c.perception}}</td>
+                    <td >{{c.sponsoredProjects}}</td>
+                    <td >{{c.awardsRecognitions}}</td>
+                  </tr>
+                </tbody>
+              </table>
+                  </div>
+                </div>
+              </div>
+              <div class="paginate" style="margin-left: 65%;">
+                <div class="row">
+                  <tr>
+                    <p class="pages-link" style="float: inline-start;"
+                       [class.disabled]="tpage === 1" (click)="onPageChange(tpage-1)" >Previous</p>
+                       <ngb-pagination class="pagination1" (pageChange)="onPageChange($event)" [maxSize]="3" [(page)]="tpage" [pageSize]="pageSize" [collectionSize]="tcollectionSize" style="float: left;">
+                          </ngb-pagination>
+                  <p class="pages-link" style="text-decoration: none;margin-left: 20px;"
+                       [class.disabled]="tpage == totalPages" (click)="onPageChange(tpage+1)">Next</p>
+                  </tr>
+                </div>
+                <br>
+                <br>
+              </div>       
+            </div>
+          </div>
+        </div>
+      </div>
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

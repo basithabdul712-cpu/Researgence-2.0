@@ -1,0 +1,316 @@
+<style>
+  /* .menu-opens {
+  padding-left: 0%;
+} */
+
+.menu-closeds {
+  padding-left: 260px;
+}
+</style> 
+<div class="content-wrapper" [ngClass]="{'menu-opens': !isMenuOpen, 'menu-closeds': isMenuOpen}"  style="font-family: 'Red Hat Display', sans-serif; background: var(--background-white);background-size: cover;background-attachment: fixed;">
+<div class="container-fluid" [ngClass]="{'pageBlur':enableBox}">
+  <div class="row" style="margin-bottom: -23px;">
+    <div class="alert alert-dismissible alert-info" >
+      <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;" ><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+    <div class="row" style="margin-left: -24px;">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" 
+      [ngStyle] = "{'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'}" #blueheader style="padding-left: 7px;">
+           <div class="container container-90 ">
+          <div class="row">
+         <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '20px'}" style="">
+                 <h2>Welcome to Your Researgence Repository</h2>
+                 <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+           <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" href="/newrequest">here</a> to contact our team.</p>
+               </div>
+               <div class="col-lg-5 col-md-5 col-sm-5" style="margin-left: -5px;"><a class="link-green help-btn" href="/newrequest"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+              </div>
+       </div>
+      </div>
+       </div>
+     </div>
+
+    <div class="container container-90" style="width: 90%;">
+      <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '170px' : '20px'}">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="inner-page-header gradient-box">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h3 class="page_title" style="font-size: 24px;">My Added Patents</h3>
+                </div>
+                <div class="col-lg-6">
+                  
+                  <a  class="btn-outline float-right ml-20" style="cursor: pointer;" (click)="resetForm()" >Add New</a>
+                  <a   class="btn-outline float-right" style="cursor: pointer;" (click)="exportexcel()" >Download Excel</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+           
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="filter">
+        <div > 
+          
+            <div class="sort">
+          <label class="control-label heading_sm">Search</label>
+          <input  type="search" class="form-field" style="width:300px"[(ngModel)]="searchQuery" (keyup)="searchTab()" >
+        </div>
+        <div class="sort"> <span class="custom-dropdown">
+          <label class="control-label heading_sm">Show</label>
+          <select style="width: 150px"[(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+            <option *ngFor="let size of pageSizes" [value]="size" [selected]="size == pageSize">{{ size }}</option>
+          </select>
+          </span> </div>
+      </div>
+            </div>
+       
+       <div class="result col-lg-12" style="padding-left: unset;padding-right: unset;">
+        <div class="content-wrapper-white" style="overflow: auto;margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+          <div>
+            <h6 class="text"> Showing  {{ startrow + 1 }} to {{ endrow}} of {{this.collectionSize}} records</h6>
+           </div>
+          <table id="example" class="table table-bordered"  >
+            <thead style="    background: #0151be;
+            color: #fff;">
+              <tr>
+                    <th  scope="col" class="name">S.NO</th>
+                    <th  scope="col" style="width: 8%;" class="name">EmployeeId</th>
+                    <th  style="width:10%"  scope="col" class="name">Author Details</th>
+                    <th  style="width: 35%;" scope="col" class="name">Patent Details</th>
+                    <th  style="width: 7%;" scope="col" class="name" (click)="sort('rfsType')">RFS Type<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'rfsType' ? 'rfstYpe' : 'undefined')"></span></th>
+                    <th  scope="col" class="name" (click)="sort('remark')">Remark<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'remark' ? 'remark' : 'undefined')"></span></th>
+                    <th  scope="col" class="name" (click)="sort('status')">Status<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'status' ? 'status' : 'undefined')"></span></th>
+                    <th  scope="col" class="name" (click)="sort('createdBy')">CreatedBy<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'createdBy' ? 'createdBy' : 'undefined')"></span></th>
+                    <th  scope="col" class="name" (click)="sortdate('createdDate')">CreatedDate<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'createdDate' ? 'createdDate' : 'undefined')"></span></th>
+                    <th  scope="col" class="name">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of dataList | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i=index">
+                      <td>{{ i + 1 + (page - 1) * pageSize }}</td>
+                      <td>{{item.employeeId}}</td>
+                      <td>
+                        <p >{{Name}}</p>
+                      </td>
+                      <td>
+                        <p><span style="font-weight: bold;">Title:</span>{{item.patentTitle}}</p>
+                        <p ><span style="font-weight: bold;">Office:</span>{{item.patentOffice}}</p>
+                        <p ><span style="font-weight: bold;">App No:</span>{{item.applicationNumber}}</p>
+                        <a class="fa fa-file-pdf-o" style="color: red;cursor: pointer;" *ngIf="item.rfsType!='Linked' && item.pdfFileLocation && item.pdfFileLocation.trim() !== ''"  (click)="testNew(item.pdfFileLocation)"></a>
+                      </td>
+                      <td >{{item.rfsType | uppercase}}</td>
+                      <td>{{item.remark}}</td>
+                      <td>{{item.status}}</td>
+                      <td>{{item.createdBy}}</td>
+                      <td>{{item.createdDate | date:'dd/MM/yyyy'}}</td>
+                      <td >
+                        <ng-container *ngIf="isReadOnly; else editButtons">     
+                          <a style="font-size: 20px;" class="fa fa-edit control-btn"></a>
+                        </ng-container>
+
+                        <ng-template #editButtons>
+                          <ng-container *ngIf="item.status == 'New' && item.rfsType == 'Linked'">
+                            <a style="font-size: 20px;" class="fa fa-trash control-btn" (click)="delete(item.requestId)"></a>
+                          </ng-container>
+
+                          <ng-container *ngIf=" !item.rfsType=='Linked'">      
+                            <a style="font-size: 20px;" class="fa fa-edit control-btn" (click)="gotoedit(item.requestId)"></a>     
+                        </ng-container>
+
+                        <ng-container *ngIf="item.status == 'New'&&item.rfsType =='Manual'">          
+                          <a style="font-size: 20px;" class="fa fa-edit control-btn" (click)="gotoedit(item.requestId)"></a>
+                          <a style="font-size: 20px;" class="fa fa-trash control-btn" (click)="delete(item.requestId)"></a>
+                      </ng-container>
+                           
+                    </ng-template>                 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>     
+                <br>
+                <div style="width: 30%;margin-left: 45%;">
+                    <ngb-pagination [maxSize]="3" [pageSize] = "pageSize" (pageChange)="onPageChange($event)"[collectionSize]="collectionSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+                  </div>
+                      <br><br><br>  
+                      </div>
+                  </div>
+                 </div>
+                </div>
+             </div>
+          </div>
+        </div>
+
+
+        <div class="modal fade modal_special in" style="display: block;opacity: unset;" id="add_new_form" tabindex="-1" role="dialog"
+        aria-labelledby="add_new_modal" aria-hidden="true" *ngIf="enablePatentBox">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width: 800px;top:25px" [ngClass]="{'enableModelScroll': enableUnmatch}">
+            <div class="modal-header" style="height: 60px;">
+              <p class="modal-title" id="add_new_modal" style="width: 100%;">Add New Patent</p>
+              <button type="button" style="background: transparent;border:transparent" class="close" data-dismiss="modal" aria-label="Close" (click)="closePatent()"><span style="color:black"
+                  aria-hidden="true">&times;</span> </button>
+            </div>
+            <div class="modal-body">
+      
+              <form id="step-form">
+      
+                <fieldset *ngIf="enablePatentAdd">
+                  <div class="form-card">
+                    <div class="form_header">
+                      <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                      <h2 class="fs-title">Would you like to add your missing patent to your profile?</h2>
+                    </div>
+                  </div>
+                  <input type="button" name="next" style="margin-top: 50px;" class="next btn-outline-blue float-right"
+                    (click)="enablePatentAppNum()" value="Yes, Continue" />
+                </fieldset>
+      
+                <fieldset *ngIf="enablePatentNum">
+                  <div class="form-card">
+                    <div class="form_header">
+                      <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                      <h2 class="fs-title">Enter the Patent Application Number</h2>
+                    </div>
+                    <br>
+                    <div>
+                      <select style="width: 30%;margin-right: 15px;" class="custom-select line-select" name="countryCode" [(ngModel)]="countryCode"> 
+                        <option value="null" selected disabled>Select Country Code</option>
+                        <option *ngFor="let item of patCountryList" class="select-selected" [value]="item.id">{{item.value}}</option>
+                      </select>
+                    <input style="height: 35px;width: 65%;border: 1px solid lightgray;" type="text" placeholder="Enter the Patent Application Number" name="searchPatentAppNum" [(ngModel)]="searchPatentAppNum">
+                   </div>
+                    <br>
+                  </div>
+                  <input type="button" name="next" [disabled]="searchPatentAppNum==''" style="margin-top: 50px;"
+                  class="next btn-outline-blue float-right" (click)="searchPatentNum()" value="Search for Match" />
+                </fieldset>
+                <fieldset *ngIf="enableUnmatch">
+                  <div class="form-card">
+                    <div class="row form_header">
+                      <div class="col-lg-2"><img src="assets/given/img/add-new-icon.jpg" alt="" width="80"></div>
+                      <div class="col-lg-10">
+                        <h2 class="fs-title">Proceed to add details of your publication</h2>
+                      </div>
+      
+                    </div>
+                    <div class="row" style="padding-right: 40px;">
+                      <div class="col-lg-2">&nbsp;</div>
+                      <div class="col-lg-10">
+                        <p class="small-text" *ngIf="!enablepatData" >All fields are mandatory along with document upload</p>
+                      </div>
+                    </div>
+      
+                    <div class="row" >
+                      <div class="col-lg-3" style="text-align: right;"><label>Application No.<span style="color: red;" *ngIf="!enablepatData" >*</span></label>
+                      </div>
+                      <div class="col-lg-9">
+                        <div>
+                          <select style="width: 30%;margin-right: 15px;" class="custom-select line-select" name="manualCountryCode" [(ngModel)]="manualCountryCode" *ngIf="!enablepatData" > 
+                            <option value="null" selected disabled>Select Country Code</option>
+                            <option *ngFor="let item of patCountryList" class="select-selected" [value]="item.id">{{item.value}}</option>
+                          </select>
+                         <input style="height: 35px;width: 65%;border: 1px solid lightgray;" type="text" placeholder="<Enter the App No>" name="patAppNo" [(ngModel)]="patAppNo" [readOnly]="enablepatData">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3" style="text-align: right;"><label>Title<span style="color: red;" *ngIf="!enablepatData" >*</span></label>
+                      </div>
+                      <div class="col-lg-9">
+                        <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Enter the Title>" name="patTitle" [(ngModel)]="patTitle" [readOnly]="enablepatData">     
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="!enablepatData" >
+                      <div class="col-lg-3"><label></label></div>
+                      <div class="col-lg-9"><p>Is your Patent got Published?</p> 
+                        <div class="form-check form-check-inline">
+                          <input mdbRadio class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes" [(ngModel)]="patPubEnable"/>
+                          <label style="margin-top: 0px;" class="form-check-label" for="inlineRadio1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input mdbRadio class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="no" [(ngModel)]="patPubEnable"/>
+                          <label style="margin-top: 0px;" class="form-check-label" for="inlineRadio2">No</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="!enablepatData && patPubEnable=='yes'" >
+                      <div class="col-lg-3"><label></label></div>
+                      <div class="col-lg-9"><p>Have your patent been published in any of the Jurisdictions?</p> 
+                        <div class="form-check form-check-inline">
+                          <input mdbRadio class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio3" value="yes" [(ngModel)]="patPubIndEnable"/>
+                          <label style="margin-top: 0px;" class="form-check-label" for="inlineRadio3">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input mdbRadio class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio4" value="no" [(ngModel)]="patPubIndEnable"/>
+                          <label style="margin-top: 0px;" class="form-check-label" for="inlineRadio4">No</label>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <div *ngIf="!enablepatData && patPubEnable=='no'||patPubIndEnable=='no'">
+                    <div class="col-lg-2"> <label for="text">message: </label></div>
+                    <div class="col-lg-10"><label style="color: red;">Please upload Form 1 or Form 5</label></div>
+                  </div>
+      
+                    <div class="row" *ngIf="!enablepatData&&patPubEnable">
+                      <div class="col-lg-3">&nbsp;</div>
+                      <div class="col-lg-9">
+                        <div class="row">
+                          <div class="col-lg-3">
+                            <input type="file" id="upload" (change)="selectFilePatent($event)" hidden />
+                            <label for="upload" class="btn-upload" style="color: #0051bf">Upload</label>
+                          </div>
+                          <div class="col-lg-9">
+                            <p class="text-italic" *ngIf="file"><span class="text_bold">{{file.name}}</span> is attached</p>
+                            <p class="text-sm text-grey">Only PDF file less than 10 MB is allowed</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="enableMessage">
+                      <div class="col-lg-10"><label style="color: red;">{{checkPatAvailability.messege}}</label></div>
+                    </div>
+                    
+                  </div>
+
+                  <div>
+                  <input type="button" class="btn-outline-blue" value="Go Back" style="float: right;" (click)="returnToSearch()">
+                </div>
+                <div *ngIf="enablepatData&&!enableMessage" >
+                  <input style="margin-right: 10px;" type="button" class="btn-outline-blue" value="Link" style="float: right;" (click)="linkPatent()">
+                </div>
+                <div *ngIf="!enablepatData&&!enableMessage" >
+                  <input type="button" name="next" class="next btn-solid-blue" value="Submit" (click)="submitPatentDetail()"
+                    style="margin-left: 10px;float: right;height: 37px;margin-right: 7px;" />
+                  <input type="button" class="btn-outline-blue" value="Close" style="float: right" (click)="closePatent()" />
+                 </div>
+               </fieldset>
+                <fieldset *ngIf="patSubmitEnable">
+                  <div class="form-card">
+                    <div class="row form_header justify-content-center">     
+                      <div class="col-lg-3">
+                        <img src="assets/given/img/success-icon.gif" alt="" width="128">
+                      </div>
+                      <div class="col-lg-8">
+                        <h2 class="fs-title">Your submission has been successfully registered</h2>
+                        <p>We shall validate the submission and credit the paper into your patent shortly.</p>
+                      </div>
+                    </div>
+                    <button type="button" class="btn-outline-blue float-right" data-dismiss="modal" aria-label="Close"
+                      (click)="donePatent()">Done</button>
+                  </div>     
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

@@ -1,0 +1,109 @@
+ 
+ <div class="content-wrapper" style="background: var(--background-white) repeat-x top fixed;">
+    <div class="container-fluid" [ngClass]="{'menu-closeds': isMenuOpen}">
+      <div class="row">
+        <div class="alert alert-dismissible alert-info" style="margin-bottom: -20px;">
+            <button type="button" class="close" data-dismiss="alert" style="top: -11px;"><i class="fa fa-remove"></i></button>
+          Currently logged in as {{Name}}({{roleName}}) </div>
+      </div>
+      
+            <div class="row">
+              <div class="video_bar bluebar_expand"[ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+              [ngStyle]="{
+            'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '':'unset','width':stickyEnable&&isMenuOpen? '95%':''
+          }" #blueheader >
+            <div class="container container-90 ">
+              <div class="row">
+                 <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '19px'}"    >
+                    <h2 style="font-size: 19px;">Welcome to the ROR</h2>
+                    <p style="margin-top: 0;font-size: 12px;">Researgence captures publications from its AI-search Engine called Episteme which houses around 110 million meta-data. This is the place to mine your search further based on various qualitative and quantitative metrics.</p>
+                   <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" >here</a> to contact our team.</p>
+                  </div>
+              <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+              </div>
+                  </div>
+                 </div>
+               </div>
+             </div>
+    <div class="container container-90 content-pushed" style="padding-top: 66px;">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner-page-header gradient-box">
+            <div class="row">
+              <div class="col-lg-12">
+                <h3 class="page_title">REPORT</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center justify-content-center" *ngIf="excelEnable" style="width: 100%;" >
+        <div class="d-flex flex-column align-items-center justify-content-center"  style="width: 300px;height:100px;" >
+          <img style="width: 50px;height: 50px;" src="../../../../../assets/images/tree/throbber.gif">
+          <h5 style="margin-top: 10px;">Downloading Please Wait...</h5>
+        </div>
+      </div>
+      <div class="row" [ngStyle]="{'opacity': excelEnable ? '10%' : '100%' }">
+        <div class="col-lg-12">
+          <div class="publication_list row">
+            <div class="result col-lg-12">
+              <article class="turnkey"  style="height: 130px;">
+                <div class="row flex">
+                  <div class="col-lg-12">
+                    <div class="article_header">
+                      <h2 class="a_title"><span class="sl_no" style="width: auto;">1</span><span>CLIENT USAGE REPORT</span></h2>
+                    </div>
+                    <div class="row">
+                  </div>
+                  <div class="col-lg-4 flex flex-row flex-wrap" style="justify-content: flex-end;float: right;">
+                    <div class="text-align-r" style="margin-top: 25px;"></div>
+					  <div class="flex" style="align-items: flex-end;">
+               <a  class="btn-solid-blue float-right ml-20" (click)="generateReport()">Generate Report</a>
+					  </div>
+                </div>
+                </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal revision-->
+<div class="modal fade in" style="display: block;padding-right: 15px;opacity: unset; top: 62px; left: -45px;"  tabindex="-1" role="dialog" aria-labelledby="validate_modal" aria-hidden="true" *ngIf="requests">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 117%;">
+      <div class="modal-header" style="display: block; padding: 0;">
+        <button type="button"  class="close" data-dismiss="modal" aria-label="Close" style="border: unset;background: #0051bf00;" (click)="request()"><span aria-hidden="true">&times;</span> </button>
+        <p class="modal-title">Specify your criteria</p>
+      </div>
+      <div class="modal-body"> 
+        <!-- MultiStep Form -->
+        <form id="form">
+          <textarea placeholder="Enter your text here" class="text-area-full form-field"></textarea>
+            <button type="button" class="btn-solid-blue">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+    .modal-title {
+    margin: 6px;
+    line-height: 1.42857143;
+}
+.turnkey table {
+    width: 300px;
+    text-align: right;
+    display: grid;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+</style>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

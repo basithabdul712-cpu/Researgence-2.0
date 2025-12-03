@@ -1,0 +1,304 @@
+<head>
+  <link href="https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css" rel="stylesheet">
+  <link href="https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-rounded/css/uicons-thin-rounded.css" rel="stylesheet">
+  <link href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css" rel="stylesheet">
+  <link href="https://cdn-uicons.flaticon.com/2.1.0/uicons-thin-straight/css/uicons-thin-straight.css" rel="stylesheet">
+  <link href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-straight/css/uicons-regular-straight.css" rel="stylesheet">
+</head>
+
+
+<div class="content-wrapper" [ngClass]="{'opensideBar': isMenuOpen}" style="background: var(--background-white);background-attachment: fixed;">
+  <div class="container-fluid" >
+    <div class="row">
+      <div class="alert alert-dismissible alert-info" style=" background-color: #ececec;   border-color: transparent; color: #000000; text-align: right; font-size: 12px;     margin-bottom: 0;">
+        <button type="button" class="close" data-dismiss="alert" style="background: unset;border: unset;"><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+
+       <div class="row">
+        <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+          'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset','width':stickyEnable? '100%':''
+        }" #blueheader style="padding-left: 50px;">
+             <div class="container container-90 ">
+            <div class="row">
+           <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '10px'} " style="    margin-left: -34px;">
+                   <h2 style="font-size: 19px;">Welcome to your Research Outputs Repository (ROR)</h2>
+                   <p style="margin-top: 0;font-size: 12px;">Researgence centralizes, curates, and leverages scholarly data, enhancing research efficiency and collaboration for users and institutions on its intuitive platform. Dive deep into your research outputs to discover valuable insights and opportunities.</p>
+             <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;" >For support, click <a class="link-green" href="/newrequest">here</a> to contact our team.</p>
+                 </div>
+                 <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"href="/newrequest" style="    margin-left: 120px;"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a><a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" style="margin-right: -8px;" class="head-video-cover" /></a></div>
+         </div>
+        </div>
+         </div>
+       </div>
+     </div>
+
+  <div class="container container-90 content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '170px' : '20px'}">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-page-header gradient-box" style="margin-bottom: 30px;">
+          <div class="row">
+            <div class="col-lg-6">
+              <h3 class="page_title">Research Output Repository</h3>
+            </div>
+            <div class="col-lg-6"> 
+              <a class="btn-outline float-right " (click)="homeCmp()">Compare</a> 
+              <!-- <a class="btn-outline float-right ml-20">Download</a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="score_category">
+          <h3 style="margin-top: 20px; margin-left: 15px;">Publications, Projects and Consultancy <a data-toggle="modal" data-target="#info1" ><img src="../../../assets/given/img/info-icon.png" width="20" height="20" alt="info" (click)="enableRorInfo()"></a>
+            <div class="modal fade in" style="display: block;padding-right: 15px;opacity: unset;"  tabindex="-1" role="dialog" aria-labelledby="info1_modal" aria-hidden="true" *ngIf="enableRor" >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <p class="modal-title" >Publications, Projects and Consultancy </p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: unset;background: #0051bf;" (click)="enableRorInfo()"><span aria-hidden="true">&times;</span> </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Publications, Projects and Consultancy.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </h3>
+          <ul class="score_container" >
+         <ng-container *ngFor="let val of filteredItems">
+            <li *ngIf="val.moduleName=='Publications'&&val.moduleGroup=='ROR'">
+              <a href="/Publications/Dashboard" target="_self" class="score_card"  style="text-decoration: none;">
+              <div class="primary_score">
+                <p class="total_score">{{counterMap[val.moduleName]}}</p>
+                <p class="score_name">{{val.moduleName}}</p>
+              </div>
+              <div class="secondary_score">
+                <table style="width: 100%" width="100%">
+                  <tr>
+                    <td>{{val.lineItem1Text}}</td>
+                    <td class="text-bold">{{val.lineItem1Count}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{val.lineItem2Text}}</td>
+                    <td class="text-bold">{{val.lineItem2Count}}</td>
+                  </tr>
+                </table>
+              </div>
+              </a></li>
+            </ng-container>
+            <ng-container *ngFor="let val of filteredItems">
+              <li *ngIf="val.moduleName=='Projects'&&val.moduleGroup=='ROR'">
+                <a  class="hover-box score_card" target="_self" style="text-decoration: none;" (mouseenter)="showMessage()" (mouseleave)="hideMessage()">
+                  <div class="primary_score">
+                    <p class="total_score">{{counterMap[val.moduleName]}}</p>
+                    <p class="score_name">{{val.moduleName}}</p>
+                  </div>
+                  <div class="secondary_score">
+                    <table style="width: 100%" width="100%">
+                      <tr>
+                        <td>{{val.lineItem1Text}}</td>
+                        <td class="text-bold">{{val.lineItem1Count}}</td>
+                      </tr>
+                      <tr>
+                        <td>{{val.lineItem2Text}}</td>
+                        <td class="text-bold">{{val.lineItem2Count}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="message" *ngIf="isMessageVisible">Module will be enabled soon</div>
+                </a>
+              </li>
+            </ng-container>
+            <ng-container *ngFor="let val of filteredItems">
+            <li *ngIf="val.moduleName=='Consultancy'&&val.moduleGroup=='ROR'">
+              <a target="_self" class="score_card" style="text-decoration: none;">
+              <div class="primary_score">
+                <p class="total_score">{{counterMap[val.moduleName]}}</p>
+                <p class="score_name">{{val.moduleName}}</p>
+              </div>
+              <div class="secondary_score">
+                <table style="width: 100%" width="100%">
+                  <tr>
+                    <td>{{val.lineItem1Text}}</td>
+                    <td class="text-bold">{{val.lineItem1Count}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{val.lineItem2Text}}</td>
+                    <td class="text-bold">{{val.lineItem2Count}}</td>
+                  </tr>
+                </table>
+              </div>
+              </a></li>
+            </ng-container>
+          </ul>
+        </div>
+        <!-- <div class="score_category">
+          <h3 style="margin-top: 20px; margin-left: 15px;">Expert Profiles <a  data-toggle="modal" data-target="#info2" ><img (click)="enableExpert()" src="../../../assets/given/img/info-icon.png" width="20" height="20" alt="info"></a>
+            <div class="modal fade in"  tabindex="-1" role="dialog" aria-labelledby="info2_modal" aria-hidden="true" style="display: block;padding-right: 15px;opacity: unset;" *ngIf="enableExp" >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <p class="modal-title" id="info2_modal">Expert Profiles </p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: unset;background: #0051bf;" (click)="enableExpert()"><span aria-hidden="true">&times;</span> </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Expert Profiles.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </h3>
+          <ul class="score_container">
+            <ng-container *ngFor="let val of filteredItems">
+            <li *ngIf="val.moduleName=='Faculty'&&val.moduleGroup=='Expert'">
+              <a href="/facultyProfiles" target="_self" class="score_card" style="text-decoration: none;">
+              <div class="primary_score">
+                <p class="total_score">{{counterMap[val.moduleName]}}</p>
+                <p class="score_name">{{val.moduleName}}</p>
+              </div>
+              <div class="secondary_score">
+                <table style="width: 100%" width="100%">
+                  <tr>
+                    <td>{{val.lineItem1Text}}</td>
+                    <td class="text-bold">{{val.lineItem1Count}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{val.lineItem2Text}}</td>
+                    <td class="text-bold">{{val.lineItem2Count}}</td>
+                  </tr>
+                </table>
+              </div>
+              </a></li>
+            </ng-container>
+
+            <ng-container *ngFor="let val of filteredItems">
+            <li *ngIf="val.moduleName=='Scholar'&&val.moduleGroup=='Expert'">
+              <a  target="_self" class="score_card" style="text-decoration: none;">
+              <div class="primary_score">           
+                <p class="total_score">{{counterMap[val.moduleName]}}</p>
+                <p class="score_name">{{val.moduleName}}</p>
+              </div>
+              <div class="secondary_score">
+                <table style="width: 100%" width="100%">
+                  <tr>
+                    <td>{{val.lineItem1Text}}</td>
+                    <td class="text-bold">{{val.lineItem1Count}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{val.lineItem2Text}}</td>
+                    <td class="text-bold">{{val.lineItem2Count}}</td>
+                  </tr>
+                </table>
+              </div>
+              </a></li>
+            </ng-container>
+
+            <ng-container *ngFor="let val of filteredItems">           
+            <li *ngIf="val.moduleName=='Startups'&&val.moduleGroup=='Expert'">
+              <a  target="_self" class="score_card" style="text-decoration: none;">
+              <div class="primary_score">
+                <p class="total_score">{{counterMap[val.moduleName]}}</p>
+                <p class="score_name">{{val.moduleName}}</p>
+              </div>
+              <div class="secondary_score">
+                <table style="width: 100%" width="100%">
+                  <tr>
+                    <td>{{val.lineItem1Text}}</td>
+                    <td class="text-bold">{{val.lineItem1Count}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{val.lineItem2Text}}</td>
+                    <td class="text-bold">{{val.lineItem2Count}}</td>
+                  </tr>
+                </table>
+              </div>
+              </a></li>
+            </ng-container>
+          </ul>
+        </div> -->
+        <div class="score_category">
+          <h3 style="margin-top: 20px; margin-left: 15px;">Intellectual Property <a  data-toggle="modal" ><img src="../../../assets/given/img/info-icon.png" width="20" height="20" alt="info" (click)="enableExpert1()"></a>
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="info3_modal" aria-hidden="true" style="display: block;padding-right: 15px;opacity: unset;" *ngIf="enableExp1" >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <p class="modal-title" id="info3_modal">Intellectual Property </p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border: unset;background: #0051bf;" (click)="enableExpert1()"><span aria-hidden="true">&times;</span> </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Intellectual Property.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </h3>
+          <ul class="score_container">
+            <ng-container *ngFor="let val of filteredExperts"> 
+            <li *ngIf="val.moduleName=='Patents'">
+              <a  class="score_card" target="_self" style="text-decoration: none;" (click)="topatents(val.totalCount)">
+              <div class="primary_score">
+                <p class="total_score">{{counterMapExp[val.moduleName]}}</p>
+                <p class="score_name">{{val.moduleName}}</p>
+              </div>
+              <div class="secondary_score">
+                <table style="width: 100%" width="100%">
+                  <tr>
+                    <td>{{val.lineItem1Text}}</td>
+                    <td class="text-bold">{{val.lineItem1Count}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{val.lineItem2Text}}</td>
+                    <td class="text-bold">{{val.lineItem2Count}}</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="message" *ngIf="isMessageVisible">Module will be enabled soon</div>
+              </a></li>
+              <li *ngIf="val.moduleName!='Patents'">
+                <a  class="score_card" target="_self" style="text-decoration: none;" (click)="subModules(val.moduleName,val.totalCount)">
+                <div class="primary_score">
+                  <p class="total_score">{{counterMapExp[val.moduleName]}}</p>
+                  <p class="score_name">{{val.moduleName}}</p>
+                </div>
+                <div class="secondary_score">
+                  <table style="width: 100%" width="100%">
+                    <tr>
+                      <td>{{val.lineItem1Text}}</td>
+                      <td class="text-bold">{{val.lineItem1Count}}</td>
+                    </tr>
+                    <tr>
+                      <td>{{val.lineItem2Text}}</td>
+                      <td class="text-bold">{{val.lineItem2Count}}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="message" *ngIf="isMessageVisible">Module will be enabled soon</div>
+                </a></li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  .alert-info {
+    background-color: #ececec;
+    border-color: transparent;
+    color: #000000;
+    text-align: right;
+    font-size: 12px;
+}
+a:hover {
+ 
+  text-decoration: none;
+}
+</style>

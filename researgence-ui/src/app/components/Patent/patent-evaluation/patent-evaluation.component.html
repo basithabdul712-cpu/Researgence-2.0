@@ -1,0 +1,620 @@
+<div class="container-fluid"  [ngClass]="{'menu-opens': !isMenuOpen, 'menu-closeds': isMenuOpen}">
+  <div class="row">
+    <div class="alert alert-dismissible alert-info" >
+      <button type="button" class="close" data-dismiss="alert" style="background: unset;border: unset;"><i class="fa fa-remove"></i></button>
+      Currently logged in as {{Name}}({{roleName}}) </div>
+  </div>
+  <div class="row">
+    <div class="video_bar bluebar_expand"  [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+      'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+    }" #blueheader style="padding-left: 50px;">
+         <div class="container container-90 " >
+        <div class="row">
+       <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '0px'} " style="height: unset;">
+               <h2>Welcome to Your Researgence Repository</h2>
+               <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+         <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" >here</a> to contact our team.</p>
+             </div>
+             <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+              <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+            </div>
+     </div>
+    </div>
+     </div>
+   </div>
+   <div class="container container-90" style="width: 95%;">
+    <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '100px' : '30px'}">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner-page-header gradient-box">
+            <div class="row">
+              <div class="col-lg-6">
+                <h3 class="page_title" style="font-size: 24px;">RFS PATENT EVALUATION</h3>
+              </div>
+              <div class="col-lg-6">          
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+            <div style="margin-top: 40px;display: inline-block;" style="width: 100%;padding-top: 30px;">
+              <div class="col-lg-12">
+              <table class="table table-striped" >
+                <tr     style="height:70px">
+                  <td>
+                   <p> {{patRequestDetail.userFullName}}<br>
+                    {{patRequestDetail.departmentName}}</p>
+                  </td>
+                  <td>
+                    <p><span style="font-weight: bold;">Application No.:</span>{{patRequestDetail.applicationNumber}}<br>
+                      <span style="font-weight: bold;">Title:</span>{{patRequestDetail.patentTitle}}<br>
+                     </p>
+      
+                    <a class="fa fa-file-pdf-o" style="color: red;" *ngIf="status!='Linked'" (click)="testNew(patRequestDetail.pdfFileLocation)"></a>
+                  </td>
+                  <td>
+                    <button class="btn-green" style="background-color: #0d6efd;color:white;cursor: default;" >{{status|uppercase}}</button>
+                  </td>
+              </tr>
+              </table>
+            </div>
+
+              <div *ngIf="status!='Linked'" style="height: auto; text-align: center;">
+                <label>PATENT APPLICATION NUMBER</label>
+                <div><input class="form-text"  style="width: 50%;" placeholder="Patent Application No." [(ngModel)]="searchData" (keyup)="changeTitle(searchbar.value)"  #searchbar>
+                <button type="button" class="btn btn-primary" style="margin-left: 3%;" (click)="addTitle('RFS')" [ngStyle]="{'opacity': searchData==null ? '0.6' : ''}">ADD</button>
+                <button type="button" class="btn btn-primary" style="margin-left: 2%;" *ngIf="linkEnable" (click)="linkPublication()">LINK</button>
+                </div>
+                <ul *ngIf="titleEnable"  class="dropdown-list">
+                  <li *ngFor="let n of filterTitle"  (click)="onSelectTitle(n.name,n.id)">
+                    {{ n.name }}
+                  </li>
+              </ul>
+                <br>
+              </div>
+
+               <p style="color: green;margin-left: 30%;font-family: 'lexiabold';" *ngIf="showCrossAuthor" class="bouncing-text">*Please scroll down to view the detailed links.</p>
+
+                 <table id="example" class="table table-bordered" style="width:100%;margin-top: 150px;" *ngIf="showCrossAuthor" >
+                    <thead style="background: #0151be;color: #fff;">
+                          <tr>
+                      <th scope="col" class="name">Sl.No</th>
+                      <th scope="col" class="name">Inventors Involved</th>
+                      <th scope="col" class="name">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let au of requestAuthorDetail; let i=index;">
+                        <td>{{i+1}}</td>                           
+                        <td><p>{{au.inventorFullName}},{{au.departmentName}},
+                          {{au.instituteName}},{{au.universityName}}
+                        </p></td>
+                        <td >
+                          <button class="btn-green" style="background-color: #0d6efd;color:white" (click)="linksubmit('Inv',au.inventorUserId,au.inventorFullName)">LINK</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                   
+                  <div  *ngIf="showCrossAuthor" style="margin-left: 150px;margin-bottom: 5%;">
+                    <button class="btn-green" style="width:200px; position: absolute;" (click)="addAuthor()">ADD INVENTOR</button><br><br>
+              <!-- <button class="btn-green" style="margin-left: 300px;margin-top:-40px;position: absolute;"  (click)="Reject(demoModal)">REJECT</button>   -->
+            </div>
+            <div class="col-lg-12" [hidden]="!openform">
+              <div class="col-lg-12" style="float: unset;">
+                <button class="state-btn" (click)="newStateModel(addState)">Add Location</button>
+                </div>
+                <ng-template #addState let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title" style="line-height: unset;letter-spacing: unset;font-weight: 600;">Add Location</h4>
+                    <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                  </div>
+                  <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                    <form>
+                      <div class="form-group">
+                       <div class="input-group">
+                        <label>COUNTRY</label>                     
+                          <select class="custom-select line-select" [(ngModel)]="countryModel" (ngModelChange)="countryModelFilter(countryModel)">
+                            <option *ngFor="let item of countryList" >{{item.countryName}}</option>                      
+                          </select>        
+                        </div>
+                        <br>
+                        <div class="input-group" *ngIf="!enableState">
+                          <label>STATE</label>                     
+                            <input style="border-radius: 8px;height: 30px;" (keyup)="SearchStateModel(stateModel)" [(ngModel)]="stateModel" name="state" class="form-control" placeholder="Enter the State..." type="text" >        
+                            <ul class="editAuthor" *ngIf="stateModelEnable" style="background: #d2d4d6;float: left;width: 100%;">
+                              <li *ngFor="let a of filterStateList" (click)="selectStateModel(a.stateName,a.stateId)">
+                                 {{a.stateName}}
+                              </li>
+                          </ul>
+                          </div>
+                          <div class="input-group" *ngIf="enableState" >
+                            <label>STATE</label>                     
+                            <br>
+                            <select class="custom-select line-select" [(ngModel)]="stateModel" (ngModelChange)="stateModelFilter(stateModel)">
+                              <option disabled selected value="">Select State</option>
+                              <option *ngFor="let item of filteredStateModel" >{{item.stateName}}</option>                      
+                            </select>  
+                            </div>
+                          <br>
+                          <div class="input-group">
+                              <label>LOCATION</label>                     
+                                <input style="border-radius: 8px;height: 30px;" name="location" [(ngModel)]="newLocationName" class="form-control" placeholder="Enter the Location..."  type="text" > 
+                              </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer" style="height: 55px;">
+                    <button style="margin-right: 20px;" type="button" class="but" (click)="addLocation()">SUBMIT</button>
+                  </div>
+                  </ng-template>
+            <div class="same">
+              <h6>
+                <input type="checkbox" style="display: inline-block;position: absolute;left:30px;top:10px;width:30px;height:30px;" [(ngModel)]="disableInput" class="check" (change)="fetchData(disableInput)">
+                <span class="sameas">SAME AUTHOR ADDRESS</span>
+              </h6>
+            </div>
+            
+              <div class="bg-blue text-white" style="margin-top: 10px; padding:40px;">
+                <h4 style="display: block; float: left;margin-top: -8px;">INVENTOR DETAILS</h4>
+                </div>
+                <div class="scrollClass">
+                <table class="table-auth">
+                  <thead>
+                    <tr>
+                      <th>UNIVERSITY</th>
+                      <th>AUTHOR NAME</th>
+                      <th>COUNTRY</th>
+                      <th>STATE</th>
+                      <th>LOCATION</th>
+                      <th>SCHOOL</th>
+                      <th>INSTITUTE</th>
+                      <th>DEPARTMENT</th>   
+                      <th>LINK AUTHOR</th>               
+                      <th>CORRES EMAIL</th>
+                      <th>CORRES AUTHOR</th>
+                      <th>ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let f of feeders;let i=index;">
+                      
+                      <td><input [readonly]="disableInput" class="input-sm" [(ngModel)]="f.universityName" (keyup)="onKeyIP($event,f.universityName,i)">
+                        <ul class="editDrop" *ngIf="ipDropdown&&i==checkData" style="background: #d2d4d6;">
+                          <li *ngFor="let n of fill"  (click)="onInput(n.name,n.id,i)">
+                             {{ n.name }}
+                          </li>
+                      </ul>
+                       </td>
+                      <td><input [readonly]="disableInput" class="input-sm" [(ngModel)]="f.fullName" (keyup)="SearchIPData($event,f.fullName,i)">
+                        <ul class="editAuthor" *ngIf="ipAutherDrop&&i==checkDataauthor" style="background: #d2d4d6;">
+                          <li *ngFor="let a of Author"  (click)="onAutherClick(a.universityId,a.userId,a.authorName,a.departmentId,a.department,a.instituteId,a.institute,a.locationId,a.location,a.countryId,a.country,a.email,a.coressauthor,i,a.stateId,a.state,a.schoolId,a.school)">
+                             {{a.authorName}}
+                          </li>
+                      </ul></td>
+
+                      <td *ngIf=" f.countryName!==null"><input  class="input-sm" [(ngModel)]="f.countryName" [readonly]="disableInput"></td>
+                      <td *ngIf=" f.countryName === null">
+                        <select class="custom-select line-select" [(ngModel)]="f.countryName" (ngModelChange)="countryFilter(f.countryName,i)">
+                          <option disabled selected value="">Select Country</option>
+                          <option *ngFor="let item of countryList" >{{item.countryName}}</option>                      
+                        </select>
+                      </td>
+
+                     
+                      <td *ngIf=" f.stateName!==null"><input  class="input-sm" [(ngModel)]="f.stateName" [readonly]="disableInput"></td>
+                      <td *ngIf=" f.stateName===null">
+                        <select class="custom-select line-select" [(ngModel)]="f.stateName" (ngModelChange)="stateFilters(f.stateName,i)">
+                          <option disabled selected value="">Select State</option>
+                          <option *ngFor="let item of filteredState" >{{item.stateName}}</option>                      
+                        </select>
+                      </td>
+
+                      <td *ngIf="i !== editRowId"><input class="input-sm" [(ngModel)]="f.locationName" [readonly]="disableInput"></td>
+                      <td *ngIf="i === editRowId&&!filterListDrop">
+                        <select class="custom-select line-select" [(ngModel)]="f.locationName" (ngModelChange)="baseLocfilter(f.locationName,i)">
+                          <option *ngFor="let item of uniqueLocationNames" >{{item}}</option>                      
+                        </select>
+                      </td>
+                      <td *ngIf="i === editRowId&&filterListDrop">
+                        <select class="custom-select line-select" [(ngModel)]="f.locationName" (ngModelChange)="LocationFilter(f.locationName,i)">
+                          <option disabled selected value="">Select Location</option>
+                          <option *ngFor="let item of filterLocation" >{{item.locationName}}</option>                      
+                        </select>
+                      </td>
+
+                      <td *ngIf="i !== editRowId"><input class="input-sm" [(ngModel)]="f.schoolName" readonly></td>
+                      <td *ngIf="i === editRowId&&filterListDrop">
+                        <input class="input-sm" [(ngModel)]="f.schoolName" [readOnly]="f.schoolEnable" (keyup)="SearchSchool(f.schoolName,i)">
+                        <ul class="editAuthor" *ngIf="ipSchoolDrop&&i==checkDataauthor" style="background: #d2d4d6;">
+                          <li *ngFor="let a of schoolList"  (click)="onselectSchool(a.name,a.id,i)">
+                             {{a.name}}
+                          </li>
+                      </ul>
+
+                      </td>
+                      <td *ngIf="i === editRowId&&!filterListDrop">
+                        <select *ngIf="f.schoolEnable"  class="custom-select line-select" [(ngModel)]="f.schoolName" (ngModelChange)="baseSchfilter(f.schoolName,i)">
+                          <option *ngFor="let item of uniqueschNames" >{{item}}</option>                      
+                        </select>
+                      </td>
+
+                      <td *ngIf="i !== editRowId"><input class="input-sm" [(ngModel)]="f.instituteName" [readonly]="disableInput"></td>
+                      <td *ngIf="i === editRowId&&!filterListDrop">
+                        <select class="custom-select line-select" [(ngModel)]="f.instituteName" (ngModelChange)="baseInstfilter(f.instituteName,i)">
+                          <option *ngFor="let item of uniqueinstNames" >{{item}}</option>                      
+                        </select>
+                      </td>
+                      <td *ngIf="i === editRowId&&filterListDrop">
+                        <input class="input-sm" [(ngModel)]="f.instituteName" (keyup)="SearchInstitute(f.instituteName,i)">
+                        <ul class="editAuthor" *ngIf="ipInstituteDrop&&i==checkDataauthor" style="background: #d2d4d6;">
+                          <li *ngFor="let a of instituteList"  (click)="onselectInstitute(a.name,a.id,i)">
+                             {{a.name}}
+                          </li>
+                      </ul>
+                      </td>
+
+                      <td *ngIf="i !== editRowId"><input class="input-sm" [(ngModel)]="f.departmentName" [readonly]="disableInput"></td>
+                      <td *ngIf="i === editRowId&&!filterListDrop">
+                        <select class="custom-select line-select" [(ngModel)]="f.departmentName" (ngModelChange)="baseDeptfilter(f.departmentName,i)">
+                          <option *ngFor="let item of filteredList" >{{item.departmentName}}</option>                      
+                        </select>
+                      </td>
+                      <td *ngIf="i === editRowId&&filterListDrop">
+                        <input class="input-sm" [(ngModel)]="f.departmentName" (keyup)="SearchDepartment(f.departmentName,i)">
+                        <ul class="editAuthor" *ngIf="ipDepartmentDrop&&i==checkDataauthor" style="background: #d2d4d6;">
+                          <li *ngFor="let a of departmentList"  (click)="onselectDepartment(a.name,a.id,i)">
+                             {{a.name}}
+                          </li>
+                      </ul>
+                      </td>
+
+                      <td *ngIf="i !== editRowId">
+                        <input class="input-sm" [(ngModel)]="f.linkname" (keyup)="aliasid(f.linkname, i)">
+                        <ul *ngIf="isalias&&enableLink==i" class="editAuthor"  style="background: #d2d4d6;">
+                          <li *ngFor="let a of linkauthor" (click)="Onlink(a.authorName,i,a.userId)">
+                             {{a.authorName}}
+                          </li>
+                      </ul>
+                      </td>
+
+                      <td *ngIf="i === editRowId">
+                        <input class="input-sm" [(ngModel)]="f.linkname" (keyup)="aliasid(f.linkname, i)">
+                        <ul *ngIf="isalias&&enableLink==i" class="editAuthor"  style="background: #d2d4d6;">
+                          <li *ngFor="let a of linkauthor" (click)="Onlink(a.authorName,i,a.userId)">
+                             {{a.authorName}}
+                          </li>
+                      </ul>
+                      </td>
+
+                      <td *ngIf="i === editRowId"><input class="input-sm" [(ngModel)]="f.correspondingEmail"></td>
+                      <td *ngIf="i !== editRowId"><input class="input-sm" [(ngModel)]="f.correspondingEmail" [readonly]="disableInput"></td>
+
+                      <td *ngIf="i === editRowId">
+                        <select  [(ngModel)]="f.correspondingAuthor" (change)="corresAuthor(f.correspondingAuthor,i)">
+                          <option *ngFor="let item of commonDropDown" [value]="item.key">{{item.value}}</option>                      
+                        </select>
+                      </td>
+                                          
+                      <td *ngIf="i !== editRowId">
+                        <select  [(ngModel)]="f.correspondingAuthor" (change)="corresAuthor(f.correspondingAuthor,i)">
+                          <option *ngFor="let item of commonDropDown" [value]="item.key">{{item.value}}</option>                      
+                        </select>
+                      </td>
+                      <td>
+                        <a title="Edit" class="fa fa-edit control-btn"   (click)="toggle(i)" ></a>
+                        <a title="Reset" class="fa fa-refresh control-btn" (click)="check(i)"></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="buttons" *ngIf="showCrossAuthor">
+                <button class="btn-green" style="margin-bottom: 90px;" (click)="submit()">UPDATE</button>
+              </div>
+           
+            </div>
+                  
+
+                <table id="example" class="table table-bordered" style="width:100%;margin-top: 150px;" *ngIf="showCrossAuthor" >
+                  <thead style="background: #0151be;color: #fff;">
+                        <tr>
+                    <th scope="col" class="name">Sl.No</th>
+                    <th scope="col" class="name">Applicants Involved</th>
+                    <th scope="col" class="name">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let d of applicantList; let i=index;">
+                      <td>{{i+1}}</td>                           
+                      <td><p>{{d.applicantFullName}},{{d.departmentName}},
+                        {{d.instituteName}},{{d.universityName}}
+                      </p></td>
+                      <td >
+                        <button class="btn-green" style="background-color: #0d6efd;color:white" (click)="linksubmit('App',d.applicantUserId,d.applicantFullName)">LINK</button>
+                      </td>
+                  </tr>
+                  </tbody>
+                </table>
+                 
+                <div  *ngIf="showCrossAuthor" style="margin-left: 150px;margin-bottom: 5%;">
+                  <button class="btn-green" style="width:200px; position: absolute;" (click)="addAuthorApp()">ADD APPLICANT</button><br><br>
+            <!-- <button class="btn-green" style="margin-left: 300px;margin-top:-40px;position: absolute;"  (click)="Reject(demoModal)">REJECT</button> -->
+              </div>
+
+
+            </div>
+            <ng-template #demoModal let-modal>
+              <div class="modal-header" style="background-color: #0d6efd;">
+                <h4 class="modal-title" id="modal-basic-title" ></h4>
+                <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+              </div>
+              <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                <form>
+                  <div class="form-group">
+                   <div class="input-group" style="padding-top: 20px;">               
+                    <input style="border-radius: 8px;height: 30px;" name="rejectReason" class="form-control" placeholder="Enter Your Comments" type="text" [(ngModel)]="rejectReason">        
+                  </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer" style="height: 55px;">
+                <button style="margin-right: 20px;background-color:#c2cf1d;border-radius: 5px;border-color:#c2cf1d;padding-top: 5px;color: black;" type="button" class="but" (click)="rejectsubmit(rejectReason)" >SUBMIT</button>
+                <button style="margin-right: 20px;background-color: #c2cf1d;border-radius: 5px;border-color:#c2cf1d;padding-top: 5px;color: black;" type="button"  class="but" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')">CANCEL</button>
+              </div>
+              </ng-template>
+
+                <div class="col-lg-12" [hidden]="!openformApp">
+                  <div class="col-lg-12" style="float: unset;">
+                    <button class="state-btn" (click)="newStateModel(addState)">Add Location</button>
+                    </div>
+                    <ng-template #addState let-modal>
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title" style="line-height: unset;letter-spacing: unset;font-weight: 600;">Add Location</h4>
+                        <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                      </div>
+                      <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                        <form>
+                          <div class="form-group">
+                           <div class="input-group">
+                            <label>COUNTRY</label>                     
+                              <select class="custom-select line-select" [(ngModel)]="countryModel" (ngModelChange)="countryModelFilter(countryModel)">
+                                <option *ngFor="let item of countryList" >{{item.countryName}}</option>                      
+                              </select>        
+                            </div>
+                            <br>
+                            <div class="input-group" *ngIf="!enableState">
+                              <label>STATE</label>                     
+                                <input style="border-radius: 8px;height: 30px;" (keyup)="SearchStateModel(stateModel)" [(ngModel)]="stateModel" name="state" class="form-control" placeholder="Enter the State..." type="text" >        
+                                <ul class="editAuthor" *ngIf="stateModelEnable" style="background: #d2d4d6;float: left;width: 100%;">
+                                  <li *ngFor="let a of filterStateList" (click)="selectStateModel(a.stateName,a.stateId)">
+                                     {{a.stateName}}
+                                  </li>
+                              </ul>
+                              </div>
+                              <div class="input-group" *ngIf="enableState" >
+                                <label>STATE</label>                     
+                                <br>
+                                <select class="custom-select line-select" [(ngModel)]="stateModel" (ngModelChange)="stateModelFilter(stateModel)">
+                                  <option disabled selected value="">Select State</option>
+                                  <option *ngFor="let item of filteredStateModel" >{{item.stateName}}</option>                      
+                                </select>  
+                                </div>
+                              <br>
+                              <div class="input-group">
+                                  <label>LOCATION</label>                     
+                                    <input style="border-radius: 8px;height: 30px;" name="location" [(ngModel)]="newLocationName" class="form-control" placeholder="Enter the Location..."  type="text" > 
+                                  </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer" style="height: 55px;">
+                        <button style="margin-right: 20px;" type="button" class="but" (click)="addLocation()">SUBMIT</button>
+                      </div>
+                      </ng-template>
+                <div class="same">
+                  <h6>
+                    <input type="checkbox" style="display: inline-block;position: absolute;left:30px;top:10px;width:30px;height:30px;" [(ngModel)]="disableInputApp" class="check" (change)="fetchDataApp(disableInput)">
+                    <span class="sameas">SAME AUTHOR ADDRESS</span>
+                  </h6>
+                </div>
+                
+                  <div class="bg-blue text-white" style="margin-top: 10px; padding:40px;">
+                    <h4 style="display: block; float: left;margin-top: -8px;">APPLICANT DETAILS</h4>
+                    </div>
+                    <div class="scrollClass">
+                    <table class="table-auth">
+                      <thead>
+                        <tr>
+                          <th>UNIVERSITY</th>
+                          <th>AUTHOR NAME</th>
+                          <th>COUNTRY</th>
+                          <th>STATE</th>
+                          <th>LOCATION</th>
+                          <th>SCHOOL</th>
+                          <th>INSTITUTE</th>
+                          <th>DEPARTMENT</th>   
+                          <th>LINK AUTHOR</th>               
+                          <th>CORRES EMAIL</th>
+                          <th>CORRES AUTHOR</th>
+                          <th>ACTION</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let f of feedersApp;let i=index;">
+                          
+                          <td><input [readonly]="disableInputApp" class="input-sm" [(ngModel)]="f.universityName" (keyup)="onKeyIPApp($event,f.universityName,i)">
+                            <ul class="editDrop" *ngIf="ipDropdownApp&&i==checkDataApp" style="background: #d2d4d6;">
+                              <li *ngFor="let n of fillApp"  (click)="onInputApp(n.name,n.id,i)">
+                                 {{ n.name }}
+                              </li>
+                          </ul>
+                           </td>
+                          <td><input [readonly]="disableInputApp" class="input-sm" [(ngModel)]="f.fullName" (keyup)="SearchIPDataApp($event,f.fullName,i)">
+                            <ul class="editAuthor" *ngIf="ipAutherDropApp&&i==checkDataauthorApp" style="background: #d2d4d6;">
+                              <li *ngFor="let a of AuthorApp"  (click)="onAutherClickApp(a.universityId,a.userId,a.authorName,a.departmentId,a.department,a.instituteId,a.institute,a.locationId,a.location,a.countryId,a.country,a.email,a.coressauthor,i,a.stateId,a.state,a.schoolId,a.school)">
+                                 {{a.authorName}}
+                              </li>
+                          </ul></td>
+
+                          <td *ngIf=" f.countryName!==null"><input  class="input-sm" [(ngModel)]="f.countryName" [readonly]="disableInputApp"></td>
+                          <td *ngIf=" f.countryName === null">
+                            <select class="custom-select line-select" [(ngModel)]="f.countryName" (ngModelChange)="countryFilterApp(f.countryName,i)">
+                              <option disabled selected value="">Select Country</option>
+                              <option *ngFor="let item of countryList" >{{item.countryName}}</option>                      
+                            </select>
+                          </td>
+
+                         
+                          <td *ngIf=" f.stateName!==null"><input  class="input-sm" [(ngModel)]="f.stateName" [readonly]="disableInputApp"></td>
+                          <td *ngIf=" f.stateName===null">
+                            <select class="custom-select line-select" [(ngModel)]="f.stateName" (ngModelChange)="stateFiltersApp(f.stateName,i)">
+                              <option disabled selected value="">Select State</option>
+                              <option *ngFor="let item of filteredState" >{{item.stateName}}</option>                      
+                            </select>
+                          </td>
+
+                          <td *ngIf="i !== editRowIdApp"><input class="input-sm" [(ngModel)]="f.locationName" [readonly]="disableInputApp"></td>
+                          <td *ngIf="i === editRowIdApp&&!filterListDrop">
+                            <select class="custom-select line-select" [(ngModel)]="f.locationName" (ngModelChange)="baseLocfilterApp(f.locationName,i)">
+                              <option *ngFor="let item of uniqueLocationNames" >{{item}}</option>                      
+                            </select>
+                          </td>
+                          <td *ngIf="i === editRowIdApp&&filterListDrop">
+                            <select class="custom-select line-select" [(ngModel)]="f.locationName" (ngModelChange)="LocationFilterApp(f.locationName,i)">
+                              <option disabled selected value="">Select Location</option>
+                              <option *ngFor="let item of filterLocation" >{{item.locationName}}</option>                      
+                            </select>
+                          </td>
+
+                          <td *ngIf="i !== editRowIdApp"><input class="input-sm" [(ngModel)]="f.schoolName" readonly></td>
+                          <td *ngIf="i === editRowIdApp&&filterListDrop">
+                            <input class="input-sm" [(ngModel)]="f.schoolName" [readOnly]="f.schoolEnable" (keyup)="SearchSchoolApp(f.schoolName,i)">
+                            <ul class="editAuthor" *ngIf="ipSchoolDropApp&&i==checkDataauthorApp" style="background: #d2d4d6;">
+                              <li *ngFor="let a of schoolList"  (click)="onselectSchoolApp(a.name,a.id,i)">
+                                 {{a.name}}
+                              </li>
+                          </ul>
+
+                          </td>
+                          <td *ngIf="i === editRowIdApp&&!filterListDrop">
+                            <select *ngIf="f.schoolEnable"  class="custom-select line-select" [(ngModel)]="f.schoolName" (ngModelChange)="baseSchfilterApp(f.schoolName,i)">
+                              <option *ngFor="let item of uniqueschNames" >{{item}}</option>                      
+                            </select>
+                          </td>
+
+                          <td *ngIf="i !== editRowIdApp"><input class="input-sm" [(ngModel)]="f.instituteName" [readonly]="disableInput"></td>
+                          <td *ngIf="i === editRowIdApp&&!filterListDrop">
+                            <select class="custom-select line-select" [(ngModel)]="f.instituteName" (ngModelChange)="baseInstfilterApp(f.instituteName,i)">
+                              <option *ngFor="let item of uniqueinstNames" >{{item}}</option>                      
+                            </select>
+                          </td>
+                          <td *ngIf="i === editRowIdApp&&filterListDrop">
+                            <input class="input-sm" [(ngModel)]="f.instituteName" (keyup)="SearchInstituteApp(f.instituteName,i)">
+                            <ul class="editAuthor" *ngIf="ipInstituteDropApp&&i==checkDataauthorApp" style="background: #d2d4d6;">
+                              <li *ngFor="let a of instituteList"  (click)="onselectInstituteApp(a.name,a.id,i)">
+                                 {{a.name}}
+                              </li>
+                          </ul>
+                          </td>
+
+                          <td *ngIf="i !== editRowIdApp"><input class="input-sm" [(ngModel)]="f.departmentName" [readonly]="disableInput"></td>
+                          <td *ngIf="i === editRowIdApp&&!filterListDrop">
+                            <select class="custom-select line-select" [(ngModel)]="f.departmentName" (ngModelChange)="baseDeptfilterApp(f.departmentName,i)">
+                              <option *ngFor="let item of filteredList" >{{item.departmentName}}</option>                      
+                            </select>
+                          </td>
+                          <td *ngIf="i === editRowIdApp&&filterListDrop">
+                            <input class="input-sm" [(ngModel)]="f.departmentName" (keyup)="SearchDepartmentApp(f.departmentName,i)">
+                            <ul class="editAuthor" *ngIf="ipDepartmentDropApp&&i==checkDataauthorApp" style="background: #d2d4d6;">
+                              <li *ngFor="let a of departmentList"  (click)="onselectDepartmentApp(a.name,a.id,i)">
+                                 {{a.name}}
+                              </li>
+                          </ul>
+                          </td>
+
+                          <td *ngIf="i !== editRowIdApp">
+                            <input class="input-sm" [(ngModel)]="f.linkname" (keyup)="aliasidApp(f.linkname, i)">
+                            <ul *ngIf="isaliasApp&&enableLinkApp==i" class="editAuthor"  style="background: #d2d4d6;">
+                              <li *ngFor="let a of linkauthor" (click)="OnlinkApp(a.authorName,i,a.userId)">
+                                 {{a.authorName}}
+                              </li>
+                          </ul>
+                          </td>
+
+                          <td *ngIf="i === editRowIdApp">
+                            <input class="input-sm" [(ngModel)]="f.linkname" (keyup)="aliasidApp(f.linkname, i)">
+                            <ul *ngIf="isaliasApp&&enableLinkApp==i" class="editAuthor"  style="background: #d2d4d6;">
+                              <li *ngFor="let a of linkauthor" (click)="OnlinkApp(a.authorName,i,a.userId)">
+                                 {{a.authorName}}
+                              </li>
+                          </ul>
+                          </td>
+
+                          <td *ngIf="i === editRowIdApp"><input class="input-sm" [(ngModel)]="f.correspondingEmail"></td>
+                          <td *ngIf="i !== editRowIdApp"><input class="input-sm" [(ngModel)]="f.correspondingEmail" [readonly]="disableInput"></td>
+
+                          <td *ngIf="i === editRowIdApp">
+                            <select  [(ngModel)]="f.correspondingAuthor" (change)="corresAuthorApp(f.correspondingAuthor,i)">
+                              <option *ngFor="let item of commonDropDown" [value]="item.key">{{item.value}}</option>                      
+                            </select>
+                          </td>
+                                              
+                          <td *ngIf="i !== editRowIdApp">
+                            <select  [(ngModel)]="f.correspondingAuthor" (change)="corresAuthorApp(f.correspondingAuthor,i)">
+                              <option *ngFor="let item of commonDropDown" [value]="item.key">{{item.value}}</option>                      
+                            </select>
+                          </td>
+                          <td>
+                            <a title="Edit" class="fa fa-edit control-btn"   (click)="toggleApp(i)" ></a>
+                            <a title="Reset" class="fa fa-refresh control-btn" (click)="checkApp(i)"></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="buttons" *ngIf="showCrossAuthor">
+                    <button class="btn-green" style="margin-bottom: 90px;" (click)="submitApp()">UPDATE</button>
+                  </div>
+               
+                </div>
+            </div>
+          </div>
+        </div>
+
+          <style>
+            .table-auth{
+            width: 100%;
+          }
+          .table-auth thead{
+            background: #e5e5e5;
+          }
+
+          .table-auth td, .table-auth th{
+            border: 2px solid #fff;
+            border-bottom: 10px solid #fff;
+            text-align: center;
+            padding: 5px;
+          }
+          .table-auth th{
+            width: 10%;
+            padding: 20px 0;
+          }
+          .table-auth .input-sm {
+              padding: 5px 10px;
+              font-size: 15px;
+              line-height: 1.5;
+              border-radius: 0px;
+              width: 120px;
+            border: 1px solid #ccc;
+            height: 50px;
+          }
+          .table-auth .control-btn{
+            margin-left: 10px;
+            font-size: 20px;
+          }
+          .table-auth td{
+            background: #e5e5e5;
+          }
+          </style>

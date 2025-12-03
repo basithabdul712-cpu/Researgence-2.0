@@ -1,0 +1,117 @@
+<style>
+      .menu-open {
+        width: 100%;
+      }
+    
+      .menu-closeds {
+        width: 83%;
+        margin-left: 250px;
+      }
+    
+      .line-select {
+    
+        width: 187px;
+    
+      }
+      *{
+        transition: unset;
+      }
+      
+    </style>
+    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+    
+    <div class="content-wrapper">
+      <div class="container-fluid" [ngClass]="{'menu-closeds': isMenuOpen}">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="alert alert-dismissible alert-info" style="margin-bottom: -20px;">
+              <button type="button" class="close" data-dismiss="alert" style="top: -11px;"><i class="fa fa-remove"></i></button>
+              Currently logged in as {{Name}}({{roleName}}) </div>
+          </div>
+          
+                <div class="row">
+                  <div class="video_bar bluebar_expand"[ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+                  [ngStyle]="{
+                'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '':'unset','width':stickyEnable&&isMenuOpen? '95%':''
+              }" #blueheader style="padding-left: 50px;">
+                       <div class="container container-90 ">
+                      <div class="row">
+                     <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '19px'}" style="margin-left: -26px; "   >
+                             <h2 style="font-size: 19px;;">Mine Your Publications</h2>
+                             <p style="margin-top: 0;font-size: 12px;">Explore deeper using qualitative and quantitative metrics for advanced research analysis.</p>
+                       <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green"  href="/newrequest">here</a> to contact our team.</p>
+                           </div>
+                           <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"  href="/newrequest"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                            <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Help Manual</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+                          </div>
+                   </div>
+                  </div>
+                   </div>
+                 </div>
+            
+                 <div class="container container-90 content-pushed"   [ngStyle] = "{'padding-top' : stickyEnable ? '120px' : '20px'}">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="inner-page-header gradient-box">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h3 class="page_title">Support Publication Mine</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" >
+            <div class="col-lg-12">
+              <form class="form" style="font-family: 'Red Hat Display', sans-serif;">
+                <div class="col-lg-12 bg-white" style="border: 1px solid #ccc; margin-bottom: 50px;">
+                  <table class="form-table mining-table" style="margin-top:20px;">
+                    <tbody><tr>
+                      <td class="column-label"><label>University</label></td>
+                      <td><input class="form-text" placeholder="Enter the University" [(ngModel)]="univName" name="univName" autocomplete="off" (keyup)="SearchUnivName(univName)">
+                      <ul *ngIf="univEnable" class="alignDrop">
+                        <li *ngFor="let n of fill" (click)="onSelectUniv(n.universityName,n.universityId)">
+                          {{ n.universityName }}
+                        </li>
+                      </ul>
+                  </td>
+                    </tr>
+                  </tbody></table>
+
+                  <table class="form-table mining-table" style="margin-top:20px;">
+                        <tbody><tr>
+                          <td class="column-label"><label>Title</label></td>
+                          <td><input class="form-text" placeholder="Enter the Title" name="pubTitle" [(ngModel)]="pubTitle">
+                      </td>
+                        </tr>
+                      </tbody></table>
+                      <table class="form-table mining-table" style="margin-top:20px;">
+                        <tbody><tr>
+                          <td class="column-label"><label>DOI</label></td>
+                          <td><input class="form-text" placeholder="Enter the Doi" name="pubDoi" [(ngModel)]="pubDoi">
+                      </td>
+                        </tr>
+                      </tbody></table>
+
+                  <table class="form-table mining-table">
+                    <tbody><tr>
+                      <td align="right" ><a class="link-black" style="cursor: pointer;">Clear Search</a>
+                        <button class="btn-solid-blue  float-right" style="margin-left: 20px;" (click)="searchMine()">Search</button></td>
+                    </tr>
+                  </tbody></table>
+                </div>
+              </form>
+            </div>
+                <br><br>
+              </div>
+            </div>
+            <br><br>
+      </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    

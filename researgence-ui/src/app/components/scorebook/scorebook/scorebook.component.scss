@@ -1,0 +1,151 @@
+p {
+	font-size: 14px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.tab-content{
+    display: none;
+}
+  a:hover {
+    text-decoration: none;
+    color: #dbdf08;
+}
+.menu-closed {
+    margin-left: 0px;
+    margin-left: -240px;
+  }
+  // .content-wrapper.bluebar_collapse .head-video-cover {
+  //   margin-right: -56%;
+  // }
+  .container.profile_expand {
+    margin-right: 16%;
+}
+.score_detail {
+    line-height: 18px;
+        color: #000;
+  font-size: 19px; 
+    margin-top: 20px;
+}
+
+.btn-outline {
+  border-radius: 18px;
+  padding: 6px;
+}
+.content-wrapper{
+  padding-left: 250px;
+  padding-top: 8px;
+}
+li.disabled {
+  opacity: 0.5; /* or any other styles indicating the disabled state */
+  pointer-events: none;
+}
+ul li a{
+  cursor: pointer;
+}
+
+a.hoverScore:hover span.content-hide{
+  display: block !important;
+} 
+
+a.page_title:hover{
+  color: #c0ce1f  !important;
+}
+
+
+// For head
+
+
+.scorebook-row {
+  display: flex;
+flex-wrap: wrap;
+align-items: flex-start;
+gap: 20px;
+width: 100%;
+box-sizing: border-box;
+
+}
+
+/* Left Title */
+.left-title {
+font-size: 22px;
+font-weight: bold;
+color: #ffffff;
+// padding-top: 20px;
+white-space: nowrap;
+padding-left: 12px;
+font-family: lexiabold;
+}
+
+/* Center Arrow with Label Above */
+.arrow-wrapper {
+display: flex;
+flex-direction: column;
+align-items: center;
+flex: 1 1 auto;
+min-width: 150px;
+max-width: 100%;
+}
+
+.arrow-label {
+font-size: 14px;
+color: #c0ce1f;
+margin-bottom: 5px;
+white-space: nowrap;
+text-align: center;
+}
+
+/* Arrow styling */
+.long-right-arrow {
+display: flex;
+align-items: center;
+width: 100%;
+max-width: 750px;  
+min-width: 150px;  
+height: 20px;
+}
+
+.arrow-body {
+height: 3px;
+background-color: #baa8a8;
+flex-grow: 1;
+}
+
+.arrow-head {
+width: 0;
+height: 0;
+border-top: 10px solid transparent;
+border-bottom: 10px solid transparent;
+border-left: 15px solid #baa8a8;
+flex-shrink: 0;
+}
+
+/* Right title and label, vertically stacked */
+.right-title-wrap {
+display: flex;
+flex-direction: column;
+padding-top: 20px;
+white-space: nowrap;
+}
+
+.right-title {
+font-size: 22px;
+font-weight: bold;
+color: #c0ce1f;
+padding-top: 3px;
+padding-left: 28px;
+}
+
+.beta-label {
+font-size: 14px;
+color: #c0ce1f;
+padding-left: 74px;
+}
+
+
+.left-title,
+.right-title-wrap {
+white-space: nowrap;
+flex-shrink: 0;
+}

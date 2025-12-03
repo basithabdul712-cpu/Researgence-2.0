@@ -1,0 +1,778 @@
+<div class="content-wrapper" [ngClass]="{'sideBarOpen': !isMenuOpen, 'sideBarClose': isMenuOpen}" style="background: var(--background-blue);background-size: cover;background-attachment: fixed;">
+	<div class="container-fluid">
+		<div class="row">
+	  <div class="alert alert-dismissible alert-info" style="background-color: #ececec;color: #000000;text-align: right;font-size: 12px;padding: 7px;padding-right: 35px;">
+		<button type="button" class="close" data-dismiss="alert"></button>
+		 </div>
+	</div>
+		
+	
+	</div>
+
+	<!-- 4Ltype1 & level 2 -->
+	<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='4LType1'&&levelId=='2'" >
+	  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+		  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+			 <a style="width: 150px;" (click)="toReport()">Insights</a>
+		 </div>
+	  <div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+			<p style="color: #fff;">{{locationname}}</p>
+			<div class="incremental-counter main_score" >
+			  <ng-container *ngIf="digits && endCounterValue">
+				  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+				</ng-container>
+		  </div>
+		</div>
+	  </div>
+	<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Schools</h3>
+				<ul class="locations flex">
+					<li *ngFor="let item of filteredValues" >
+						<a (click)="viewLevel(item.schoolId,3,item.schoolName)">
+						  <p>{{item.schoolShortName}}</p>
+						  <p class="hover-text">{{item.schoolName}}</p>
+						  <h4>{{item.pubCount}}</h4>
+						</a>
+					  </li>
+				</ul>
+			
+		</div>
+	  </div>
+	<!-- <div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+			<ul class="other-score flex">
+				<li *ngFor="let item of filteredItems" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+					<p>{{item.publicationDBShortName}}</p>					  
+					<h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+					<p>h-index  {{item.hIndex}}</p></a>
+				</li>
+				</ul>
+		</div>
+	  </div> -->
+	
+<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>	  
+			</div>
+	  </div>
+</div>
+
+	<!-- 4Ltype2 & level 2 -->
+	<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='4LType2'&&levelId=='2'" >
+	  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+		  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+			 <a style="width: 150px;" (click)="toReport()">Insights</a>
+		 </div>
+	  <div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+			<p style="color: #fff;">{{schoolname}}</p>
+			<div class="incremental-counter main_score" >
+			  <ng-container *ngIf="digits && endCounterValue">
+				  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+				</ng-container>
+		  </div>
+		</div>
+	  </div>
+	<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Institute</h3>
+				<ul class="locations flex">
+					<li *ngFor="let item of filteredValues" >
+						<a (click)="viewLevel(item.instituteId,3,item.instituteName)">
+						  <p>{{item.instituteShortName}}</p>
+						  <p class="hover-text">{{item.instituteName}}</p>
+						  <h4>{{item.pubCount}}</h4>
+						</a>
+					  </li>
+				</ul>
+			
+		</div>
+	  </div>
+	<!-- <div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+			<ul class="other-score flex">
+				<li *ngFor="let item of filteredItems" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+					<p>{{item.publicationDBShortName}}</p>					  
+					<h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+					<p>h-index  {{item.hIndex}}</p></a>
+				</li>
+				</ul>
+		</div>
+	  </div> -->
+	
+<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+		
+			</div>
+	  </div>
+</div>
+ 
+	<!-- 3Ltype1 & level 2 -->
+	<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='3LType1'&&levelId=='2'" >
+	  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+		  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+			 <a style="width: 150px;" (click)="toReport()">Insights</a>
+		 </div>
+			<div class="row">
+			  <div class="col-lg-12">
+					<h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+				  <p style="color: #fff;">{{locationname}}</p>
+				  <div class="incremental-counter main_score" >
+					  <ng-container *ngIf="digits && endCounterValue">
+						  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+						</ng-container>
+				  </div>
+			  </div>
+			</div>
+		  <div class="row">
+			  <div class="col-lg-12">
+					<h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Institute</h3>
+					  <ul class="locations flex">
+						  <li *ngFor="let item of filteredValues" >
+							  <a (click)="viewLevel(item.instituteId,3,item.instituteName)">
+								<p>{{item.instituteShortName}}</p>
+								<p class="hover-text">{{item.instituteName}}</p>
+								<h4>{{item.pubCount}}</h4>
+							  </a>
+							</li>
+					  </ul>
+				  
+			  </div>
+			</div>
+		  <!-- <div class="row">
+			  <div class="col-lg-12">
+					<h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+				  <ul class="other-score flex">
+					  <li *ngFor="let item of filteredItems" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+						  <p>{{item.publicationDBShortName}}</p>					  
+						  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+						  <p>h-index  {{item.hIndex}}</p></a>
+					  </li>
+					  </ul>
+			  </div>
+			</div> -->
+		  
+	  <div class="row">
+			  <div class="col-lg-12">
+					<h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+			  
+				  </div>
+			</div>
+	  </div>
+
+   <!-- 3Ltype2 &level 2-->
+   <div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='3LType2'&&levelId=='2'" >
+	  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+		  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+			 <a style="width: 150px;" (click)="toReport()">Insights</a>
+		 </div>
+	  <div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+			<p style="color: #fff;">{{locationname}}</p>
+			<div class="incremental-counter main_score" >
+			  <ng-container *ngIf="digits && endCounterValue">
+				  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+				</ng-container>
+		  </div>
+		</div>
+	  </div>
+	<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Department</h3>
+				<ul class="locations flex">
+				  <li *ngFor="let item of filteredValues" [ngClass]="{'clickable': filteredValues.length > 1}" (click)="filteredValues.length > 1 ? viewLevel(item.departmentId, 3, item.departmentName) : null">
+					  <a>
+						<p>{{item.departmentName}}</p>
+						<p class="hover-text">{{item.departmentName}}</p>
+						<h4>{{item.pubCount}}</h4>
+					  </a>
+					</li>
+				</ul>		  
+		</div>
+	  </div>
+	<!-- <div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+			<ul class="other-score flex">
+			  <li *ngFor="let item of filteredItems" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+				  <p>{{item.publicationDBShortName}}</p>					  
+				  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+				  <p>h-index  {{item.hIndex}}</p></a>
+			  </li>
+				</ul>
+		</div>
+	  </div> -->
+	
+<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+
+			</div>
+	  </div>
+</div>
+
+   <!-- 2Ltype1 &level 2-->
+   <div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='2LType1'&&levelId=='2'">
+	  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+		  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+			 <a style="width: 150px;" (click)="toReport()">Insights</a>
+		 </div>
+	  <div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+			<p style="color: #fff;">{{institutename}}</p>
+			<div class="incremental-counter main_score" >
+			  <ng-container *ngIf="digits && endCounterValue">
+				  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+				</ng-container>
+		  </div>
+		</div>
+	  </div>
+	<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Department</h3>
+				<ul class="locations flex">
+					<li *ngFor="let item of filteredValues" [ngClass]="{'clickable': filteredValues.length > 1}" (click)="filteredValues.length > 1 ? viewLevel(item.departmentId, 3, item.departmentName) : null">
+					  <a>
+						<p>{{item.departmentName}}</p>
+						<p class="hover-text">{{item.departmentName}}</p>
+						<h4>{{item.pubCount}}</h4>
+					  </a>
+					</li>
+				</ul>
+			
+		</div>
+	  </div>
+	<!-- <div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+			<ul class="other-score flex">
+			  <li *ngFor="let item of filteredItems" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+				  <p>{{item.publicationDBShortName}}</p>					  
+				  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+				  <p>h-index  {{item.hIndex}}</p></a>
+			  </li>
+				</ul>
+		</div>
+	  </div> -->
+	
+<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+		
+			</div>
+	  </div>
+</div>
+
+<!-- 2LType2 &level 2 -->
+<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='2LType2'&&levelId=='2'">
+  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+	  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+		 <a style="width: 150px;" (click)="toReport()">Insights</a>
+	 </div>
+  <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+		<p style="color: #fff;">{{departmentname}}</p>
+		<div class="incremental-counter main_score" >
+		  <ng-container *ngIf="digits && endCounterValue">
+			  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+			</ng-container>
+	  </div>
+	</div>
+  </div>
+<div class="row">
+	<div class="col-lg-12">
+		
+	</div>
+  </div>
+<!-- <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+		<ul class="other-score flex">
+		  <li *ngFor="let item of filteredItems" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+			  <p>{{item.publicationDBShortName}}</p>					  
+			  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+			  <p>h-index  {{item.hIndex}}</p></a>
+		  </li>
+			  
+			</ul>
+	</div>
+  </div> -->
+
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+
+		</div>
+  </div>
+</div>
+
+<div *ngIf="levelId=='2'"  id="chartdivs"  style="overflow: unset;height: 500px;width: 75%;border: 1px solid lightblue; margin: 0px auto;">
+<br>
+<br>
+<br>
+</div>
+
+
+
+<!-- ..........................................................LEVEL -3 ................................................... -->
+
+<!-- 4Ltype1 & level 3 -->
+<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='4LType1'&&levelId=='3'">
+  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+	  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+		 <a style="width: 150px;" (click)="toReport()">Insights</a>
+	 </div>
+  <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+		<p style="color: #fff;">{{locationname}} -> {{schoolname}}</p>
+		<div class="incremental-counter main_score" >
+		  <ng-container *ngIf="digits3 && endCounterValue3">
+			  <div class="num" *ngFor="let num of numbers3">{{ num }}</div>
+			</ng-container>
+	  </div>
+	</div>
+  </div>
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Institute</h3>
+			<ul class="locations flex">
+			  <li *ngFor="let item of filteredValues3" >
+				  <a (click)="viewLevel4(item.instituteId,4,item.instituteName)">
+					<p>{{item.instituteShortName}}</p>
+					<p class="hover-text">{{item.instituteName}}</p>
+					<h4>{{item.pubCount}}</h4>
+				  </a>
+				</li>
+			</ul>
+		
+	</div>
+  </div>
+<!-- <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+		<ul class="other-score flex">
+		  <li *ngFor="let item of filteredItems3" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+			  <p>{{item.publicationDBShortName}}</p>					  
+			  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+			  <p>h-index  {{item.hIndex}}</p></a>
+		  </li>
+			  
+			</ul>
+	</div>
+  </div> -->
+
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+
+		</div>
+  </div>
+</div>
+
+<!-- 4Ltype2 &  level 3-->
+<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='4LType2'&&levelId=='3'">
+  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+	  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+		 <a style="width: 150px;" (click)="toReport()">Insights</a>
+	 </div>
+  <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+		<p style="color: #fff;">{{schoolname}} -> {{institutename}}</p>
+		<div class="incremental-counter main_score" >
+		  <ng-container *ngIf="digits3 && endCounterValue3">
+			  <div class="num" *ngFor="let num of numbers3">{{ num }}</div>
+			</ng-container>
+	  </div>
+	</div>
+  </div>
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Department</h3>
+			<ul class="locations flex">
+			  <li *ngFor="let item of filteredValues3" [ngClass]="{'clickable': filteredValues3.length > 1}" (click)="filteredValues3.length > 1 ? viewLevel4(item.departmentId,4,item.departmentName) : null">
+				  <a>
+					<p>{{item.departmentName}}</p>
+					<p class="hover-text">{{item.departmentName}}</p>
+					<h4>{{item.pubCount}}</h4>
+				  </a>
+				</li>
+			</ul>
+		
+	</div>
+  </div>
+<!-- <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+		<ul class="other-score flex">
+		  <li *ngFor="let item of filteredItems3" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+			  <p>{{item.publicationDBShortName}}</p>					  
+			  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+			  <p>h-index  {{item.hIndex}}</p></a>
+		  </li>
+			  
+			</ul>
+	</div>
+  </div> -->
+
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+
+		</div>
+  </div>
+</div>
+
+<!-- 3Ltype1 & level3 -->
+<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='3LType1'&&levelId=='3'">
+  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+	  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+		 <a style="width: 150px;" (click)="toReport()">Insights</a>
+	 </div>
+  <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+		<p style="color: #fff;">{{locationname}} -> {{institutename}}</p>
+		<div class="incremental-counter main_score" >
+		  <ng-container *ngIf="digits3 && endCounterValue3">
+			  <div class="num" *ngFor="let num of numbers3">{{ num }}</div>
+			</ng-container>
+	  </div>
+	</div>
+  </div>
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Department</h3>
+			<ul class="locations flex">
+			  <li *ngFor="let item of filteredValues3" [ngClass]="{'clickable': filteredValues3.length > 1}" (click)="filteredValues3.length > 1 ? viewLevel4(item.departmentId,4,item.departmentName) : null">
+				  <a>
+					<p>{{item.departmentName}}</p>
+					<p class="hover-text">{{item.departmentName}}</p>
+					<h4>{{item.pubCount}}</h4>
+				  </a>
+				</li>
+			</ul>
+		
+	</div>
+  </div>
+<!-- <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+		<ul class="other-score flex">
+		  <li *ngFor="let item of filteredItems3" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+			  <p>{{item.publicationDBShortName}}</p>					  
+			  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+			  <p>h-index  {{item.hIndex}}</p></a>
+		  </li>
+			  
+			</ul>
+	</div>
+  </div> -->
+
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+
+		</div>
+  </div>
+</div>
+
+<!-- 3Ltype2 & level3 -->
+<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='3LType2'&&levelId=='3'">
+  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+	  <a style="width: 150px;"  (click)="toMine()">Data Mining</a>
+		 <a style="width: 150px;" (click)="toReport()">Insights</a>
+	 </div>
+  <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+		<p style="color: #fff;">{{locationname}} -> {{departmentname}}</p>
+		<div class="incremental-counter main_score" >
+		  <ng-container *ngIf="digits3 && endCounterValue3">
+			  <div class="num" *ngFor="let num of numbers3">{{ num }}</div>
+			</ng-container>
+	  </div>
+	</div>
+  </div>
+<div class="row">
+	<div class="col-lg-12">
+		
+	</div>
+  </div>
+<!-- <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+		<ul class="other-score flex">
+		  <li *ngFor="let item of filteredItems3" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+			  <p>{{item.publicationDBShortName}}</p>					  
+			  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+			  <p>h-index  {{item.hIndex}}</p></a>
+		  </li>
+			  
+			</ul>
+	</div>
+  </div> -->
+
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+
+		</div>
+  </div>
+</div>
+
+<!-- 2Ltype1 & level 3 -->
+<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='2LType1'&&levelId=='3'">
+  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+	  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+		 <a style="width: 150px;" (click)="toReport()">Insights</a>
+	 </div>
+  <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+		<p style="color: #fff;">{{institutename}} -> {{departmentname}}</p>
+		<div class="incremental-counter main_score" >
+		  <ng-container *ngIf="digits3 && endCounterValue3">
+			  <div class="num" *ngFor="let num of numbers3">{{ num }}</div>
+			</ng-container>
+	  </div>
+	</div>
+  </div>
+<div class="row">
+	<div class="col-lg-12">
+		
+	</div>
+  </div>
+<!-- <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+		<ul class="other-score flex">
+		  <li *ngFor="let item of filteredItems3" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+			  <p>{{item.publicationDBShortName}}</p>					  
+			  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+			  <p>h-index  {{item.hIndex}}</p></a>
+		  </li>
+			  
+			</ul>
+	</div>
+  </div> -->
+
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+
+		</div>
+  </div>
+</div>
+
+<div *ngIf="levelId=='3'"  id="chartdiv3"  style="overflow: unset;height: 500px;width: 75%;border: 1px solid lightblue; margin: 0px auto;">
+<br>
+<br>
+<br>
+</div>
+
+
+
+<!-- -----------------------------------------   LEVEL-4      ----------------------------------------------------------------------------- -->
+
+<!-- 4Ltype1 & level 4 -->
+<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='4LType1'&&levelId=='4'">
+  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+	  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+		 <a style="width: 150px;" (click)="toReport()">Insights</a>
+	 </div>	 
+  <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+		<p style="color: #fff;">{{locationname}} -> {{schoolname}} -> {{institutename}}</p>
+		<div class="incremental-counter main_score" >
+		  <ng-container *ngIf="digits4 && endCounterValue4">
+			  <div class="num" *ngFor="let num of numbers4">{{ num }}</div>
+			</ng-container>
+	  </div>
+	</div>
+  </div>
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Department</h3>
+			<ul class="locations flex">
+			  <li *ngFor="let item of filteredValues4" [ngClass]="{'clickable': filteredValues4.length > 1}" (click)="filteredValues4.length > 1 ? viewLevel5(item.departmentId,5,item.departmentName) : null">
+				  <a>
+					<p>{{item.departmentName}}</p>
+					<p class="hover-text">{{item.departmentName}}</p>
+					<h4>{{item.pubCount}}</h4>
+				  </a>
+				</li>
+			</ul>
+		
+	</div>
+  </div>
+<!-- <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+		<ul class="other-score flex">
+		  <li *ngFor="let item of filteredItems4" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+			  <p>{{item.publicationDBShortName}}</p>					  
+			  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+			  <p>h-index  {{item.hIndex}}</p></a>
+		  </li>
+			  
+			</ul>
+	</div>
+  </div> -->
+
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+
+		</div>
+  </div>
+</div>
+
+<!-- 4Ltype2 & level 4 -->
+<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='4LType2'&&levelId=='4'">
+  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+	  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+		 <a style="width: 150px;" (click)="toReport()">Insights</a>
+	 </div>	 
+  <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+		<p style="color: #fff;">{{schoolname}} -> {{institutename}} -> {{departmentname}}</p>
+		<div class="incremental-counter main_score" >
+		  <ng-container *ngIf="digits4 && endCounterValue4">
+			  <div class="num" *ngFor="let num of numbers4">{{ num }}</div>
+			</ng-container>
+	  </div>
+	</div>
+  </div>
+<div class="row">
+	<div class="col-lg-12">
+	</div>
+  </div>
+<div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+		<ul class="other-score flex">
+		  <li *ngFor="let item of filteredItems4" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+			  <p>{{item.publicationDBShortName}}</p>					  
+			  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+			  <p>h-index  {{item.hIndex}}</p></a>
+		  </li>
+			  
+			</ul>
+	</div>
+  </div>
+
+<div class="row">
+	<div class="col-lg-12">
+	  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+		</div>
+
+  </div>
+</div>
+
+<!-- 3Ltype1 & level 4 -->
+<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='3LType1'&&levelId=='4'">
+  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+	  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+		 <a style="width: 150px;" (click)="toReport()">Insights</a>
+	 </div>	 
+  <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+		<p style="color: #fff;">{{locationname}} -> {{institutename}} -> {{departmentname}}</p>
+		<div class="incremental-counter main_score" >
+		  <ng-container *ngIf="digits4 && endCounterValue4">
+			  <div class="num" *ngFor="let num of numbers4">{{ num }}</div>
+			</ng-container>
+	  </div>
+	</div>
+  </div>
+<div class="row">
+	<div class="col-lg-12">
+	</div>
+  </div>
+<!-- <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+		<ul class="other-score flex">
+		  <li *ngFor="let item of filteredItems4" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+			  <p>{{item.publicationDBShortName}}</p>					  
+			  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+			  <p>h-index  {{item.hIndex}}</p></a>
+		  </li>
+			  
+			</ul>
+	</div>
+  </div> -->
+
+<div class="row">
+	<div class="col-lg-12">
+	  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+		</div>
+
+  </div>
+</div>
+
+<div *ngIf="levelId=='4'"  id="chartdiv4"  style="overflow: unset;height: 500px;width: 75%;border: 1px solid lightblue; margin: 0px auto;"></div>
+
+<!---------------------------------------------------- level 5 -------------------------------------------------------------------------->
+
+<!-- 4Ltype1 & level 5 -->
+<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='4LType1'&&levelId=='5'">
+  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+	  <a style="width: 150px;" (click)="toMine()">Data Mining</a>
+		 <a style="width: 150px;" (click)="toReport()">Insights</a>
+	 </div>	 
+  <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+		<p style="color: #fff;">{{locationname}} -> {{schoolname}} -> {{institutename}} -> {{departmentname}}</p>
+		<div class="incremental-counter main_score" >
+		  <ng-container *ngIf="digits5 && endCounterValue5">
+			  <div class="num" *ngFor="let num of numbers5">{{ num }}</div>
+			</ng-container>
+	  </div>
+	</div>
+  </div>
+<div class="row">
+	<div class="col-lg-12">
+	</div>
+  </div>
+<!-- <div class="row">
+	<div class="col-lg-12">
+		  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+		<ul class="other-score flex">
+		  <li *ngFor="let item of filteredItems5" ><a style="background: transparent;border: 1px solid #fff;cursor: default;">
+			  <p>{{item.publicationDBShortName}}</p>					  
+			  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+			  <p>h-index  {{item.hIndex}}</p></a>
+		  </li>
+			  
+			</ul>
+	</div>
+  </div> -->
+
+<div class="row">
+	<div class="col-lg-12">
+	  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+		</div>
+
+  </div>
+</div>
+
+<div *ngIf="levelId=='5'"  id="chartdiv5"  style="overflow: unset;height: 500px;width: 75%;border: 1px solid lightblue; margin: 0px auto;"></div>
+
+</div>

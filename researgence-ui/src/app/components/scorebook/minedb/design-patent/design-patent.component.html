@@ -1,0 +1,188 @@
+<div class="loader-wrapper" [class.loderhide]="enablePic" *ngIf="!enablePic" >
+  <div class="loader bg-white">
+    <div class="whirly-loader"> </div>
+    <br>
+    <br>
+       <p>Please Wait..Page is loading!</p>
+  </div>
+</div>
+<div class="content-wrapper" style="font-family: 'Red Hat Display', sans-serif;">
+    <div class="container-fluid" [ngClass]="{'menu-closed': isMenuOpen}">
+      <div class="row" style="margin-bottom: -23px;">
+        <div class="alert alert-dismissible alert-info" style="color: unset;">
+          <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;"><i class="fa fa-remove"></i></button>
+          Currently logged in as {{Name}}({{roleName}}) </div>
+      </div>
+      <div class="row">
+        <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+        [ngStyle]="{'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '':'unset','width':stickyEnable&&isMenuOpen? '95%':''}" #blueheader >
+          	<div class="container-90">
+		   		<div class="row">
+					<div class="col-lg-7 col-md-7 col-sm-7 text-white" style="padding-left: 10%;" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '10px'}">
+            			<h2>Welcome to Your Researgence Repository</h2>
+            			<p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+						<p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" href="/newrequest">here</a> to contact our team.</p>
+          			</div>
+          			<div class="col-lg-5 col-md-5 col-sm-5"><a href="newrequest" class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                  <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover"></a> -->
+                </div>
+				</div>
+		   </div>
+        </div>
+      </div>
+        <div class="container container-90 content-pushed" style="width: 90%;" [ngStyle] = "{'padding-top' : stickyEnable ? '100px' : '40px'}">
+          <div class="d-flex align-items-center justify-content-center" *ngIf="excelEnable" style="width: 100%;height:100%;" >
+            <div class="d-flex flex-column align-items-center justify-content-center"  style="width: 300px;height:100px;">
+              <img style="width: 100px;height: 100px;" src="../../../../../assets/images/tree/throbber.gif">
+              <h5 style="margin-top: 10px;color: white;">Downloading Please Wait...</h5>
+            </div>
+          </div>
+      <div class="row" [ngStyle]="{'opacity': excelEnable ? '5%':'100%'}">
+    <div class="col-lg-12">
+      <div class="inner-page-header gradient-box">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="col-lg-8">
+              <h3 class="page_title">Search Results</h3>
+            </div>
+            <div class="col-lg-2">
+              <!-- <a class="btn-outline float-right " style="cursor: pointer;" (click)="toReport()" >Insights</a>  -->
+            </div>     
+            <div class="col-lg-2">
+              <button  class="btn btn-default dropdown-toggle download_btn_multi" type="button" (click)="toggleDropdown()" style="float: right;height: 34px;padding: revert;background-color: transparent;border: 1px solid #dbdf08;color: #fff;">Download</button>
+            <ul  class="dropdown-menu" [class.show]="isDropdownOpen" (mouseleave)="isDropdownOpen = false">
+              <!-- <li *ngIf="!downloadEnable"  (click)="captureAsPDF('1')" class="pdfHover"><a >Generate PDF</a></li>
+              <li *ngIf="downloadEnable"  (click)="captureAsPDF('0')" class="pdfHover"><a >PDF</a></li> -->
+              <li (click)="exportToExcel()"  class="pdfHover"><a style="background: white !important;color: black;">EXCEL</a> 
+                <!-- <img *ngIf="excelEnable"  style="padding-left: 30px;" src="../../../../../assets/images/tree/throbber.gif"> -->
+              </li>
+            </ul>
+            </div> 
+          </div>   
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" [ngStyle]="{'opacity': excelEnable ? '5%':'100%'}">
+  <div class="view">
+    <h6 class="tweet" style="font-size: 15px;font-weight: 500;padding-top: 8px;text-align: end;padding-right: 10px;"> Showing {{ startrow + 1 }} to {{endrow}} of {{this.collapsablesize}} records</h6>
+  </div> 
+</div>
+    <div class="row" [ngStyle]="{'opacity': excelEnable ? '5%':'100%'}">
+      <div class="col-lg-12">
+        <div class="publication_list row">     
+          <div class="col-lg-12">
+            <div class="filter">
+              <div class="sort"> <span class="custom-dropdown">
+                  <label class="control-label heading_sm">Sort</label>
+                  <select [(ngModel)]="yearValue" (change)="changeYear(yearValue)">
+                    <option *ngFor="let yearorder of yearSort">
+                      {{yearorder}}
+                    </option>
+                  </select>
+                </span> <span class="custom-dropdown">
+                  <select [(ngModel)]="ascendValue" (change)="changesOrder(ascendValue)">
+                    <option *ngFor="let order of orderSort">
+                      {{order}}
+                    </option>
+                  </select>
+                </span> </div>
+              <div class="view"> <span class="custom-dropdown">
+                  <label class="control-label">Paginate</label>
+                  <select [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                    <option *ngFor="let dropcount of pageSizecount" [value]="dropcount">{{dropcount}}</option>
+                  </select>
+                </span> </div>
+                   
+              </div>
+          </div>
+      
+    
+
+                <div id="printPatent">
+                <div  class="result col-lg-12" *ngFor="let item of dataList ;let i=index">
+                  <article class="compact">
+                    <div style="display: flex;flex-wrap: nowrap;">
+                    <!-- <p class="tag_text" style="font-size: 12px;">{{item.patentApplicantTypeName}} |</p> -->
+                    <p class="tag_text" style="font-size: 12px;padding-left: 20px;">{{item.designPatentStageName}} |</p>
+					           <p class="text-sm mb-0x" style="padding-left: 20px;">{{item.designPatentOfficeName}}</p>
+                    </div>
+                    <div class="row flex">
+                      <div class="col-lg-8">
+                              <div class="article_header">			  
+                                        <h2 class="a_title" style="font-weight: bold;flex-wrap: nowrap;font-size: 16px;"><span class="sl_no">{{ i + 1 +(page - 1) * pageSize }}</span>
+                          
+                                  <span style="width: 30%">{{item.designPatentNumber}}</span>        
+                                  <span>{{item.designPatentTitle}}</span>	
+
+                              </h2>
+                              <i style="display: flex;width: 100%;"><span style="display: block;float: left;padding: 0 15px;">Filing Date: {{item.filingDate}}</span>
+                                <span style="display: block;float: left;padding: 0 15px;">Accepted Date: {{item.acceptedDate}}</span>
+                                <span style="display: block;float: left;padding: 0 15px;">RenewalDate Date: {{item.renewalDate}}</span></i>         
+                            </div>
+                                      
+                                        <div class="article_footer">
+                              <div class="a_author applicant"><table><tbody><tr><td>Applicants:</td>
+                                <div *ngIf="item.applicantAffiliation!=null" >
+                                  <td *ngIf="item.applicantAffiliation.length>1" >
+                                    <a class="tooltip1"  (click)="printNumber(item.applicantAffiliation[0])" *ngFor="let r of item.applicantAffiliation" >{{r.split(',')[0]}} 
+                                    <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                                  </a>
+                                  </td>
+                                  <td *ngIf="item.applicantAffiliation.length===1" >
+                                    <a class="tooltip1"  (click)="printNumber(item.applicantAffiliation[0])">{{item.applicantAffiliation[0].split(',')[0]}} 
+                                    <span class="tooltiptext">{{item.applicantAffiliation[0].split(',')[1]}},{{item.applicantAffiliation[0].split(',')[2]}},{{item.applicantAffiliation[0].split(',')[3]}},{{item.applicantAffiliation[0].split(',')[4]}}</span>
+                                  </a>
+                                  </td>
+                                  </div>
+                              </tr></tbody></table></div>	
+                            </div>
+               </div>
+
+               <div class="col-lg-2">
+                <img *ngIf="item.enabledesignImage"  [src]="item.designPatentImagePath" style="height: 120px;width: 100%;image-rendering: -webkit-optimize-contrast;" alt="">
+               </div>
+
+                  <div class="col-lg-2 flex flex-valign-center">         
+							<table class="project score">
+								<tbody>
+                  <tr [ngClass]="{'not-available':item.filed == 0||item.designPatentStageLifeCycle==null}">
+									<td class="text-align-r colon-right">Filed</td>
+									<td *ngIf="item.filed == 1" >Yes</td>
+                  <td *ngIf="item.filed == 0||item.designPatentStageLifeCycle==null" >-</td>
+								</tr>
+								<tr [ngClass]="{'not-available':item.Accepted == 0||item.designPatentStageLifeCycle==null}">
+									<td class="text-align-r colon-right">Accepted</td>
+									<td *ngIf="item.Accepted == 1" >Yes</td>
+                  <td *ngIf="item.Accepted == 0||item.designPatentStageLifeCycle==null" >-</td>
+								</tr>
+								<!-- <tr [ngClass]="{'not-available':item.Renewed == 0||item.designPatentStageLifeCycle==null}">
+									<td class="text-align-r colon-right">Renewed</td>
+									<td *ngIf="item.Renewed == 1" >Yes</td>
+                  <td *ngIf="item.Renewed == 0||item.designPatentStageLifeCycle==null" >-</td>
+								</tr>								 -->
+							</tbody></table>                    
+                      </div>
+                    </div>				  
+                  </article>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="paginate" style="padding-left: 45%;">
+          <ngb-pagination [(page)]="page" [pageSize]="pageSize" [maxSize]="3" [collectionSize]="collapsablesize"
+            (pageChange)="onPageChange($event)">
+        </ngb-pagination>
+        </div>
+    </div>
+    </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+ 

@@ -1,0 +1,225 @@
+.dropdown-list {
+  overflow: scroll;
+  margin-right: 80%;
+  max-width: 880px;
+  width: 30%;
+  margin-left: 250px;
+ font-size: 16px;
+ max-height: 150px;
+}
+.forms-control:focus{
+  border-color: 1px solid black;
+  outline: 0;
+  box-shadow: none;
+}
+.content-wrapper{
+  background: var(--background-white) repeat top center;
+}
+
+// .menu-open {
+//   padding-left: 5%;
+// }
+
+// .menu-closed {
+//   padding-left: 12%;
+// }
+
+  .forms-control:focus{
+    border-color: 1px solid black;
+    outline: 0;
+    box-shadow: none;
+  }
+  .dropdown-list li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+  .subMenus {
+    margin-top: 7%;
+}
+label.adminClient {
+  border: solid 1px #0d6efd;
+  margin-left: 20%;
+  width: 20%;
+  text-align: center;
+  font-size: 17px;
+  background: #0d6efd;
+  color: white;
+  height: 40px;
+  border-radius: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+label.adminClient:hover{
+  background: linear-gradient(45deg, black, transparent);
+  border: solid 1px black;
+}
+
+.name{
+  color: white;
+  border-right: solid 1px black;
+  text-align: center;
+}
+
+.row{
+  padding-bottom: 4%;
+}
+.btn-green{
+margin-right: 40px;
+background: #c2cf1d;
+color: #000000;
+border: none;
+padding: 6px 10px;
+margin-left: 7px;
+}
+.btn-green:hover{
+background-color: #000000;
+color: white;
+}
+
+.box{
+  border-right: solid 1px black;
+}
+
+.message {
+  border-radius: 50px;
+  margin: 0 15px 20px;
+  padding: 10px 20px;
+  position: relative;
+  font-size: 20px;
+}
+.message.to {
+  background-color: 
+#2095FE;
+  color: 
+#fff;
+  margin-left: 100px;
+  text-align: right;
+}
+.message.from {
+  background-color: 
+#E5E4E9;
+  color: 
+#363636;
+  margin-right: 100px;
+}
+.message.to + .message.to,
+.message.from + .message.from {
+  margin-top: -10px;
+}
+.rounded-div {  
+  margin-left: 74%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  width: 21%
+}
+
+.select-selected{
+  position: absolute;
+    background-color: #005bb3;
+    color: white;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+  }
+  
+  .line-select {
+    background: none;
+    border: none;
+    border-bottom: #ccc 2px solid;
+    width: 350px;
+    color: #000000;
+    }
+
+    .alignDrop{
+      height: 150px;
+      overflow: scroll;
+      width: 90%;
+      background: white;
+    }
+    .alignDrop li:hover{
+    background-color: #005bb3;
+    color: white; 
+    cursor: pointer;
+    }
+    .td
+   {
+      border-right: 1px solid black;
+   }
+
+  //For university scrolling
+  .dropdown-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .dropdown-list_1 {
+    position: absolute;
+    width: 100%;
+    max-height: 200px; /* Adjust this for the visible dropdown height */
+    border: 1px solid #ddd;
+    background-color: #005bb3;
+    z-index: 1000;
+    overflow: hidden;
+    color: #fff;
+  }
+  
+  .scroll-viewport {
+    height: 200px;
+  }
+  
+  .dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #0d6efd;
+  }
+  
+
+  .dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .arrow-icon {
+    font-size: 25px;
+    position: absolute;
+    top: -11px;
+    right: -1px;
+    cursor: pointer;
+  }
+  
+  // For table scrolling
+  .table-container {
+    max-height: 500px; /* Set the max height for the table */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    border: 1px solid black;  /* Optional border to define the table container */
+    margin-top: 10px;  /* Add margin if needed */
+  }
+
+  .table {
+    width: 100%; /* Make table take up full width */
+    border-collapse: collapse;
+  }
+
+  .table thead tr th {
+    position: sticky;  /* Makes the header sticky */
+    background-color: #254e99;
+    top: 0; 
+    z-index: 1;  /* Ensures the header stays above the table rows */
+    padding: 10px;
+    border: 1px solid black;
+  }

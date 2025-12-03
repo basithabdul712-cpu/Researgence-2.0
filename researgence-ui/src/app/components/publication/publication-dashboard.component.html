@@ -1,0 +1,342 @@
+<div class="content-wrapper" [ngClass]="{'sideBarOpen': !isMenuOpen, 'sideBarClose': isMenuOpen}" style="background: var(--background-blue);background-size: cover;background-attachment: fixed;">
+	<div class="container-fluid">
+		<div class="row">
+	  <div class="alert alert-dismissible alert-info" style="background-color: #ececec;color: #000000;text-align: right;font-size: 12px;padding: 5px;padding-right: 35px;">
+		<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
+		Currently logged in as {{Name}}({{roleName}}) </div>
+	</div>
+		
+	
+	</div>
+
+		  <!-- 4Ltype1 -->
+	<div class="container container-90 home" *ngIf="layerType=='4LType1'" >
+	  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+		   <a style="width: 150px;" routerLink="/scorebook/Publications/Mine" style="cursor: pointer;">Data Mining</a>
+			  <a style="width: 150px;" routerLink="/scorebook/Publications/InsightReports" style="cursor: pointer;">Insights</a>
+   </div>
+	   <div class="row">
+		 <div class="col-lg-12">
+			   <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+			   <div class="incremental-counter main_score" >
+				  <ng-container *ngIf="digits && endCounterValue">
+					  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+					</ng-container>
+			  </div>
+		 </div>
+	   </div>
+	 <div class="row">
+		 <div class="col-lg-12">
+			   <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Locations</h3>
+				 <ul class="locations flex">
+					 <li *ngFor="let item of filteredValues">
+					  <a (click)="viewLevel(item.locationId,2,layerType,item.locationName,item.departmentGroupId)">				   
+						 <p>{{item.locationShortName ?? item.locationName}}</p>
+						 <p class="hover-text">{{item.locationName}}</p>
+						  <h4>{{item.pubCount}}</h4></a>
+					 </li>
+				 </ul>		   
+		 </div>
+	   </div>
+	 <div class="row">
+		 <div class="col-lg-12">
+			   <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>		   
+			 <ul class="other-score flex">
+					 <li *ngFor="let item of filteredItems" >
+					  <a style="background: transparent;border: 1px solid #fff;cursor: default;" [class]="item.publicationDBShortName">
+						<p>{{item.publicationDBShortName}} <span class="fa fa-info-circle control-btn" style="color: #d8dd0b;display: none;float: inline-end;" [class]="item.publicationDBShortName"></span></p>					  
+					  <h4>{{item.dbLevelCount}}</h4>
+					  <p style="margin-top: 2px;" *ngIf="item.hIndex!=null" >h-index  {{item.hIndex}}</p>
+					  <p style="margin-top: 5px;" class="disclaim" [class]="item.publicationDBShortName">Indexing information is compiled from publicly available sources or user-provided data</p>
+					</a>
+				  </li>
+				 </ul>
+		 </div>
+	   </div>
+	   <div class="row">
+		  <div class="col-lg-12">
+				<h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">International Collaborations</h3>
+				  </div>
+			</div>
+		 </div>
+
+		<!-- 4Ltype2 -->
+		<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='4LType2'" >
+		  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+			  <a style="width: 150px;" routerLink="/scorebook/Publications/Mine" style="cursor: pointer;">Data Mining</a>
+				 <a style="width: 150px;" routerLink="/scorebook/Publications/InsightReports" style="cursor: pointer;">Insights</a>
+			 </div>
+		  <div class="row">
+			<div class="col-lg-12">
+				  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+				  <div class="incremental-counter main_score" >
+					  <ng-container *ngIf="digits && endCounterValue">
+						  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+						</ng-container>
+				  </div>
+			</div>
+		  </div>
+		<div class="row">
+			<div class="col-lg-12">
+				  <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Schools</h3>
+					<ul class="locations flex">
+						<li *ngFor="let item of filteredValues" >
+							<a (click)="viewLevel(item.schoolId,2,layerType,item.schoolName,item.departmentGroupId)">
+							  <p>{{item.schoolShortName ?? item.schoolName}}</p>
+							  <p class="hover-text">{{item.schoolName}}</p>
+							  <h4>{{item.pubCount}}</h4>
+							</a>
+						  </li>
+					</ul>		  
+			</div>
+		  </div>
+		  <div class="row">
+			  <div class="col-lg-12">
+					<h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>		   
+				  <ul class="other-score flex">
+						  <li *ngFor="let item of filteredItems" >
+						   <a style="background: transparent;border: 1px solid #fff;cursor: default;" [class]="item.publicationDBShortName">
+							<p>{{item.publicationDBShortName}} <span class="fa fa-info-circle control-btn" style="color: #d8dd0b;display: none;float: inline-end;" [class]="item.publicationDBShortName"></span>
+							</p>					  
+						   <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+						   <p *ngIf="item.hIndex!=null">h-index  {{item.hIndex}}</p>
+						   <p style="margin-top: 5px;" class="disclaim" [class]="item.publicationDBShortName">Indexing information is compiled from publicly available sources or user-provided data</p>
+						</a>
+					   </li>
+					  </ul>
+			  </div>
+			</div>
+	<div class="row">
+			<div class="col-lg-12">
+				  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+			
+
+				</div>
+		  </div>
+	</div>
+ 
+	<!-- 3Ltype1 -->
+	<div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='3LType1'" >
+	  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+		  <a style="width: 150px;" routerLink="/scorebook/Publications/Mine" style="cursor: pointer;">Data Mining</a>
+			 <a style="width: 150px;" routerLink="/scorebook/Publications/InsightReports" style="cursor: pointer;">Insights</a>
+		 </div>
+			<div class="row">
+			  <div class="col-lg-12">
+					<h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+					<div class="incremental-counter main_score" >
+					  <ng-container *ngIf="digits && endCounterValue">
+						  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+						</ng-container>
+				  </div>
+			  </div>
+			</div>
+		  <div class="row">
+			  <div class="col-lg-12">
+					<h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Locations</h3>
+					  <ul class="locations flex">
+						  <li *ngFor="let item of filteredValues" style="cursor: pointer;">
+							  <a (click)="viewLevel(item.locationId,2,layerType,item.locationName,item.departmentGroupId)">
+								<p>{{item.locationShortName ?? item.locationName}}</p>
+								<p class="hover-text">{{item.locationName}}</p>
+								<h4>{{item.pubCount}}</h4>
+							  </a>
+							</li>
+					  </ul>
+				  
+			  </div>
+			</div>
+		  <div class="row">
+			  <div class="col-lg-12">
+					<h3  style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+				  <ul class="other-score flex">
+					  <li *ngFor="let item of filteredItems" >
+						<a style="background: transparent;border: 1px solid #fff;cursor: default;" [class]="item.publicationDBShortName">
+						  <p>{{item.publicationDBShortName}} <span class="fa fa-info-circle control-btn" style="color: #d8dd0b;display: none;float: inline-end;" [class]="item.publicationDBShortName"></span></p>					  
+						  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+						  <p *ngIf="item.hIndex!=null">h-index  {{item.hIndex}}</p>
+						  <p style="margin-top: 5px;" class="disclaim" [class]="item.publicationDBShortName">Indexing information is compiled from publicly available sources or user-provided data</p>
+						</a>
+					  </li>
+					  </ul>
+			  </div>
+			</div>
+		  
+	  <div class="row">
+			  <div class="col-lg-12">
+					<h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+			  
+
+				  </div>
+			</div>
+	  </div>
+
+   <!-- 3Ltype2 -->
+   <div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='3LType2'" >
+	  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+		  <a style="width: 150px;" routerLink="/scorebook/Publications/Mine" style="cursor: pointer;">Data Mining</a>
+			 <a style="width: 150px;" routerLink="/scorebook/Publications/InsightReports" style="cursor: pointer;">Insights</a>
+		 </div>
+	  <div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+			  <div class="incremental-counter main_score" >
+				  <ng-container *ngIf="digits && endCounterValue">
+					  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+					</ng-container>
+			  </div>
+		</div>
+	  </div>
+	<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Locations</h3>
+				<ul class="locations flex">
+				  <li *ngFor="let item of filteredValues" style="cursor: pointer;">
+					  <a (click)="viewLevel(item.locationId,2,layerType,item.locationName,item.departmentGroupId)">
+						<p>{{item.locationShortName ?? item.locationName}}</p>
+						<p class="hover-text">{{item.locationName}}</p>
+						<h4>{{item.pubCount}}</h4>
+					  </a>
+					</li>
+	  
+				</ul>
+			
+		</div>
+	  </div>
+	<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+			<ul class="other-score flex">
+			  <li *ngFor="let item of filteredItems" >
+				<a style="background: transparent;border: 1px solid #fff;cursor: default;" [class]="item.publicationDBShortName">
+				  <p>{{item.publicationDBShortName}} <span class="fa fa-info-circle control-btn" style="color: #d8dd0b;display: none;float: inline-end;" [class]="item.publicationDBShortName"></span></p>					  
+				  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+				  <p *ngIf="item.hIndex!=null">h-index  {{item.hIndex}}</p>
+				  <p style="margin-top: 5px;" class="disclaim" [class]="item.publicationDBShortName">Indexing information is compiled from publicly available sources or user-provided data</p>
+				</a>
+			  </li>
+				</ul>
+		</div>
+	  </div>
+	
+<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+		
+	  
+			</div>
+	  </div>
+</div>
+
+   <!-- 2Ltype1 -->
+   <div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='2LType1'">
+	  <div class="block-btn-blue-container" #stickyheader  style="margin-top: -20px;">
+		  <a style="width: 150px;" routerLink="/scorebook/Publications/Mine" style="cursor: pointer;">Data Mining</a>
+			 <a style="width: 150px;" routerLink="/scorebook/Publications/InsightReports" style="cursor: pointer;">Insights</a>
+		 </div>
+	  <div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+			  <div class="incremental-counter main_score" >
+				  <ng-container *ngIf="digits && endCounterValue">
+					  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+					</ng-container>
+			  </div>
+		</div>
+	  </div>
+	<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 30px; margin-bottom: 20px;color: #fff; cursor: pointer;">Institute</h3>
+				<ul class="locations flex" >
+					<li *ngFor="let item of filteredValues" style="cursor: pointer;">
+					  <a (click)="viewLevel(item.instituteId,2,layerType,item.instituteName,item.departmentGroupId)" style="cursor: pointer;">
+						<p>{{item.instituteShortName ?? item.instituteName}}</p>
+						<p class="hover-text">{{item.instituteName}}</p>
+						<h4>{{item.pubCount}}</h4>
+					  </a>
+					</li>
+				</ul>
+			
+		</div>
+	  </div>
+	<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+			<ul class="other-score flex">
+					<li *ngFor="let item of filteredItems" >
+						<a style="background: transparent;border: 1px solid #fff;cursor: default;" [class]="item.publicationDBShortName">
+						<p>{{item.publicationDBShortName}} <span class="fa fa-info-circle control-btn" style="color: #d8dd0b;display: none;float: inline-end;" [class]="item.publicationDBShortName"></span></p>					  
+						<h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+						<p *ngIf="item.hIndex!=null">h-index  {{item.hIndex}}</p>
+						<p style="margin-top: 5px;" class="disclaim" [class]="item.publicationDBShortName">Indexing information is compiled from publicly available sources or user-provided data</p>
+					</a>
+					</li>
+				</ul>
+		</div>
+	  </div>
+	
+<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+			</div>
+	  </div>
+</div>
+
+   <!-- 2Ltype2 -->
+   <div class="container container-90 home" style="width: 90%;" *ngIf="layerType=='2LType2'">
+	  <div class="block-btn-blue-container" #stickyheader style="margin-top: -20px;">
+		  <a style="width: 150px;" routerLink="/scorebook/Publications/Mine" style="cursor: pointer;">Data Mining</a>
+			 <a style="width: 150px;" routerLink="/scorebook/Publications/InsightReports" style="cursor: pointer;">Insights</a>
+		 </div>
+	  <div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;">Publications</h3>
+			  <div class="incremental-counter main_score" >
+				  <ng-container *ngIf="digits && endCounterValue">
+					  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+					</ng-container>
+			  </div>
+		</div>
+	  </div>
+	<div class="row">
+		<div class="col-lg-12">
+			  <h3  style="margin-top: 30px; margin-bottom: 20px;color: #fff;">Department</h3>
+				<ul class="locations flex">
+				  <li *ngFor="let item of filteredValues" [ngClass]="{'clickable': filteredValues.length > 1}" (click)="filteredValues.length > 1 ? viewLevel(item.departmentId,2,layerType,item.departmentName,item.departmentGroupId) : null">
+					  <a>
+						<p>{{item.departmentName}}</p>
+						<p class="hover-text">{{item.departmentName}}</p>
+						<h4>{{item.pubCount}}</h4>
+					  </a>
+					</li>
+				 </ul>		  
+		     </div>
+	     </div>
+	<div class="row">
+		<div class="col-lg-12">
+			  <h3 style="margin-top: 60px; margin-bottom: 20px;color: #fff;">Databases</h3>
+			<ul class="other-score flex">
+			  <li *ngFor="let item of filteredItems" >
+				<a style="background: transparent;border: 1px solid #fff;cursor: default;" [class]="item.publicationDBShortName">
+				  <p>{{item.publicationDBShortName}} <span class="fa fa-info-circle control-btn" style="color: #d8dd0b;display: none;float: inline-end;" [class]="item.publicationDBShortName"></span></p>					  
+				  <h4 style="margin-top: 15px;">{{item.dbLevelCount}}</h4>
+				  <p *ngIf="item.hIndex!=null">h-index  {{item.hIndex}}</p>
+				  <p style="margin-top: 5px;" class="disclaim" [class]="item.publicationDBShortName">Indexing information is compiled from publicly available sources or user-provided data</p>
+				</a>
+			  </li>				
+				</ul>
+		</div>
+	  </div>
+	
+	  <div class="row">
+			  <div class="col-lg-12">
+					  <h3 style="margin-top: 60px;color: #fff;">International Collaborations</h3>
+				  </div>
+			  </div>
+	  </div>
+
+		<div id="chartdiv" style="overflow: unset;height: 500px;width: 75%;border: 1px solid lightblue; margin: 0px auto;"></div>
+	  <br>
+	  <br>
+	  <br>
+</div>

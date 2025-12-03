@@ -1,0 +1,126 @@
+.subMenus {
+    margin-top: 7%;
+    height: 700px;
+  }
+  .dropdown-list {
+  overflow: scroll;
+  // margin-right: 80%;
+  // max-width: 880px;
+  width: 55%;
+  margin-left: 250px;
+  font-size: 20px;
+   max-height: 400px;
+  }
+  .forms-control:focus{
+  border-color: 1px solid black;
+  outline: 0;
+  box-shadow: none;
+  }
+  .content-wrapper{
+  background:var(--background-white) repeat top center;
+  }
+  
+  // .menu-opens {
+  // padding-left: 5%;
+  // }
+  
+  .menu-closeds {
+  padding-left: 12%;
+  }
+  .dropdown-list li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+
+  // Search box and text delete icon
+  .input-container {
+    position: relative !important;
+    display: inline-block !important;
+    width: 100% !important;
+  }
+  
+  .input-with-icon {
+    width: 50% !important;
+    height: 40px !important;
+    margin-left: 40% !important;
+    text-align: center !important;
+    font-size: 25px !important;
+    border-radius: 7.5px !important;
+    padding-right: 30px !important; /* Space for the close button */
+    box-sizing: border-box !important;
+  }
+  .input-with-icon::placeholder {
+    font-size: 20px !important;
+    color: rgb(197, 193, 193) !important;
+  }
+  
+  .close-icon {
+    position: absolute;
+    top: 50%;
+    right: 52%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 10px;
+  }
+  .search-icon::before {
+    content:'\f002';
+    font-family: "FontAwesome";
+    font-size: 16px;
+    vertical-align: middle;
+    position: absolute;
+    right: 52%;
+    top: 30%;
+  }
+
+
+//Checking purpose
+.locations{
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+li{
+  cursor: pointer;
+}
+.locations li {
+    margin: 0 10px;
+    width: 180px;
+    height: 180px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #fff;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.locations li, .other-score li {
+  margin: 10px;
+  cursor: pointer;
+  
+}
+
+.locations li .hover-text {
+ display: none;
+}
+
+.locations li:hover .hover-text {
+ display: block;
+ margin-top: 10px;
+ font-weight: 700 !important;
+ color:#d8dd0b !important;
+ font-size: 17px !important;
+}
+.locations li:hover p{
+  display: block;
+  color: #fff !important;
+  font-size: 13px !important;
+  font-weight: 200 !important;
+ }
+
+
+// .locations li:hover p:not(.hover-text) {
+//  display: none;
+// }

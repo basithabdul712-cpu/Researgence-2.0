@@ -1,0 +1,113 @@
+<style>
+  .sidemenu-open {
+  padding-left: 0%;
+}
+
+.menu-closed {
+  padding-left: 250px;
+}
+</style>
+<div class="loader-wrapper" [class.loderhide]="enablePic" *ngIf="!enablePic" >
+  <div class="loader bg-white">
+    <div class="whirly-loader"> </div>
+    <br>
+    <br>
+       <p>Please Wait..Page is loading!</p>
+  </div>
+</div>
+
+<div class="content-wrapper" [ngClass]="{'sidemenu-open': !isMenuOpen, 'menu-closed': isMenuOpen}" style="font-family: 'Red Hat Display', sans-serif;padding-top: 0px;">
+  <div class="container-fluid">
+    <div class="row" style="margin-bottom: -23px;">
+      <div class="alert alert-dismissible alert-info" >
+        <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;" ><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+    <div class="row">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 50px;">
+           <div class="container container-90 " style="width: 86%;">
+          <div class="row">
+         <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '20px'}" style="margin-left: -28px;">
+                 <h2>Welcome to Your Researgence Repository</h2>
+                 <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+           <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green"  href="/newrequest" >here</a> to contact our team.</p>
+               </div>
+               <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"  href="/newrequest"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+              </div>
+       </div>
+      </div>
+       </div>
+     </div>
+  </div>
+
+<div class="container container-90" style="width: 90%;">
+  <div class="content-pushed"  [ngStyle] = "{'padding-top' : stickyEnable ? '100px' : '20px'}">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-page-header gradient-box">
+          <div class="row">
+            <div class="col-lg-6">
+              <h3 class="page_title" style="font-size: 24px;">{{viewName}}</h3>
+            </div>
+            <div class="col-lg-6">
+              <input type="button" style="cursor: pointer;" class="btn-outline float-right ml-20" data-toggle="modal" data-target="#add_new"  value="Download Excel" (click)="exportData()">
+            
+            </div>
+          </div>
+        </div>
+        <div class="sort" style="padding-top: 4px;width: 100%;">
+          <h6   class="tweet" style="padding-top: 2px;text-align: end;">Showing {{startIndex+1}} to {{endIndex}} of {{McollectionSize}} records</h6>
+         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="publication_list row">
+          <div class="col-lg-12">
+            <div class="filter">
+              <div class="sort"><span class="custom-dropdown">
+                <label class="control-label heading_sm">Show</label>
+                <select style="width: 150px"[(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                  <option *ngFor="let size of pageSizes" [value]="size" [selected]="size == pageSize">{{ size }}</option>
+                </select>
+                </span> </div>
+            </div>
+          </div>
+          <div class="result col-lg-12">
+            <div class="content-wrapper-white" style="overflow: auto;margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+              <table id="example" class="table table-bordered" style="width:100%">
+                <thead style="    background: #0151be;
+                color: #fff;">
+                  <tr>           
+                    <th *ngFor="let header of getHeaders()" style="color: white;">{{header}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of listData|slice: (Mpage-1) * pageSize : (Mpage-1) * pageSize + pageSize">             
+                    <td *ngFor="let key of getHeaders()">{{item[key]}}</td>
+                  </tr>   
+                </tbody>
+              </table>
+                  </div>
+                </div>
+              </div>
+              <div class="paginate" style="margin-left: 40%;">
+                <div class="row">
+                  <tr>
+                       <ngb-pagination class="pagination1"  [maxSize]="3" [(page)]="Mpage" [pageSize]="pageSize" [collectionSize]="McollectionSize" (pageChange)="onPageChange($event)"  style="float: left;">
+                          </ngb-pagination>
+                  </tr>
+                </div>
+                <br>
+                <br>
+              </div>       
+            </div>
+          </div>
+        </div>
+      </div>
+  
+ 
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

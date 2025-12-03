@@ -1,0 +1,75 @@
+td {
+    text-align: center;
+}
+//yearpicker
+::ng-deep .bs-datepicker-body {
+    background-color: #f0f0f0;
+    width: 200x;
+    height: 100px;
+    padding: 10px;
+  }
+   
+  ::ng-deep .bs-datepicker-body :hover {
+  cursor: pointer;
+  }
+
+  .alert-dismissable .close, .alert-dismissible .close {
+    position: relative;
+    top: -12px;
+    right: -20px;
+    color: inherit;
+    font-size: 18px;
+}
+   
+  ::ng-deep td.ng-star-inserted {
+    
+  padding-left: 10px;
+  }
+  ::ng-deep bs-datepicker-navigation-view {
+    padding-left: 27px;
+  }
+   
+  ::ng-deep span {
+    font-size:15px;
+  }
+  .td {
+    border-right: 1px solid black;
+  }
+  span.sorting:before {
+    /* bottom: 50%; */
+    float: right;
+    margin-left: 2px;
+    margin-top: 9px;
+    margin-bottom: -10px;
+    content: "▼" / "";
+    position: absolute;
+    
+  }
+  span.sorting:after {
+  /* top: 50%; */
+  float: right;
+  content: "▲" / "";
+  margin-left: 2px;
+  margin-top: -3px;
+  margin-bottom: 9px;
+  position: absolute;
+  
+  }
+  span.sorting:before,
+  span.sorting:after {
+  font-size: 14px; 
+  color: rgb(189, 184, 184); 
+  }
+  
+  /* Styling for ascending arrow */
+  th.ascending span.sorting:before {
+  color: white; 
+  }
+  
+  /* Styling for descending arrow */
+  th.descending span.sorting:after {
+  color: white; 
+  }
+th{
+  color: #fff;
+}

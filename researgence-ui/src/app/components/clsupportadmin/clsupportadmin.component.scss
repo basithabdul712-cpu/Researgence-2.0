@@ -1,0 +1,103 @@
+.opensideBar {
+    padding-left: 250px;
+    margin-left: 0px;
+    }
+
+.group-title{
+    border: 1px solid;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, rgb(3,8,75), rgb(26,4,107));
+    margin-bottom: 2%;
+    color: white;
+    padding: 5px 0px 0px 20px;
+    margin-left: 38px;
+    margin-right: 38px;
+}
+
+.score_containers{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.score_containers a{
+    width: 85%;
+    padding: 15px;
+}
+
+@media only screen and (max-width:1200px){
+    .score_containers a{
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width:600px){
+    .score_containers a{
+        width: 100%;
+    }
+    .video_bar .col-lg-3{
+        padding-right: 15px;
+    }
+}
+
+@media only screen and (max-width:1367px){
+    .score_containers a{
+        padding: 30px;
+    }
+}
+
+.but
+  {
+    width:100px;
+    height:30px;
+    border-radius: 10px;
+    background-color: #0051bf;
+    color: white;
+    border-color: #0051bf;
+    font-weight: bold;
+  }
+  .but:hover{
+    background: #dbdf08;
+    color: #000;
+    border-color: #dbdf08;
+  }
+
+    ::ng-deep .bottom {
+        z-index: 1050;
+    }
+
+    //yearpicker
+    ::ng-deep .bs-datepicker-body {
+        background-color: #f0f0f0;
+        // width: 200px;
+        height: 115px;
+        padding: 10px;
+        border-radius: 5px;
+        min-width: 215px;
+        }
+    
+    ::ng-deep .bs-datepicker-body :hover {
+         cursor: pointer;
+     }
+    
+    ::ng-deep td.ng-star-inserted {
+        padding-left: 10px;
+    }
+    
+    ::ng-deep bs-datepicker-navigation-view {
+        padding-left: 27px;
+    }
+  
+    .alignDrop {
+        overflow: scroll;
+        font-size: 16px;
+        background: #dfdbdb;
+         max-height: 400px;
+    }
+
+    .alignDrop li:hover{
+        background-color: #0051bf;
+        color: white; 
+        cursor: pointer;
+      }
+      

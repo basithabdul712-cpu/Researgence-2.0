@@ -1,0 +1,151 @@
+<div class="container-fluid"  [ngClass]="{'menu-opens': !isMenuOpen, 'menu-closeds': isMenuOpen}">
+    <div class="row">
+      <div class="alert alert-dismissible alert-info" >
+        <button type="button" class="close" data-dismiss="alert" style="background: unset;border: unset;"><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+    <div class="row">
+      <div class="video_bar bluebar_expand"  [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 50px;">
+           <div class="container container-90 ">
+          <div class="row">
+         <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '20px'}" style="padding-left: 0px;margin-left: -20px;">
+                 <h2>Welcome to Your Researgence Repository</h2>
+                 <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+           <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" >here</a> to contact our team.</p>
+               </div>
+               <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+              </div>
+       </div>
+      </div>
+       </div>
+     </div>
+ 
+  <div class="container container-90" >
+    <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '150px' : '30px'}">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner-page-header gradient-box">
+            <div class="row">
+              <div class="col-lg-6">
+                <h3 class="page_title" style="font-size: 24px;">RFS PENDING APPROVAL</h3>
+              </div>
+              <div class="col-lg-6">
+                
+                <input type="button"  class="btn-outline float-right ml-20"(click)="advSearch()" value="Advance Search">
+                <input type="button"  class="btn-outline float-right ml-20"(click)="exportExcel()" value="Download Excel">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="filter" style="display: flex;flex-flow: row;align-items: flex-start;">
+
+            <div class="sort"> <span class="custom-dropdown">
+              <label class="control-label heading_sm">Show</label>
+              <select style="width: 80px"[(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                <option *ngFor="let size of pageSizes" [value]="size" [selected]="size == pageSize">{{ size }}</option>
+              </select>
+              </span> </div>
+
+            <div class="sort"*ngIf="userName===support">
+                <label class="control-label heading_sm">University</label>
+                <input type="search" class="form-field" style="width:110px"[(ngModel)]="searchData" (keyup)="changeTitle(searchbar.value)" placeholder="Search University"  #searchbar>
+                <ul  class="dropdown-list" *ngIf="hideDrop&& filterTitle.length > 0" style="z-index: 10;">       
+                  <li *ngFor="let n of filterTitle"  (click)="onSelectTitle(n.universityId,n.universityName)">
+                    {{ n.universityName }}
+                  </li>
+                 </ul>
+              </div>
+
+              <div class="rounded-div" style="margin-right: 20px;" *ngIf="userName===supportAdmin">
+                <h6 style="margin-top: 5px;">{{ name }}</h6>
+              </div>
+
+                <div class="sort"> <span class="custom-dropdown">
+                  <label class="control-label heading_sm" >RFS Type</label>
+                  <select style="width: 100px" [(ngModel)]="rfsTypeFilter">
+                    <option value="">Select All</option>
+                    <option value="Linked">Linked</option>
+                    <option value="Manual">Manual</option>
+                    <option value="CrossRef">CrossRef</option>
+                  </select>
+                  </span> </div>
+              
+              <div class="sort"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">Status</label>
+                <select style="width: 100px" [(ngModel)]="status">
+                  <option value="">Select All</option>
+                  <option *ngFor="let item of userStatusFilter" [value]="item.value">{{item.value}}</option>
+                </select>
+                </span> </div>      
+                <input type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" (click)="filter()" value="Filter"> 
+                <input style="margin-left: 5px;" type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new"  value="Clear" (click)="clearFilter()"> 
+              </div>
+          </div>
+              
+          <div class="sort" style="padding-top: 4px;margin-right: unset;padding-left: 15px;padding-right: 15px;">
+            <h6   class="tweet" style="padding-top: 2px;text-align: end;font-size: 13px;"> Showing  {{startrow+1 }} to {{ endrow}} of {{this.collectionSize}} records</h6>
+           </div>
+              
+
+              <div class="result col-lg-12">
+                <div class="content-wrapper-white" style="overflow: auto;margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+                 <div class="scrollClass">
+                  <table id="example" class="table table-bordered table-responsive" style="width:100%" >
+                    <thead style="background: #0151be;color: #fff;">
+                      <tr>
+                          <th scope="col" class="name">S.NO</th>
+                          <th style="width: 20%;" scope="col" class="name">Author Details</th>
+                          <th style="width: 45%" scope="col" class="name">Publication Details</th>
+                          <th scope="col" class="name" (click)="sortdate('createdDate')">CreatedDate<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'createdDate' ? 'createdDate' : 'undefined')"></span></th>
+                          <th style="width: 10%;" scope="col" class="name" (click)="sort('rfsType')">RFS Type<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'rfsType' ? 'rfsType' : 'undefined')"></span></th>
+                          <th scope="col" class="name" (click)="sort('status')">Status<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'status' ? 'status' : 'undefined')"></span></th>
+                          <th scope="col" class="name" class="sticky-column-right bg-light" style="background-color: #0151be !important;color: #fff !important;">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of dataList | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i=index">
+                            <td>{{ i + 1 + (page - 1) * pageSize }}</td>
+                            <td>
+                              <p><span style="font-weight: 700;">Name: </span>{{item.userFullName}}</p>
+                              <p><span style="font-weight: 700;">University: </span>{{item.universityShortName}}</p>
+                              <p><span style="font-weight: 700;">Location: </span>{{item.locationName}}</p>
+                              <p><span style="font-weight: 700;">Institute: </span>{{item.instituteName}}</p>
+                              <p><span style="font-weight: 700;">Department: </span>{{item.departmentName}}</p>
+                            </td>
+                            <td>
+                              <p><span style="font-weight: 700;">Source Title: </span>{{item.publicationTitle}}</p>
+                              <p><span style="font-weight: 700;">Source Name: </span>{{item.publicationSourceName}}</p>
+                              <p><span style="font-weight: 700;">DOI: </span>{{item.doi}}</p>
+                              <a class="fa fa-file-pdf-o" style="color: red;" *ngIf="item.rfsType!='Linked'"  (click)="testNew(item.pdfFileLocation)"></a>
+                            </td>
+                            <td>{{item.createdDate | date:'dd/MM/yyyy'}}</td>
+                            <td>{{item.rfsType | uppercase}}</td>
+                            <td>{{item.status}}</td>
+                            <td class="sticky-column-right bg-light"><button type="button" class="btn-solid-blue" (click)="evaluate(item.rfsPublicationQueueId,item.rfsType,item.publicationId)">Evaluation</button></td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                   </div>
+                </div>
+               <div>
+                <div style="width: 30%;margin-left: 40%;">
+                <ngb-pagination style="float: right;" [maxSize]="3" [pageSize] = "pageSize" (pageChange)="onPageChange($event)" [collectionSize]="collectionSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+                </div>
+              </div>
+               <br>
+               <br>
+                </div>
+                <br>
+      </div>
+    </div>
+      
+  </div>
+      

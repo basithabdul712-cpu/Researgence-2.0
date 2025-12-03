@@ -1,0 +1,460 @@
+
+
+.dropdown-list {
+  overflow: scroll;
+  margin-right: 80%;
+  max-width: 880px;
+  width: 30%;
+  margin-left: 250px;
+ font-size: 16px;
+ max-height: 150px;
+}
+.forms-control:focus{
+  border-color: 1px solid black;
+  outline: 0;
+  box-shadow: none;
+}
+.menu-closeds {
+  margin-left: 0px;
+  margin-left: -240px;
+  // width: 86% !important;
+}
+
+
+// .menu-open {
+//   padding-left: 5%;
+// }
+
+// .menu-closed {
+//   padding-left: 12%;
+// }
+
+
+.bluebar_collapse h2 {
+  font-size: 20px;
+  margin-top: 8px;
+  // margin-left: -74px;
+}
+
+  .forms-control:focus{
+    border-color: 1px solid black;
+    outline: 0;
+    box-shadow: none;
+  }
+  .dropdown-list li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+  .subMenus {
+    margin-top: 7%;
+}
+label.adminClient {
+  border: solid 1px #0d6efd;
+  margin-left: 20%;
+  width: 20%;
+  text-align: center;
+  font-size: 17px;
+  background: #0d6efd;
+  color: white;
+  height: 40px;
+  border-radius: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+label.adminClient:hover{
+  background: linear-gradient(45deg, black, transparent);
+  border: solid 1px black;
+}
+
+.name{
+  color: white;
+  border-right: solid 1px black;
+}
+
+
+.btn-green{
+margin-right: 40px;
+background: #c2cf1d;
+color: #000000;
+border: none;
+padding: 6px 10px;
+margin-left: 7px;
+}
+.btn-green:hover{
+background-color: #000000;
+color: white;
+}
+
+.box{
+  border-right: solid 1px black;
+}
+
+.message {
+  border-radius: 50px;
+  margin: 0 15px 20px;
+  padding: 10px 20px;
+  position: relative;
+  font-size: 20px;
+}
+.message.to {
+  background-color: 
+#2095FE;
+  color: 
+#fff;
+  margin-left: 100px;
+  text-align: right;
+}
+.message.from {
+  background-color: 
+#E5E4E9;
+  color: 
+#363636;
+  margin-right: 100px;
+}
+.message.to + .message.to,
+.message.from + .message.from {
+  margin-top: -10px;
+}
+.rounded-div {  
+  margin-left: 74%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  width: 21%
+}
+
+.select-selected{
+  position: absolute;
+    background-color: #005bb3;
+    color: white;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+  }
+  
+  .line-select {
+    background: none;
+    border: none;
+    border-bottom: #ccc 2px solid;
+    width: 350px;
+    color: #000000;
+    }
+
+    .alignDrop{
+      height: 150px;
+      overflow: scroll;
+      width: 90%;
+      background: white;
+    }
+    .alignDrop li:hover{
+    background-color: #005bb3;
+    color: white; 
+    cursor: pointer;
+    }
+
+//dropdown database
+    .drop-toggle{
+      background-color: #fff;
+    
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      cursor: hand;
+      //border: 1px solid black;
+      width: 233px;
+      text-align: left;
+      border-bottom: #ccc 2px solid; 
+      width: 100%; 
+      
+
+
+
+  }
+
+  .drop-show {
+      padding: 4px;
+      width: 222px;
+      background-color: #FFF;
+      border: 1px solid #BABABA;
+      position: absolute;
+      z-index: 100;
+      -webkit-box-shadow: 0 6px 10px rgba(0,0,0,.15);
+      -moz-box-shadow: 0 6px 10px rgba(0,0,0,.15);
+      box-shadow: 0 6px 10px rgba(0,0,0,.15);
+      margin-left: 1px;
+  }
+  .drop-show label{
+      display:block;
+      font-size:15px;
+      cursor: pointer;
+  }
+  .drop-show label option{
+    vertical-align: top;
+    position: relative;
+    margin-right: 10px;
+    top: 0px;
+    left: 10px;
+   
+  }
+  .content-wrapper{
+background: var(--background-white) repeat top center;
+background-size: cover;
+background-attachment: fixed;
+}
+  .drop-show label span{
+      display:inline-block;
+  }
+  .drop-show input span label option:hover{
+    background-color:rgb(15, 47, 194);
+  }
+.dbname
+{
+padding-left: 20px;
+} 
+
+.checkbox-label {
+display: block;
+padding: 5px;
+}
+
+.dbname {
+font-weight: bold;
+font-size: 13px;
+}
+
+.size{
+background-color: #004096;
+color: white;
+font-size: 15px;
+}
+body {
+font-family: 'Red Hat Display', sans-serif;
+
+font-size: 14px;
+color: #000;
+background-color: #ffffff;
+letter-spacing: 0.4px;
+line-height: 1.3em;
+}
+
+//yearpicker
+::ng-deep .bs-datepicker-body {
+background-color: #f0f0f0;
+// width: 200px;
+height: 115px;
+padding: 10px;
+border-radius: 5px;
+min-width: 215px;
+}
+
+::ng-deep .bs-datepicker-body :hover {
+cursor: pointer;
+}
+
+::ng-deep td.ng-star-inserted {
+
+padding-left: 10px;
+}
+::ng-deep bs-datepicker-navigation-view {
+padding-left: 27px;
+}
+
+// ::ng-deep span {
+// font-size:15px;
+// }
+
+.line-select {
+background: none;
+border: none;
+border-bottom: #ccc 2px solid;
+width: 181px;
+color: #000000;
+}
+.flex-column{
+display: flex;
+    justify-content: space-between;
+}
+.btnAddRow {
+background: #0051bf;
+color: #fff;
+height: 21px;
+width: 21px;
+border-radius: 50%;
+padding: 3px;
+position: absolute;
+margin: 0 auto;
+left: 0;
+right: 0;
+bottom: 0;
+}
+.btnAddRow span.left{
+display: block;
+width: 200px;
+height: 1px;
+background: #ccc;
+position: absolute;
+margin-left: -220px;
+margin-top: -10px;
+}
+.btnAddRow span.right{
+display: block;
+width: 200px;
+height: 1px;
+background: #ccc;
+position: absolute;
+margin-left: 30px;
+margin-top: -10px;
+}
+.btnAddRow:hover{
+cursor: pointer;
+color: #000;
+background: #d9dd0b;
+}
+.btn-default, .form-select{
+background: #f5f5f5;
+color: #000;
+font-family: 'Red Hat Display';
+font-weight: normal;
+font-size: 14px;
+border: 1px solid transparent;
+padding: 10px 16px;
+appearance: none;
+-webkit-appearance: none;
+-moz-appearance: none;
+}
+.btn-default:hover, .form-select:hover {
+background-color: #fff;
+cursor: pointer;
+border:1px solid #000;
+color: #000;
+}
+.form-select option{
+background: #fff;
+border: none;
+font-size: 14px;
+padding: 15px !important;
+display: block;
+}
+.btn-default span{
+font-weight: normal;
+}
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+width: 100%;
+}
+
+.btn-adv-search:hover{
+cursor: pointer;
+color: #0051bf;
+font-weight: bold;
+}
+
+.form-text, .form-select {
+border: none;
+border: #ccc 1px solid;
+width: 100%;
+padding: 10px 5px;
+border-radius: 6px;
+}
+input, .form-control {
+-webkit-box-shadow: none;
+box-shadow: none;
+}
+a:hover, button:hover, input:hover, li:hover {
+transition: 0.3s;
+}
+.time-drop {
+width: 57%;
+float: left;
+}
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+width: 100%;
+padding-right: 0px;
+padding-left: 8px;
+margin-right: auto;
+margin-left: auto;
+}
+.horizontal-line {
+border: none; /* Removes default border */
+border-top: 2px solid #051c85; /* Sets the top border to create the line */
+margin: 10px 0; /* Adjust margin as needed */
+}
+input[type=text] {
+width: 230px;
+height: 39px;
+font-size: 18px;
+margin: 5px 0 0 0;
+padding: 0 0 0 5px;
+border: 1px solid #555;
+border-radius: 3px;
+background-color: #f5f5f5;
+}
+.checkbox input[type="checkbox"], .checkbox input[type="radio"] {
+opacity: 0;
+z-index: 1;
+}
+.checkbox input[type="checkbox"]:checked + label::after, .checkbox input[type="radio"]:checked + label::after {
+font-family: "FontAwesome";
+content: "\f00c";
+}
+.checkbox label::after {
+display: inline-block;
+position: absolute;
+width: 16px;
+height: 16px;
+left: 0;
+top: 0;
+margin-left: -20px;
+padding-left: 3px;
+padding-top: 1px;
+font-size: 14px;
+color: #0051bf;
+}
+.checkbox label::before {
+content: "" !important;
+display: inline-block;
+position: absolute;
+width: 20px;
+height: 20px;
+left: 0;
+margin-left: -20px;
+border: 1px solid #cccccc;
+border-radius: 3px;
+background-color: #fff;
+-webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+-o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.drop-show label:hover{
+  background: #0051bf;
+  color: white;
+}
+
+.bootstrap-select.btn-group.show-tick .dropdown-menu li.selected a span.check-mark {
+  position: absolute;
+  display: inline-block;
+  right: 15px;
+  margin-top: 5px;
+}
+
+.glyphicon {
+  position: relative;
+  top: 1px;
+  float: right;
+  right: 10px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-ok:before {
+  content: "\e013";
+}

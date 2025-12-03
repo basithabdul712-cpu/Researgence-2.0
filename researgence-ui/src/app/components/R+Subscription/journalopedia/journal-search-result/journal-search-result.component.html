@@ -1,0 +1,158 @@
+<div class="loader-wrapper" [class.loderhide]="enablePic" *ngIf="!enablePic" >
+    <div class="loader bg-white">
+      <div class="whirly-loader"> </div>
+      <br>
+      <br>
+         <p>Please Wait..Page is loading!</p>
+    </div>
+  </div>
+<body class="innerpage">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="header">
+                    <div class="logo"><img src="../../../../../assets/images/journalopedia/logo-white.png" alt="journalopedia logo" class="image"></div>
+                    <a routerLink="{{homeURL}}" target="_self" class="researgence_btn" style="text-decoration: none;"><img
+                            src="../../../../../assets/images/journalopedia/researgence-logo.png" alt="">
+                        <p>Back to<br>
+                            Researgence</p>
+                    </a>
+                    <div class="design">
+                        <div class="page-image"><img src="../../../../../assets/images/journalopedia/image2.png" alt="" class="image"></div>
+                    </div>
+                </div>
+                <div class="nav"> <a class="button" id="back_btn" style="text-decoration: none;color: black;" (click)="onClickBack()">Back</a> <a class="button" id="fav_btn">Favourite</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="profile"> <img src="../../../../../assets/images/journalopedia/profile-image.jpg" alt="">
+                            <p class="profile_name">Welcome, {{Name}} !</p>
+                        </div>
+                        <div class="content-wrapper">
+                            <div class="page-title">
+                                <h5>Search Result</h5>
+                            </div>
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="sort_dropdown"><span>Sort By</span>
+                                            <div style="width:200px;">
+                                                <select style="color: black;" [(ngModel)]="ascendValue" (change)="changesOrder(ascendValue)">
+                                                    <option *ngFor="let order of orderSort">
+                                                      {{order}}
+                                                    </option>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                        <div class="sort_dropdown"><span>Paginate</span>
+                                            <div style="width:200px;">
+                                                <select style="color: black;" [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                                                    <option *ngFor="let dropcount of pageSizecount" [value]="dropcount">{{dropcount}}</option>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                        <div class="sort_dropdown"><span style="font-weight: 600;">Showing {{ startrow + 1 }} to {{endrow}} of {{this.collapsablesize}} records</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="result" *ngFor="let item of filteredList" >
+                                            <h6>{{item.rowNumber}}</h6>
+                                            <div class="content">
+                                                <div class="row">
+                                                    <div class="detail col-md-9">
+                                                        <a class="title" data-toggle="modal"
+                                                            data-target="#exampleModalCenter" (click)="toDetailView(item.rowNumber)">{{item.publicationSourceName}}</a>
+                                                        <p class="font-italic">ISSN: {{item.issn}}; {{item.eissn}}</p>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <ul class="dates">
+                                                                    <li>Submission to Acceptance <span>{{item.subnToAcc}}</span>
+                                                                    </li>
+                                                                    <li>Rate of Acceptance <span>{{item.costPublishing}}</span></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <ul class="dates">
+                                                                    <li>Acceptance to Publishing<span>{{item.accToPublish}}</span>
+                                                                    </li>
+                                                                    <li>Peer review <span>{{item.peerReviewType}}</span></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-12 databases">
+                                                                <h6>Databases:</h6>
+                                                                <p *ngFor="let d of item.journalDBMapping" >{{d}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3" style="border-left: 1px solid #c7c7c7;">
+
+                                                        <div [ngClass]="'score' + (dataList.snip==='-' ? ' inactive' : '')">SNIP
+                                                            <span class="value" *ngIf="item.snip !==null">{{item.snip}}</span></div>
+                                                        <div [ngClass]="'score' + (dataList.imf==='-' ? ' inactive' : '')">Impact Factor
+                                                            <span class="value" *ngIf="item.imf !==null">{{item.imf}}</span></div>
+                                                        <div [ngClass]="'score' + (dataList.sjr==='-' ? ' inactive' : '')">SJR
+                                                            <span class="value" *ngIf="item.sjr !==null">{{item.sjr}}</span>
+                                                        </div>
+                                                        <div [ngClass]="'score' + (dataList.cs==='-' ? ' inactive' : '')">Cite Score
+                                                            <span class="value" *ngIf="item.cs !==null">{{item.cs}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="detail col-lg-12"
+                                                        style="border-top: 1px solid #c7c7c7; padding-top: 10px; margin-top: 10px;">
+                                                        <p class="font-weight-bold mb-0">Aim &amp; Scope:</p>
+                                                        <p class="mb-0">{{item.aimScope}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                    <!-- pagination -->
+                    <div class="paginate" style="padding-left: 45%;">
+                        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [maxSize]="3" [collectionSize]="collapsablesize"
+                          (pageChange)="onPageChange($event)">
+                        </ngb-pagination>
+                      </div>
+
+                            </div>
+                        </div>
+                        <div id="dropDownSelect1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer">
+                    <div class="col-lg-6">Copyright © 2024. All rights reserved.</div>
+                    <div class="col-lg-6"></div>
+                </div>
+            </div>
+
+
+        </div>
+        <div id="wrapper">
+            <section>
+
+                <div class="data-container"></div>
+                <div id="pagination-demo2"></div>
+            </section>
+        </div>
+    </div>
+
+</body>

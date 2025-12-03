@@ -1,0 +1,281 @@
+<style>
+  .menu-open {
+    padding-left: 0%;
+  }
+
+  .menu-closed {
+    padding-left: 252px;
+  }
+</style>
+<div class="content-wrapper" [ngClass]="{'menu-closed': isMenuOpen}" style="font-family: 'Red Hat Display', sans-serif;">
+  <div class="container-fluid">
+    <div class="row" style="margin-bottom: -23px;">
+      <div class="alert alert-dismissible alert-info" >
+        <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;" ><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}})
+      </div>
+    </div>
+    <div class="row" >
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+      [ngStyle]="{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 50px;">
+           <div class="container container-90 ">
+          <div class="row" >
+         <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle]="{'margin-top' : stickyEnable ? '' : '20px'}">
+                 <h2>Welcome to Your Researgence Repository</h2>
+                 <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+           <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" href="/newrequest">here</a> to contact our team.</p>
+               </div>
+               <div class="col-lg-5 col-md-5 col-sm-5" style="margin-left: -37px;"><a class="link-green help-btn" href="/newrequest"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a><a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a></div>
+       </div>
+      </div>
+       </div>
+     </div>
+  </div>
+
+  <div class="container container-90" >
+    <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '170px' : '35px'}">
+      <div class="row"*ngIf="!newrequest">
+        <div class="col-lg-12">
+          <div class="inner-page-header gradient-box">
+            <div class="row">
+              <div class="col-lg-6">
+                <h3 class="page_title" style="font-size: 24px;">My-Service Request</h3>
+              </div>
+              <div class="col-lg-6">
+
+                <a  *ngIf="showButton" class="btn-outline float-right ml-20" style="cursor: pointer;" (click)="newRequest()">New Request</a>
+                <a  *ngIf="showButton" class="btn-outline float-right" style="cursor: pointer;" (click)="processAndExportToExcel()" >Download Excel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="publication_list row">
+            <div class="col-lg-12">
+              <div class="filter" *ngIf="!newrequest">
+                <div class="sort"> <span class="custom-dropdown">
+
+                    <div>
+                      <label>
+                        <select class="form-control input-sm ts" [(ngModel)]="pageSize"
+                          (change)="onPageSizeChange($event.target.value)">
+                          <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+                        </select>
+                        <span class="caret"></span>
+                      </label>
+                    </div>
+                  </span> </div>
+                <div class="sort"> <span class="custom-dropdown">
+                    <label class="control-label heading_sm">Type</label>
+                    <select style="width: 100px" [(ngModel)]="filterType" (ngModelChange)="changeType(filterType)">
+                      <option disabled selected value="undefined">Select Type</option>
+                      <option value="">All Type</option>
+                      <option *ngFor="let item of uniqType" [value]="item.serviceTypeId">{{item.serviceTypeName}}
+                      </option>
+                    </select>
+                  </span> </div>
+                <div class="sort"> <span class="custom-dropdown">
+                    <label class="control-label heading_sm">Category</label>
+                    <select style="width: 100px" [(ngModel)]="filterCategory">
+                      <option disabled selected value="undefined">Select Category</option>
+                      <option value="">All Category</option>
+                      <option *ngFor="let item of categoryList" [value]="item.categoryName">{{item.categoryName}}
+                      </option>
+                    </select>
+                  </span> </div>
+                <div class="sort"> <span class="custom-dropdown">
+                    <label class="control-label heading_sm">Priority</label>
+                    <select style="width: 100px" [(ngModel)]="filterPriority">
+                      <option disabled selected value="undefined">Select Priority</option>
+                      <option value="">All Priority</option>
+                      <option *ngFor="let item of priorityList" [value]="item.value">{{item.value}}</option>
+                    </select>
+                  </span> </div>
+                <div class="sort"> <span class="custom-dropdown">
+                    <label class="control-label heading_sm">Status</label>
+                    <select style="width: 100px" [(ngModel)]="filterstatus">
+                      <option disabled selected value="undefined">Select status</option>
+                      <option value="">All Status</option>
+                      <option *ngFor="let item of statusList" [value]="item.value">{{item.value}}</option>
+                    </select>
+                  </span> </div>
+                <input type="button" class="btn-solid-blue float-left" data-toggle="modal" data-target="#add_new"
+                  (click)="filter()" value="Filter">
+              </div>
+            </div>
+            <div class="result col-lg-12" *ngIf="!newrequest">
+              <div class="content-wrapper-white"
+                style="margin-top: 20px;overflow: auto;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+                <table id="example" class="table table-bordered" style="width:100%">
+                  <thead style="    background: #0151be;
+                        color: #fff;">
+                    <tr>
+
+                      <th scope="col" class="name">S.NO</th>
+                      <th style="width: 15%;" scope="col" class="name" (click)="sort('createdOn')" [ngClass]="{
+                          'ascending': currentSortColumn === 'createdOn' && currentSortDirection === 'asc',
+                          'descending': currentSortColumn === 'createdOn' && currentSortDirection === 'desc'
+                        }">CREATED ON<span class="sorting"></span></th>
+                      <th style="width: 15%" scope="col" class="name">CREATED BY</th>
+                      <th scope="col" class="name" (click)="sort('serviceType')" [ngClass]="{
+                          'ascending': currentSortColumn === 'serviceType' && currentSortDirection === 'asc',
+                          'descending': currentSortColumn === 'serviceType' && currentSortDirection === 'desc'
+                        }">TYPE<span class="sorting"></span></th>
+                      <th style="width: 20%" scope="col" class="name" (click)="sort('category')" [ngClass]="{
+                          'ascending': currentSortColumn === 'category' && currentSortDirection === 'asc',
+                          'descending': currentSortColumn === 'category' && currentSortDirection === 'desc'
+                        }">CATEGORY<span class="sorting"></span></th>
+                      <th style="width: 20%" scope="col" class="name">REQUEST DESCRIPTION</th>
+                      <th scope="col" class="name" (click)="sort('priority')" [ngClass]="{
+                            'ascending': currentSortColumn === 'priority' && currentSortDirection === 'asc',
+                            'descending': currentSortColumn === 'priority' && currentSortDirection === 'desc'
+                          }">PRIORITY<span class="sorting"></span></th>
+                      <th scope="col" class="name" (click)="sort('status')" [ngClass]="{
+                            'ascending': currentSortColumn === 'status' && currentSortDirection === 'asc',
+                            'descending': currentSortColumn === 'status' && currentSortDirection === 'desc'
+                          }">STATUS<span class="sorting"></span></th>
+                      <th scope="col" class="name">REMARK</th>
+                      <th style="width: 20%" scope="col" class="name">RESOLVED ON</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let item of serviceList| slice:(page-1)*pageSize:(page-1)*pageSize+pageSize;let i=index">
+                      <td class="td">{{ i + 1 + (page - 1) * pageSize }}</td>
+                      <td class="td">{{item.createdOn}}</td>
+                      <td class="td">{{item.raisedBy}}</td>
+                      <td class="td">{{item.serviceType}}</td>
+                      <td class="td">{{item.category}}</td>
+                      <td class="td">{{item.requestDescription}}</td>
+                      <td class="td">{{item.priority}}</td>
+                      <td class="td">{{item.status}}</td>
+                      <td class="td">{{item.remark}}</td>
+                      <td class="td">{{item.resolvedOn}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <ngb-pagination *ngIf="!enableErrorMsg&&!newrequest" style="float: right;" [maxSize]="3"
+                [pageSize]="pageSize" [collectionSize]="collectionSize" (pageChange)="onPageChange($event)"
+                [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+             <br>
+             <br>
+            </div>
+                     <br>
+            <p *ngIf="enableErrorMsg&&!newrequest" style="color: red;text-align: center;font-weight: 700;">* No records
+              found...</p>
+            <br>
+          </div>
+
+          <div class="row"  *ngIf="newrequest">
+            <div class="col-lg-12">
+              <div class="inner-page-header gradient-box">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h3 class="page_title">New Request</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="newrequest">
+            <div class="col-lg-12">
+              <form class="form" style="font-family: 'Red Hat Display', sans-serif;">
+                <div class="col-lg-12 bg-white" style="border: 1px solid #ccc; margin-bottom: 50px;">
+                  
+                  <table class="form-table mining-table" style="margin-top:20px;">
+                    <tbody><tr>
+                      <td class="column-label"><label style="    padding: 20px;">Type</label></td>
+                      <td><select class="form-select" name="serviceTypeId" placeholder=" Select Type" [(ngModel)]="serviceTypeId"
+                        (ngModelChange)="changeType(serviceTypeId)">
+                        <option class="size" disabled selected value="undefined">Select Type</option>
+                        <option class="size" *ngFor="let item of uniqType" [value]="item.serviceTypeId">
+                          {{item.serviceTypeName}}</option>
+
+                      </select>
+                      </td>
+
+                  <td class="column-label2"><label>Category</label></td>
+                  <td>
+                  <select class="form-select" name="categoryId" [(ngModel)]="categoryId">
+                    <option class="size" disabled selected value="undefined">Select Category</option>
+                    <option class="size" *ngFor="let item of categoryList" [value]="item.categoryId">
+                      {{item.categoryName}}</option>
+                  </select>
+                      </td>
+                      <td class="column-label2"><label>Priority</label>
+                        <td >
+                          <select class="form-select" style="width: 100%;" name="priorityId"
+                            [(ngModel)]="priorityId">
+                            <option class="size" disabled selected value="undefined">Select Priority</option>
+                            <option class="size" *ngFor="let item of priorityList" [value]="item.id">{{item.value}}
+                            </option>
+                          </select>                  
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td  class="column-label"><label style="padding: 20px;">REQUEST</label></td>
+                      <td >
+                        <!-- <input class="form-text"  name="requestDescription"
+                          [(ngModel)]="requestDescription"> -->
+                          <textarea rows="10" style="width:150%;height: 50px;" class="textArea" [(ngModel)]="requestDescription"></textarea>
+                      </td>
+                    </tr>
+                   
+                      <tr>
+                        <label style="margin-left: 10px;">CONTACT-DETAILS </label>
+                      </tr>
+                       
+                    <tr>
+                      <td  class="column-label"><label style="    padding: 20px;">MOBILE <span style="color: red;">*</span></label>
+                      </td>
+                      <td >
+                        <input  class="form-text" name="contactPhoneNo"
+                          [(ngModel)]="contactPhoneNo" maxlength="10" required>
+
+                        <div *ngIf="!contactPhoneNo && submitted" style="color: red;">Mobile number is required.
+                        </div>
+                      </td>
+                      <td class="column-label2"><label>EMAIL <span style="color: red;">*</span></label>
+                      </td>
+                      <td ><input  class="form-text" name="contactEmailId"
+                          [(ngModel)]="contactEmailId" required>
+                        <div *ngIf="!contactEmailId && submitted" style="color: red;">Email is required.</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="1"></td>
+                      <td colspan="1"></td>
+                      <td colspan="3">
+                        <button 
+                          class="btn-solid-blue float-right ml-20" (click)="sendRequest()">SUBMIT</button>
+                        <button 
+                          class="btn-solid-blue float-right " (click)="resetRequest()">RESET</button>                          
+                        
+                      </td>
+                      <td colspan="4">                      <button
+                          class="btn-solid-blue" (click)="newRequest1()">CANCEL</button></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </form>
+            </div>
+          <br>
+          <br>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

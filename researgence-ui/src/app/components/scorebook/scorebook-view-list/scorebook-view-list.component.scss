@@ -1,0 +1,45 @@
+*{
+  border-radius: 4px;
+}
+p {
+	font-size: 14px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.tab-content{
+    display: none;
+}
+  a:hover {
+    text-decoration: none;
+    color: #dbdf08;
+}
+  // .content-wrapper.bluebar_collapse .head-video-cover {
+  //   margin-right: -56%;
+  // }
+  .container.profile_expand {
+    margin-right: 16%;
+}
+.score_detail {
+    line-height: 18px;
+        color: #000;
+  font-size: 19px; 
+    margin-top: 20px;
+}
+
+.btn-outline {
+  border-radius: 18px;
+  padding: 6px;
+}
+.content-wrapper{
+  padding-left: 250px;
+  padding-top: 8px;
+}
+li.disabled {
+  opacity: 0.5; /* or any other styles indicating the disabled state */
+  pointer-events: none;
+}
+ul li a{
+  cursor: pointer;
+}

@@ -1,0 +1,38 @@
+export class DfsPublicationNew{
+publicationId: Number;
+doi: string;
+title: string;
+levelId: string;
+level: string;
+volume: string;
+issno: string;
+bPage: string;
+ePage: string;
+acceptedDate: string;
+onlineDate: string;
+printDate: string;
+publishedDate: string;
+CrossrefDate:string;
+ConferenceName: string;
+webLink: string;
+publisherId: Number;
+publisherName: string;
+publicationSourceId: Number;
+publicationSourceName: string;
+articleTypeId: Number;
+articleTypeName:string;
+pissn: string;
+eissn: string;
+pisbn: string;
+eisbn: string;
+abstract: string;
+year:string;
+authors: string;
+authorAddress: string;
+technologyArea: string;
+isPubSrcCorrect: Number;
+pubSrcRemark: string;
+pubSrcArticleTypeId: string;
+pubSrcArticleTypeName: string;
+SrcUniversityId:string;
+}

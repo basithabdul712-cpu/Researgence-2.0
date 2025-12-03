@@ -1,0 +1,292 @@
+<body class="innerpage">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="header">
+                    <div class="logo"><img src="../../../../../assets/images/journalopedia/logo-white.png" alt="journalopedia logo" class="image"></div>
+                    <a routerLink="{{homeURL}}" target="_self" class="researgence_btn" style="text-decoration: none;"><img
+                            src="../../../../../assets/images/journalopedia/researgence-logo.png" alt="">
+                        <p>Back to<br>
+                            Researgence</p>
+                    </a>
+                    <div class="design">
+                        <div class="page-image"><img src="../../../../../assets/images/journalopedia/image1.png" alt="" class="image"></div>
+                    </div>
+                </div>
+                <div class="nav"> <a class="button" id="back_btn" style="color: black;text-decoration: none;" routerLink="{{backURL}}">Back</a> <a class="button" id="fav_btn">Favourite</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="profile" style="background: none;"> <img src="../../../../../assets/images/journalopedia/profile-image.jpg" alt="">
+                            <p class="profile_name">Welcome, {{Name}} !</p>
+                        </div>
+                        <div class="content-wrapper">
+                            <div class="page-title">
+                                <h5>Advance Search</h5>
+                            </div>
+                            <div class="content">
+                                <form class="contact100-form validate-form">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="wrap-input100 validate-input " data-validate=""  (mouseleave)="sourceNameOpen = false"> <span class="label-input100">Source Title</span>
+                                                <input class="input100" type="text" name="sourceNameData" placeholder="Enter Source Title " [(ngModel)]="sourceNameData" (keyup)="onKeySource($event,sourceNameData)">
+                                                <ul class="alignDrop1" *ngIf="sourceNameOpen">
+                                                    <li *ngFor="let n of filterJournal"  (click)="onSelectSource(n.name,n.id)">
+                                                       {{ n.name }}
+                                                    </li>
+                                                </ul>
+                                                <span class="focus-input100"></span> </div>
+                                            <div class="wrap-input100 validate-input" data-validate=""> <span
+                                                    class="label-input100">Technology Area</span>
+                                                <input class="input100" type="text" name="technologyArea"
+                                                    placeholder="Enter Technology Area" [(ngModel)]="technologyArea">
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="wrap-input100 input100-select "> <span
+                                                    class="label-input100">Stream</span>
+                                                    <div>
+                                                        <select style="width: 100%;border: none;color: black;background: none;" [(ngModel)]="streamType">
+                                                            <option selected value="undefined">Select Streamlist</option>
+                                                            <option style="color: black;" *ngFor="let item of streamList" [value]="item.value">{{item.value}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <span class="focus-input100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="wrap-input100 input100-select"> <span
+                                                    class="label-input100">Access Type</span>
+                                                <div>
+                                                    <select style="width: 100%;border: none;color: black;background: none;" [(ngModel)]="accessType">
+                                                        <option selected value="undefined">Select Accesstype</option>
+                                                        <option style="color: black;" *ngFor="let item of subcripstionList" [value]="item.value">{{item.value}}</option>
+                                                    </select>
+                                                </div>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="row d-flex">
+                                                <div class="col-lg-9" (mouseleave)="showDropDown = false">
+                                                    <div class="wrap-input100 validate-input" data-validate="Message is required"> <span class="label-input100">Database</span>
+                                                        <div class="btn-group bootstrap-select show-tick" style="width: 60%;display: flow;" >
+                                                            <button
+                                                            style=" background-color: #fff; padding: 5px 10px;  width: 146%;border: none;"
+                                                            type="button" class="form-select"(click)="showDropDown=!showDropDown"
+                                                            [(ngModel)]="multidatabase">
+                                                            <span *ngIf="selectDB.length <= 0">Select Multiple Databases</span>
+                                                            <span *ngIf="selectDB.length > 0">{{selectDB.join(', ')}}</span>
+                                                            <!-- <i class="fa fa-angle-down fa-2x"></i> -->
+                                                          </button> 
+                                                         
+                                                    </div>
+                                                    </div>
+                                                     
+                                                    <div style="background-color:  #ffffff;; color: rgb(0, 0, 0);margin-top: 60px;box-sizing: border-box;box-shadow: 0px 2px 5px #aaaaaa;" class="drop-show"
+                                                    [style.display]="showDropDown ? 'block' : 'none'">
+                                                    <label *ngFor="let a of databaseDropDown" style="display: block;" class="nn">
+                                                      <input style="position: unset" type="checkbox" [(ngModel)]="a.checked"
+                                                        (change)="getSelectedValue(a.checked, a.value,a.id)" >
+                                                      <span class="dbname">{{a.value}}</span>
+                                                      <span *ngIf="a.checked"  class="glyphicon glyphicon-ok check-mark"></span>
+                                                      
+                                                    </label>
+                                                  </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="d-flex">
+                                                        <label class="custom-radio">And
+                                                            <input type="radio" id="inlineRadio1" [(ngModel)]="andorType" value="AND" name="radioInline" checked="">
+                                                            <span class="checkmark"></span> </label>
+                                                        <label class="custom-radio">Or
+                                                            <input type="radio" id="inlineRadio2"[(ngModel)]="andorType" value="OR" name="radioInline">
+                                                            <span class="checkmark"></span> </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+
+                                            <label>Quality Score</label>
+                                            <a class="btnAddRow fa fa-plus control-btn" style="top: 4px;left: 12%;" (click)="add()">
+                                                <!-- <span class="left"></span><span
+                                                    class="right"></span> -->
+                                                </a>
+                                            <table class="table-editable">
+                                                <tbody>
+                                                    <tr *ngFor="let f of row; let i = index;">
+
+                                                          <td style="width: 36%;">
+                                                          <select class="form-select" [(ngModel)]="f.qualityscore"
+                                                            [name]="'qualityscore' + f.qualityscore" (change)="checkQualityScore(i,f.qualityscore)" style="width: 60%;">
+                                                            <option disabled selected value="">Select Quality score</option>
+                                                            <option style="color: black;" class="select-selected" class="size" *ngFor="let item of qualityScoreList">
+                                                              {{item.value}}</option>
+                                                          </select>
+                                                        </td>
+                                                 
+                                                        <td  class="column-label3"  ><label>FROM</label></td>
+                                                        <td style="padding-left: 20px;">
+                                                          <input  class="form-text"
+                                                            [name]="'citattionrangefrom' +f.citattionrangefrom" [(ngModel)]="f.citattionrangefrom"
+                                                            placeholder="Citation" type="number" style="color: #000;">
+                                                        </td>
+                                                        <td  class="column-label3"  style="padding-left: 20px;"><label>TO</label></td>
+                                                        <td style="padding-left: 20px;">
+                                                          <input  class="form-text"
+                                                            [name]="'citattionrangeto' +f.citattionrangeto" [(ngModel)]="f.citattionrangeto"
+                                                            placeholder="Citation" type="number" style="color: #000;">
+                                                        </td>
+                                    
+                                                        <td style="padding-left: 20px;">                   
+                                                          <a class="fa fa-trash control-btn" style="font-size: x-large;margin-left: 5%;"
+                                                            (click)="removeRow(i)"></a>
+                                                        </td>            
+                                                      </tr>
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <div class="col-lg-12 mb-4" style="padding-left: 30px;">
+                                            <table class="image" style="margin-top: 30px;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="25%">
+                                                            <div class="checkbox checkbox-inline">
+                                                                <ul>
+                                                                    <li>
+                                                                        <label class="custom-checkbox">SCS Quartile
+                                                                        </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label class="custom-checkbox">Q1
+                                                                            <input style="position: unset" type="checkbox" class="db2_checkbox" id="Q1" value="Q1" [checked]="quartile.includes('Q1')" (change)="updateSelectedValues('scs','Q1', $event.target.checked);individualCheckboxes('All')">
+                                                                            <span class="checkmark"></span> </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label class="custom-checkbox">Q2
+                                                                            <input style="position: unset" type="checkbox" class="db2_checkbox" id="Q2" value="Q2" [checked]="quartile.includes('Q2')" (change)="updateSelectedValues('scs','Q2', $event.target.checked);individualCheckboxes('All')">
+                                                                            <span class="checkmark"></span> </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label class="custom-checkbox">Q3
+                                                                            <input style="position: unset" type="checkbox" class="db2_checkbox" id="Q3" value="Q3" [checked]="quartile.includes('Q3')" (change)="updateSelectedValues('scs','Q3', $event.target.checked);individualCheckboxes('All')">
+                                                                            <span class="checkmark"></span> </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label class="custom-checkbox">Q4
+                                                                            <input style="position: unset" type="checkbox" class="db2_checkbox" id="Q4" value="Q4" [checked]="quartile.includes('Q4')"  (change)="updateSelectedValues('scs','Q4', $event.target.checked);individualCheckboxes('All')">
+                                                                            <span class="checkmark"></span> </label>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                        <td width="25%">
+                                                            <div class="checkbox checkbox-inline">
+                                                                <ul>
+                                                                    <li>
+                                                                        <label class="custom-checkbox">WOS Quartile
+                                                                            </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label class="custom-checkbox">Q1
+                                                                            <input style="position: unset" type="checkbox" class="db2_checkbox" id="Q11" value="Q11" [checked]="wosQuartile.includes('Q1')" (change)="updateSelectedValues('Q1','W', $event.target.checked);individualCheckboxes('All')">
+                                                                            <span class="checkmark"></span> </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label class="custom-checkbox">Q2
+                                                                            <input style="position: unset" type="checkbox" class="db2_checkbox" id="Q21" value="Q21" [checked]="wosQuartile.includes('Q2')" (change)="updateSelectedValues('Q2','W', $event.target.checked);individualCheckboxes('All')">
+                                                                            <span class="checkmark"></span> </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label class="custom-checkbox">Q3
+                                                                            <input style="position: unset" type="checkbox" class="db2_checkbox" id="Q31" value="Q31" [checked]="wosQuartile.includes('Q3')" (change)="updateSelectedValues('Q3','W', $event.target.checked);individualCheckboxes('All')">
+                                                                            <span class="checkmark"></span> </label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <label class="custom-checkbox">Q4
+                                                                            <input style="position: unset" type="checkbox" class="db2_checkbox" id="Q41" value="Q41" [checked]="wosQuartile.includes('Q4')" (change)="updateSelectedValues('Q4','W', $event.target.checked);individualCheckboxes('All')">
+                                                                            <span class="checkmark"></span> </label>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                      
+                                                        <td width="25%">
+                                                            <div class="checkbox checkbox-inline">
+                                                                <label class="custom-checkbox">All
+                                                                    <input style="position: unset" type="checkbox" id="selectAll2" id="all" value="all" [checked]="AllQuartiles.length==1" (change)="userall('All')">
+                                                                    <span class="checkmark"></span> </label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="wrap-input100 validate-input " data-validate=""> <span
+                                                    class="label-input100">ISSN Number</span>
+                                                <input class="input100" type="text" name="issnNumber"
+                                                    placeholder="Enter ISSN Number" [(ngModel)]="issnNumber">
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="wrap-input100 validate-input " data-validate=""> <span
+                                                    class="label-input100" (mouseleave)="enblePublisher = false">Publisher Name</span>
+                                                <input class="input100" type="text" name="pubName"
+                                                    placeholder="Enter Publisher Name" [(ngModel)]="pubName" (keyup)="changePub(pubName)">
+                                                    <ul class="alignDrop1" *ngIf="enblePublisher">
+                                                        <li *ngFor="let n of filterPublisher"  (click)="onSelectPub(n.name,n.id)">
+                                                           {{ n.name }}
+                                                        </li>
+                                                    </ul>
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="wrap-input100 validate-input " data-validate=""> <span
+                                                    class="label-input100">Publisher Level</span>
+                                                <input class="input100" type="text" name="pubLevel"
+                                                    placeholder="Enter Publisher Level" [(ngModel)]="pubLevel">
+                                                <span class="focus-input100"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <a class="btn btn-outline-primary text-center mr-3">Clear</a>
+                                            <a class="btn btn-outline-primary btn-red text-center" style="background-color: #d9204d;color: #fff !important;;" (click)="onSearch()">Search</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="dropDownSelect1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer">
+                    <div class="col-lg-6">Copyright © 2024. All rights reserved.</div>
+                    <div class="col-lg-6"></div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</body>

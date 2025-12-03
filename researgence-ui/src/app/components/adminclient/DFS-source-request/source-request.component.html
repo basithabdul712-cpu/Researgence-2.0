@@ -1,0 +1,639 @@
+
+<style>
+  .sidemenu-open {
+  padding-left: 0%;
+}
+
+.menu-closed {
+  padding-left: 250px;
+}
+</style>
+
+<div class="content-wrapper" [ngClass]="{'sidemenu-open': !isMenuOpen, 'menu-closed': isMenuOpen}" style=" font-family: 'Red Hat Display', sans-serif;">
+  <div class="container-fluid">
+    <div class="row" style="margin-bottom: -23px;">
+      <div class="alert alert-dismissible alert-info" >
+        <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;" ><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+    <div class="row">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'}" #blueheader style="padding-left: 50px;">
+      <div class="container container-90 ">
+        <div class="row">
+         <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '20px'}" style="padding-left: 0px;margin-left: -20px;">
+                 <h2>Welcome to Your Researgence Repository</h2>
+                 <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+                 <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" >here</a> to contact our team.</p>
+              </div>
+      <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+        <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+      </div>
+       </div>
+      </div>
+       </div>
+     </div>
+  </div>
+
+<div class="container container-90" *ngIf="!historyEnable" >
+  <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '150px' : '30px'}">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-page-header gradient-box">
+          <div class="row">
+            <div class="col-lg-6">
+              <h3 class="page_title" style="font-size: 24px;">DFS Source Requests</h3>
+            </div>
+            <div class="col-lg-6">
+              <a class="btn-outline float-right ml-20"  *ngIf="!historyEnable" (click)="checkHistory()"> <a class="fa fa-history control-btn"></a>History</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="publication_list row">
+          <div class="col-lg-12">
+            <div class="filter">
+              <!-- <div class="sort"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">SHOW</label>
+                <select style="width: 50px" >
+                  <option  disabled selected value="undefined">20</option>
+                </select>
+                </span> </div> -->
+              <div class="sort"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">Article Type</label>
+                <select style="width: 90px" [(ngModel)]="filterArticleName">
+                  <option  disabled selected value="undefined">Select Article Type</option>
+                  <option value="">All Article Type</option>
+                  <option  *ngFor="let item of filterArticle" >{{item.value}}</option>
+                </select>
+                </span> </div>
+              <div class="sort"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">Type</label>
+                <select style="width: 90px" [(ngModel)]="filterTypeName">
+                  <option  disabled selected value="undefined">Select Type</option>
+                  <option value="">All Article Type</option>
+                  <option  value="Insert">Insert</option>
+                  <option  value="Edit">Edit</option>
+                </select>
+                </span> </div>
+              <div class="sort"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">Status</label>
+                <select style="width: 90px" [(ngModel)]="filterStatus" (change)="changeFilterStatus(filterStatus)">       
+                      <option disabled selected value="undefined">Select Status</option>
+                      <option value="">All Status</option>
+                      <option  *ngFor="let item of statusList" >{{item.value}}</option>
+                </select>
+                </span> </div>
+                <div class="sort">
+                  <span class="custom-dropdown">
+                    <label class="control-label heading_sm" style="text-transform: unset;">Show</label>
+                    <select style="width:60px" [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                      <option *ngFor="let size of pageSizes" [value]="size" [selected]="size == pageSize">{{size}}</option>
+                    </select>
+                  </span>
+                </div>
+              <input type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" value="Filter" style="margin-left: 10px;" (click)="filterAll()">
+              <input type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" value="Add New" (click)="addNewSource()">
+            </div>
+          </div>
+          <div class="result col-lg-12">
+            <div class="content-wrapper-white" style="overflow: auto;margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+              <table id="example" class="table table-bordered" style="width:100%">
+                <thead style="    background: #0151be;
+                color: #fff;">
+                  <tr>
+                    <th>S.N0</th>
+                    <th>Type</th>
+                    <th>Request Id</th>
+                    <th>Article Type</th>
+                    <!-- <th>Publication Source Code</th> -->
+                    <th>Publication Source</th>
+                    <th>Remarks</th>
+                    <th>Status</th>
+                    <th>Created By</th>
+                    <th>Created Date</th>
+                    <th>Verified By</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of sourceList | paginate :{itemsPerPage:pageSize, currentPage:page};let i=index">
+                    <td class="td">{{i+1}}</td>
+                    <td class="td">{{item.actionType}}</td>
+                    <td class="td">{{item.dfsPubSrcQueueId}}</td>
+                    <td class="td">{{item.pubSrcArticleTypeName}}</td>
+                    <!-- <td class="td">{{item.publicationSourceId}}</td> -->
+                    <!-- <td class="td">{{item.publicationSource}}</td> -->
+                    <td class="td">
+                      <tr><span style="font-weight: 700;">Source Name</span>: {{item.publicationSource}}</tr>
+                      <tr><span style="font-weight: 700;">Publisher</span>: {{item.publisherName}}</tr>
+                      <tr><span style="font-weight: 700;">ISSN</span>:{{item.issn}} <span style="font-weight: 700;">EISSN</span>:{{item.eissn}}</tr>
+                      <tr><span style="font-weight: 700;">ISBN</span>:{{item.isbn}} <span style="font-weight: 700;">EISBN</span>:{{item.eisbn}}</tr>
+                    </td>
+                    <td class="td">{{item.remark}}</td>
+                    <td class="td">{{item.workflowstatusName}}</td>
+                    <td class="td">{{item.createdBy}}</td>
+                    <td class="td">{{item.createdDate| date:'dd/MM/yyyy'}}</td>
+                    <td class="td">{{item.verifiedBy}}</td>
+                    <td class="td" *ngIf="userName==12"><input type="button" style="width: 100%;" class="btn-solid-blue float-right" value="Evaluation" (click)="evaluateSourceRequest(item.dfsPubSrcQueueId,item.publicationSourceId)"></td>
+                    <td class="td" *ngIf="userName==11">
+                      <a class="fa fa-edit control-btn" (click)="editRequest(item.dfsPubSrcQueueId,item.publicationSourceId)"></a>
+                      <a class="fa fa-trash control-btn" style="margin-left: 10px;" (click)="deleteRequest(item.dfsPubSrcQueueId)"></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+                  </div>
+                </div>
+                <div class="col-lg-6" style="float:right;margin-left:40%">
+                  <pagination-controls responsive="true" [maxSize]="5" (pageChange)="page =$event"></pagination-controls>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       </div>
+
+       <ng-template #demoModal let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title"></h4>
+          <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body" style="width: 500px;padding-left: 10px;">
+          <form>
+            <div class="form-group">
+             <div class="input-group">
+              <label>Remark</label>                     
+                <input style="border-radius: 8px;height: 30px;margin-left: 75px;width: 70%;" name="rejectRemark" class="form-control" placeholder="Enter the remark" type="text" [(ngModel)]="rejectRemark">        
+              </div>
+              <br>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" style="height: 55px;">
+          <button style="margin-right: 20px;" type="button" class="but" (click)="processRejectData()">SUBMIT</button>
+          <button style="margin-right: 20px;" type="button" class="but" (click)="cancelReq()">CANCEL</button>
+        </div>
+        </ng-template>
+
+       <div class="container container-90" *ngIf="historyEnable" >
+        <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '150px' : '30px'}">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="inner-page-header gradient-box">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <h3 class="page_title" style="font-size: 24px;">DFS Source Requests - History</h3>
+                  </div>
+                  <div class="col-lg-6">
+                    <a class="btn-outline float-right ml-20" (click)="toSourceList()">Source Request</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="publication_list row">
+                <div class="col-lg-12">
+                  <div class="filter">
+                    <!-- <div class="sort"> <span class="custom-dropdown">
+                      <label class="control-label heading_sm">SHOW</label>
+                      <select style="width: 50px" >
+                        <option  disabled selected value="undefined">20</option>
+                      </select>
+                      </span> </div> -->
+                    <div class="sort"> <span class="custom-dropdown">
+                      <label class="control-label heading_sm">Article Type</label>
+                      <select style="width: 90px" [(ngModel)]="filterArticleNameHis">
+                        <option  disabled selected value="undefined">Select Article Type</option>
+                        <option value="">All Article Type</option>
+                        <option  *ngFor="let item of filterArticle" >{{item.value}}</option>
+                      </select>
+                      </span> </div>
+                    <div class="sort"> <span class="custom-dropdown">
+                      <label class="control-label heading_sm">Type</label>
+                      <select style="width: 90px" [(ngModel)]="filterTypeNameHis">
+                        <option  disabled selected value="undefined">Select Type</option>
+                        <option value="">All Article Type</option>
+                        <option  value="Insert">Insert</option>
+                        <option  value="Edit">Edit</option>
+                      </select>
+                      </span> </div>
+                    <div class="sort"> <span class="custom-dropdown">
+                      <label class="control-label heading_sm">Status</label>
+                      <select style="width: 90px" [(ngModel)]="filterStatusHis" (change)="changeFilterStatusHis(filterStatusHis)">       
+                        <option disabled selected value="undefined">Select Status</option>
+                        <option value="">All Status</option>
+                        <option  *ngFor="let item of statusList" >{{item.value}}</option>
+                  </select>
+                      </span> </div>
+                      <div class="sort">
+                        <span class="custom-dropdown">
+                          <label class="control-label heading_sm" style="text-transform: unset;">Show</label>
+                          <select style="width:60px" [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                            <option *ngFor="let size of pageSizes" [value]="size" [selected]="size == pageSize">{{size}}</option>
+                          </select>
+                        </span>
+                      </div>
+                    <input type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" value="Filter" style="margin-left: 10px;">
+                    <input *ngIf="userName==12"  type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" value="Add New" (click)="addNewSource()">
+                  </div>
+                </div>
+                <div class="result col-lg-12">
+                  <div class="content-wrapper-white" style="overflow: auto;margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+                    <table id="example" class="table table-bordered" style="width:100%">
+                      <thead style="    background: #0151be;
+                      color: #fff;">
+                        <tr>
+                          <th>S.N0</th>
+                          <th>Type</th>
+                          <th>Request Id</th>
+                          <th>Article Type</th>
+                          <!-- <th>Publication Source Code</th> -->
+                          <th>Publication Source</th>
+                          <th>Remarks</th>
+                          <th>Status</th>
+                          <th>Created By</th>
+                          <th>Created Date</th>
+                          <th>Verified By</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of sourceListHis | paginate :{itemsPerPage:pageSize, currentPage:page};let i=index">
+                          <td class="td">{{i+1}}</td>
+                          <td class="td">{{item.actionType}}</td>
+                          <td class="td">{{item.dfsPubSrcQueueId}}</td>
+                          <td class="td">{{item.pubSrcArticleTypeName}}</td>
+                          <!-- <td class="td">{{item.publicationSourceId}}</td> -->
+                          <td class="td">
+                            <tr>Source Name: {{item.publicationSource}}</tr>
+                            <tr>Publisher: {{item.publisherName}}</tr>
+                            <tr>ISSN:{{item.issn}} EISSN:{{item.eissn}}</tr>
+                            <tr>ISBN:{{item.isbn}} EISBN:{{item.eisbn}}</tr>
+                          </td>
+                          <td class="td">{{item.remark}}</td>
+                          <td class="td">{{item.workflowstatusName}}</td>
+                          <td class="td">{{item.createdBy}}</td>
+                          <td class="td">{{item.createdDate| date:'dd/MM/yyyy'}}</td> 
+                          <td class="td">{{item.verifiedBy}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-lg-6" style="float:right;margin-left:40%">
+                  <pagination-controls responsive="true" [maxSize]="5" (pageChange)="page =$event"></pagination-controls>
+              </div>
+               </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Model for add publication source -->
+  <div class="modal fade modal_special in" style="display: block;opacity: unset !important;" id="add_new_form" tabindex="-1" role="dialog" aria-labelledby="add_new_modal" aria-hidden="true" *ngIf="enableBox">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width: 1100px;height: 550px;left: -290px;top: 50px; overflow-y: scroll;" >
+        <div class="modal-header" >
+          <p class="modal-title" id="add_new_modal" style="left: -20%;width: 100%;margin-bottom: unset;">Add publication source</p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeAdd()"><span
+              aria-hidden="true">&times;</span> </button>
+        </div>
+        <div class="modal-body">
+          <form id="step-form">
+            <fieldset >
+              <div class="form-card">
+                <div class="form_header">
+                  <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                  <h2 class="fs-title">Enter the publication source details</h2>
+                </div>
+                <div style="display: flex;flex-flow: row;justify-content: space-between;width: 100%;">
+                  <div style="width: 68%;" class="form-group">
+                    <input class="form-control" type="text" placeholder="" name="pubSrcDisp" [(ngModel)]="pubSrcDisp" (keyup)="onKeySourcePubSrc(pubSrcDisp)" autocomplete="off">
+                    <label class="form-control-label" for="Source Title">Source Title</label>
+                    <ul *ngIf="showSourceTitleDis"  class="alignDrop1">
+                      <li *ngFor="let n of filterJournalList"  (click)="onSelectSourcePubSrc(n.displayName,n.name,n.id)">
+                         {{ n.displayName }}
+                      </li>
+                  </ul>
+                  </div>
+                <div style="width: 25%;">
+                  <select style="border: 1px solid #000;color: #000;margin: unset;" class="form-select" name="pubSourceTypeName" [(ngModel)]="pubSourceTypeName">
+                    <option value="undefined" selected disabled>Source Type</option>
+                    <option *ngFor="let item of articleListValues" >{{item.value}}</option>                      
+                  </select>
+                </div> 
+              </div>
+              <div style="margin-top: 10px;display: flex;flex-flow: row;justify-content: space-between;width: 100%;">
+                <div style="width: 50%;" class="form-group">
+                  <input class="form-control" type="text" placeholder="" name="pubSourceTitleDis" [(ngModel)]="pubSourceTitleDis" (keyup)="changePubSrcTitle(pubSourceTitleDis)" autocomplete="off">
+                  <label class="form-control-label" for="Publisher name">Publisher name</label>
+                  <ul *ngIf="showPubTitle"  class="alignDrop1">
+                      <li *ngFor="let n of filterDisplayTitle"  (click)="onSelectPubSrcTitle(n.displayName,n.name,n.id)">
+                         {{ n.displayName }}
+                      </li>
+                  </ul>
+                </div>      
+                <div style="width: 25%;">
+                  <select class="form-select" style="border: 1px solid #000;color: #000;margin: unset;" [(ngModel)]="srcCountryName">
+                    <option disabled selected value="undefined">Publisher Country</option>
+                    <option *ngFor="let item of countryList" >{{item.countryName}}</option>  
+                  </select>
+                </div> 
+                 
+              <div style="width: 11%;">
+                <select class="form-select" style="border: 1px solid #000;color: #000;margin: unset;" [(ngModel)]="srcLevel">
+                  <option disabled selected value="undefined">Level</option>
+                  <option *ngFor="let item of leveDropDownmn" >{{item.value}}</option>
+                </select>
+              </div> 
+            </div>  
+            <div style="margin-top: 10px;display: flex;flex-flow: row;justify-content: space-between;width: 100%;">
+              <div style="width: 16%;" class="form-group">
+                <input class="form-control" type="text" placeholder="" name="srcwebLink" [(ngModel)]="srcwebLink" autocomplete="off">
+                <label class="form-control-label" for="Web Link">Web Link</label>
+              </div> 
+              <div style="width: 16%;" class="form-group">
+                <input class="form-control" type="text" placeholder="" name="srcpIssn" [(ngModel)]="srcpIssn" autocomplete="off">
+                <label class="form-control-label" for="P-ISSN">P-ISSN</label>
+              </div>
+            <div style="width: 16%;" class="form-group">
+              <input class="form-control" type="text" placeholder="" name="srceIssn" [(ngModel)]="srceIssn" autocomplete="off">
+              <label class="form-control-label" for="E-ISSN">E-ISSN</label>
+            </div> 
+            <div style="width: 16%;" class="form-group">
+              <input class="form-control" type="text" placeholder="" name="srcpIsbn" [(ngModel)]="srcpIsbn" autocomplete="off">
+              <label class="form-control-label" for="P-ISBN">P-ISBN</label>
+            </div> 
+            <div style="width: 16%;" class="form-group">
+              <input class="form-control" type="text" placeholder="" name="srceIsbn" [(ngModel)]="srceIsbn" autocomplete="off">
+              <label class="form-control-label" for="E-ISBN">E-ISBN</label>
+             </div> 
+           </div>                           
+         </div>  
+                <p *ngIf="sourceNameExists" style="color: red;">Source name values already exists</p>  
+                <div class="form-group" *ngIf="!sourceNameExists" style="width: 50%;top: 40px;min-height: 1.5em;">
+                  <input class="form-control" style="border: 2px solid darkgray;width: 100%;"  placeholder="" 
+                  [(ngModel)]="remarks" name="remarksSource" autocomplete="off">
+                  <label class="form-control-label" for="remarks">Remarks</label>
+                </div>   
+                <input type="button" name="next" class="next btn-outline-blue float-right" style="width: 20%;float: right;margin-left: 10px;"  value="Clear" (click)="clearSrcData()" />
+                <input *ngIf="!sourceNameExists"  type="button" name="next"  style="width: 20%;"
+                class="next btn-outline-blue float-right"  value="Add Source" (click)="submitSrcData()" />
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Model for Evaluate source request -->
+  <div class="modal fade modal_special in" style="display: block;opacity: unset !important;" id="add_new_form" tabindex="-1" role="dialog" aria-labelledby="add_new_modal" aria-hidden="true" *ngIf="enableEvaluation">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width: 1000px;height: 550px;left: -200px;top: 50px; overflow-y: scroll;" >
+        <div class="modal-header" >
+          <p class="modal-title" id="add_new_modal" style="left: -20%;width: 100%;margin-bottom: unset;">Evaluate Source Request</p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeEvaluate()"><span
+              aria-hidden="true">&times;</span> </button>
+        </div>
+            <div class="modal-body">
+                <form id="step-form">
+                   <fieldset >
+                       <div class="form-card">
+                            <div class="form_header">
+                              <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                              <h2 class="fs-title">Please verify the source details</h2>
+                            </div>
+                            <div>
+                              <div style="width: 68%;float: inline-end;" class="form-group">
+                                <input class="form-control" type="text" placeholder="" name="pubSrcDisp" [(ngModel)]="pubSrcDisp" (keyup)="onKeySourcePubSrcET(pubSrcDisp)" autocomplete="off" readonly style="background-color: white;">
+                                <label class="form-control-label" for="Source Title">Source Title</label>
+                                <ul *ngIf="showSourceTitleDis"  class="alignDrop1">
+                                  <li *ngFor="let n of filterJournalList"  (click)="onSelectSourcePubSrcET(n.displayName,n.name,n.id)">
+                                    {{ n.displayName }}
+                                  </li>
+                              </ul>
+                              </div>
+                            <div style="width: 25%;">
+                              <select style="border: 1px solid #000;color: #000;" class="form-select" name="dfsSourceDetail.pubSrcArticleTypeName" [(ngModel)]="dfsSourceDetail.pubSrcArticleTypeName" (change)="sourceTypeValue(dfsSourceDetail.pubSrcArticleTypeName)">
+                                <option value="undefined" selected disabled>Source Type</option>
+                                <option *ngFor="let item of articleListValues" >{{item.value}}</option>                      
+                              </select>
+                            </div> 
+                          </div>
+                          <div style="margin-top: 10px;display: flex;flex-flow: row;justify-content: space-between;width: 100%;">           
+                          <div style="width: 25%;">
+                            <select class="form-select" style="border: 1px solid #000;color: #000;" name="srcCountryNameEt" [(ngModel)]="srcCountryNameEt" (change)="changeCountry(srcCountryNameEt)" >
+                              <option disabled selected value="undefined">Publisher Country</option>
+                              <option *ngFor="let item of countryList" >{{item.countryName}}</option>  
+                            </select>
+                          </div> 
+                          <div style="width: 68%;" class="form-group">
+                            <input class="form-control" type="text" placeholder="" name="pubSourceTitleDis" [(ngModel)]="pubSourceTitleDis" (keyup)="changePubSrcTitleET(pubSourceTitleDis)" style="height: 45px;" autocomplete="off">
+                            <label class="form-control-label" for="Publisher Name">Publisher name</label>
+                            <ul *ngIf="showPubTitle"  class="alignDrop1">
+                                <li *ngFor="let n of filterDisplayTitle"  (click)="onSelectPubSrcTitleET(n.displayName,n.name,n.id)">
+                                  {{ n.displayName }}
+                                </li>
+                            </ul>
+                          </div> 
+                        </div>  
+                        <div style="display: flex;flex-flow: row;justify-content: space-between;width: 100%;">
+                          <div style="width: 16%;">
+                            <select class="form-select" style="border: 1px solid #000;color: #000;" name="dfsSourceDetail.level" [(ngModel)]="dfsSourceDetail.level" (change)="changeLevel(dfsSourceDetail.level)">
+                              <option disabled selected value="undefined">Level</option>
+                              <option *ngFor="let item of leveDropDownmn" >{{item.value}}</option>
+                            </select>
+                          </div> 
+                          <div style="width: 16%;" class="form-group">
+                            <input class="form-control" type="text" placeholder="" name="dfsSourceDetail.pissn" [(ngModel)]="dfsSourceDetail.pissn" autocomplete="off">
+                            <label class="form-control-label" for="P-ISSN">P-ISSN</label>
+                          </div> 
+                          <div style="width: 16%;" class="form-group">
+                            <input class="form-control" type="text" placeholder="" name="dfsSourceDetail.eissn" [(ngModel)]="dfsSourceDetail.eissn" autocomplete="off">
+                            <label class="form-control-label" for="E-ISSN">E-ISSN</label>
+                          </div>
+                        <div style="width: 16%;" class="form-group">
+                          <input class="form-control" type="text" placeholder="" name="dfsSourceDetail.pisbn" [(ngModel)]="dfsSourceDetail.pisbn" autocomplete="off">
+                          <label class="form-control-label" for="P-ISBN">P-ISBN</label>
+                        </div> 
+                        <div style="width: 16%;" class="form-group">
+                          <input class="form-control" type="text" placeholder="" name="dfsSourceDetail.eisbn" [(ngModel)]="dfsSourceDetail.eisbn" autocomplete="off">
+                          <label class="form-control-label" for="E-ISBN">E-ISBN</label>
+                        </div> 
+                      </div>
+
+                        <div style="display: flex;flex-flow: row;justify-content: space-between;width: 100%;">  
+                        <ng-container *ngFor="let item of indexData">      
+                          <div style="width: 16%;" *ngIf="item.type=='SourceIndexing'&&item.fieldName=='SNIP'" class="form-group">
+                            <input class="form-control" type="text" placeholder="" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue" autocomplete="off">
+                            <label class="form-control-label" [for]="item.fieldDesc">{{item.fieldDesc}}</label>
+                          </div>
+                        <div style="width: 16%;" *ngIf="item.type=='SourceIndexing'&&item.fieldName=='SJR'" class="form-group">
+                          <input class="form-control" type="text" placeholder="" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue" autocomplete="off">
+                          <label class="form-control-label" [for]="item.fieldDesc">{{item.fieldDesc}}</label>
+                        </div> 
+                        <div style="width: 16%;" *ngIf="item.type=='SourceIndexing'&&item.fieldName=='ImpactFactor'" class="form-group">
+                          <input class="form-control" type="text" placeholder="" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue" autocomplete="off">
+                          <label class="form-control-label" [for]="item.fieldDesc">{{item.fieldDesc}}</label>
+                        </div> 
+                        <div style="width: 16%;" *ngIf="item.type=='SourceIndexing'&&item.fieldName=='CiteScore'" class="form-group">
+                          <input class="form-control" type="text" placeholder="" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue" autocomplete="off">
+                          <label class="form-control-label" [for]="item.fieldDesc">{{item.fieldDesc}}</label>
+                        </div> 
+                        <div style="width: 16%;" *ngIf="item.type=='SourceIndexing'&&item.fieldName=='UGCCareGroup1'" class="form-group">
+                          <!-- <input class="form-control" type="text" placeholder="" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue" autocomplete="off">
+                          <label class="form-control-label" [for]="item.fieldDesc">{{item.fieldDesc}}</label> -->
+                          <select style="margin: unset;" class="form-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                            <option value="" selected disabled>UGC Care Group</option>
+                            <option *ngFor="let ugc of UGCdropdown" >{{ugc.value}}</option>                      
+                          </select>
+                        </div> 
+                      </ng-container>
+                    </div>  
+
+                      <div style="display: flex;flex-flow: row;justify-content: space-between;width: 100%;">
+                        <ng-container *ngFor="let item of indexData">
+                        <div style="width: 16%;" *ngIf="item.type=='SourceIndexing'&&item.fieldName=='QRankSC'" class="form-group">
+                          <!-- <input class="form-control" type="text" placeholder="" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue" autocomplete="off">
+                          <label class="form-control-label" [for]="item.fieldDesc">{{item.fieldDesc}}</label> -->
+                          <select style="margin: unset;" class="form-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                            <option value="" selected disabled>QRankSC</option>
+                            <option *ngFor="let qr of QrankdropdownScs" >{{qr.value}}</option>                      
+                          </select>
+                        </div>
+                      <div style="width: 16%;" *ngIf="item.type=='SourceIndexing'&&item.fieldName=='QRankWOS'" class="form-group">
+                        <!-- <input class="form-control" type="text" placeholder="" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue" autocomplete="off">
+                        <label class="form-control-label" [for]="item.fieldDesc">{{item.fieldDesc}}</label> -->
+                        <select style="margin: unset;" class="form-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                          <option value="" selected disabled>QRankWOS</option>
+                          <option *ngFor="let qr of Qrankdropdown" >{{qr.value}}</option>                      
+                        </select>
+                      </div> 
+                      <div style="width: 16%;" *ngIf="item.type=='SourceIndexing'&&item.fieldName=='ABDC'" class="form-group">
+                        <!-- <input class="form-control" type="text" placeholder="" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue" autocomplete="off">
+                        <label class="form-control-label" [for]="item.fieldDesc">{{item.fieldDesc}}</label> -->
+                        <select style="margin: unset;" class="form-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                          <option value="" selected disabled>ABDC</option>
+                          <option *ngFor="let abdc of ABDCdropdown" >{{abdc.value}}</option>                      
+                        </select>
+                      </div> 
+                      <div style="width: 16%;" *ngIf="item.type=='SourceIndexing'&&item.fieldName=='CORE'" class="form-group">
+                        <input class="form-control" type="text" placeholder="" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue" autocomplete="off">
+                        <label class="form-control-label" [for]="item.fieldDesc">{{item.fieldDesc}}</label>
+                      </div> 
+                    </ng-container>
+                    <div style="width: 16%;" class="form-group">
+                      <input class="form-control" type="text" placeholder="" name="dfsSourceDetail.webLink" [(ngModel)]="dfsSourceDetail.webLink" autocomplete="off">
+                      <label class="form-control-label" for="Web Link">Web Link</label>
+                    </div>            
+                    </div>             
+                </div>      
+                <input type="button" name="next" class="next btn-outline-blue float-right" style="margin-top: 5px;width: 20%;float: right;margin-left: 10px;"  value="Cancel" (click)="cancelSourceReq()"/>
+                <input type="button" name="next"  style="margin-top: 5px;width: 20%;margin-left: 10px;" class="next btn-outline-blue float-right"  value="Approve" (click)="acceptRequest()"/>
+                <input type="button" name="next"  style="margin-top: 5px;width: 20%;" class="next btn-outline-blue float-right"  value="Reject" (click)="rejectRequest(demoModal)"/>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Model for Edit source request -->
+  <div class="modal fade modal_special in" style="display: block;opacity: unset !important;" id="add_new_form" tabindex="-1" role="dialog" aria-labelledby="add_new_modal" aria-hidden="true" *ngIf="enableEdit">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width: 1000px;height: 550px;left: -200px;top: 50px; overflow-y: scroll;" >
+        <div class="modal-header" >
+          <p class="modal-title" id="add_new_modal" style="left: -20%;width: 100%;margin-bottom: unset;">Edit Source Request</p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeEdit()"><span
+              aria-hidden="true">&times;</span> </button>
+        </div>
+            <div class="modal-body">
+                <form id="step-form">
+                   <fieldset >
+                       <div class="form-card">
+                            <div class="form_header">
+                              <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                              <h2 class="fs-title">Please edit  the source details</h2>
+                            </div>
+                            <div>
+                              <div style="width: 64%;float: inline-end;" class="form-group">
+                                <input class="form-control" type="text" placeholder="" name="pubSrcDisp" [(ngModel)]="pubSrcDisp" (keyup)="onKeySourcePubSrcET(pubSrcDisp)">
+                                <label class="form-control-label" for="Source Title">Source Title</label>
+                                <ul *ngIf="showSourceTitleDis"  class="alignDrop1">
+                                  <li *ngFor="let n of filterJournalList"  (click)="onSelectSourcePubSrcET(n.displayName,n.name,n.id)">
+                                    {{ n.displayName }}
+                                  </li>
+                              </ul>
+                              </div>
+                            <div style="width: 25%;">
+                              <select style="border: 1px solid #000;color: #000;margin: unset;" class="form-select" name="dfsSourceDetail.pubSrcArticleTypeName" [(ngModel)]="dfsSourceDetail.pubSrcArticleTypeName" (change)="sourceTypeValue(dfsSourceDetail.pubSrcArticleTypeName)">
+                                <option value="undefined" selected disabled>Source Type</option>
+                                <option *ngFor="let item of articleListValues" >{{item.value}}</option>                      
+                              </select>
+                            </div> 
+                          </div>
+                          <div style="margin-top: 10px;display: flex;flex-flow: row;justify-content: space-between;width: 100%;">
+                            <div style="width: 25%;">
+                              <select class="form-select" style="border: 1px solid #000;color: #000;margin: unset;" name="srcCountryNameEt" [(ngModel)]="srcCountryNameEt" (change)="changeCountry(srcCountryNameEt)">
+                                <option disabled selected value="undefined">Publisher Country</option>
+                                <option *ngFor="let item of countryList" >{{item.countryName}}</option>  
+                              </select>
+                            </div> 
+                            <div style="width: 64%;" class="form-group">
+                              <input class="form-control" type="text" placeholder="" name="pubSourceTitleDis" [(ngModel)]="pubSourceTitleDis" (keyup)="changePubSrcTitleET(pubSourceTitleDis)" style="height: 45px;">
+                              <label class="form-control-label" for="Publisher Name">Publisher name</label>
+                              <ul *ngIf="showPubTitle"  class="alignDrop1">
+                                  <li *ngFor="let n of filterDisplayTitle"  (click)="onSelectPubSrcTitleET(n.displayName,n.name,n.id)">
+                                    {{ n.displayName }}
+                                  </li>
+                              </ul>
+                            </div>           
+                        </div>
+                    <div style="display: flex;flex-flow: row;justify-content: space-between;width: 100%;">
+                      <div style="width: 16%;">
+                        <select class="form-select" style="border: 1px solid #000;color: #000;margin: unset;" name="dfsSourceDetail.level" [(ngModel)]="dfsSourceDetail.level" (change)="changeLevel(dfsSourceDetail.level)">
+                          <option disabled selected value="undefined">Level</option>
+                          <option *ngFor="let item of leveDropDownmn" >{{item.value}}</option>
+                        </select>
+                      </div> 
+                      <div style="width: 16%;" class="form-group">
+                        <input class="form-control" type="text" placeholder="" name="dfsSourceDetail.eissn" [(ngModel)]="dfsSourceDetail.eissn" autocomplete="off">
+                        <label class="form-control-label" for="E-ISSN">E-ISSN</label>
+                      </div>
+                    <div style="width: 16%;" class="form-group">
+                      <input class="form-control" type="text" placeholder="" name="dfsSourceDetail.pisbn" [(ngModel)]="dfsSourceDetail.pisbn" autocomplete="off">
+                      <label class="form-control-label" for="P-ISBN">P-ISBN</label>
+                    </div> 
+                    <div style="width: 16%;" class="form-group">
+                      <input class="form-control" type="text" placeholder="" name="dfsSourceDetail.eisbn" [(ngModel)]="dfsSourceDetail.eisbn" autocomplete="off">
+                      <label class="form-control-label" for="E-ISBN">E-ISBN</label>
+                    </div> 
+                    <div style="width: 16%;" class="form-group">
+                      <input class="form-control" type="text" placeholder="" name="dfsSourceDetail.pissn" [(ngModel)]="dfsSourceDetail.pissn" autocomplete="off">
+                      <label class="form-control-label" for="P-ISSN">P-ISSN</label>
+                    </div> 
+                  </div>
+                </div>    
+                <div class="form-group" style="width: 50%;top: 40px;min-height: 1.5em;">
+                  <input class="form-control" style="border: 2px solid darkgray;width: 100%;"  placeholder="" 
+                  [(ngModel)]="dfsSourceDetail.pubSrcRemark" name="dfsSourceDetail.pubSrcRemark" autocomplete="off">
+                  <label class="form-control-label" for="remarks">Remarks</label>
+                </div>   
+                <input type="button" name="next" class="next btn-outline-blue float-right" style="width: 20%;float: right;margin-left: 10px;"  value="Cancel" (click)="cancelSourceReqEdit()"/>
+                <input type="button" name="next"  style="width: 20%;margin-left: 10px;" class="next btn-outline-blue float-right"  value="Update" (click)="submitEditRequest()"/>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,324 @@
+.alignDrop{
+    height: 180px;
+    overflow: scroll;
+    width: 100%;
+    background: white;
+  }
+  .alignDrop li:hover{
+  background-color: #0051bf;
+  color: white; 
+  cursor: pointer;
+  }
+  .alignDrop1{
+  width: 100%;
+  height: 200px;
+  overflow: scroll;
+  background:#0051bf;
+  border: solid 1px #0051bf;
+  color: white;
+  }
+  .alignDrop1 li:hover {
+  background-color: #f5f5f5;
+  color: #000; 
+  cursor: pointer;
+  }
+  .but
+  {
+    width:100px;
+    height:30px;
+    border-radius: 10px;
+    background-color: #0051bf;
+    color: white;
+    border-color: #0051bf;
+    font-weight: bold;
+  }
+  .but:hover{
+    background: #dbdf08;
+    color: #000;
+    border-color: #dbdf08;
+  }
+  .menu-open {
+  padding-left: 0%;
+  max-height: unset;
+  }
+  .editDrop{
+  height: 150px;
+  overflow: scroll;
+  }
+  .editAuthor{
+  height: 150px;
+  overflow: scroll;
+  }
+  .editDrop li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+  .editAuthor li:hover{
+    background-color: #0051bf;
+    color: white; 
+    cursor: pointer;
+  }
+
+.state-btn{
+  color: white;
+  float: right;
+  margin-right: 30px;
+  border-radius: 12px;
+  background: #0051bf;
+  border: unset;
+  height: 30px;
+  width: 10%;
+}
+
+.state-btn:hover{
+  background: #dbdf08;
+	color: #000;
+}
+.tab-container{
+  background-color: #f5f5f5;
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  height: 55px;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+  
+}
+.tab-container .tab-link{
+  width:33.33%;
+  position: relative;
+ height: 100%;
+ padding: 10px;
+ float: left;
+ text-align: center;
+ cursor: pointer;
+
+}
+.active{
+  border-bottom: 2px solid #0051bf;
+  transition: ease-in-out .3s;
+}
+.custom-input {
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px; /* Padding inside the input */
+  font-size: 14px; /* Font size */
+  width: 100%; /* Full width */
+}
+input[type=text]{
+  width: 331px;
+  height: 39px;
+  font-size: 14px;
+  margin: 10px 0 10px 21px;
+  padding: 0 0 0 5px;
+  border: 1px solid #555;
+  border-radius: 3px;
+}
+.break-after-space {
+  white-space: pre-wrap;
+}
+.horizontal-line {
+  border: none; /* Removes default border */
+  border-top: 2px solid #000000; /* Sets the top border to create the line */
+  margin: 10px 0; /* Adjust margin as needed */
+  }
+  // .custom-select {
+  //   border: 1px solid #ccc; /* Add border */
+  //   border-radius: 4px; /* Rounded corners */
+  //   padding: 10px; /* Padding inside the select */
+  //   font-size: 14px; /* Font size */
+  //   width: 100%; /* Full width */
+  // }
+  // .custom-input:focus {
+  //   border-color: #66afe9; /* Border color on focus */
+  //   outline: none; /* Remove outline */
+  //   box-shadow: 0 0 5px rgba(102, 175, 233, 0.6); /* Add shadow on focus */
+  // }
+  .custom-button{
+    background: #c2cf1d;
+    cursor: pointer;
+  }
+  .custom-button:hover{
+    background: black;
+    color: #ffffff;
+  }
+
+  .control-btn{
+  margin-right: 10px;
+  }
+  .control-btn:last-child{
+    margin-right: 0;
+  }
+  .centered-actions span.left {
+    display: block;
+    width: 600px;
+    height: 1px;
+    background: #ccc;
+   
+  }
+  .centered-actions span.right {
+    display: block;
+    width: 600px;
+    height: 1px;
+    background: #ccc;
+  
+}
+.centered-actions {
+  text-align: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.centered-actions .control-btn {
+  font-size: 1.5em;
+  margin: 0 10px;
+}
+.custom-input:focus {
+  border-color: #000000; /* Border color on focus */
+  outline: none; /* Remove outline */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6); /* Add shadow on focus */
+}
+.bluebar_expand {
+  position: fixed;
+  z-index: 9;
+  height: 160px !important;
+  border-radius: 0 0 10px 10px;
+}
+.sideBarClose {
+  padding-left: 250px;
+  margin-left: 0px;
+}
+
+.sideBarOpen {
+  padding-left: 0px;
+}
+
+.input input:focus {
+  outline: none; /* Ensure no outline is shown when input is focused */
+}
+
+/* To ensure the border of the div remains */
+.input:focus-within {
+  border: 1px solid #ccc; /* Maintain the border of the parent div */
+}
+
+.input textarea:focus {
+  outline: none; /* Ensure no outline is shown when input is focused */
+}
+
+/* To ensure the border of the div remains */
+.input:focus-within {
+  border: 1px solid #ccc; /* Maintain the border of the parent div */
+}
+.edit:hover {
+  text-decoration: none !important;
+  color: #adc12e !important;
+}
+
+.edit {
+  color: #0051bf !important;
+}
+
+.cor_author_trash::before {
+  font-family: "uicons-regular-rounded";
+  content: "\f1f8"; /* Unicode for trash icon */
+  margin-right: 5px;
+}
+.input-wrapper.filled label {
+  transform: scale(0.65);
+  top: 3px;
+  color: #0051bf;
+}
+.btn-outline-blue {
+  border: 2px solid #0051bf;
+  border-radius: 18px;
+  color: #0051bf;
+  width: auto;
+  padding: 8px 20px;
+  background: #fff;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 600;
+}
+
+// ////////////////////////////////////////////
+
+.form-groups {
+  position: relative;
+  min-height: 3.5em;
+}
+
+input.form-controls {
+  height: 3em;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+label.form-controls-label {
+  position: absolute;
+  font-size: .7em !important;
+  top: 0;
+  left: 5px;
+  text-transform: uppercase !important;
+  color: #0051bf !important;
+  padding-left: unset  !important;
+  margin: unset !important;
+}
+
+.table-box{
+  border: 2px solid black;
+}
+
+//yearpicker
+::ng-deep .bs-calendar-layout{
+  z-index: 999 !important;
+}
+::ng-deep .bs-datepicker-head{
+  height: 30px;
+}
+::ng-deep .bs-datepicker-body {
+  background-color: #f0f0f0;
+  // width: 200px;
+  height: 170px;
+  padding: 10px;
+  border-radius: 5px;
+  min-width: 220px;
+  }
+  
+  ::ng-deep .bs-datepicker-body :hover {
+    cursor: pointer;
+  }
+  
+  ::ng-deep .ng-star-inserted {
+    // padding-left: 10px;
+    // margin-bottom: 20px;
+  }
+  // ::ng-deep bs-datepicker-navigation-view {
+  //   padding-left: 27px;
+  // }
+  
+
+  .forms-control:focus{
+    border-color: 1px solid black;
+    outline: 0;
+    box-shadow: none;
+  }
+  .newone{
+    width: 230px;
+    transition: margin-bottom 0.2s ease;  
+  }
+  .with-margin {
+    margin-bottom: 200px; /* adjust as per calendar height */
+  }
+  .p-set{
+    position:unset !important;
+  }
+  
+  .text-danger {
+    color: red;
+    font-size: 0.875rem;
+  }

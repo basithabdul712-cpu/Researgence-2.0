@@ -1,0 +1,95 @@
+
+img.reslogo {
+    position: absolute;
+    height: 40px;
+   
+}
+
+.search-form input{
+    position: relative;
+    width: 400px;
+    margin-left:10px;
+    border:1px solid #eff0f1;
+    padding: 10px 10px 10px 70px;
+    border-radius:50px ;
+    background-color: #f6f7fb;
+    height: 40px;
+}
+.unmarked{
+    font-weight: 600;
+}
+.marked{
+    font-weight: 400;
+}
+
+.flex-grow-1:hover{
+    background: #0288d1;
+}
+.hoverAll:hover{
+    color: black !important;
+}
+.backCover{
+    background: lightblue;
+}
+.nobackCover{
+    background: whitesmoke;
+}
+
+.menu-item:hover .dropdown-content {display: block;}
+.dropdown-content a:hover {color: #0288d1;}
+.menu-item:hover font{color: #0288d1;}
+ 
+.dropdown-content {
+       width: 70%;
+       height: 50px;
+       display: none;
+       position: absolute;
+        background-color: whitesmoke;
+       color: black;
+       min-width: 160px;
+       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+       z-index: 1;
+       left: 10%;
+     }
+     .dropdown-content a {
+       color: black;
+       padding: 12px 16px;
+       text-decoration: none;
+       display: block;
+     }
+    .enableScroll{
+        overflow-y: scroll;
+        height: 350px;
+    }
+    .headerunShift{
+       margin-left: 250px;
+    }
+
+    .header-link img.icon{
+        display: block;
+    }
+    .header-link img{
+        margin: 0 auto;
+        width: 22px;
+    }
+    .header-link img.icon-over{
+        display: none;
+    }
+    .header-link:hover > img.icon{
+        display: none;
+    }
+    .header-link:hover > img.icon-over{
+        display: block;
+    }
+    .header-link:hover{
+        color: #0051bf !important;
+    
+    }
+    .header-link{
+        text-align: center;
+        padding: 0px 0px !important;
+    }
+    a{
+        color: black;
+        cursor: pointer;
+    }

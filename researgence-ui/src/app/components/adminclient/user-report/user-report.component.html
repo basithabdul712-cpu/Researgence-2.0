@@ -1,0 +1,54 @@
+<div class="content-wrapper" [ngClass]="{'menu-closeds': isMenuOpen}"
+  style="background: var(--background-blue);background-attachment: fixed;background-size: cover;">
+  <div class="container-fluid" style="padding-top: 60px;" [ngStyle]="{'height':fill.length>8?'': '100vh'}">
+    <div>
+      <div class="search" >
+        <div class="">
+          <!-- <h3 style="margin-top: 60px; margin-bottom: 30px;color: #fff;text-align: center;background: #c7a408;border: solid 1px #c7a408">Select University</h3> -->
+
+        </div>
+        <div class="col-lg-12">
+          <div class="col-lg-6" style="padding-left: 5%;">
+            <h2 class="page-title" id="page-title" #header
+              style="text-align: center;color: white;border-radius: 7.5px;margin: unset;padding-left: 40%;">
+              Select University</h2>
+          </div>
+          <div class="col-lg-6">
+            <div class="input-container">
+
+              <input type="text" class="forms-control input-with-icon" style="margin-left: unset !important;"
+                name="universityName" [(ngModel)]="universityName" (keyup)="onKeyUp($event)"
+                value="{{this.universityName}}" placeholder="Search University" autocomplete="off">
+              <span class="close-icon" *ngIf="showCloseIcon" (click)="clearSearch()">&#10006;</span>
+              <span class="search-icon" *ngIf="!showCloseIcon"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br><br>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="excelEnable" >
+      <div class="d-flex flex-column align-items-center justify-content-center"  style="width: 300px;height:100px;">
+        <img style="width: 50px;height: 50px;" src="../../../../../assets/images/tree/throbber.gif">
+        <h5 style="margin-top: 10px;color: #fff;">Downloading Please Wait...</h5>
+      </div>
+    </div>  
+    <div class="row">
+      <div class="col-lg-12">
+        <ul class="locations flex">
+          <li (click)="reportDownload(0,'All')">
+            <p style="color: #d8dd0b;font-size: 17px;font-weight: 700;">All University</p>
+            <p class="hover-text">Generate Report</p>
+          </li>
+
+          <li *ngFor="let n of fill" (click)="reportDownload(n.universityId,n.universityName)">
+            <p style="color: #d8dd0b;font-size: 17px;font-weight: 700;">{{n.universityName}}</p>
+            <p class="hover-text">Generate Report</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

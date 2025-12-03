@@ -1,0 +1,210 @@
+<div class="loader-wrapper" [class.loderhide]="enablePic" *ngIf="!enablePic">
+  <div class="loader bg-white">
+    <div class="whirly-loader"> </div>
+    <br>
+    <br>
+    <p>Please Wait..Page is loading!</p>
+  </div>
+</div>
+<div class="content-wrapper" style="font-family: 'Red Hat Display', sans-serif;">
+  <div class="container-fluid" [ngClass]="{'menu-closed': isMenuOpen}">
+    <div class="row" style="margin-bottom: -23px;">
+      <div class="alert alert-dismissible alert-info" style="padding: 0px;margin-top: -5px;">
+        <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;"></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container container-90 content-pushed" [ngStyle]="{'padding-top' : stickyEnable ? '100px' : '40px'}">
+        <div *ngIf="enableFaculty">
+          <div class="d-flex align-items-center justify-content-center" *ngIf="excelEnable"
+            style="width: 100%;height:100%;">
+            <div class="d-flex flex-column align-items-center justify-content-center"
+              style="width: 300px;height:100px;">
+              <img style="width: 100px;height: 100px;" src="../../../../../assets/images/tree/throbber.gif">
+              <h5 style="margin-top: 10px;">Downloading Please Wait...</h5>
+            </div>
+          </div>
+          <div class="row" [ngStyle]="{'opacity': excelEnable ? '5%':'100%'}">
+            <div class="col-lg-12">
+              <div class="inner-page-header gradient-box">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="col-lg-8">
+                      <h3 class="page_title">Search Results</h3>
+                    </div>
+                    <div class="col-lg-2">
+                      <a class="btn-outline float-right " style="cursor: pointer;" (click)="toReport()">Insights</a>
+                    </div>
+                    <!-- <div class="col-lg-2">
+                      <button class="btn btn-default dropdown-toggle download_btn_multi" type="button"
+                        (click)="toggleDropdown()"
+                        style="float: right;height: 34px;padding: revert;background-color: transparent;border: 1px solid #dbdf08;color: #fff;">Download
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" [class.show]="isDropdownOpen" (mouseleave)="isDropdownOpen = false">
+                        <li (click)="exportToExcel()" class="pdfHover"><a
+                            style="background: white !important;color: black;">EXCEL</a>
+                        </li>
+                      </ul>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" [ngStyle]="{'opacity': excelEnable ? '5%':'100%'}">
+            <div class="view">
+              <h6 class="tweet"
+                style="font-size: 15px;font-weight: 500;padding-top: 8px;text-align: end;padding-right: 10px;"> Showing
+                {{ startrow + 1 }} to {{endrow}} of {{this.collapsablesize}} records</h6>
+            </div>
+          </div>
+          <div class="row" [ngStyle]="{'opacity': excelEnable ? '5%':'100%'}">
+            <div class="col-lg-12">
+              <div class="publication_list row">
+                <div class="col-lg-12">
+                  <div class="filter">
+                    <div class="sort"> <span class="custom-dropdown">
+                        <label class="control-label heading_sm">Sort</label>
+                        <select [(ngModel)]="yearValue" (change)="changeYear(yearValue)">
+                          <option *ngFor="let yearorder of yearSort">
+                            {{yearorder}}
+                          </option>
+                        </select>
+                      </span> <span class="custom-dropdown">
+                        <select [(ngModel)]="ascendValue" (change)="changesOrder(ascendValue)">
+                          <option *ngFor="let order of orderSort">
+                            {{order}}
+                          </option>
+                        </select>
+                      </span> </div>
+                    <div class="view"> <span class="custom-dropdown">
+                        <label class="control-label">Paginate</label>
+                        <select [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                          <option *ngFor="let dropcount of pageSizecount" [value]="dropcount">{{dropcount}}</option>
+                        </select>
+                      </span> </div>
+
+                  </div>
+                </div>
+                <div id="printformClass">
+                  <div class="result col-lg-12" style="padding-left: unset;padding-right: unset;">
+                    <div *ngIf="dataList.length === 0" class="text-center a_title"
+                      style="color: red; font-weight: bold; top: 0;">
+                      No result found
+                    </div>
+                    <div *ngFor="let d of dataList ;let i=index">
+                      <article
+                        [ngClass]="'tagged_' + (d.isInHouse == 1 ? 'home' : 'away') + ' ' + d.articleType + ' ' + selectedView">
+                        <div class="row">
+                          <div class="col-lg-9">
+                            <div class="article_header">
+                              <h2 class="a_title"><span class="sl_no"
+                                  [ngClass]="{'homeColor':d.isInHouse == 1 , 'awayColor': d.isInHouse == 0}">{{ i + 1 +
+                                  (page - 1) * pageSize }}</span><span style="font-size: 18px;"
+                                  [routerLink]="['/article/art',d.publicationId,this.userId || '',backbuttonflag]"
+                                  style="cursor: pointer;font-family: 'Red Hat Display', sans-serif;">{{d.publicationTitle}}</span>
+                              </h2>
+                              <i style="font-size: 14px;font-family: 'Red Hat Display', sans-serif;font-style: normal;">{{d.year}}
+                                {{d.sourcePublication}}, <span *ngIf="d.volumeNumber">Volume {{d.volumeNumber}},</span>
+                                <span *ngIf="d.issueNumber">Issue {{d.issueNumber}},</span>
+                                <span *ngIf="d.bPage">Page {{d.bPage}} - {{d.ePage}};</span> <span
+                                  *ngIf="d.issn">P-ISSN: {{d.issn}},</span> <span *ngIf="d.eissn">E-ISSN:
+                                  {{d.eissn}};</span> </i>
+                            </div>
+
+                            <div ><span>DOI: </span><a class="doiLink" style="text-decoration: none !important;cursor: unset;">{{d.doi}}</a></div>
+                            <div ><span>Weblink: </span><a class="doiLink" [href]="d.link" target="_blank">{{d.link}}</a></div>
+                            
+                            <div class="article_body">
+                              <div class="article_scores flex" *ngIf="d.publicationSourceDBMetrics!=null"
+                                style="flex-flow: wrap;font-size: 14px;">
+                                <div *ngFor="let item of d.publicationSourceDBMetrics">
+                                  <p *ngIf="!item.includes('-')"
+                                    style="border-left: unset !important;padding: 0px 3px !important;">{{item}};</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- <div class="col-lg-3">
+                            <table class="score">
+                              <tr [ngClass]="{'not-available':d.wos == null||d.wos =='-'}">
+                                <td class="text-align-r" *ngIf="d.wos !==null">Web of Science :</td>
+                                <td>{{d.wos}}</td>
+                              </tr>
+                              <tr [ngClass]="{'not-available':d.pubmed == null||d.pubmed =='-'}">
+                                <td class="text-align-r" *ngIf="d.pubmed !== null">PubMed :</td>
+                                <td>{{d.Pubmed}}</td>
+                              </tr>
+                              <tr [ngClass]="{'not-available':d.abdc== null||d.abdc =='-'}">
+                                <td class="text-align-r" *ngIf="d.abdc!== null">ABCD :</td>
+                                <td>{{d.abdc}}</td>
+                              </tr>
+                              <tr [ngClass]="{'not-available':d.ieee == null||d.ieee =='-'}">
+                                <td class="text-align-r" *ngIf="d.ieee !== null">IEEE :</td>
+                                <td>{{d.ieee}}</td>
+                              </tr>
+                              <tr [ngClass]="{'not-available':d.gs == null||d.gs =='-'}">
+                                <td class="text-align-r" *ngIf="d.gs !== null">Google Scholar :</td>
+                                <td>{{d.gs}}</td>
+                              </tr>
+                              <tr [ngClass]="{'not-available':d.scopus == null||d.scopus =='-'}">
+                                <td class="text-align-r" *ngIf="d.scopus !==null">Scopus :</td>
+                                <td>{{d.scopus}}</td>
+                              </tr>
+                            </table>
+                          </div> -->
+                        </div>
+                        <div class="row flex flex-valign-bottom">
+                          <div class="col-lg-9">
+                            <div class="article_footer" *ngIf="d.authorAffiliation != null">
+                              <div class="a_author" *ngIf="d.authorAffiliation.length > 1">
+                                <a class="tooltip1"
+                                  *ngFor="let t of (expandedItems.includes(d) ? d.authorAffiliation : d.authorAffiliation.slice(0, 5))"
+                                  (click)="printNumber(t)" [ngClass]="{'highlightedName': hasBrackets(t)}">
+                                  {{ getNameWithoutBrackets(t) | titlecase }}
+                                  <span class="tooltiptext">{{ getAffiliationWithoutBrackets(t) }}</span>
+                                </a>
+                                <ng-container *ngIf="d.authorAffiliation.length > 5">
+                                  <a class="showMore" (click)="toggleExpansion(d)">{{ expandedItems.includes(d) ? 'Show Less' : 'Show More' }}</a>
+                                </ng-container>
+                              </div>
+                              <div class="a_author" *ngIf="d.authorAffiliation.length === 1">
+                                <a class="tooltip1" (click)="printNumber(d.authorAffiliation[0])"
+                                  [ngClass]="{'highlightedName': hasBrackets(d.authorAffiliation[0])}">{{getNameWithoutBrackets(d.authorAffiliation[0])|
+                                  titlecase }}<span
+                                    class="tooltiptext">{{getAffiliationWithoutBrackets(d.authorAffiliation[0])}}</span></a>
+                              </div>
+                            </div>
+                            <div class="detail_content article_footer" style="font-size: 14px;">
+                              <!-- <p class="a_data" style="margin-bottom: 15px;">Doi: {{d.link}}</p>
+                        <label>Research Focus Areas: </label>
+                        <p style="display: inline;margin-left: 6px;">{{d.technologyAreas}}</p> -->
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="paginate" style="margin-left: 40%;" [ngStyle]="{'opacity': excelEnable ? '5%':'100%'}">
+          <ngb-pagination [(page)]="page" [pageSize]="pageSize" [maxSize]="3" [collectionSize]="collapsablesize"
+            (pageChange)="onPageChange($event)">
+          </ngb-pagination>
+        </div>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

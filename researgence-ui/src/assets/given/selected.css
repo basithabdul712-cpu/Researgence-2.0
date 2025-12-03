@@ -1,0 +1,195 @@
+.tab-pane {
+	font-family: 'Open Sans', sans-serif;
+    background: var(--background-white) repeat top center;
+    font-size: 14px;
+    color: #000;
+}
+.top-buffer { 
+	margin-top:0px; 
+}
+
+.score_container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	float: left;
+}
+.score_card {
+	display: block;
+	width: 100%;
+	height: 165px;
+	background-color: #e1e1e1;
+	border-radius: 10px;
+	padding: 15px;
+	margin: 15px;
+	color: #000000;
+}
+.score_card:focus{
+	color: #000000;
+	text-decoration: none;
+}
+.text-bold{
+    font-weight: bold;
+}
+
+@media (min-width: 768px) {
+.score_card{
+	width: 45%;
+}
+}
+@media only screen and (min-width: 992px) {
+.score_card {
+	width: 45%;
+}
+}
+
+@media only screen and (min-width: 1200px) {
+.score_card {
+	width: 350px;
+}
+}
+
+
+.score_card:hover {
+	background: rgb(27,98,169);
+	background: linear-gradient(141deg, rgba(27,98,169,1) 0%, rgba(165,187,53,1) 100%);
+	color: #ffffff !important;
+	box-shadow: 10px 10px 42px -9px rgba(0,0,0,0.43);
+	-webkit-box-shadow: 10px 10px 42px -9px rgba(0,0,0,0.43);
+	-moz-box-shadow: 10px 10px 42px -9px rgba(0,0,0,0.43);
+}
+.score_card:hover> .total_score {
+	color: #ffffff;
+}
+.score_card:active{
+	background: #0051bf;
+}
+.score_name {
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	margin: 0;
+	font-family: sans-serif;
+}
+.total_score {
+	font-size: 45px;
+	font-weight: bold;
+	text-align: center;
+	margin: 0;
+	color: #0051bf;
+	margin-top: 5px;
+}
+.secondary_score {
+	padding-top: 20px;
+	font-family: sans-serif;
+}
+.bg-gray{
+	background-color: #e5e5e5;
+}
+.score_card_inner {
+	display: block;
+	width: 100%;
+	height: 95px;
+	background-color: #f2f2f2;
+	border-radius: 10px;
+	padding: 15px;
+	margin: 15px;
+	color: #000000;
+}
+.score_card_inner:focus{
+	color: #000000;
+	text-decoration: none;
+}
+
+@media (min-width: 768px) {
+.score_card_inner{
+	width: 45%;
+}
+}
+@media only screen and (min-width: 992px) {
+.score_card_inner {
+	width: 45%;
+}
+}
+
+@media only screen and (min-width: 1200px) {
+.score_card_inner {
+	width: 250px;
+}
+}
+
+.score_card_inner:hover {
+	background: rgb(27,98,169);
+	background: linear-gradient(141deg, rgba(27,98,169,1) 0%, rgba(165,187,53,1) 100%);
+	color: #ffffff !important;
+	box-shadow: 10px 10px 42px -9px rgba(0,0,0,0.43);
+	-webkit-box-shadow: 10px 10px 42px -9px rgba(0,0,0,0.43);
+	-moz-box-shadow: 10px 10px 42px -9px rgba(0,0,0,0.43);
+}
+.score_card_inner:hover> .total_score {
+	color: #ffffff;
+}
+.score_card_inner:active{
+	background: #0051bf;
+}
+.score_name {
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	margin: 0;
+}
+.total_score {
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+	margin: 0;
+	color: #0051bf;
+	margin-top: 5px;
+}
+.srp-page-title {
+    padding-bottom: 15px;
+    margin-bottom: 0px;
+    text-align: center;
+    font-family: 'gothambold';
+    margin-top: 20px;
+    font-size: 24px;
+}
+
+
+/* for faulty pages - start */
+.faculty {
+    box-shadow: 0px 7px 16px 0px rgb(0 0 0 / 15%);
+    margin-bottom: 20px;
+    float: left;
+    width: 100%;
+	    padding: 10px;
+}
+/* for  faulty pages - start */
+
+/* for footer - start */
+
+.social_link{
+	float: right;
+	width: 120px;
+}
+.social_link a{
+	display: block;
+	width: 30px;
+	height: 30px;
+	float: left;
+	font-size: 20px;
+}
+.social_link a:before{
+	display: block;
+	position: relative;
+	right: 0;
+	left: 0;
+	text-align: center;
+	top: 5px;
+}
+.copyright{
+	float: left;
+	margin: 15px 0;
+}
+
+/* for footer - end */

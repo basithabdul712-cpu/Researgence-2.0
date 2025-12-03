@@ -1,0 +1,178 @@
+
+<div class="container-fluid" [ngClass]="{'menu-opens': !isMenuOpen, 'menu-closeds': isMenuOpen}" style=" font-family: 'Red Hat Display', sans-serif;">
+  <div class="row" style="margin-bottom: -23px;">
+    <div class="alert alert-dismissible alert-info" >
+      <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;" ><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+    <div class="row">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 50px;">
+           <div class="container container-90 ">
+          <div class="row">
+         <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '20px'}" style="padding-left: 0px;margin-left: -20px;">
+                 <h2>Welcome to Your Researgence Repository</h2>
+                 <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+           <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" >here</a> to contact our team.</p>
+               </div>
+               <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+              </div>
+       </div>
+      </div>
+       </div>
+     </div>
+  
+  <div class="container container-90" >
+    <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '150px' : '30px'}">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner-page-header gradient-box">
+            <div class="row">
+              <div class="col-lg-6">
+                <h3 class="page_title" style="font-size: 24px;">LIST OF PROJECT</h3>
+              </div>
+              <div class="col-lg-6">
+                  <input type="button"  class="btn-outline float-right ml-20" (click)="exportexcel()" value="Download Excel">
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+            
+           <div class="row">
+            <div class="col-lg-12">
+              <div class="filter">
+              <div class="publication_list row">
+                <div class="col-lg-12">
+              <div style="float: inherit;margin-right: 20px;"> 
+                <label class="control-label heading_sm">Show</label>
+                 <select  [(ngModel)]="pageSize">
+                   <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+                 </select>
+             </div>
+             <div *ngIf="userName==support" style="width: 60%;float: inline-end;"> 
+              <label class="control-label heading_sm">University</label>
+              <input style="border: 1px solid lightgray;width: 25%;" name="univName" [(ngModel)]="univName" (keyup)="changeTitle(univName)" placeholder="Enter University" autocomplete="off"> 
+              <ul  class="dropdown-list" *ngIf="hideDrop&& filterTitle.length > 0" style="z-index: 10;">       
+                <li *ngFor="let n of filterTitle"  (click)="onSelectTitle(n.universityId,n.universityName)">
+                  {{ n.universityName }}
+               </li>
+              </ul>
+            </div>
+            <div *ngIf="userName==support" style="width: 50%;"> 
+              <label class="control-label heading_sm">Search</label>
+              <input style="border: 1px solid lightgray;width: 25%;" name="searchData" [(ngModel)]="searchData" (keyup)="changeFilters(searchData)" placeholder="Search Inputsource | Createdbyname" autocomplete="off"> 
+            </div>
+             <div *ngIf="userName=='11'" > 
+              <label class="control-label heading_sm">{{showUnivName}}</label>
+             </div>
+             <input type="button" *ngIf="userName === support" class="btn-solid-blue float-right"  (click)="onRejectButtonClick()"  value="Reject">
+             <input type="button" *ngIf="userName === support" class="btn-solid-blue" (click)="approveSelectedItems()" style="float: right;margin-right: 10px;" value="Approve">
+             <!-- <input type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" (click)="filter()" value="Approve"> -->
+                </div>
+               </div>
+             </div>
+              <div class="result col-lg-12">
+                <div class="content-wrapper-white" style="margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+                  <div class="scrollClass">
+                   
+                    <table id="example" class="table table-bordered" style="width:100%" >
+                      <thead style="    background: #0151be;
+                      color: #fff;">
+                        <tr>
+                     
+                          <th *ngIf="userName===support"> <input type="checkbox" style="position: unset;width: 20px;height: 20px;" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"> </th>
+                          <th  class="name" style="padding-right: unset">SL.NO</th>
+                          <th scope="col" class="name"><div style="width: 150px;">UNIVERSITY</div></th>
+                          <th scope="col" class="name"><div style="width: 250px;">PROJECT DETAILS</div></th>
+                          <th scope="col" class="name" (click)="sort('inputSource')"[ngClass]="{
+                            'ascending': currentSortColumn === 'inputSource' && currentSortDirection === 'asc',
+                            'descending': currentSortColumn === 'inputSource' && currentSortDirection === 'desc'
+                          }"><div style="width: 200px;">INPUT SOURCE<span class="sorting" style="margin-left: 25px;"></span></div></th>
+                        
+                          <th scope="col" class="name">CREATED BY</th>
+                          <th scope="col" class="name" (click)="sortdate('createdDate')"[ngClass]="{
+                            'ascending': currentSortColumn === 'createdDate' && currentSortDirection === 'asc',
+                            'descending': currentSortColumn === 'createdDate' && currentSortDirection === 'desc'
+                          }"><div style="width: 180px;">CREATED DATE<span class="sorting" style="margin-left: 25px;"></span></div></th>
+                         
+                          <th scope="col" class="name" (click)="sort('status')"[ngClass]="{
+                            'ascending': currentSortColumn === 'status' && currentSortDirection === 'asc',
+                            'descending': currentSortColumn === 'status' && currentSortDirection === 'desc'
+                          }"><div style="width: 120px;">STATUS<span class="sorting" style="margin-left: 25px;"></span></div></th>
+                          <th scope="col" class="name" class="sticky-column-right bg-light" style="background-color: #0151be !important;color: #fff !important;">EDIT</th>
+                          </tr>
+                    </thead>
+                    
+                    <tbody>
+                      <tr *ngFor="let item of dataList | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i=index">
+                        <td *ngIf="userName===support"><input type="checkbox" style="position: unset;width: 20px;height: 20px;" [(ngModel)]="item.isSelected" name="list_name" [attr.disabled]="item.status === 'Approved' ? true : null" (change)="isAllSelected()" /></td>
+                        <td>{{ i + 1 + (page - 1) * pageSize }}</td>
+                        <td>{{item.srcUniversityName}}</td>
+                        <td>
+                          <tr><span style="font-weight: 700;">Project Title</span>: {{item.projectTitle}}</tr>
+                          <!-- <tr><span style="font-weight: 700;">Project ID</span>: {{item.projectId}}</tr> -->
+                          <tr><span style="font-weight: 700;">Project Description</span>: {{item.projectDescription}}</tr>
+                          <tr><span style="font-weight: 700;">Funding Type</span>: {{item.projectFundingType}}</tr>
+                          <tr><span style="font-weight: 700;">Sanctioned Amount</span>: {{item.sanctionedAmount}}</tr>
+                          <tr><span style="font-weight: 700;">Project Status</span>: {{item.projectStatus}}</tr>
+                        </td>
+                        <td>{{item.inputSource}}</td>
+                        <td>{{item.createdByName}}</td>
+                        <td>{{item.createdDate}}</td>         
+                        <td>{{item.status}}</td>
+                        <td class="sticky-column-right bg-light">
+                          <ng-container *ngIf=" item.status !== 'Verified' ">
+                              
+                            <!-- <a style="font-size: 20px;cursor: pointer;" class="fa fa-edit control-btn" (click)="edit(item.projectId,item.inputSource,item.srcUniversityId)"></a>   -->
+                            <a style="font-size: 20px;cursor: pointer;" class="fa fa-edit control-btn" (click)="edit(item.projectId,item.srcUniversityId)"></a>                    
+                  
+                          </ng-container></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              </div>
+            </div>
+           
+              <div class="row d-flex justify-content-center">
+                <div class="col-lg-12">
+                  <div class="row ">
+                    <div class="col-lg-4 text-right" style="margin-top: 10px;margin-left: 20%;">
+                      <ngb-pagination style="float: right;" [maxSize]="3" [pageSize]="pageSize" [collectionSize]="collectionSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+    </div>
+</div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+<style>
+span.sorting:before,
+span.sorting:after {
+font-size: 14px; /* Adjust the font size as needed */
+color: #686565; /* Default color for the arrows */
+}
+
+/* Styling for ascending arrow */
+th.ascending span.sorting:before {
+color: #f3f1f1; /* Change the color to highlight ascending arrow */
+}
+
+/* Styling for descending arrow */
+th.descending span.sorting:after {
+color: #ffffff; /* Change the color to highlight descending arrow */
+}
+
+
+</style>

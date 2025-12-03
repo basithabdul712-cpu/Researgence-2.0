@@ -1,0 +1,399 @@
+<style>
+  /* .menu-opens {
+  padding-left: 0%;
+} */
+
+.menu-closeds {
+  padding-left: 260px;
+}
+</style> 
+<div class="content-wrapper" [ngClass]="{'menu-opens': !isMenuOpen, 'menu-closeds': isMenuOpen}"  style="font-family: 'Red Hat Display', sans-serif; background: var(--background-white);background-size: cover;background-attachment: fixed;">
+<div class="container-fluid" [ngClass]="{'pageBlur':enableBox}">
+  <div class="row" style="margin-bottom: -23px;">
+    <div class="alert alert-dismissible alert-info" >
+      <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;" ><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+    <div class="row" style="margin-left: -24px;">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 7px;">
+           <div class="container container-90 ">
+          <div class="row">
+         <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '20px'}" >
+                 <h2>Welcome to Your Researgence Repository</h2>
+                 <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+           <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" href="/newrequest">here</a> to contact our team.</p>
+               </div>
+               <div class="col-lg-5 col-md-5 col-sm-5" style="margin-left: -5px;"><a class="link-green help-btn" href="/newrequest"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+              </div>
+       </div>
+      </div>
+       </div>
+     </div>
+
+    <div class="container container-90" style="width: 90%;">
+      <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '170px' : '20px'}">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="inner-page-header gradient-box">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h3 class="page_title" style="font-size: 24px;">My Added Projects</h3>
+                </div>
+                <div class="col-lg-6">
+                  
+                  <a  class="btn-outline float-right ml-20" style="cursor: pointer;" (click)="newProject()" >Add New</a>
+                  <a   class="btn-outline float-right" style="cursor: pointer;" (click)="exportexcel()" >Download Excel</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+           
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="filter">
+        <div > 
+          
+            <div class="sort">
+          <label class="control-label heading_sm">Search</label>
+          <input  type="search" class="form-field" style="width:300px"[(ngModel)]="searchQuery" (keyup)="searchTab()" >
+        </div>
+        <div class="sort"> <span class="custom-dropdown">
+          <label class="control-label heading_sm">Show</label>
+          <select style="width: 150px"[(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+            <option *ngFor="let size of pageSizes" [value]="size" [selected]="size == pageSize">{{ size }}</option>
+          </select>
+          </span> </div>
+      </div>
+            </div>
+       
+       <div class="result col-lg-12" style="padding-left: unset;padding-right: unset;">
+        <div class="content-wrapper-white" style="overflow: auto;margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+          <div>
+            <h6 class="text"> Showing  {{ startrow + 1 }} to {{ endrow}} of {{this.collectionSize}} records</h6>
+           </div>
+          <table id="example" class="table table-bordered"  >
+            <thead style="    background: #0151be;
+            color: #fff;">
+              <tr>
+                    <th  scope="col" class="name">S.NO</th>
+                    <!-- <th  scope="col" style="width: 8%;" class="name">EmployeeId</th> -->
+                    <th  style="width:10%"  scope="col" class="name">Author Details</th>
+                    <th  style="width: 35%;" scope="col" class="name">Project Details</th>
+                    <th  style="width: 7%;" scope="col" class="name" (click)="sort('projectStatus')">Project Status<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'projectStatus' ? 'projectStatus' : 'undefined')"></span></th>
+                    <th  scope="col" class="name" (click)="sortdate('projectStartDate')">Start Date<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'projectStartDate' ? 'projectStartDate' : 'undefined')"></span></th>
+                    <th  scope="col" class="name" (click)="sortdate('projectEndDAte')">End Date<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'projectEndDAte' ? 'projectEndDAte' : 'undefined')"></span></th>
+                    <th  scope="col" class="name" (click)="sort('createdBy')">CreatedBy<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'createdBy' ? 'createdBy' : 'undefined')"></span></th>
+                    <th  scope="col" class="name" (click)="sortdate('completionDate')">Completion Date<span [ngClass]="'sorting_'+ currentSortDirection+'_'+(currentSortColumn == 'completionDate' ? 'completionDate' : 'undefined')"></span></th>
+                    <th  style="width: 35%;" scope="col" class="name" >Project Detailing</th>
+                    <th  scope="col" class="name">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of dataList | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i=index">
+                      <td>{{ i + 1 + (page - 1) * pageSize }}</td>
+                      <!-- <td>{{item.employeeId}}</td> -->
+                      <td>
+                        <p >{{item.fullName}}</p>
+                      </td>
+                      <td>
+                        <p><span style="font-weight: bold;">Title:</span>{{item.projectTitle}}</p>
+                        <p ><span style="font-weight: bold;">Project Funding Type:</span>{{item.projectFundingType}}</p>
+                        <p><span style="font-weight: bold;">Project Funding Agency:</span>{{item.projectFundingAgency}}</p>
+                        <p><span style="font-weight: bold;">Project Funding Agency Type:</span>{{item.projectFundingAgencyType}}</p>
+                        <!-- <a class="fa fa-file-pdf-o" style="color: red;cursor: pointer;" *ngIf="item.rfstYpe!='Linked' && item.pdfFileLocation && item.pdfFileLocation.trim() !== ''"  (click)="testNew(item.pdfFileLocation)"></a> -->
+                      </td>
+                      <td >{{item.projectStatus | uppercase}}</td>
+                      <td>{{item.projectStartDate | date:'dd/MM/yyyy'}}</td>
+                      <td>{{item.projectEndDAte | date:'dd/MM/yyyy'}}</td>
+                      <td>{{item.createdBy}}</td>
+                      <td>{{item.completionDate | date:'dd/MM/yyyy'}}</td>
+                      <!-- <td>{{item.projectEntryCompletionPercentage}}</td> -->
+                       <th style="width: 35%;" scope="col" class="name">
+                          Project Detailing
+                          <div class="progress" style="height: 20px; margin-top: 5px;">
+                            <div class="progress-bar" role="progressbar"
+                                [ngStyle]="{ 'width': item.projectEntryCompletionPercentage + '%' }"
+                                [attr.aria-valuenow]="item.projectEntryCompletionPercentage"
+                                aria-valuemin="0" aria-valuemax="100"
+                                style="background-color: mediumseagreen !important;">
+                              {{item.projectEntryCompletionPercentage}}%
+                            </div>
+                          </div>
+                        </th>
+
+                      <td>
+                        
+                          <a style="font-size: 20px;cursor: pointer;" (click)="gotoedit(item.projectId)" class="fa fa-edit control-btn"></a>
+                     
+                        <!-- <ng-template #editButtons>
+                          <ng-container *ngIf="item.status == 'New' && item.rfstYpe == 'Linked'">
+                            <a style="font-size: 20px;" class="fa fa-trash control-btn" (click)="delete(item.requestId)"></a>
+                          </ng-container>
+                          <ng-container *ngIf=" !item.rfstYpe=='Linked'">
+                            
+                            <a style="font-size: 20px;" class="fa fa-edit control-btn" (click)="gotoedit(item.requestId)"></a>
+                           
+                        </ng-container>
+                        <ng-container *ngIf="item.status == 'New'&&item.rfstYpe =='Manual'">
+                            
+                          <a style="font-size: 20px;" class="fa fa-edit control-btn" (click)="gotoedit(item.requestId)"></a>
+                                           
+                        <a style="font-size: 20px;" class="fa fa-trash control-btn" (click)="delete(item.requestId)"></a>
+                      </ng-container>
+                      
+                        </ng-template> -->
+                           
+                      </td>
+                  </tr>
+                  </tbody>
+                </table>
+           </div>     
+                      <br>
+                      <div style="width: 40%;margin-left: 40%;">
+                      <ngb-pagination  [maxSize]="3" [pageSize] = "pageSize" (pageChange)="onPageChange($event)"[collectionSize]="collectionSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+                    </div>
+                      <br><br><br>  
+                    </div>
+                  </div>
+                 </div>
+                </div>
+             </div>
+          </div>
+        </div>
+
+
+        <div class="modal fade modal_special in" style="display: block;opacity: unset;" id="add_new_form" tabindex="-1" role="dialog"
+        aria-labelledby="add_new_modal" aria-hidden="true" *ngIf="enableProjectNew">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width: 1000px;top: 60px;left: -150px;">
+            <div class="modal-header" >
+              <p class="modal-title" id="add_new_modal" style="width: 100%;">Add Project</p>
+              <button type="button" class="close" style="background: transparent;border:transparent" data-dismiss="modal" aria-label="Close" (click)="closeProject()"><span
+                  aria-hidden="true">&times;</span> </button>
+            </div>
+            <div class="modal-body">
+      
+              <form id="step-form">
+      
+                <fieldset *ngIf="enableProjectAdd">
+                  <div class="form-card">
+                    <div class="form_header">
+                      <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                      <h2 class="fs-title">Was this funded project awarded while working with your current university or elsewhere?</h2>
+                    </div>
+                    <div class="radio">
+                      <div class="col-lg-3" style="cursor: default;">
+                        <input type="radio" value="Yes"
+                          style="z-index: 3;cursor: pointer;position: relative;left: -3px;top: 0px;" [(ngModel)]="checkProjectTitle"
+                          (ngModelChange)="updateValuesProject()">
+                        <label for="radio_title">Yes</label>
+                      </div>
+                      <div class="col-lg-9" style="cursor: default;">
+                        <input type="radio" value="No"
+                          style="z-index: 3;cursor: pointer;position: relative;left: -3px;top: 0px;" [(ngModel)]="checkProjectTitle"
+                          (ngModelChange)="updateValuesProject()">
+                        <label for="radio_doi">No</label>
+                      </div>
+                    </div>
+                    <br>
+                    <input *ngIf="enableProjectUniv"  type="text" placeholder="Enter the university" name="searchUnivProj" [(ngModel)]="searchUnivProj" (keyup)="changeTitleProject(searchUnivProj)">
+                    <ul *ngIf="titleEnableProject" class="alignDrop">
+                      <li *ngFor="let n of fill" (click)="onSelectUnivProj(n.universityName,n.universityId)">
+                        {{ n.universityName }}
+                      </li>
+                    </ul>
+                  </div>
+                  <input type="button" name="next" [disabled]="checkProjectTitle==undefined" style="margin-top: 50px;"
+                    class="next btn-outline-blue float-right" (click)="searchBasic()" value="Continue" />
+                </fieldset>
+      
+                <fieldset *ngIf="enableProjectNum">
+                  <div class="form-card"style="height: 400px; overflow-y: auto; overflow-x: hidden;">
+                    <div class="row form_header" style="max-width: max-content;float: none;">
+                      <div class="col-lg-2"><img src="assets/given/img/add-new-icon.jpg" alt="" width="80"></div>
+                      <div class="col-lg-10">
+                        <h2 class="fs-title">Proceed to add details of your project</h2>
+                      </div>
+      
+                    </div>
+                    <div class="row" style="padding-right: 40px;">
+                      <div class="col-lg-2">&nbsp;</div>
+                      <div class="col-lg-10">&nbsp;
+                        <!-- <p class="small-text">All fields are mandatory along with document upload</p> -->
+                      </div>
+                    </div>
+      
+                    <div class="row" style="width: 95%;">
+                      <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project Title<span style="color: red;"  >*</span></label>
+                      </div>
+                      <div class="col-lg-9">
+                        <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Enter the Title>" name="projectBasicDl.projectTitle" [(ngModel)]="projectBasicDl.projectTitle" >     
+                        </div>
+                    </div>
+      
+                    <div class="row" style="width: 95%;">
+                      <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Funding Type<span style="color: red;"  >*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                          <select style="margin-top: -10px;" class="custom-select line-select" name="projectBasicDl.projectFundingTypeName" [(ngModel)]="projectBasicDl.projectFundingTypeName" (ngModelChange)="changeFundType(projectBasicDl.projectFundingTypeName)"> 
+                            <option value="undefined" selected disabled>Select Funding Type</option>
+                            <option *ngFor="let item of projectFundingType" class="select-selected" [value]="item.value">{{item.value}}</option>
+                          </select>
+                        </div>
+      
+                        <div class="col-lg-1" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Funding Agency<span style="color: red;"  >*</span></label>
+                        </div>
+                        <div class="col-lg-2">
+                          <select style="margin-top: -10px;" class="custom-select line-select" name="projectBasicDl.projectFundingAgencyName" [(ngModel)]="projectBasicDl.projectFundingAgencyName" (ngModelChange)="changeFundAgency(projectBasicDl.projectFundingAgencyName)"> 
+                            <option value="undefined" selected disabled>Select Funding Agency</option>
+                            <option *ngFor="let item of projectFundingAgency" class="select-selected" [value]="item.value">{{item.value}}</option>
+                          </select>
+                        </div>
+      
+                          <div class="col-lg-1" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Agency Type<span style="color: red;"  >*</span></label>
+                            </div>
+                          <div class="col-lg-2" style="display: flex;flex-flow: row;">
+                            <select style="margin-top: -10px;" class="custom-select line-select" name="projectBasicDl.projectFundingAgencyTypeName" [(ngModel)]="projectBasicDl.projectFundingAgencyTypeName" (ngModelChange)="changeFundAgencyType(projectBasicDl.projectFundingAgencyTypeName)"> 
+                              <option value="undefined" selected disabled>Select Agency Type</option>
+                              <option *ngFor="let item of projectFundingAgencyType" class="select-selected" [value]="item.value">{{item.value}}</option>
+                            </select> 
+                            </div>
+                         </div>
+      
+                    <div class="row" style="width: 95%;">
+                      <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Technology Areas</label>
+                      </div>
+                      <div class="col-lg-9">
+                        <!-- <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Enter the Technology Areas>" name="patTitle" [(ngModel)]="projectBasicDl" >      -->
+                          <input style="border: 0;border-bottom: #ccc 2px solid;border: 1px solid lightgray;"  type="text" class="form-control" placeholder="Enter ResearchArea" [(ngModel)]="newTag" (keydown.enter)="addTag()" (keyup)="onResearcher(newTag)" #inputBox/>
+                          <ul *ngIf="researchDrop"  class="editDrop" style="background: #d2d4d6;">
+                            <li *ngFor="let list of researchname"  (click)="onInputTag(list.value)">
+                               {{ list.value }}
+                            </li>
+                         </ul>
+                         <div class="tag-list" style="margin-top: 5px;margin-bottom: 5px;">
+                          <span class="tag" *ngFor="let tag of tags">{{ tag }} <span class="remove" (click)="removeTag(tag)">&times;</span></span>
+                        </div>
+                        </div>
+                    </div>
+      
+                    <div class="row" style="width: 95%;">
+                      <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project Description<span style="color: red;"  >*</span></label>
+                      </div>
+                      <div class="col-lg-9">
+                        <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Enter the project description>" name="projectBasicDl.projectDescription" [(ngModel)]="projectBasicDl.projectDescription" >     
+                        </div>
+                    </div>
+      
+                    <div class="row" style="width: 95%;">
+                      <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Sanctioned Amount<span style="color: red;"  >*</span></label>
+                      </div>
+                      <div class="col-lg-2" style="display: flex;flex-flow: row;">
+                        <input style="height: 35px;border: 1px solid lightgray;" type="number" id="" placeholder="<Enter the Amount>" name="projectBasicDl.projectSanctionedAmount" (keyup)="onAmountChange()" [(ngModel)]="projectBasicDl.projectSanctionedAmount" >   
+                          <span style="margin-top: 9px;">INR</span>  
+                        </div>
+      
+                        <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">In Words</label>
+                        </div>
+                        <div class="col-lg-4">
+                          <span>{{projectBasicDl.projectSanctionedAmountInWords}}</span>
+                          <!-- <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" placeholder="<Amount in words>" name="projectBasicDl.projectSanctionedAmountInWords" [(ngModel)]="projectBasicDl.projectSanctionedAmountInWords" readOnly>      -->
+                          </div>
+                    </div>
+      
+                    <div class="row" style="width: 95%;">
+                      <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project Start Date<span style="color: red;"  >*</span></label>
+                      </div>
+                      <div class="col-lg-2">
+                        <input style="height: 35px;border: 1px solid lightgray;" type="date" id=""  name="projectBasicDl.projectStartDate" [(ngModel)]="projectBasicDl.projectStartDate" (ngModelChange)="calcDuration()">   
+                        </div>
+      
+                        <div class="col-lg-2" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Project End Date<span style="color: red;"  >*</span></label>
+                        </div>
+                        <div class="col-lg-2">
+                          <input style="height: 35px;border: 1px solid lightgray;" type="date" id="" name="projectBasicDl.projectEndDate" [(ngModel)]="projectBasicDl.projectEndDate" (ngModelChange)="calcDuration()">     
+                          </div>
+      
+                          <div class="col-lg-1" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Duration</label>
+                          </div>
+                          <div class="col-lg-2" style="display: flex;flex-flow: row;">
+                            <input style="height: 35px;border: 1px solid lightgray;" type="text" id="" name="projectBasicDl.projectDurationInYears" [(ngModel)]="projectBasicDl.projectDurationInYears" readonly>   
+                              <span style="margin-top: 9px;">Yrs</span>  
+                            </div>
+                    </div>
+      
+                    <div class="row" style="width: 95%;">
+                      <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Status<span style="color: red;"  >*</span></label>
+                      </div>
+                      <div class="col-lg-3">
+                            <select style="margin-top: -10px;" class="custom-select line-select" name="projectBasicDl.projectStatusName" [(ngModel)]="projectBasicDl.projectStatusName" (ngModelChange)="changeStatus(projectBasicDl.projectStatusName)"> 
+                              <option value="undefined" selected disabled>Select Status</option>
+                              <option *ngFor="let item of projectStatusList" class="select-selected" [value]="item.value">{{item.value}}</option>
+                            </select>   
+                        </div>
+      
+                        <div class="col-lg-3" style="text-align: right;"><label style="font-size: 14px;font-weight: 600;">Completion Date<span style="color: red;"  >*</span></label>
+                        </div>
+                        <div class="col-lg-3">
+                          <input style="height: 35px;border: 1px solid lightgray;" type="date" id=""  name="projectBasicDl.projectCompletionDate" [(ngModel)]="projectBasicDl.projectCompletionDate" >     
+                          </div>
+                    </div>
+      
+                    <!-- <div class="row">
+                      <div class="col-lg-3">&nbsp;</div>
+                      <div class="col-lg-9">
+                        <div class="row">
+                          <div class="col-lg-3">
+                            <input type="file" id="upload" (change)="selectFileProject($event)" hidden />
+                            <label for="upload" class="btn-upload" style="color: #0051bf">Upload</label>
+                          </div>
+                          <div class="col-lg-9">
+                            <p class="text-italic" *ngIf="fileProj"><span class="text_bold">{{fileProj.name}}</span> is attached</p>
+                            <p class="text-sm text-grey">Only PDF file less than 10 MB is allowed</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+      
+      
+                    <!-- <div *ngIf="enableMessage">
+                      <div class="col-lg-10"><label style="color: red;">{{checkPatAvailability.messege}}</label></div>
+                    </div> -->
+      
+                  </div>
+                  
+                  <div>
+                    <input type="button" name="next" class="next btn-solid-blue" value="Submit" (click)="saveProjectDetail()"
+                      style="margin-left: 10px;float: right;height: 37px;margin-right: 7px;" />
+                    <input type="button" class="btn-outline-blue" value="Close" style="float: right" (click)="closeProject()" />
+                  </div>
+                </fieldset>
+                <fieldset *ngIf="projectSubmitEnable">
+                  <div class="form-card">
+                    <div class="row form_header justify-content-center">
+      
+      
+                      <div class="col-lg-3">
+                        <img src="assets/given/img/success-icon.gif" alt="" width="128">
+                      </div>
+                      <div class="col-lg-8">
+                        <h2 class="fs-title">Your submission has been successfully registered</h2>
+                        <p>We shall validate the submission and credit the project into your profile shortly.</p>
+                      </div>
+                    </div>
+                    <button type="button" class="btn-outline-blue float-right" data-dismiss="modal" aria-label="Close"
+                      (click)="doneProject()">Done</button>
+                  </div>
+      
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

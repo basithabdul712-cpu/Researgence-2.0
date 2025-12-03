@@ -1,0 +1,391 @@
+<style>
+  .menu-open {
+    width: 100%;
+  }
+
+  .menu-closeds {
+    width: 83%;
+    margin-left: 250px;
+  }
+
+  .line-select {
+
+    width: 187px;
+
+  }
+  *{
+    transition: unset;
+  }
+  
+</style>
+<script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+
+<div class="content-wrapper">
+  <div class="container-fluid" [ngClass]="{'menu-closeds': isMenuOpen}">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="alert alert-dismissible alert-info" style="margin-bottom: -20px;">
+          <button type="button" class="close" data-dismiss="alert" style="top: -11px;"><i class="fa fa-remove"></i></button>
+          Currently logged in as {{Name}}({{roleName}}) </div>
+      </div>   
+            <div class="row">
+              <div class="video_bar bluebar_expand"[ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+              [ngStyle]="{
+            'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '':'unset','width':stickyEnable&&isMenuOpen? '95%':''
+          }" #blueheader style="padding-left: 50px;">
+                   <div class="container container-90 ">
+                  <div class="row">
+                 <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '19px'}" style="margin-left: -26px; "   >
+                         <h2 style="font-size: 19px;">Welcome to the ROR - Project - Data Mining page</h2>
+                         <p style="margin-top: 0;font-size: 12px;">Researgence captures publications from its AI-search Engine called Episteme which houses around 110 million meta-data. This is the place to mine your search further based on various qualitative and quantitative metrics.</p>
+                   <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" >here</a> to contact our team.</p>
+                       </div>
+                       <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn" href="/newrequest"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                        <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+                      </div>
+               </div>
+              </div>
+               </div>
+             </div> 
+             <div class="container container-90 content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '120px' : '20px'}">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner-page-header gradient-box">
+            <div class="row">
+              <div class="col-lg-12">
+                <h3 class="page_title">Data Mining</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <form class="form" style="font-family: 'Red Hat Display', sans-serif;">
+            <div class="col-lg-12 bg-white" style="border: 1px solid #ccc; margin-bottom: 50px;">
+              <table class="form-table mining-table" style="margin-top:20px;">
+                <tbody><tr>
+                  <td class="column-label"><label>Patent no.</label></td>
+                  <td>
+                    <input class="form-text"name="Patent No"
+                    [(ngModel)]="publicationNo" >
+                </td>        
+                </tr>
+
+                <tr>
+                  <td class="column-label"><label>Title</label></td>
+                  <td><input class="form-text"name="Patent Title"
+                    [(ngModel)]="publicationTitle" (keyup)="changePubTitle(searchbar.value)" #searchbar>
+                    <ul *ngIf="titleEnable"  class="alignDrop">
+                      <li *ngFor="let n of pubList" (click)="selectTitle(n.name,n.id)">
+                        {{ n.name }}
+                      </li>
+                    </ul>
+                </td>
+                
+                </tr>
+                <tr>
+                  <td class="column-label"><label>Application No</label></td>
+                  <td> 
+                    <input class="form-text"  name="applicantNo" [(ngModel)]="applicantNo">
+                </td>
+                </tr>   
+              </tbody></table>
+              <table class="form-table mining-table" >
+                <tbody><tr >
+
+                    <td class="column-label" *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'"><label>School</label></td>
+                      <td style="width: 792px;" *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'"><div class="btn-group bootstrap-select show-tick" style="width: 54%;" (mouseleave)="showDropDownScl = false">
+                        <button
+                        style="background-color: #fff; padding: 5px 10px;text-align: left;  width: 146%; color: black;border-bottom: 1px solid  #BABABA;"
+                        type="button" class="form-select"(click)="showDropDownScl=!showDropDownScl"
+                        [(ngModel)]="multipleScl">
+                        <span *ngIf="selectDBScl.length <= 0">Select School</span>
+                        <span *ngIf="selectDBScl.length > 0">{{selectDBScl.join(', ')}}</span>
+                        <i class="fa fa-angle-down fa-2x"></i>
+                      </button> <div style="width: 146%;height: 150px;overflow: auto; background-color:  #ffffff;; color: rgb(0, 0, 0);" class="drop-show"
+                      [style.display]="showDropDownScl ? 'block' : 'none'">
+                      <label *ngFor="let a of layerSchool">
+                        <input type="checkbox" style="position: unset;display: contents;" [(ngModel)]="a.checked"
+                          (change)="getSelectedValueScl(a.checked, a.schoolName,a.schoolId)" >
+                        <span class="dbname">{{a.schoolName}}</span>
+                        <span *ngIf="a.checked"  class="glyphicon glyphicon-ok check-mark"></span>               
+                      </label>
+                    </div></div></td>
+
+
+                      <td class="column-label2"*ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'"><label>Campus</label></td>
+                    <td style="width: 792px;" *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1' "><div class="btn-group bootstrap-select show-tick" style="width: 54%;" (mouseleave)="showDropDownCamp = false">
+                      <button
+                      style="background-color: #fff; padding: 5px 10px;text-align: left;  width: 146%; color: black;border-bottom: 1px solid  #BABABA;"
+                      type="button" class="form-select"(click)="showDropDownCamp=!showDropDownCamp"
+                      [(ngModel)]="multipleCamp">
+                      <span *ngIf="selectDBCamp.length <= 0">Select Campus</span>
+                      <span *ngIf="selectDBCamp.length > 0">{{selectDBCamp.join(', ')}}</span>
+                      <i class="fa fa-angle-down fa-2x"></i>
+                    </button> <div style="width: 146%;height: 150px;overflow: auto; background-color:  #ffffff;; color: rgb(0, 0, 0);" class="drop-show"
+                    [style.display]="showDropDownCamp ? 'block' : 'none'">
+                    <label *ngFor="let a of layerCampus">
+                      <input type="checkbox" style="position: unset;display: contents;" [(ngModel)]="a.checked"
+                        (change)="getSelectedValueCamp(a.checked, a.locationName,a.locationId)" >
+                      <span class="dbname">{{a.locationName}}</span>
+                      <span *ngIf="a.checked"  class="glyphicon glyphicon-ok check-mark"></span>               
+                    </label>
+                  </div></div></td>
+                </tr>
+                </tbody>
+              </table>
+                <table class="form-table mining-table" >
+                  <tbody>
+                <tr>
+                  <td class="column-label" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'"><label>Institute</label></td>
+                    <td style="width: 792px;" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'"><div class="btn-group bootstrap-select show-tick" style="width: 54%;" (mouseleave)="showDropDownInst = false">
+                      <button
+                      style="background-color: #fff; padding: 5px 10px;text-align: left;  width: 146%; color: black;border-bottom: 1px solid  #BABABA;"
+                      type="button" class="form-select"(click)="showDropDownInst=!showDropDownInst"
+                      [(ngModel)]="multipleInst">
+                      <span *ngIf="selectDBInst.length <= 0">Select Institute</span>
+                      <span *ngIf="selectDBInst.length > 0">{{selectDBInst.join(', ')}}</span>
+                      <i class="fa fa-angle-down fa-2x"></i>
+                    </button> <div style="width: 146%;height: 150px;overflow: auto; background-color:  #ffffff;; color: rgb(0, 0, 0);" class="drop-show"
+                    [style.display]="showDropDownInst ? 'block' : 'none'">
+                    <label *ngFor="let a of layerInst">
+                      <input type="checkbox" style="position: unset;display: contents;" [(ngModel)]="a.checked"
+                        (change)="getSelectedValueInst(a.checked, a.instituteName,a.instituteId)" >
+                      <span class="dbname">{{a.instituteName}}</span>
+                      <span *ngIf="a.checked"  class="glyphicon glyphicon-ok check-mark"></span>
+                      
+                    </label>
+                  </div></div></td>
+    
+                  <td class="column-label2"  *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'"><label>Department</label></td>
+                    <td style="width: 792px;" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'"><div class="btn-group bootstrap-select show-tick" style="width: 54%;" (mouseleave)="showDropDownDept = false">
+                      <button
+                      style="background-color: #fff; padding: 5px 10px;text-align: left;  width: 146%; color: black;border-bottom: 1px solid  #BABABA;"
+                      type="button" class="form-select"(click)="showDropDownDept=!showDropDownDept"
+                      [(ngModel)]="multipleDept">
+                      <span *ngIf="selectDBDept.length <= 0">Select Department</span>
+                      <span *ngIf="selectDBDept.length > 0">{{selectDBDept.join(', ')}}</span>
+                      <i class="fa fa-angle-down fa-2x"></i>
+                    </button> <div style="width: 146%;height: 150px;overflow: auto; background-color:  #ffffff;; color: rgb(0, 0, 0);" class="drop-show"
+                    [style.display]="showDropDownDept ? 'block' : 'none'">
+                    <label *ngFor="let a of layerDept">
+                      <input type="checkbox" style="position: unset;display: contents;" [(ngModel)]="a.checked"
+                        (change)="getSelectedValueDept(a.checked, a.departmentName,a.departmentId)" >
+                      <span class="dbname">{{a.departmentName}}</span>
+                      <span *ngIf="a.checked"  class="glyphicon glyphicon-ok check-mark"></span>
+                    </label>
+                  </div></div></td>
+                </tr>
+                  </tbody>
+                </table>
+                <form>
+                <table class="form-table mining-table" >
+                  <tbody>
+                <tr>
+                  <td class="column-label" ><label>Filing Date</label></td>
+                  <td  class="newone">
+                    <input type="text" placeholder="Year" class="form-control" style="height: 39px; border-radius: 5px; border: #ccc 1px solid;" bsDatepicker [(ngModel)]="tempfromYear" [(bsValue)]="fromYear"
+                    [bsConfig]="{ dateInputFormat: 'YYYY',minMode: 'year',maxDate:maxDate }" >
+                  </td>
+                  <td class="newtd">    
+                    <select class="form-select time-drop" style="width: 96%;"  name="pubdDateFrom" [(ngModel)]="pubDateMonthFrom">
+                      <option disabled selected value="undefined" >Month</option>
+                      <option *ngFor="let item of month"  [value]="item.id">
+                        {{item.name}}</option>
+                    </select></td>
+                  <td class="column-label2"><label>To</label></td>
+                  <td class="newone">
+                    <input class="form-control" placeholder="Year" type="text" style="height: 39px; border-radius: 5px; border: #ccc 1px solid;"   bsDatepicker [(ngModel)]="temptoYear" [(bsValue)]="toYear"
+                    [bsConfig]="{ dateInputFormat: 'YYYY',minMode: 'year',maxDate:maxDate }">
+                  </td>
+                  <td class="newtd">
+                    <select class="form-select time-drop" style="width: 96%;"  name="pubDateMonthto" [(ngModel)]="pubDateMonthto">
+                      <option disabled selected value="undefined" >Month
+                      </option>
+                      <option style="color: black;" *ngFor="let item of month" class="select-selected" class="size" [value]="item.id">
+                        {{item.name}}</option>
+                    </select></td>
+                </tr>
+              </tbody></table>
+            </form>
+              <table class="form-table mining-table">
+                <tbody><tr>
+                  <td class="column-label"><label>Patent’s Stages</label></td>
+
+                  <td style="width: 792px;" ><div class="btn-group bootstrap-select show-tick" style="width: 54%;" (mouseleave)="showDropDown = false">
+                    <button
+                    style=" background-color: #fff; padding: 5px 10px;text-align: left;  width: 146%; color: black;border-bottom: 1px solid  #BABABA;"
+                    type="button" class="form-select"(click)="showDropDown=!showDropDown"
+                    [(ngModel)]="multidatabase">
+                    <span *ngIf="selectDB.length <= 0">Select One or more</span>
+                    <span *ngIf="selectDB.length > 0">{{selectDB.join(', ')}}</span>
+                    <i class="fa fa-angle-down fa-2x"></i>
+                  </button> <div style="width: 146%; background-color:  #ffffff;; color: rgb(0, 0, 0);" class="drop-show"
+                  [style.display]="showDropDown ? 'block' : 'none'">
+                  <label *ngFor="let a of databaseDropDown">
+                    <input type="checkbox" style="position: unset;display: contents;" [(ngModel)]="a.checked"
+                      (change)="getSelectedValue(a.checked, a.value,a.id)" >
+                    <span class="dbname">{{a.value}}</span>
+                    <span *ngIf="a.checked"  class="glyphicon glyphicon-ok check-mark"></span>
+                    
+                  </label>
+                </div></div></td>
+                  <td ><a class="radio radio-info radio-inline">
+                      <input type="radio" id="inlineRadio1" [(ngModel)]="andorType" value="AND" name="radioInline" checked="">
+                      <label for="inlineRadio1"> And</label>
+                    </a>
+                    <a class="radio radio-inline" style="margin-left: 20px;">
+                      <input type="radio" id="inlineRadio2"[(ngModel)]="andorType" value="OR" name="radioInline">
+                      <label for="inlineRadio2"> Or </label>
+                    </a></td>
+                </tr>
+              </tbody></table>
+              
+              <!--advance search form begins here-->
+              <div class="advance-search" *ngIf="advanceEnable" style="display: block;">
+                <hr class="horizontal-line">
+                <p class="small-text text-center"><strong>Advance Search</strong></p>
+                <table class="form-table mining-table">
+                   <tbody>
+                    <tr *ngIf="advanceEnable">
+                    <td class="column-label"><label> Applicant Type</label></td>
+                    <td style="padding-left: 20px;"><div class="form-group" style="display: flex;">
+                      <div class="checkbox checkbox-inline">
+                        <input style="position: unset;" class="db_checkbox" type="checkbox" id="selectAll" [checked]="selectAllPubType" (change)="selectAll()">
+                        <label for="selectAll" style="margin-right: 25px;"> All</label>
+                      </div>
+                      <div class="checkbox checkbox-inline" *ngFor="let item of typeDropDownmn">
+                        <input style="position: unset;" class="db_checkbox" type="checkbox" [id]="item.id" [value]="item.value" [checked]="item.isSelected" (change)="toggleCheckbox(item)">
+                        <label [for]="item.id"    style="margin-right: 25px;" >{{ item.value }}</label>
+                      </div>           
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+                <table class="form-table mining-table">
+                  <tbody>          
+                  <tr *ngFor="let f of row; let i = index;">
+                    <td  class="column-label"  *ngIf="advanceEnable"><label>Date Range</label>
+                      <td style="width: 26%;">
+                      <select class="form-select" [(ngModel)]="f.qualityscore"
+                        [name]="'qualityscore' + f.qualityscore" (change)="checkQualityScore(i,f.qualityscore)">
+                        <option disabled selected value="">Select One or More</option>
+                        <option style="color: black;" class="select-selected" class="size" *ngFor="let item of qualityScoreList">
+                          {{item.value}}</option>
+                      </select>
+                    </td>
+                    <td  class="column-label3"  *ngIf="advanceEnable"><label>FROM</label></td>
+                    <td *ngIf="advanceEnable" >
+                      <input  class="form-text"
+                        [name]="'citattionrangefrom' +f.citattionrangefrom" [(ngModel)]="f.citattionrangefrom"
+                        placeholder="Citation" type="date">
+                    </td>
+                    <td  class="column-label3"  *ngIf="advanceEnable"><label>TO</label></td>
+                    <td *ngIf="advanceEnable" >
+                      <input  class="form-text"
+                        [name]="'citattionrangeto' +f.citattionrangeto" [(ngModel)]="f.citattionrangeto"
+                        placeholder="Citation" type="date">
+                    </td>
+                    <td *ngIf="advanceEnable">
+                      <a class="radio radio-inline">
+                        <input  type="radio" [id]="'inlineRadio' + (i * 2 + 3)" [(ngModel)]="f.enableType" value="AND" [name]="f.enableType" checked="">
+                        <label [for]="'inlineRadio' + (i * 2 + 3)"> And</label>
+                      </a>
+                      <a class="radio radio-inline" style="margin-left: 20px;">
+                        <input type="radio" [id]="'inlineRadio' + (i * 2 + 4)" [(ngModel)]="f.enableType" value="OR" [name]="f.enableType">
+                        <label [for]="'inlineRadio' + (i * 2 + 4)"> Or </label>
+                      </a>
+                  </td>
+                    <td  *ngIf="advanceEnable">              
+                      <a *ngIf="showTrashIcon" class="fa fa-trash control-btn" style="font-size: x-large;margin-left: 5%;"
+                        (click)="removeRow(i)"></a>
+                    </td>         
+                  </tr>
+                  <tr *ngIf="advanceEnable">
+                    <td colspan="6" style="text-align: center;position: relative;">
+                    <a class="btnAddRow fa fa-plus control-btn" (click)="add()" style=" padding: 3px;">
+                    <span class="left"></span><span class="right"></span></a><table class="table-editable"></table>
+                  </td>
+                  </tr>
+                </tbody></table>
+                  <table class="form-table mining-table" style="margin-top:20px;">
+                <tbody><tr *ngIf="advanceEnable">
+                  <td class="column-label"><label>Applicant Name</label></td>
+                  <td><input class="form-text"  name="dervauthorname" [(ngModel)]="dervauthorname" (keyup)="changeAuthor(dervauthorname)">
+                  <ul *ngIf="authorEnable" class="alignDrop">
+                    <li *ngFor="let n of authorList" (click)="onSelectAuthor(n.authorName,n.userId,n.dervAuthorName)">
+                      {{ n.dervAuthorName }}
+                    </li>
+                  </ul>
+                </td>
+                </tr>
+                <tr *ngIf="advanceEnable">
+                  <td class="column-label"><label> Inventor Name</label></td>
+                  <td><input class="form-text"  name="dervfacultyname" [(ngModel)]="dervfacultyname" (keyup)="changeFaculty(dervfacultyname)">
+                  <ul *ngIf="facultyEnable" class="alignDrop">
+                    <li *ngFor="let n of authorList" (click)="onSelectFaculty(n.authorName,n.userId,n.dervAuthorName)">
+                      {{ n.dervAuthorName }}
+                    </li>
+                  </ul>
+                </td>
+                </tr>
+                <tr *ngIf="advanceEnable">
+                  <td class="column-label"><label>Technology Area</label></td>
+                  <td><input class="form-text"  name="technolgyArea" [(ngModel)]="technologyArea">
+                </td>
+                </tr>
+                <tr *ngIf="advanceEnable">
+                  <td class="column-label"><label>Domain</label></td>
+                  <td> 
+                    <input class="form-text"  name="domain" [(ngModel)]="domain">
+                </td>
+                </tr>
+                <tr *ngIf="advanceEnable">
+                  <td class="column-label"><label>Patent Office</label></td>
+                  <td><input class="form-text"  name="journalname" [(ngModel)]="journalname" (keyup)="searchJournal(journalname)">
+                  <ul *ngIf="journalEnable"  class="alignDrop">
+                    <li *ngFor="let n of journalList" (click)="selectJournal(n.value,n.id)">
+                      {{ n.value }}
+                    </li>
+                  </ul></td>
+                </tr> 
+                <tr *ngIf="advanceEnable">
+                  <td class="column-label"><label>Patent Status</label></td>
+                  <td> 
+                    <input class="form-text"  name="patentStatus" [(ngModel)]="patentStatus">
+                </td>
+                </tr>    
+              </tbody></table>
+              </div>
+              <!--advance search form ENDS here-->
+              <table class="form-table mining-table">
+                <tbody><tr>
+                  <td align="right" ><a (click)="refreshPage()" class="link-black">Clear Search</a>
+                    <button class="btn-solid-blue  float-right" style="margin-left: 20px;" (click)="searchData()">Search</button></td>
+                </tr>
+                <tr>
+                  <td><a id="btn-adv-search" *ngIf="!advanceEnable" class="btn-adv-search"(click)="advanceSearch()">Advance Search</a>
+                    <a id="btn-adv-search" *ngIf="advanceEnable" class="btn-adv-search"(click)="advanceSearch()">Clear Advance Search</a>
+                  </td>
+                </tr>
+              </tbody></table>
+            </div>
+          </form>
+        </div>
+            <br>
+            <br>
+          </div>
+        </div>
+        <br>
+        <br>
+  </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

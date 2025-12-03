@@ -1,0 +1,23 @@
+export class DfsSourceTitleData{
+    dfsPubSourceQueueId:Number;
+    universityId:Number;
+    userId:Number;
+    publisherId:Number;
+    publisherName:string;
+    publisherCountryId:Number;
+    publicationSourceId:Number;
+    publicationSourceName:string;
+    levelId:Number;
+    levelName:string;
+    webLink:string;
+    articleTypeId:Number;
+    articleTypeName:string;
+    issn:string;
+    eissn:string;
+    isbn:string;
+    eisbn:string;
+    actionTypeId:Number;
+    remark:string;
+    takenBy:Number;
+    verifiedBy:Number;
+}

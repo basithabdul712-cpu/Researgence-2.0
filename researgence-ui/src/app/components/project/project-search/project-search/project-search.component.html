@@ -1,0 +1,189 @@
+<div class="loader-wrapper" [class.loderhide]="enablePic" *ngIf="!enablePic" >
+  <div class="loader bg-white">
+    <div class="whirly-loader"> </div>
+    <br>
+    <br>
+       <p>Please Wait..Page is loading!</p>
+  </div>
+</div>
+
+<div class="content-wrapper" [ngClass]="{'opensideBar': isMenuOpen}" style="background: var(--background-white);background-size: cover;background-attachment: fixed;min-height: calc(100vh - 80px);transition: padding-left 0.3s ease, margin-left 0.3s ease;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="alert alert-dismissible alert-info">
+          <button type="button" class="close" style="border: none;" data-dismiss="alert"><i class="fa fa-remove"></i></button>
+          Currently logged in as {{Name}}({{roleName}}) </div>
+      </div>
+      <div class="row">
+        <div class="video_bar bluebar_expand"[ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+        [ngStyle]="{
+      'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '':'unset','width':stickyEnable&&isMenuOpen? '95%':''
+    }" #blueheader style="padding-left: 50px;">
+          	<div class="container">
+		   		<div class="row">
+					<div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '16px'}">
+            			<h2>Welcome to Your Researgence Repository</h2>
+            			<p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+						<p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" href="/newrequest">here</a> to contact our team.</p>
+          			</div>
+          			<div class="col-lg-5 col-md-5 col-sm-5"><a href="/newrequest" class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                  <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover"></a> -->
+                </div>
+				</div>
+		   </div>
+        </div>
+      </div>
+      </div>
+        <div class="container container-90 content-pushed" style="width: 90%;" [ngStyle] = "{'padding-top' : stickyEnable ? '100px' : '40px'}">
+          <div class="d-flex align-items-center justify-content-center" *ngIf="excelEnable" style="width: 100%;height:100%;" >
+            <div class="d-flex flex-column align-items-center justify-content-center"  style="width: 300px;height:100px;">
+              <img style="width: 100px;height: 100px;" src="../../../../../assets/images/tree/throbber.gif">
+              <h5 style="margin-top: 10px;">Downloading Please Wait...</h5>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-lg-12">
+            <div class="inner-page-header gradient-box">
+              <div class="row">
+                <div class="col-lg-8">
+                  <h3 class="page_title">Search Results</h3>
+                </div>
+                <div class="col-lg-4">
+                <button  class="btn btn-default dropdown-toggle download_btn_multi" type="button" (click)="toggleDropdown()" style="float: right;height: 34px;padding: revert;background-color: transparent;border: 1px solid #dbdf08;color: #fff;">Download
+                </button>
+                <ul class="dropdown-menu" [class.show]="isDropdownOpen" (mouseleave)="isDropdownOpen = false">
+                  <!-- <li *ngIf="!downloadEnable"  (click)="captureAsPDF('1')" class="pdfHover"><a >Generate PDF</a></li>
+                  <li *ngIf="downloadEnable"  (click)="captureAsPDF('0')" class="pdfHover"><a >PDF</a></li> -->
+                  <li (click)="exportToExcel()" class="pdfHover"><a >EXCEL</a></li>
+                </ul>		
+            </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="publication_list row">
+                <div class="col-lg-12">
+                  <div class="filter">
+                    <div class="sort"> <span class="custom-dropdown">
+                      <label class="control-label heading_sm">Sort</label>
+                        <span class="custom-dropdown">
+                          <select [(ngModel)]="ascendValue" (change)="changesOrder(ascendValue)">
+                            <option *ngFor="let order of orderSort">
+                              {{order}}
+                            </option>
+                          </select>
+                      </span> 
+                    </span></div>
+                    <div class="view"> <span class="custom-dropdown">
+                          <label class="control-label">Paginate</label>
+                          <select [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                            <option *ngFor="let dropcount of pageSizecount" [value]="dropcount">{{dropcount}}</option>
+                          </select>
+                        </span> </div>                  
+                      </div>
+                    </div>
+
+                <div class="result col-lg-12" *ngFor="let item of dataList ;let i=index">
+                  <article class="tagged">
+                    <div style="display: flex;">
+                      <p class="tag_text">{{item.projectFundingAgencyTypeName}} | </p>
+                      <p class="tag_text">{{item.projectFundingAgencyName}}</p>
+                    </div>	
+
+          <div class="row flex">
+            <div class="col-lg-7">
+						     <div class="article_header">
+                        <h2 class="a_title"><span class="sl_no">{{ i + 1 +(page - 1) * pageSize }}</span><span>{{item.projectTitle}}</span></h2>                      
+						     </div>
+                       
+              <div class="article_footer">
+                <div class="a_author">
+                  <table><tbody>
+                    <tr><td>Project Team:</td>
+                      <div *ngIf="item.projectTeam!=null">
+                        <td *ngIf="item.projectTeam.length>1" >
+                          <a class="tooltip1" *ngFor="let r of item.projectTeam" >{{r.split(',')[0]}} 
+                          <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                        </a>
+                         </td>
+                         <td *ngIf="item.projectTeam.length===1" >
+                          <a class="tooltip1">{{item.projectTeam[0].split(',')[0]}} 
+                          <span class="tooltiptext">{{item.projectTeam[0].split(',')[1]}},{{item.projectTeam[0].split(',')[2]}},{{item.projectTeam[0].split(',')[3]}},{{item.projectTeam[0].split(',')[4]}}</span>
+                        </a>
+                         </td>
+                      </div>
+                    </tr></tbody></table></div>
+                
+                <div class="a_author"><table><tbody><tr><td>Principal Investigator:</td>
+                  <div *ngIf="item.principalInvestigator!=null">
+                    <td *ngIf="item.principalInvestigator.length>1" >
+                      <a class="tooltip1" *ngFor="let r of item.principalInvestigator" >{{r.split(',')[0]}} 
+                      <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                    </a>
+                     </td>
+                     <td *ngIf="item.principalInvestigator.length===1" >
+                      <a class="tooltip1">{{item.principalInvestigator[0].split(',')[0]}} 
+                      <span class="tooltiptext">{{item.principalInvestigator[0].split(',')[1]}},{{item.principalInvestigator[0].split(',')[2]}},{{item.principalInvestigator[0].split(',')[3]}},{{item.principalInvestigator[0].split(',')[4]}}</span>
+                    </a>
+                     </td>
+                  </div>
+                </tr></tbody></table></div>	
+                  
+                <div class="a_author co_investigator"><table><tbody><tr><td>Co-Investigator:</td>
+                  <div *ngIf="item.coInvestigator!=null">
+                    <td *ngIf="item.coInvestigator.length>1" >
+                      <a class="tooltip1" *ngFor="let r of item.coInvestigator" >{{r.split(',')[0]}} 
+                      <span class="tooltiptext">{{r.split(',')[1]}},{{r.split(',')[2]}},{{r.split(',')[3]}},{{r.split(',')[4]}}</span>
+                    </a>
+                     </td>
+                     <td *ngIf="item.coInvestigator.length===1" >
+                      <a class="tooltip1">{{item.coInvestigator[0].split(',')[0]}} 
+                      <span class="tooltiptext">{{item.coInvestigator[0].split(',')[1]}},{{item.coInvestigator[0].split(',')[2]}},{{item.coInvestigator[0].split(',')[3]}},{{item.coInvestigator[0].split(',')[4]}}</span>
+                    </a>
+                       </td>
+                      </div>
+                     </tr>
+                    </tbody></table></div>
+						       </div>
+                 </div>
+                      <div class="col-lg-5 flex flex-valign-center"> 
+                        
+							<table class="project score">
+								<tbody><tr>
+									<td class="text-align-r colon-right">Sanctioned Amount</td>
+									<td>{{item.sanctionedAmount}}</td>
+								</tr>
+								<tr>
+									<td class="text-align-r colon-right">Sanctioned Date</td>
+									<td>{{item.sanctionedDate}}</td>
+								</tr>
+								<tr>
+									<td class="text-align-r colon-right">Period</td>
+									<td>{{item.projectPeriod}}</td>
+								</tr>
+								<tr>
+									<td class="text-align-r colon-right">Grant Received</td>
+									<td>{{item.grantReceived}}</td>
+								</tr>
+								
+							</tbody></table>
+                          
+                      </div>
+                    </div>
+                   					  
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="paginate" style="padding-left: 45%;">
+            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [maxSize]="3" [collectionSize]="collapsablesize"
+              (pageChange)="onPageChange($event)">
+            </ngb-pagination>
+            <br><br>
+          </div>
+        </div>
+    </div>

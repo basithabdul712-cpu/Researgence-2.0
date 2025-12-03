@@ -1,0 +1,190 @@
+
+<style>
+  .sidemenu-open {
+  padding-left: 0%;
+}
+
+.menu-closed {
+  padding-left: 250px;
+}
+</style>
+<div class="content-wrapper" [ngClass]="{'sidemenu-open': !isMenuOpen, 'menu-closed': isMenuOpen}" style=" font-family: 'Red Hat Display', sans-serif;">
+  <div class="container-fluid">
+    <div class="row" style="margin-bottom: -23px;">
+      <div class="alert alert-dismissible alert-info" >
+        <button type="button" class="close" data-dismiss="alert" style="background: unset; top: -26%;" ><i class="fa fa-remove"></i></button>
+        Currently logged in as {{Name}}({{roleName}}) </div>
+    </div>
+    <div class="row">
+      <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}" [ngStyle] = "{
+        'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '150px':'unset'
+      }" #blueheader style="padding-left: 50px;">
+           <div class="container container-90 ">
+          <div class="row">
+         <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '20px'}" style="padding-left: 0px;margin-left: -20px;">
+                 <h2>Welcome to Your Researgence Repository</h2>
+                 <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+           <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" >here</a> to contact our team.</p>
+               </div>
+               <div class="col-lg-5 col-md-5 col-sm-5"><a class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+              </div>
+       </div>
+      </div>
+       </div>
+     </div>
+  </div>
+
+<div class="container container-90">
+  <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '150px' : '30px'}">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-page-header gradient-box">
+          <div class="row">
+            <div class="col-lg-6">
+              <h3 class="page_title" style="font-size: 24px;">Service Requests</h3>
+            </div>
+            <div class="col-lg-6">
+              <input type="button" class="btn-outline float-right ml-20" data-toggle="modal" data-target="#add_new" (click)="advancesearch()" value="Advance Search">
+              <input type="button" class="btn-outline float-right ml-20" data-toggle="modal" data-target="#add_new" (click)="assignAuthorList()" value="Assign">
+              <input type="button" class="btn-outline float-right ml-20" data-toggle="modal" data-target="#add_new" (click)="processAndExportToExcel()" value="Download Excel">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="publication_list row">
+          <div class="col-lg-12">
+            <div class="filter">
+              <div class="sort"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">University</label>
+                <select style="width: 150px" [(ngModel)]="filterUniversity">
+                  <option  disabled selected value="undefined">Select University</option>
+                  <option  value="">All University</option>
+                  <option *ngFor="let item of universityList" [value]="item.universityId">{{item.universityName}}</option>
+                </select>
+                </span> </div>
+              <div class="sort"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">Type</label>
+                <select style="width: 100px" [(ngModel)]="filterType" (ngModelChange)="changeType(filterType)">
+                  <option  disabled selected value="undefined">Select Type</option>
+                  <option  value="">All Type</option>
+                  <option  *ngFor="let item of uniqType" [value]="item.serviceTypeId">{{item.serviceTypeName}}</option>
+                </select>
+                </span> </div>
+              <div class="sort"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">Category</label>
+                <select style="width: 100px" [(ngModel)]="filterCategory">
+                  <option  disabled selected value="undefined">Select Category</option>
+                  <option  value="">All Category</option>
+                  <option  *ngFor="let item of categoryList" [value]="item.categoryName">{{item.categoryName}}</option>
+                </select>
+                </span> </div>
+              <div class="sort"> <span class="custom-dropdown">
+                <label class="control-label heading_sm">Priority</label>
+                <select style="width: 100px" [(ngModel)]="filterPriority">
+                  <option disabled selected value="undefined">Select Priority</option>
+                      <option value="">All Priority</option>
+                      <option *ngFor="let item of priorityList" [value]="item.value">{{item.value}}</option>
+                </select>
+                </span> </div>
+                <div class="sort"> <span class="custom-dropdown">
+                  <label class="control-label heading_sm">Status</label>
+                  <select style="width: 100px" [(ngModel)]="filterstatus">
+                    <option disabled selected value="undefined">Select status</option>
+                        <option value="">All Status</option>
+                        <option *ngFor="let item of statusList" [value]="item.value">{{item.value}}</option>
+                  </select>
+                  </span> </div>
+                  <div class="sort">
+                    <span class="custom-dropdown">
+                      <label class="control-label heading_sm" style="text-transform: unset;">Show</label>
+                      <select style="width:60px" [(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                        <option *ngFor="let size of pageSizes" [value]="size" [selected]="size == pageSize">{{size}}</option>
+                      </select>
+                    </span>
+                  </div>
+              <input type="button" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" (click)="ResetAll()" value="Reset">
+              <input type="button" style="margin-right: 10px;" class="btn-solid-blue float-right" data-toggle="modal" data-target="#add_new" (click)="filter()" value="Filter">
+            </div>
+          </div>
+          <div class="result col-lg-12">
+            <div class="content-wrapper-white" style="margin-top: 20px;margin-bottom: 20px;padding: 15px;background: #fff;border: 1px solid #e5e5e5;position: relative;transition: 0.3s;">
+              <div class="scrollClass">
+              <table id="example" class="table table-bordered table-responsive" style="width:100%">
+                <thead style="background: #0151be;color: #fff;">
+                  <tr>
+                    <th> <input type="checkbox" style="position: unset;width: 20px;height: 20px;" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"> </th>
+                    <th>UNIVERSITY</th>
+                    <th>Requested By</th>
+                    <th>Request Description</th>
+                    <th style="padding-right: 100px;">Assigned to</th> 
+                    <th (click)="sort('priority')"
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'priority' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'priority' && currentSortDirection === 'desc'
+                    }">Priority <span class="sorting"></span></th>
+                    <th  (click)="sort('status')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'status' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'status' && currentSortDirection === 'desc'
+                    }">Status <span class="sorting"></span></th>
+                    <th (click)="sortdate('createdOn')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'createdOn' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'createdOn' && currentSortDirection === 'desc'
+                    }">Created on <span class="sorting"></span></th>    
+                    <th (click)="sort('category')" 
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'category' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'category' && currentSortDirection === 'desc'
+                    }">Category <span class="sorting"></span></th>    
+                    <th (click)="sort('serviceType')"
+                    [ngClass]="{
+                      'ascending': currentSortColumn === 'serviceType' && currentSortDirection === 'asc',
+                      'descending': currentSortColumn === 'serviceType' && currentSortDirection === 'desc'
+                    }">Type <span class="sorting"></span></th>    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of data | paginate :{itemsPerPage:pageSize, currentPage:page};let i=index">
+                    <td><input type="checkbox" style="position: unset;width: 20px;height: 20px;" [(ngModel)]="item.isSelected" name="list_name"  (change)="isAllSelected()"></td>
+                    <td class="td">{{item.universityName}}</td>
+                    <td class="td">{{item.raisedBy}}</td>        
+                    <td class="td">{{item.requestDescription}}</td>
+                    <td>
+                      <div>
+                      <select class="custom-select scorebook_dropdown" name="assignAuthor" [(ngModel)]="item.assignAuthor" (ngModelChange)="selectedAuthor(i,item.assignAuthor)"
+                      style="color: #000;border-bottom: #ccc 2px solid;">
+                        <option  disabled selected value="null" >Select</option>
+                        <option  *ngFor="let d of item.assignList" [value]="d.id">{{d.value}}</option>                 
+                          </select>
+                         </div>	
+                       </td>           
+                    <td class="td">{{item.priority}}</td>
+                    <td class="td">{{item.status}}</td>
+                    <td class="td">{{item.createdOn}}</td>
+                    <td class="td">{{item.category}}</td>
+                    <td class="td">{{item.serviceType}}</td>  
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+                  </div>
+                </div>
+                <div class="col-lg-6" style="float:right;margin-left:40%">
+                  <pagination-controls responsive="true" [maxSize]="5" (pageChange)="page =$event"></pagination-controls>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

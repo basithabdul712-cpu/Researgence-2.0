@@ -1,0 +1,297 @@
+
+<body class="blue-bg"  [ngClass]="{'sideBarOpen': !isMenuOpen, 'sideBarClose': isMenuOpen}">
+  <div class="content-wrapper patents" style="background: var(--background-blue) repeat-x top fixed;
+  background-size: cover;
+  color: #fff;">
+	  <div class="container-fluid">
+	  	<div class="row">
+        <div class="alert alert-dismissible alert-info" style="padding: 7px;">
+          <button type="button" class="close" data-dismiss="alert" style="border: unset;"></button>
+          </div>
+      </div>  
+	  </div>
+<!--    4Ltype1     -->
+	  <div class="container container-90 home" *ngIf="layerType=='4LType1'">
+		 	<div class="block-btn-blue-container">
+		  		<a href="Patent/minedb" style="width: 150px;">Data Mining</a>
+				<!-- <a  style="width: 150px;">Insights</a> -->
+				<!-- <a href="/Patent/Profile" style="width: 150px;">Profile</a> -->
+		  </div>
+      		<div class="row">
+        		<div class="col-lg-12">
+          			<h3 style="margin-top: 60px; margin-bottom: 30px;">Filed Applications</h3>
+					  <div class="incremental-counter main_score" >
+						<ng-container *ngIf="digits && endCounterValue">
+						  <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+						</ng-container>
+					  </div>		
+        		</div>
+      		</div>
+			<div class="row">
+        		<div class="col-lg-12">
+          			<h3 style="margin-top: 60px; margin-bottom: 20px;">Locations</h3>
+						<ul class="locations flex">
+							<li *ngFor="let item of filteredValues">
+								<a (click)="viewLevel(item.locationId,2,layerType,item.locationName)">				   
+								   <p>{{item.locationShortName}}</p>
+								   <p class="hover-text">{{item.locationName}}</p>
+									<h4>{{item.patCount}}</h4></a>
+							   </li>			
+						</ul>		
+        		</div>
+      		</div>
+			<div class="row">
+        		<div class="col-lg-12">
+          			<h3 style="margin-top: 60px; margin-bottom: 20px;">Patent Application Stages</h3>
+					
+					<ul class="other-score flex">
+						<li *ngFor="let item of filteredItems" >
+							<a>
+								<p>{{item.patentStageName}}</p>
+								<h4>{{item.stageLevelCount}}</h4>
+							</a>
+						</li>  
+						</ul>
+        		</div>
+      		</div>
+   	 </div>
+
+	 <!--   4LType2   -->
+	 <div class="container container-90 home" *ngIf="layerType=='4LType2'">
+		<div class="block-btn-blue-container">
+			 <a href="Patent/minedb" style="width: 150px;">Data Mining</a>
+		   <!-- <a  style="width: 150px;">Insights</a> -->
+		   <!-- <a href="/Patent/Profile" style="width: 150px;">Profile</a> -->
+	 </div>
+		 <div class="row">
+		   <div class="col-lg-12">
+				 <h3 style="margin-top: 60px; margin-bottom: 30px;">Filed Applications</h3>
+				 <div class="incremental-counter main_score" >
+				   <ng-container *ngIf="digits && endCounterValue">
+					 <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+				   </ng-container>
+				 </div>		
+		   </div>
+		 </div>
+	   <div class="row">
+		   <div class="col-lg-12">
+				 <h3 style="margin-top: 60px; margin-bottom: 20px;">Schools</h3>
+				   <ul class="locations flex">
+					<li *ngFor="let item of filteredValues" >
+						<a (click)="viewLevel(item.schoolId,2,layerType,item.schoolName)">
+						  <p>{{item.schoolShortName}}</p>
+						  <p class="hover-text">{{item.schoolName}}</p>
+						  <h4>{{item.patCount}}</h4>
+						</a>
+					  </li>				
+				   </ul>		
+		   </div>
+		 </div>
+	   <div class="row">
+		   <div class="col-lg-12">
+				 <h3 style="margin-top: 60px; margin-bottom: 20px;">Patent Application Stages</h3>
+			   
+			   <ul class="other-score flex">
+				<li *ngFor="let item of filteredItems" >
+					<a>
+						<p>{{item.patentStageName}}</p>
+						<h4>{{item.stageLevelCount}}</h4>
+					</a>
+				</li>  
+			  </ul>
+		   </div>
+		 </div>
+   </div>
+
+   <!--  3LType1  -->
+   <div class="container container-90 home" *ngIf="layerType=='3LType1'">
+	<div class="block-btn-blue-container">
+		 <a href="Patent/minedb" style="width: 150px;">Data Mining</a>
+	   <!-- <a  style="width: 150px;">Insights</a> -->
+	   <!-- <a href="/Patent/Profile" style="width: 150px;">Profile</a> -->
+ </div>
+	 <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 30px;">Filed Applications</h3>
+			 <div class="incremental-counter main_score" >
+			   <ng-container *ngIf="digits && endCounterValue">
+				 <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+			   </ng-container>
+			 </div>		
+	   </div>
+	 </div>
+   <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 20px;">Locations</h3>
+			   <ul class="locations flex">
+				<li *ngFor="let item of filteredValues" style="cursor: pointer;">
+					<a (click)="viewLevel(item.locationId,2,layerType,item.locationName)">
+					  <p>{{item.locationShortName}}</p>
+					  <p class="hover-text">{{item.locationName}}</p>
+					  <h4>{{item.patCount}}</h4>
+					</a>
+				  </li>		
+			   </ul>		
+	   </div>
+	 </div>
+   <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 20px;">Patent Application Stages</h3>
+		   
+		   <ul class="other-score flex">
+			<li *ngFor="let item of filteredItems" >
+				<a>
+					<p>{{item.patentStageName}}</p>
+					<h4>{{item.stageLevelCount}}</h4>
+				</a>
+			</li>  
+			   </ul>
+	   </div>
+	 </div>
+</div>
+
+<!--  3LType2 -->
+<div class="container container-90 home" *ngIf="layerType=='3LType2'">
+	<div class="block-btn-blue-container">
+		 <a href="Patent/minedb" style="width: 150px;">Data Mining</a>
+	   <!-- <a  style="width: 150px;">Insights</a> -->
+	   <!-- <a href="/Patent/Profile" style="width: 150px;">Profile</a> -->
+ </div>
+	 <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 30px;">Filed Applications</h3>
+			 <div class="incremental-counter main_score" >
+			   <ng-container *ngIf="digits && endCounterValue">
+				 <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+			   </ng-container>
+			 </div>		
+	   </div>
+	 </div>
+   <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 20px;">Locations</h3>
+			   <ul class="locations flex">
+				<li *ngFor="let item of filteredValues" style="cursor: pointer;">
+					<a (click)="viewLevel(item.locationId,2,layerType,item.locationName)">
+					  <p>{{item.locationShortName}}</p>
+					  <p class="hover-text">{{item.locationName}}</p>
+					  <h4>{{item.patCount}}</h4>
+					</a>
+				  </li>				
+			   </ul>		
+	   </div>
+	 </div>
+   <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 20px;">Patent Application Stages</h3>
+		   
+		   <ul class="other-score flex">
+			<li *ngFor="let item of filteredItems" >
+				<a>
+					<p>{{item.patentStageName}}</p>
+					<h4>{{item.stageLevelCount}}</h4>
+				</a>
+			</li>  
+			   </ul>
+	   </div>
+	 </div>
+</div>
+
+<!-- 2LType1 -->
+<div class="container container-90 home" *ngIf="layerType=='2LType1'">
+	<div class="block-btn-blue-container">
+		 <a href="Patent/minedb" style="width: 150px;">Data Mining</a>
+	   <!-- <a  style="width: 150px;">Insights</a> -->
+	   <!-- <a href="/Patent/Profile" style="width: 150px;">Profile</a> -->
+ </div>
+	 <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 30px;">Filed Applications</h3>
+			 <div class="incremental-counter main_score" >
+			   <ng-container *ngIf="digits && endCounterValue">
+				 <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+			   </ng-container>
+			 </div>		
+	   </div>
+	 </div>
+   <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 20px;">Institute</h3>
+			   <ul class="locations flex">
+				<li *ngFor="let item of filteredValues" style="cursor: pointer;">
+					<a (click)="viewLevel(item.instituteId,2,layerType,item.instituteName)" style="cursor: pointer;">
+					  <p>{{item.instituteShortName}}</p>
+					  <p class="hover-text">{{item.instituteName}}</p>
+					  <h4>{{item.patCount}}</h4>
+					</a>
+				  </li>
+			   </ul>		
+	   </div>
+	 </div>
+   <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 20px;">Patent Application Stages</h3>
+		   
+		   <ul class="other-score flex">
+			<li *ngFor="let item of filteredItems" >
+				<a>
+					<p>{{item.patentStageName}}</p>
+					<h4>{{item.stageLevelCount}}</h4>
+				</a>
+			</li>  
+		  </ul>
+	   </div>
+	 </div>
+</div>
+
+<!-- 2Ltype2 -->
+<div class="container container-90 home" *ngIf="layerType=='2LType2'">
+	<div class="block-btn-blue-container">
+		 <a href="Patent/minedb" style="width: 150px;">Data Mining</a>
+	   <!-- <a  style="width: 150px;">Insights</a> -->
+	   <!-- <a href="/Patent/Profile" style="width: 150px;">Profile</a> -->
+ </div>
+	 <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 30px;">Filed Applications</h3>
+			 <div class="incremental-counter main_score" >
+			   <ng-container *ngIf="digits && endCounterValue">
+				 <div class="num" *ngFor="let num of numbers">{{ num }}</div>
+			   </ng-container>
+			 </div>		
+	   </div>
+	 </div>
+   <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 20px;">Department</h3>
+			   <ul class="locations flex">
+				  <li *ngFor="let item of filteredValues" [ngClass]="{'clickable': filteredValues.length > 1}" (click)="filteredValues.length > 1 ? viewLevel(item.departmentId,2,layerType,item.departmentName) : null">
+					 <a>
+					  <p>{{item.departmentName}}</p>
+					  <p class="hover-text">{{item.departmentName}}</p>
+					  <h4>{{item.patCount}}</h4>
+					</a>
+				  </li>
+			   </ul>		
+	   </div>
+	 </div>
+   <div class="row">
+	   <div class="col-lg-12">
+			 <h3 style="margin-top: 60px; margin-bottom: 20px;">Patent Application Stages</h3>
+		   
+		   <ul class="other-score flex">
+			<li *ngFor="let item of filteredItems" >
+				<a>
+					<p>{{item.patentStageName}}</p>
+					<h4>{{item.stageLevelCount}}</h4>
+				</a>
+			</li>  
+			   </ul>
+	   </div>
+	 </div>
+</div>
+  </div>
+  <br>
+  <br>
+  <br>
+</body>

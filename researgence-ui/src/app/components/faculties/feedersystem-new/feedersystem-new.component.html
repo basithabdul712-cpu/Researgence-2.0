@@ -1,0 +1,1102 @@
+  <div class="content-wrapper" [ngClass]="{'sideBarOpen': !isMenuOpen, 'sideBarClose': isMenuOpen}" style="background: var(--background-white);background-size: cover;background-attachment: fixed; font-family: 'Red Hat Display', sans-serif;" [ngStyle]="{'opacity' : enableBox ? '0.3' : ''}">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="alert alert-dismissible alert-info" style="margin-bottom: unset;background-color: #ececec;border-color: transparent;color: #000000;text-align: right;font-size: 12px;padding: 5px;">
+          <button type="button" class="close" data-dismiss="alert"  style="background: unset;border: unset;right: 0px;"><i class="fa fa-remove"></i></button>
+          Currently logged in as {{Name}}({{roleName}}) </div>
+      </div>
+      <div class="row">
+        <div class="video_bar bluebar_expand" [ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+        [ngStyle]="{
+      'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '':'unset','width':stickyEnable&&isMenuOpen? '95%':'100%'
+    }" #blueheader style="padding-left: 50px;">
+          <div class="container container-90" style="width: 90%;">
+            <div class="row">
+              <div class="col-lg-7 col-md-7 col-sm-7 text-white">
+                <h2>Welcome to Your Researgence Repository</h2>
+                <p style="margin-top: 0;">Learn more about ROR's coverage by watching this video.</p>
+                <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" href="/newrequest">here</a> to contact our team.</p>
+              </div>
+              <div class="col-lg-5 col-md-5 col-sm-5"><a style="color: #adc12e " href="/newrequest" class="link-green help-btn"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover"></a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container container-90 content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '100px' : '30px'}" style="width: 90%;">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner-page-header gradient-box">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="col-lg-9">
+                  <h3 class="page_title" *ngIf="type!='RFS'" >Daily Feeder System (DFS)</h3>
+                  <h3 class="page_title" *ngIf="type=='RFS'" >Researcher Feeder System (RFS)</h3>
+                </div>
+                <div class="col-lg-3">
+                  <p class="page_title">{{showUnivName}}</p>
+                </div>            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <form class="form">
+            <div class="input-wrapper">
+              <div class="col-lg-12 bg-white" style="border: 1px solid #ccc; margin-bottom: 50px;">
+                <div class="row">
+                  <div class="col-lg-9 mt-1x">
+                    <div class="input">
+                      <input type="text" placeholder="" name="title" [(ngModel)]="title" #searchbar (keyup)="changeJournal(searchbar.value)">
+                      <label>Title</label>
+                    </div>
+                    <ul *ngIf="hideTitle"  class="alignDrop">
+                      <li *ngFor="let n of titleList"  (click)="onSelectJournal(n.name,n.id)">
+                         {{ n.name }}
+                      </li>
+                  </ul>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <a class="btn-solid-blue float-right  btn-show-update" style="float: left;width: 60%;" (click)="fetchPubDetail()" [ngStyle]="{'opacity': title=='' ? '0.6' : ''}">View Pub Details</a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-9 mt-1x">
+                    <div class="input">
+                      <input type="text" placeholder="" name="doi" [(ngModel)]="doi" autocomplete="off">
+                      <label>DOI</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <a class="btn-solid-blue float-right  btn-show-update" style="float: left;" (click)="crossRefData(demoModal)" [ngStyle]="{'opacity': doi==null ? '0.6' : ''}">+Add</a>
+                  </div>
+                </div>
+               
+                <ng-template #demoModal let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title"></h4>
+                    <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                  </div>
+                  <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                    <form>
+                      <div class="form-group">
+                       <div class="input-group">
+                        <label>TITLE</label>                     
+                          <input style="border-radius: 8px;height: 30px;" name="crossTitle" class="form-control" placeholder="Title" type="text" [(ngModel)]="crossTitle">        
+                        </div>
+                        <br>
+                        <div class="input-group">
+                          <label>SOURCE NAME</label>                     
+                            <input style="border-radius: 8px;height: 30px;" name="crossSourceName" class="form-control" placeholder="SourceName" type="text" [(ngModel)]="crossSourceName">        
+                          </div>
+                          <br>
+                          <div class="input-group">
+                              <label>TYPE</label>                     
+                                <input style="border-radius: 8px;height: 30px;" name="crossType" class="form-control" placeholder="Type" type="text" [(ngModel)]="crossType">        
+                              </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer" style="height: 55px;">
+                    <p style="color: red;padding-right: 60px;" *ngIf="erromessage" >{{erromessage}}</p>
+                    <button [disabled]="!enableProceed" style="margin-right: 20px;" type="button" class="but" (click)="processData()" [ngStyle]="{'opacity': !enableProceed ? '0.6' : ''}">PROCEED</button>
+                    <button style="margin-right: 20px;" type="button" class="but" (click)="clearPopUP()">CLEAR</button>
+                  </div>
+                  </ng-template>
+
+                  
+                  <div class="row" *ngIf="showData&&crossData">
+                    <div class="col-lg-9 mt-1x">
+                      <div class="input">
+                        <input type="text" placeholder="" name="checkValues.title" [(ngModel)]="checkValues.title">
+                        <label>Add title of publication</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 mt-1x">
+                       <div class="input">
+                        <select class="form-select" name="articleType" [(ngModel)]="articleType">
+                          <option value="" selected disabled>Article Type</option>
+                          <option *ngFor="let item of articleListValues" >{{item.value}}</option>                      
+                        </select>
+                       </div>
+                    </div>
+                  </div>
+                <div class="row" *ngIf="showData&&crossData">
+                  <div class="col-lg-4 mt-1x">
+                    <div class="input" *ngIf="!enableType">
+                      <input type="text" placeholder=" " name="checkValues.type" [(ngModel)]="checkValues.type" readonly>
+                      <label>Source Type</label>
+                    </div>
+                    <div class="input" *ngIf="enableType">
+                      <select class="form-select" name="checkValues.type" [(ngModel)]="checkValues.type" (change)="chaneTypes()">
+                        <option value="" >Source Type</option>
+                        <option *ngFor="let item of articleDropdown" >{{item.value}}</option>                      
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-8 mt-1x">
+                    <div class="input">
+                      <input type="text" placeholder=" "name="sourceNameData"  [(ngModel)]="sourceNameData" (keyup)="onKeySource($event,sourceNameData)">
+                      <label>Source Title</label>
+                    </div>
+                    <ul class="alignDrop1" *ngIf="sourceNameOpen">
+                      <li *ngFor="let n of filterJournal"  (click)="onSelectSource(n.name,n.id)">
+                         {{ n.displayName }}
+                      </li>
+                  </ul>
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="showData&&crossData">
+                    <div class="col-lg-12 mt-1x">
+                      <p *ngIf="crossSourceName" style="text-align: center;color: purple;">{{crossSourceName}}</p>
+                    </div>
+                </div>
+       
+                <div class="row" *ngIf="showData&&crossData">
+                  <div class="col-lg-12 mt-1x" style="min-height: 15px;"> 
+                    <a *ngIf="!enableView"  id="" class="btn-more btn-show" (click)="viewDetail()" style="color: #0051bf">View More</a>
+                    <a style="color: #0051bf" *ngIf="enableView" id="" class="btn-more btn-show" (click)="viewDetail()">View Less</a>
+                    <a id="" class="btn-solid-blue float-right  btn-show-update" style="width: 18%;" (click)="addMoreDetail()">Add Publication Source</a>      
+                  </div>
+
+                    <div class="col-lg-12"> 
+                      <hr class="hr-grey">  
+                     </div>   
+                </div>
+                <div class="score_more score_more-open" *ngIf="showData&&crossData&&enableView">
+                  <div class="row" >
+                    <div class="col-lg-12">
+                      
+                      <table class="mining-table full-width">
+                        <tbody>
+                          <tr>
+                            <ng-container *ngFor="let item of indexData">  
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='SNIP'">
+                              <div class="input disabled" style="border: 1px solid #a3a8a8;">
+                                <input readonly type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='SJR'">
+                              <div class="input disabled" style="border: 1px solid #a3a8a8;">
+                                <input readonly type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='ImpactFactor'">
+                              <div class="input disabled" style="border: 1px solid #a3a8a8;">
+                                <input readonly type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='CiteScore'">
+                              <div class="input disabled" style="border: 1px solid #a3a8a8;">
+                                <input readonly type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='UGCCareGroup1'">
+                              <div class="input disabled" style="border: 1px solid #a3a8a8;">
+                                <input readonly type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                             </td>
+                           </ng-container>
+                          </tr>
+                          <tr>
+                            <ng-container *ngFor="let item of indexData">  
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='ABDC'">
+                              <div class="input disabled" style="border: 1px solid #a3a8a8;">
+                                <input readonly type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='CORE'">
+                              <div class="input disabled" style="border: 1px solid #a3a8a8;">
+                                <input readonly type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='QRankSC'">
+                              <div class="input disabled" style="border: 1px solid #a3a8a8;">
+                                <input readonly type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='QRankWOS'">
+                              <div class="input disabled" style="border: 1px solid #a3a8a8;">
+                                <input readonly type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>              
+                           </ng-container>
+                           <td>
+                            <div class="input disabled" style="border: 1px solid #a3a8a8;">
+                              <input readonly type="text" placeholder=" " name="level" [(ngModel)]="level"> 
+                              <label>Level</label>
+                            </div>
+                          </td>
+                          </tr>                
+                        <tr>
+                          <td><div class="input disabled" style="border: 1px solid #a3a8a8;">
+                              <input readonly type="text" placeholder=" " disabled="" [(ngModel)]="publisherSource" name="publisherSource">
+                              <label>Publisher Name</label>
+                            </div></td>
+                          <td><div class="input disabled" style="border: 1px solid #a3a8a8;">
+                            
+                            <input readonly type="text" placeholder=" " disabled="" [(ngModel)]="checkValues.pissn" name="checkValues.pissn">
+                              <label>P-ISSN</label>
+                            </div></td>
+                          <td><div class="input disabled" style="border: 1px solid #a3a8a8;">
+                              <input readonly type="text" placeholder=" " disabled="" [(ngModel)]="checkValues.eissn" name="checkValues.eissn">
+                              <label>E-ISSN</label>
+                            </div></td>
+                          <td><div class="input disabled" style="border: 1px solid #a3a8a8;">
+                              <input readonly type="text" placeholder=" " disabled="" [(ngModel)]="checkValues.pisbn" name="checkValues.pisbn">
+                              <label>P-ISBN</label>
+                            </div></td>
+                          <td class="padr-0"><div class="input disabled" style="border: 1px solid #a3a8a8;">
+                              <input readonly type="text" placeholder=" " disabled="" [(ngModel)]="checkValues.eisbn" name="checkValues.eisbn">
+                              <label>E-ISBN</label>
+                            </div></td>
+                        </tr>
+                      </tbody></table>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">     
+                      <p *ngIf="remarks" style="line-height: unset;margin-bottom: unset;text-align: center;font-size: 15px;color: rgb(0, 81, 191);">Remarks: {{remarks}}</p>             
+                        <a  class="btn-link-red float-right" [ngStyle]="{'color' : isCorrect==0 ? 'limegreen' : ''}" data-toggle="modal" data-target="#revision" (click)="checkNotCorrect(reviewModel)">
+                          <img *ngIf="isCorrect==0" src="../../../../assets/given/img/i-icongreen.png" alt="" style="margin-right: 10px;">
+                          <img *ngIf="isCorrect==1"  src="../../../../assets/given/img/i-icon.png" alt="" style="margin-right: 10px;">Not Correct ?</a>       
+                    </div>
+                    <div class="col-lg-12">
+                      <hr class="hr-grey">
+                    </div>
+                  </div>
+
+                  <ng-template #reviewModel let-modal>
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title"></h4>
+                      <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                    </div>
+                    <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                      <form>
+                        <div class="form-group">
+                         <div class="input-group">
+                          <label>Remarks</label>                     
+                            <input style="border-radius: 8px;height: 30px;" name="remarks" class="form-control" placeholder="Title" type="text" [(ngModel)]="remarks">        
+                          </div>
+                          <br>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer" style="height: 55px;">        
+                      <button style="margin-right: 20px;" type="button" class="but" (click)="updateRemark()">Update</button>
+                      <!-- <button style="margin-right: 20px;" type="button" class="but" >CLEAR</button> -->
+                    </div>
+                    </ng-template>
+
+                </div>
+                  <div class="update_score update_score-open" *ngIf="showData&&crossData&&enablemoreDetail">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      
+                      <table class="mining-table full-width">
+                        <tbody>
+                          <tr>
+                            <ng-container *ngFor="let item of indexData">  
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='SNIP'">
+                              <div class="input">
+                                <input type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='SJR'">
+                              <div class="input">
+                                <input type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='ImpactFactor'">
+                              <div class="input">
+                                <input type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='CiteScore'">
+                              <div class="input">
+                                <input type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='UGCCareGroup1'">
+                              <div class="input">
+                                <input type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                             </td>
+                           </ng-container>
+                          </tr>
+                          <tr>
+                            <ng-container *ngFor="let item of indexData">  
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='ABDC'">
+                              <div class="input">
+                                <select class="form-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                                  <option value="" selected>ABDC</option>
+                                  <option *ngFor="let abdc of ABDCdropdown" >{{abdc.value}}</option>                      
+                                </select>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='CORE'">
+                              <div class="input">
+                                <input type="tel" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue"> 
+                                <label>{{item.fieldDesc}}</label>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='QRankSC'">
+                              <div class="input">
+                                <select class="form-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                                  <option value="" selected>QRankSC</option>
+                                  <option *ngFor="let qr of QrankdropdownScs" >{{qr.value}}</option>                      
+                                </select>
+                              </div>
+                            </td>
+                            <td *ngIf="item.type=='SourceIndexing'&&item.fieldName=='QRankWOS'">
+                              <div class="input">
+                                <select class="form-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                                  <option value="" selected>QRankWOS</option>
+                                  <option *ngFor="let qr of Qrankdropdown" >{{qr.value}}</option>                      
+                                </select>
+                              </div>
+                            </td>
+                          
+                           </ng-container>
+                           <td>
+                            <div class="input">
+                              <select class="form-select" [(ngModel)]="level" (change)="levelChange()">
+                                <option  disabled selected value="undefined" >Level</option>
+                                <option *ngFor="let item of leveDropDownmn" >{{item.value}}</option>                      
+                              </select>
+                            </div>
+                          </td>
+                          </tr>                
+                        <tr>
+                          <td><div class="input">
+                              <input type="text" placeholder=" " [(ngModel)]="publisherSource" name="publisherSource">
+                              <label>Publisher Name</label>
+                            </div></td>
+                          <td><div class="input">
+                              <input type="text" placeholder=" " [(ngModel)]="checkValues.pissn" name="checkValues.pissn">
+                              <label>P-ISSN</label>
+                            </div></td>
+                          <td><div class="input">
+                              <input type="text" placeholder=" " [(ngModel)]="checkValues.eissn" name="checkValues.eissn">
+                              <label>E-ISSN</label>
+                            </div></td>
+                          <td><div class="input">
+                              <input type="text" placeholder=" " [(ngModel)]="checkValues.pisbn" name="checkValues.pisbn">
+                              <label>P-ISBN</label>
+                            </div></td>
+                          <td class="padr-0"><div class="input">
+                              <input type="text" placeholder=" " [(ngModel)]="checkValues.eisbn" name="checkValues.eisbn">
+                              <label>E-ISBN</label>
+                            </div></td>
+                        </tr>
+                      </tbody></table>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                       
+                      <button class="btn-solid-blue float-right" style="margin-left: 20px;" (click)="addMoreDetail()">Update</button>
+                    </div>
+                    <div class="col-lg-12">
+                      <hr class="hr-grey">
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="showData&&crossData">
+                  <div class="col-lg-12 mt-1x">
+                    <div class="input">
+                      <input type="text" placeholder="" name="checkValues.doi" [(ngModel)]="checkValues.doi">
+                      <label>DOI</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="showData&&crossData">
+                  <div class="col-lg-12 mt-1x">
+                    <div class="input">
+                      <input type="text" placeholder="" name="checkValues.weblink" [(ngModel)]="checkValues.weblink">
+                      <label>Weblink</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="showData&&crossData">
+                  <div class="col-lg-12 mt-1x">
+                    <table class="mining-table full-width">
+                      <tbody>
+                        <tr>
+                          <ng-container *ngFor="let item of indexData">
+                        <td class="padb-0" *ngIf="item.type=='ArticleIndexing'&&item.fieldName=='SCOPUS'"><div class="input">
+                            <input *ngIf="item.forDFSInputValue==1&&item.type=='ArticleIndexing'" type="text" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                            <label>{{item.fieldDesc}}</label>
+                          </div></td>
+                        <td class="padb-0" *ngIf="item.type=='ArticleIndexing'&&item.fieldName=='WOS'"><div class="input">
+                            <input *ngIf="item.forDFSInputValue==1&&item.type=='ArticleIndexing'" type="text" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                            <label>{{item.fieldDesc}}</label>
+                          </div></td>
+                        <td class="padb-0" *ngIf="item.type=='ArticleIndexing'&&item.fieldName=='GS'"><div class="input">
+                            <input *ngIf="item.forDFSInputValue==1&&item.type=='ArticleIndexing'" type="text" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                            <label>{{item.fieldDesc}}</label>
+                          </div></td>
+                        <td class="padb-0" *ngIf="item.type=='ArticleIndexing'&&item.fieldName=='PUBMED'">
+                          <div class="input"> 
+                            <select class="form-select" [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                              <option value="">PUBMED</option>
+                              <option  value="Yes">Yes</option>  
+                            </select>
+                          
+                          </div></td>
+                        <td class="padr-0 padb-0" *ngIf="item.type=='ArticleIndexing'&&item.fieldName=='IEEE'"><div class="input">
+                          <input *ngIf="item.forDFSInputValue==1&&item.type=='ArticleIndexing'" type="text" placeholder=" " [name]="'indexingValue_' + item.fieldDesc" [(ngModel)]="item.indexingValue">
+                          <label>{{item.fieldDesc}}</label>
+                        </div></td>
+                        </ng-container>
+                      </tr>
+                    </tbody></table>
+                  </div>
+                </div>
+                <div class="row" *ngIf="showData&&crossData">
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                      <input type="date" id="" name="checkValues.onlineDate" [(ngModel)]="checkValues.onlineDate">
+                      <label>Online Date</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                       <input type="date" id="" name="checkValues.printDate" [(ngModel)]="checkValues.printDate">
+                      <label>Print Date</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                       <input type="date" id="" name="checkValues.publishedDate" [(ngModel)]="checkValues.publishedDate">
+                      <label>Acc Date</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                      <input placeholder="Year" type="text" style="height: 39px; border-radius: 5px; border: #ccc 1px solid;"  bsDatepicker [(ngModel)]="tempfromYear" (ngModelChange)="onSelectYear(temptoYear)" [(bsValue)]="toYear"
+                                      [bsConfig]="{ dateInputFormat: 'YYYY',minMode: 'year',maxDate:maxDate }">
+                      <!-- <input type="text" placeholder="" name="checkValues.year" [(ngModel)]="checkValues.year"> -->
+                      <!-- <label>Year</label> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="showData&&crossData">
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                      <input type="text" placeholder="" name="checkValues.volumeNumber" [(ngModel)]="checkValues.volumeNumber">
+                      <label>Vol No</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                      <input type="text" placeholder="" name="checkValues.issueNumber" [(ngModel)]="checkValues.issueNumber">
+                      <label>Iss No</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                      <input type="text" placeholder="" name="checkValues.bPage" [(ngModel)]="checkValues.bPage">
+                      <label>B Page</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                      <input type="text" placeholder="" name="checkValues.ePage" [(ngModel)]="checkValues.ePage">
+                      <label>E Page</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="showData&&crossData">
+                  <div class="col-lg-12 mt-1x">
+                    <div class="input grow-wrap">
+                     <textarea [(ngModel)]="checkValues.abstract" name="text" oninput="this.parentNode.dataset.replicatedValue = this.value"></textarea>
+                      <label>Abstract</label>
+                    </div>
+                  </div>
+                </div>
+               
+                <div class="author_detail" *ngIf="showData&&crossData" style="margin-top: 10px;">
+                  <div class="row">
+                    <div class="col-lg-7">
+                      <h4>Author Detail</h4>
+                      <p class="text-sm">[default information coming from crossref will be shown here]</p>
+                    </div>
+                    <div class="col-lg-5 flex flex-align-right" style="height: fit-content;"> 
+                      <a class="btn-outline-blue" style="margin-right: 10px;" (click)="newStateModel(addState)">Add Location</a> 
+                      <a class="btn-outline-blue" (click)="addHomeAuthor()">Add Home</a> 
+                      <a class="btn-outline-blue" (click)="addAwayAuthor()" style="margin-left: 10px;">Add Away</a> 
+                      </div>
+                  </div>
+                  <ng-template #addState let-modal>
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title" style="line-height: unset;letter-spacing: unset;font-weight: 600;">Add Location</h4>
+                      <button style="margin-right: 5px;height: 20px;" type="button" class="btn-close" #closebutton data-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+                    </div>
+                    <div class="modal-body" style="width: 500px;padding-left: 10px;">
+                      <form>
+                        <div class="form-group">
+                         <div class="input-group">
+                          <label>COUNTRY</label>                     
+                            <select class="custom-select line-select" [(ngModel)]="countryModel" (ngModelChange)="countryModelFilter(countryModel)">
+                              <option disabled selected value="undefined">Select Country</option>
+                              <option *ngFor="let item of countryList" >{{item.countryName}}</option>                      
+                            </select>        
+                          </div>
+                          <br>
+                          <div class="input-group" *ngIf="!enableState" >
+                            <label>STATE</label>                     
+                              <input style="border-radius: 8px;height: 30px;" (keyup)="SearchStateModel(stateModel)" [(ngModel)]="stateModel" name="state" class="form-control" placeholder="Enter the State..." type="text" >        
+                              <ul class="editAuthor" *ngIf="stateModelEnable" style="background: #d2d4d6;float: left;width: 100%;">
+                                <li *ngFor="let a of filterStateList" (click)="selectStateModel(a.stateName,a.stateId)">
+                                   {{a.stateName}}
+                                </li>
+                            </ul>
+                            </div>
+                            <div class="input-group" *ngIf="enableState" >
+                              <label>STATE</label>                     
+                              <br>
+                              <select class="custom-select line-select" [(ngModel)]="stateModel" (ngModelChange)="stateModelFilter(stateModel)">
+                                <option disabled selected value="">Select State</option>
+                                <option *ngFor="let item of filteredStateModel" >{{item.stateName}}</option>                      
+                              </select>  
+                              </div>
+                            <br>
+                            <div class="input-group">
+                                <label>LOCATION</label>                     
+                                  <input style="border-radius: 8px;height: 30px;" name="location" [(ngModel)]="newLocationName" class="form-control" placeholder="Enter the Location..."  type="text" > 
+                                </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer" style="height: 55px;">
+                      <button style="margin-right: 20px;" type="button" class="but" (click)="addLocation()">SUBMIT</button>
+                    </div>
+                    </ng-template>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <ol id="example1" class="list-group ol-list author_list" cdkDropList (cdkDropListDropped)="onDrop($event)">
+                        <ng-container *ngFor="let user of tempusers;let i=index">
+                        <li [ngStyle]="{'border-left' : user.enableHome ? '5px solid limegreen' : '5px solid red'}" class="list-group-item"  style="cursor: pointer;" cdkDrag cdkDragLockAxis="y" ><span style="font-weight: 900;">{{user.fullName}}</span>,{{user.departmentName}},{{user.instituteName}},<span style="font-weight: 900;">{{user.universityName}}</span>,{{user.locationName}},{{user.stateName}},{{user.countryName}}<span class="cor_author ml-20"></span>
+                          <a class="edit" draggable="false" (click)="newEdit(i)">Edit</a>
+                          <a class="fa fa-trash control-btn" style="padding-right: 15px;padding-top: 2px;" (click)="delete(i)"></a>
+                        </li>
+                      </ng-container>
+                      </ol>
+                      <hr class="hr-grey">
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="col-lg-3">
+                      <h4>Add New Author</h4>
+                    </div>
+                      <div class="col-lg-9" style="display: flex;flex-flow: row;">
+                      <a class="fa fa-user" style="color: green;margin-top: 12px;margin-right: 15px;cursor: pointer;" (click)="addHomeAuthor()"></a>
+                      <p style="width: 5%;margin-top: 8px;margin-right: 15px;cursor: pointer;" (click)="addHomeAuthor()">Home</p>
+                      <a class="fa fa-user" style="color: red;margin-top: 12px;margin-right: 15px;cursor: pointer;" (click)="addAwayAuthor()"></a>
+                      <p style="width: 5%;margin-top: 8px;margin-right: 15px;cursor: pointer;" (click)="addAwayAuthor()">Away</p>
+                    </div>
+                    </div>
+                  </div>
+                  <div *ngIf="enableHome" >
+                  <div *ngFor="let f of feeders;let i=index;" style="border-left: 3px solid mediumseagreen;">
+                  <div class="row">
+                    <div class="col-lg-5 mt-1x">
+                      <span style="float: inline-end;margin-top: 10px;font-weight: 900;color: lightseagreen;cursor: pointer;"  (click)="homeUniv()">H</span>
+                      <div class="input" [ngClass]="{ 'filled': f.universityName }" style="color: black;width: 90%;">
+                        <input type="text" placeholder="" name="f.universityName"  [(ngModel)]="f.universityName" (keyup)="onKeyIP($event,f.universityName,i)" autocomplete="off">
+                        <label>University</label>
+                      </div>
+                      <ul class="editDrop" *ngIf="ipDropdown&&i==checkData" style="background: #d2d4d6;" (mouseleave)="ipDropdown=false">
+                        <li *ngFor="let n of fill"  (click)="onInput(n.universityName,n.universityId,i)">
+                           {{ n.universityName }}
+                        </li>
+                    </ul>
+                    </div>
+                    <div class="col-lg-5 mt-1x">
+                      <div class="input">
+                        <input type="text" placeholder="" name="f.fullName" [(ngModel)]="f.fullName" (keyup)="SearchIPData($event,f.fullName,i)" autocomplete="off" (mouseleave)="onLeaveAuthorIp(f.fullName,i)">
+                        <label>Author</label>
+                      </div>
+                      <ul class="editAuthor" *ngIf="ipAutherDrop&&i==checkDataauthor" style="background: #d2d4d6;" (mouseleave)="onLeaveAuthor(f.fullName,i)">
+                        <li *ngFor="let a of Author"  (click)="onAutherClick(a.universityId,a.userId,a.authorName,a.departmentId,a.department,a.instituteId,a.institute,a.locationId,a.location,a.countryId,a.country,a.email,a.coressauthor,i,a.stateId,a.state,a.schoolId,a.school)">
+                           {{a.authorName}}
+                        </li>
+                    </ul>
+                    </div>
+                    <div class="col-lg-2 mt-1x" (mouseover)="leaveAuthor()">
+                      <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.countryName }" style="color: black;">
+                        <input type="text" placeholder="" name="f.countryName" [(ngModel)]="f.countryName" readonly> 
+                        <label>Country</label>
+                      </div>
+                      <div class="input" *ngIf="i === editRowId">
+                        <select class="form-select" name="f.countryName" [(ngModel)]="f.countryName" (ngModelChange)="countryFilterHome(f.countryName,i)">
+                          <option value="" selected disabled>Select Country</option>
+                          <option *ngFor="let item of uniqCountry" >{{item}}</option>                      
+                        </select>
+                      </div>
+                    </div>
+                   
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 mt-1x">
+                      <div class="input" *ngIf="i !==editRowId" [ngClass]="{ 'filled': f.stateName }" style="color: black;">
+                        <input type="text" placeholder="" name="f.stateName" [(ngModel)]="f.stateName" readonly >
+                        <label>State</label>
+                      </div>
+                      <div class="input" *ngIf="i === editRowId">
+                        <select class="form-select" name="f.stateName" [(ngModel)]="f.stateName" (ngModelChange)="stateFiltersHome(f.stateName,i)">
+                          <option value="" selected disabled>Select State</option>
+                          <option *ngFor="let item of uniqState" >{{item}}</option>                      
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 mt-1x">
+                      <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.locationName }" style="color: black;">
+                        <input type="text" placeholder="" name="f.locationName"  [(ngModel)]="f.locationName" readonly >
+                        <label>Location</label>
+                      </div>
+                      <div class="input" *ngIf="i === editRowId">
+                        <select class="form-select" name="f.locationName" [(ngModel)]="f.locationName" (ngModelChange)="baseLocfilter(f.locationName,i)">
+                          <option value="" selected disabled>Select Location</option>
+                          <option *ngFor="let item of uniqueLocationNames" >{{item}}</option>                      
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 mt-1x" *ngIf="i !== editRowId&&f.schoolEnable!=false">
+                      <div class="input"  [ngClass]="{ 'filled': f.schoolName }" style="color: black;">
+                        <input type="text" placeholder="" name="f.schoolName" [(ngModel)]="f.schoolName" readonly > 
+                        <label>School</label>
+                      </div>
+                      </div>
+                    <div class="col-lg-3 mt-1x" *ngIf="i === editRowId&&f.schoolEnable!=false">
+                      <div class="input" >
+                        <select class="form-select" name="f.schoolName" [(ngModel)]="f.schoolName" (ngModelChange)="baseSchfilter(f.schoolName,i)">
+                          <option value="" selected disabled>Select School</option>
+                          <option *ngFor="let item of layerSchool" >{{item}}</option>                      
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 mt-1x">
+                      <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.instituteName }" style="color: black;">
+                        <input type="text" placeholder="" name="f.instituteName" [(ngModel)]="f.instituteName" readonly >
+                        <label>Institute</label>
+                      </div>
+                      <div class="input" *ngIf="i === editRowId">
+                        <select class="form-select" name="f.instituteName" [(ngModel)]="f.instituteName" (ngModelChange)="baseInstfilter(f.instituteName,i)">
+                          <option value="" selected disabled>Select Institute</option>
+                          <option *ngFor="let item of layerIns" >{{item}}</option>                      
+                        </select>
+                      </div>
+                    </div> 
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 mt-1x">
+                      <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.departmentName }" style="color: black;">
+                        <input type="text" placeholder="" name="f.departmentName" [(ngModel)]="f.departmentName" readonly >
+                        <label>Department</label>
+                      </div>
+                      <div class="input" *ngIf="i === editRowId">
+                        <select class="form-select" name="f.departmentName" [(ngModel)]="f.departmentName" (ngModelChange)="baseDeptfilter(f.departmentName,i)">
+                          <option value="" selected disabled>Select Department</option>
+                          <option *ngFor="let item of layerDept" >{{item}}</option>                      
+                        </select>
+                      </div>
+                      </div>
+                    <div class="col-lg-3 mt-1x">
+                      <div class="input" *ngIf="i === editRowId">
+                        <input autocomplete="off" type="text" placeholder="" name="f.correspondingEmail" [(ngModel)]="f.correspondingEmail">
+                        <label>Email</label>
+                      </div>
+                      <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.correspondingEmail }" style="color: black;">
+                        <input autocomplete="off" type="text" placeholder="" name="f.correspondingEmail" [(ngModel)]="f.correspondingEmail" >
+                        <label>Email</label>
+                      </div>
+                     </div> 
+                    <div class="col-lg-3 mt-1x">
+                      <div class="input">
+                        <select  class="form-select" [(ngModel)]="f.correspondingAuthor" (change)="corresAuthor(f.correspondingAuthor,i)">
+                          <option value="" disabled selected>Corresponding Author</option>
+                          <option *ngFor="let item of commonDropDown" [value]="item.key">{{item.value}}</option>                      
+                        </select>
+                      </div>
+                    </div>   
+                    <div class="col-lg-3 mt-1x" *ngIf="rfsEnable" >
+                      <div class="input">
+                        <input type="text" placeholder="" name="f.linkName" [(ngModel)]="f.linkName" (keyup)="aliasid(f.linkName,i)" autocomplete="off">
+                        <label>Link Author</label>
+                      </div>
+                      <ul class="editAuthor" *ngIf="isalias&&i==enableLink" style="background: #d2d4d6;" >
+                        <li *ngFor="let a of linkauthor"  (click)="Onlink(a.authorName,i,a.userId)">
+                           {{a.authorName}}
+                        </li>
+                    </ul>
+                    </div>
+                    <div class="col-lg-3 mt-1x" *ngIf="!rfsEnable" style="display: flex;flex-flow: row-reverse;">
+                      <button class="btn-solid-blue float-right" style="margin-left: 5px;" (click)="clearDetails()">Clear</button>
+                      <button class="btn-solid-blue float-right" style="margin-left: 5px;" (click)="editDetailsHome(i)">Edit</button>
+                      <button class="btn-solid-blue float-right"  (click)="addNewDetails('home')">Add</button>
+                    </div>
+                  </div>
+                  <div class="row"*ngIf="rfsEnable"  >
+                    <div class="col-lg-9 mt-1x">
+                      </div>
+                      <div class="col-lg-3 mt-1x" style="display: flex;flex-flow: row-reverse;">
+                        <button class="btn-solid-blue float-right" style="margin-left: 5px;" (click)="clearDetails()">Clear</button>
+                        <button class="btn-solid-blue float-right" style="margin-left: 5px;" (click)="editDetailsHome(i)">Edit</button>
+                        <button class="btn-solid-blue float-right"  (click)="addNewDetails('home')">Add</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+ 
+              <!-- Away author -->
+              <div *ngIf="enableAway" >
+                <div *ngFor="let f of feeders;let i=index;" style="border-left: 3px solid red;">
+                <div class="row">
+                  <div class="col-lg-5 mt-1x">
+                    <div class="input" [ngClass]="{ 'filled': f.universityName }" style="color: black;width: 90%;">
+                      <input type="text" placeholder="" name="f.universityName"  [(ngModel)]="f.universityName" (keyup)="onKeyIPAway($event,f.universityName,i)" autocomplete="off">
+                      <label>University</label>
+                    </div>
+                    <ul class="editDrop" *ngIf="ipDropdown&&i==checkData" style="background: #d2d4d6;" (mouseleave)="ipDropdown=false">
+                      <li *ngFor="let n of fillNonCus"  (click)="onInputAway(n.universityName,n.universityId,i)">
+                         {{ n.universityName }}
+                      </li>
+                  </ul>
+                  </div>
+                  <div class="col-lg-5 mt-1x">
+                    <div class="input">
+                      <input type="text" placeholder="" name="f.fullName" [(ngModel)]="f.fullName" (keyup)="SearchIPDataAway($event,f.fullName,i)" autocomplete="off" (mouseleave)="onLeaveAuthorIp(f.fullName,i)">
+                      <label>Author</label>
+                    </div>
+                    <!-- <ul class="editAuthor" *ngIf="ipAutherDrop&&i==checkDataauthor" style="background: #d2d4d6;" (mouseleave)="onLeaveAuthor(f.fullName,i)">
+                      <li *ngFor="let a of Author"  (click)="onAutherClick(a.universityId,a.userId,a.authorName,a.departmentId,a.department,a.instituteId,a.institute,a.locationId,a.location,a.countryId,a.country,a.email,a.coressauthor,i,a.stateId,a.state,a.schoolId,a.school)">
+                         {{a.authorName}}
+                      </li>
+                  </ul> -->
+                  </div>
+                  <div class="col-lg-2 mt-1x" (mouseover)="leaveAuthor()">
+                    <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.countryName }" style="color: black;">
+                      <input type="text" placeholder="" name="f.countryName" [(ngModel)]="f.countryName" readonly> 
+                      <label>Country</label>
+                    </div>
+                    <div class="input" *ngIf="i === editRowId">
+                      <select class="form-select" name="f.countryName" [(ngModel)]="f.countryName" (ngModelChange)="countryFilter(f.countryName,i)">
+                        <option value="" selected disabled>Select Country</option>
+                        <option *ngFor="let item of countryList" >{{item.countryName}}</option>                      
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input" *ngIf="i !==editRowId" [ngClass]="{ 'filled': f.stateName }" style="color: black;">
+                      <input type="text" placeholder="" name="f.stateName" [(ngModel)]="f.stateName" readonly >
+                      <label>State</label>
+                    </div>
+                    <div class="input" *ngIf="i === editRowId">
+                      <select class="form-select" name="f.stateName" [(ngModel)]="f.stateName" (ngModelChange)="stateFilters(f.stateName,i)">
+                        <option value="" selected disabled>Select State</option>
+                        <option *ngFor="let item of filteredState" >{{item.stateName}}</option>                      
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.locationName }" style="color: black;">
+                      <input type="text" placeholder="" name="f.locationName"  [(ngModel)]="f.locationName" readonly >
+                      <label>Location</label>
+                    </div>
+                    <div class="input" *ngIf="i === editRowId">
+                      <select class="form-select" name="f.locationName" [(ngModel)]="f.locationName" (ngModelChange)="LocationFilter(f.locationName,i)">
+                        <option value="" selected disabled>Select Location</option>
+                        <option *ngFor="let item of filterLocation" >{{item.locationName}}</option>                      
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x" *ngIf="i !== editRowId&&f.schoolEnable!=false">
+                    <div class="input"  [ngClass]="{ 'filled': f.schoolName }" style="color: black;">
+                      <input type="text" placeholder="" name="f.schoolName" [(ngModel)]="f.schoolName" readonly > 
+                      <label>School</label>
+                    </div>
+                    </div>
+                    <div class="col-lg-3 mt-1x" *ngIf="i === editRowId&&f.schoolEnable!=false">
+                    <div class="input" >
+                      <input type="text" placeholder="" name="f.schoolName"  [(ngModel)]="f.schoolName" (keyup)="SearchSchool(f.schoolName,i)" autocomplete="off">
+                      <label>School</label>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.instituteName }" style="color: black;">
+                      <input type="text" placeholder="" name="f.instituteName" [(ngModel)]="f.instituteName" readonly >
+                      <label>Institute</label>
+                    </div>
+                    <div class="input" *ngIf="i === editRowId">
+                      <input autocomplete="off" type="text" placeholder="" name="f.instituteName" [(ngModel)]="f.instituteName" (keyup)="SearchInstitute(f.instituteName,i)" >
+                      <label>Institute</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.departmentName }" style="color: black;">
+                      <input type="text" placeholder="" name="f.departmentName" [(ngModel)]="f.departmentName" readonly >
+                      <label>Department</label>
+                    </div>
+                    <div class="input" *ngIf="i === editRowId">
+                      <input autocomplete="off" type="text" placeholder="" name="f.departmentName" [(ngModel)]="f.departmentName" (keyup)="SearchDepartment(f.departmentName,i)">
+                      <label>Department</label>
+                    </div>
+                    <ul class="editAuthor" *ngIf="ipDepartmentDrop&&i==editRowId" style="background: #d2d4d6;">
+                      <li *ngFor="let a of departmentList"  (click)="onselectDepartment(a.name,a.id,i)">
+                         {{a.name}}
+                      </li>
+                  </ul>
+                  </div>
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input" *ngIf="i === editRowId">
+                      <input autocomplete="off" type="text" placeholder="" name="f.correspondingEmail" [(ngModel)]="f.correspondingEmail">
+                      <label>Email</label>
+                    </div>
+                    <div class="input" *ngIf="i !== editRowId" [ngClass]="{ 'filled': f.correspondingEmail }" style="color: black;">
+                      <input autocomplete="off" type="text" placeholder="" name="f.correspondingEmail" [(ngModel)]="f.correspondingEmail" >
+                      <label>Email</label>
+                    </div>
+                   </div> 
+                  <div class="col-lg-3 mt-1x">
+                    <div class="input">
+                      <select  class="form-select" [(ngModel)]="f.correspondingAuthor" (change)="corresAuthor(f.correspondingAuthor,i)">
+                        <option value="" disabled selected>Corresponding Author</option>
+                        <option *ngFor="let item of commonDropDown" [value]="item.key">{{item.value}}</option>                      
+                      </select>
+                    </div>
+                  </div>   
+                  <div class="col-lg-3 mt-1x" *ngIf="!rfsEnable" style="display: flex;flex-flow: row-reverse;">
+                    <button class="btn-solid-blue float-right" style="margin-left: 5px;" (click)="clearDetails()">Clear</button>
+                    <button class="btn-solid-blue float-right" style="margin-left: 5px;" (click)="editDetails(i)">Edit</button>
+                    <button class="btn-solid-blue float-right"  (click)="addNewDetails('away')">Add</button>
+                  </div>
+                  <div class="col-lg-3 mt-1x" *ngIf="rfsEnable">
+                    <div class="input">
+                      <input type="text" placeholder="" name="f.linkName" [(ngModel)]="f.linkName" (keyup)="aliasidAway(f.linkName,i)" autocomplete="off">
+                      <label>Link Author</label>
+                    </div>
+                    <ul class="editAuthor" *ngIf="isaliasAway&&i==enableLinkAway" style="background: #d2d4d6;" >
+                      <li *ngFor="let a of linkauthorAway"  (click)="OnlinkAway(a.authorName,i,a.userId)">
+                         {{a.authorName}}
+                      </li>
+                  </ul>
+                  </div>
+                </div>
+                <div class="row"*ngIf="rfsEnable"  >
+                  <div class="col-lg-9 mt-1x">
+                    </div>
+                    <div class="col-lg-3 mt-1x" style="display: flex;flex-flow: row-reverse;">
+                      <button class="btn-solid-blue float-right" style="margin-left: 5px;" (click)="clearDetails()">Clear</button>
+                      <button class="btn-solid-blue float-right" style="margin-left: 5px;" (click)="editDetails(i)">Edit</button>
+                      <button class="btn-solid-blue float-right"  (click)="addNewDetails('away')">Add</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+                </div>
+                <br>
+                 <div class="gradient-box mt-2x" *ngIf="showData&&crossData">
+                     <a  class="btn-white text-center width-100 center-block" (click)="submitAll()">SUBMIT</a>
+                </div>
+              </div>    
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+   <!-- Model for add publication source -->
+   <div class="modal fade modal_special in" style="display: block;" id="add_new_form" tabindex="-1" role="dialog" aria-labelledby="add_new_modal" aria-hidden="true" *ngIf="enableBox">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width: 1100px;left: -290px;top: 50px;" >
+        <div class="modal-header" >
+          <p class="modal-title" id="add_new_modal" style="left: -20%;width: 100%;">Add publication source</p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeAdd()"><span
+              aria-hidden="true">&times;</span> </button>
+        </div>
+        <div class="modal-body">
+          <form id="step-form">
+            <fieldset >
+              <div class="form-card">
+                <div class="form_header">
+                  <img src="assets/given/img/add-new-icon.jpg" alt="" width="80" class="img-block">
+                  <h2 class="fs-title">Enter the publication source details</h2>
+                </div>
+                <div style="display: flex;flex-flow: row;justify-content: space-between;width: 100%;">
+                  <div style="width: 68%;" class="form-groups">
+                    <input class="form-controls" type="text" placeholder="" name="pubSrcDisp" [(ngModel)]="pubSrcDisp" (keyup)="onKeySourcePubSrc(pubSrcDisp)" autocomplete="off" (mouseleave)="srcTitleLeave(pubSrcDisp)">
+                    <label class="form-controls-label" for="Source Title">Source Title</label>
+                    <ul *ngIf="showSourceTitleDis"  class="alignDrop1" (mouseleave)="srcTitleLeave(pubSrcDisp)">
+                      <li *ngFor="let n of filterJournalList"  (click)="onSelectSourcePubSrc(n.displayName,n.name,n.id)">
+                         {{ n.displayName }}
+                      </li>
+                  </ul>
+                  </div>
+                <div style="width: 25%;">
+                  <select style="border: 1px solid #000;color: #000;" class="form-select" name="pubSourceTypeName" [(ngModel)]="pubSourceTypeName">
+                    <option value="undefined" selected disabled>Source Type</option>
+                    <option *ngFor="let item of articleListValues" >{{item.value}}</option>                      
+                  </select>
+                </div> 
+              </div>
+              <div style="margin-top: 10px;display: flex;flex-flow: row;justify-content: space-between;width: 100%;">
+                <div style="width: 50%;" class="form-groups">
+                  <input class="form-controls" type="text" placeholder="" name="pubSourceTitleDis" [(ngModel)]="pubSourceTitleDis" (keyup)="changePubSrcTitle(pubSourceTitleDis)" autocomplete="off">
+                  <label class="form-controls-label" for="Publisher name">Publisher name</label>
+                    <ul *ngIf="showPubTitle"  class="alignDrop1">
+                      <li *ngFor="let n of filterDisplayTitle"  (click)="onSelectPubSrcTitle(n.displayName,n.name,n.id)">
+                         {{ n.displayName }}
+                      </li>
+                  </ul>
+                </div>
+                <div style="width: 25%;">
+                  <select class="form-select" style="border: 1px solid #000;color: #000;" [(ngModel)]="srcCountryName">
+                    <option disabled selected value="undefined">Publisher Country</option>
+                    <option *ngFor="let item of countryList" >{{item.countryName}}</option>  
+                  </select>
+                </div> 
+               
+              <div style="width: 11%;">
+                <select class="form-select" style="border: 1px solid #000;color: #000;" [(ngModel)]="srcLevel">
+                  <option disabled selected value="undefined">Level</option>
+                  <option *ngFor="let item of leveDropDownmn" >{{item.value}}</option>
+                </select>
+              </div> 
+              
+            </div>  
+            <div style="margin-top: 10px;display: flex;flex-flow: row;justify-content: space-between;width: 100%;">
+              <div style="width: 16%;" class="form-groups">
+                <input class="form-controls" type="text" placeholder="" name="srcwebLink" [(ngModel)]="srcwebLink" autocomplete="off">
+                <label class="form-controls-label" for="Web Link">Web Link</label>
+              </div> 
+              <div style="width: 16%;" class="form-groups">
+                <input class="form-controls" type="text" placeholder="" name="srcpIssn" [(ngModel)]="srcpIssn" autocomplete="off">
+                <label class="form-controls-label" for="P-ISSN">P-ISSN</label>
+              </div>
+            <div style="width: 16%;" class="form-groups">
+              <input class="form-controls" type="text" placeholder="" name="srceIssn" [(ngModel)]="srceIssn" autocomplete="off">
+              <label class="form-controls-label" for="E-ISSN">E-ISSN</label>
+            </div> 
+            <div style="width: 16%;" class="form-groups">
+              <input class="form-controls" type="text" placeholder="" name="srcpIsbn" [(ngModel)]="srcpIsbn" autocomplete="off">
+              <label class="form-controls-label" for="P-ISBN">P-ISBN</label>
+            </div> 
+            <div style="width: 16%;" class="form-groups">
+              <input class="form-controls" type="text" placeholder="" name="srceIsbn" [(ngModel)]="srceIsbn" autocomplete="off">
+              <label class="form-controls-label" for="E-ISBN">E-ISBN</label>
+            </div> 
+            </div>                               
+          </div>       
+                <p *ngIf="sourceNameExists" style="color: red;">Source name values already exists</p>
+                <div class="form-groups" *ngIf="!sourceNameExists" style="width: 50%;top: 50px;">
+                <input class="form-controls" style="border: 2px solid darkgray;width: 100%;"  placeholder="" 
+                [(ngModel)]="remarksSource" name="remarksSource" autocomplete="off">
+                <label class="form-controls-label" for="Remarks">Remarks</label>
+              </div>
+                <input type="button" name="next" class="next btn-outline-blue float-right" style="width: 20%;float: right;margin-left: 10px;"  value="Clear"  (click)="clearSrcData()"/>
+                <input *ngIf="!sourceNameExists" type="button" name="next" style="width: 20%;"
+                class="next btn-outline-blue float-right"  value="Add Source" (click)="submitSrcData()" />
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Model for view pub detail -->
+  <div class="modal fade modal_special in" style="display: block;" id="add_new_form" tabindex="-1" role="dialog" aria-labelledby="add_new_modal" aria-hidden="true" *ngIf="enableViewPub">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width: 1100px;left: -290px;top: 50px; overflow-y: scroll;height: 500px;" >
+        <div class="modal-header" >
+          <p class="modal-title" id="add_new_modal" style="left: -20%;width: 100%;">View Publication Detail</p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closePubDetail()"><span
+              aria-hidden="true">&times;</span> </button>
+        </div>
+        <div class="modal-body">
+          <form id="step-form">
+            <fieldset >
+              <div class="form-card">
+                <div>
+                  <p><span style="font-weight: bold;">Title:</span> {{viewPubList.publicationTitle}}</p>
+                </div>
+                <div>
+                  <p><span style="font-weight: bold;">SourceName:</span> {{viewPubList.sourcePublication}}</p>
+                </div>
+                <div *ngIf="viewPubList.doi" >
+                  <p><span style="font-weight: bold;">Doi:</span> {{viewPubList.doi}}</p>
+                </div>
+                <div *ngIf="viewPubList.publisher" >
+                  <p><span style="font-weight: bold;">Publisher:</span> {{viewPubList.publisher}}</p>
+                </div>
+                <div *ngIf="viewPubList.publisherCountry" >
+                  <p><span style="font-weight: bold;">Publisher Country:</span> {{viewPubList.publisherCountry}}</p>
+                </div>
+
+                <div>
+                  <p><span *ngIf="viewPubList.year">{{viewPubList.year}},</span>Article type: {{viewPubList.articleType}},P-ISSN:{{viewPubList.issn}},E-ISSN:{{viewPubList.eissn}},P-ISBN:{{viewPubList.isbn}},E-ISBN:{{viewPubList.eisbn}}</p>
+                </div>
+               <br>
+                <div style="display: flex;flex-flow: wrap;">
+                    <p *ngFor="let item of viewPubList.publicationSourceDBMetrics" style="color: #adc12e;">
+                      <span *ngIf="!item.includes('-')">{{item}};</span></p>
+                </div>
+               <br>
+                <div>
+                  <p *ngIf="viewPubList.onlineDate" >Published Online: {{viewPubList.onlineDate}}</p>
+                </div>
+               <br>
+                <div>
+                  <table class="table-box">
+                    <thead style="border: 1px solid black;height: 40px;background: #0051bf;">
+                      <th style="border-right: 1px solid white;color: white;width: 5%;text-align: center;font-weight: bold;">Sl.No</th>
+                      <th style="color: white;text-align: center;font-weight: bold;">Authors Involved</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of viewPubList.authorAffiliation;let i=index"  style="border: 1px solid black;height: 35px;">
+                      <td style="border-right: 1px solid black;text-align: center;">{{i+1}}</td>
+                      <td style="padding-left: 15px;">{{item}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <br>
+                <br>
+                <div>
+                  <input type="button" name="next" class="next btn-outline-blue float-right" style="width: 20%;float: right;margin-left: 10px;"  value="Close" (click)="closePubDetail()"/>
+                  <!-- <input type="button" name="next" style="width: 20%;" class="next btn-outline-blue float-right"  value="Afflication need correction"/> -->
+                </div>
+                </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

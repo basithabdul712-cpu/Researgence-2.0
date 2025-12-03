@@ -1,0 +1,197 @@
+<style>
+
+  .menu-closed {
+      margin-left: 0px;
+      margin-left: -240px;
+    }
+    
+    *{
+      transition: unset;
+    }
+    .tooltip1:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    background-color: black !important;
+}
+.faculty_list .box{
+    padding: 65px 50px !important;
+}
+  
+  </style>
+
+  <div class="loader-wrapper" [class.loderhide]="enablePic" *ngIf="!enablePic" >
+  <div class="loader bg-white">
+    <div class="whirly-loader"> </div>
+    <br>
+    <br>
+       <p>Please Wait..Page is loading!</p>
+  </div>
+</div>
+  
+  <div class="content-wrapper" [ngClass]="{'content-expand': !isMenuOpen, 'content-wrapper': isMenuOpen}"style="background: var(--background-white);background-size: cover;background-attachment: fixed; font-family: 'Red Hat Display', sans-serif;">
+    <div class="container-fluid">
+      <div class="row"  >
+        <div class="alert alert-dismissible alert-info">
+          <button type="button" class="close" data-dismiss="alert" style="background: unset;border: unset;"><i
+              class="fa fa-remove"></i></button>
+          Currently logged in as {{Name}}({{roleName}})
+        </div>
+      </div>
+      <div class="row" >
+        <div class="video_bar bluebar_expand"[ngClass]="{'bluebar_expand': !isScrolled,'bluebar_collapse': isScrolled}"
+        [ngStyle]="{
+      'position' : stickyEnable ? 'fixed' : 'relative','padding-right':stickyEnable ? '':'unset','width':stickyEnable&&isMenuOpen? '95%':''
+    }" #blueheader style="padding-left: 50px;">
+             <div class="container container-90 ">
+            <div class="row">
+           <div class="col-lg-7 col-md-7 col-sm-7 text-white" [ngStyle] = "{'margin-top' : stickyEnable ? '' : '16px'}" style="margin-left: -25px;">
+                   <h2 style="font-size: 19px;">Welcome to the organizations’ Faculty Profiles page</h2>
+                   <p style="margin-top: 0;font-size: 13px;">Researgence profiles centralize individual research contributions, impact metrics, and insights, offering a personalized platform for faculty to explore and enhance their academic influence. Researgence profile is all yours to explore.</p>
+             <p><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="30" style="margin-right: 15px;">For support, click <a class="link-green" href="/newrequest" >here</a> to contact our team.</p>
+                 </div>
+                 <div class="col-lg-5 col-md-5 col-sm-5" ><a class="link-green help-btn" href="/newrequest"><img src="https://researgence.ai/univ-assets/cssimage/help-icon.png" alt="help" width="20" style="margin-right: 10px;">Support</a>
+                  <!-- <a href="https://www.youtube.com/watch?v=3wzpI7orqxo" target="_blank" class="video_btn mediabox"><span>Watch Video</span><img src="https://researgence.ai/univ-assets/cssimage/srp_video_cover.jpg" alt="srp video" class="head-video-cover" /></a> -->
+                </div>
+         </div>
+        </div>
+         </div>
+       </div>
+    </div>
+  
+  
+    <div class="container container-90">
+      <div class="content-pushed" [ngStyle] = "{'padding-top' : stickyEnable ? '100px' : '30px'}">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="inner-page-header gradient-box">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h3 class="page_title">List of Staff Profiles</h3>
+                </div>
+                <div class="col-lg-6">
+                  <!-- <a *ngIf="!downloadEnable"  class="btn-outline float-right ml-20" style="cursor: pointer;" (click)="captureAsPDF('1')">Generate PDF</a> 
+                  <a *ngIf="downloadEnable"  class="btn-outline float-right ml-20" style="cursor: pointer;" (click)="captureAsPDF('0')">Download</a>  -->
+                  <!-- <a class="btn-outline float-right " *ngIf="userRole.includes(management) || userRole.includes(hoc) || userRole.includes(hoi) || userRole.includes(hod) || userRole.includes(cisupport)"   routerLink="{{compareurl}}">Compare</a>  -->
+                  <!-- <a class="btn-outline float-right ml-20" *ngIf="userRole.includes(faculty)"  routerLink="{{requesturl}}">Service Request</a>  -->
+                </div>
+                </div>
+              </div>
+            </div>
+             <div class="sort" style="padding-top: 4px;margin-right: unset;padding-left: 15px;padding-right: 15px;">
+              <h6   class="tweet" style="padding-top: 2px;text-align: end;font-size: 13px;"> Showing  {{startrow+1 }} to {{ endrow}} of {{this.tcollectionSize}} records</h6>
+             </div>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="filter" *ngIf="userRole=='6'||userRole=='7'||userRole=='8'||userRole=='9'||userRole=='10'" style="display: flex;flex-wrap: wrap;">
+                <div style="margin-bottom: 10px;" class="sort" *ngIf="layerType=='3LType1'||layerType=='3LType2'||layerType=='4LType1'"> <span  class="custom-dropdown">
+                  <label class="control-label heading_sm" style="text-transform: unset;">Campus</label>
+                  <select style="width: 150px" [(ngModel)]="filterCamp"  (change)="filters('loc')">
+                    <option  disabled selected value="undefined">Select Campus</option>
+                    <option  value="">All Campus</option>
+                    <option *ngFor="let item of layerCampus">{{item}}</option>
+                  </select>
+                  </span> </div>
+                  <div style="margin-bottom: 10px;" class="sort" *ngIf="layerType=='4LType1'||layerType=='4LType2'||layerType=='3LType3'"> <span   class="custom-dropdown">
+                    <label  class="control-label heading_sm" style="text-transform: unset;">School</label>
+                    <select  style="width: 100px" [(ngModel)]="filterSchool" (change)="filters('scl')">
+                      <option  disabled selected value="undefined">Select School</option>
+                      <option  value="">All School</option>
+                      <option  *ngFor="let item of layerSchool" >{{item}}</option>
+                    </select>
+                    </span> </div>
+                    <div style="margin-bottom: 10px;" class="sort" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType3'||layerType=='4LType1'||layerType=='4LType2'"> <span  class="custom-dropdown">
+                      <label class="control-label heading_sm" style="text-transform: unset;">Institute</label>
+                      <select style="width: 100px" [(ngModel)]="filterInst" (change)="filters('inst')">
+                        <option  disabled selected value="undefined">Select Institute</option>
+                        <option  value="">All Institute</option>
+                        <option  *ngFor="let item of layerInst" >{{item}}</option>
+                      </select>
+                      </span> </div>
+                      <div style="margin-bottom: 10px;" class="sort" *ngIf="layerType=='2LType1'||layerType=='3LType1'||layerType=='3LType2'||layerType=='3LType3'||layerType=='2LType2'||layerType=='4LType1'||layerType=='4LType2'"> <span  class="custom-dropdown">
+                        <label class="control-label heading_sm" style="text-transform: unset;">Department</label>
+                        <select style="width: 100px" [(ngModel)]="filterDepart" (change)="filters('dept')">
+                          <option disabled selected value="undefined">Select Department</option>
+                              <option value="">All Department</option>
+                              <option *ngFor="let item of layerDept" [value]="item.departmentName">{{item.departmentName}}</option>
+                        </select>
+                    </span> </div>
+                    <br>
+                    <div class="sort" style="margin-bottom: 10px;">
+                      <label class="control-label heading_sm" style="text-transform: unset;">Search Name / ID</label>
+                      <input type="search" class="form-field" style="width:170px" [(ngModel)]="searchQuery" (keyup)="searchData(searchQuery)">
+                    </div>
+                    <div class="sort"><span class="custom-dropdown">
+                      <label class="control-label heading_sm" style="text-transform: unset;">Show</label>
+                      <select style="width: 60px"[(ngModel)]="pageSize" (change)="onPageSizeChange($event.target.value)">
+                        <option *ngFor="let size of pageSizes" [value]="size" [selected]="size == pageSize">{{ size }}</option>
+                      </select>
+                      </span> </div>
+                </div>
+            </div>
+          <div class="col-lg-12" id="printform">
+            <div class="content-wrapper-white faculty_list">
+              <div class="box" style="height:200px" *ngFor="let data of filteredItems | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let i=index">
+                  <p class="sl_no">{{ data.seriesNo}}</p>
+                <div class="row">
+                  <div class="col-lg-5">
+                    <div class="row">
+                     <div class="profile_pic">
+                      <span>
+                        <img [src]="data.userProfilePicLocation" alt="">
+                      </span>
+                    </div>
+                      <div class="flex flex-align-center" style="height: 70px;">
+                        <div class="faculty_names" style="margin-left: 78px;margin-bottom: 135px;">
+                          <p class="name"><a routerLink="{{uibaseurl}}/{{data.slNo}}" > 
+                            {{data.facultyName}}</a>
+                          </p>
+                          <p *ngIf="data.location!='NULL'" >{{data.location}}</p>
+                          <p *ngIf="data.school!='NULL'" >{{data.school}}</p>
+                          <p *ngIf="data.institution!='NULL'" >{{data.institution}}</p>
+                          <p *ngIf="data.department!='NULL'" >{{data.department}}</p>
+                          <p *ngIf="universityName!=='Ashoka University'">EMP ID : <span>{{data.empId}}</span></p>
+                          <p *ngIf="universityName==='Ashoka University'">Profile ID : <span>{{data.empId}}</span></p>
+                        </div> 
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-7">
+                    <ul class="faculty_score">
+                      <li class="flex">
+                          <h2>{{data.pubCount_Total}}</h2>
+                          <p class="tooltip1">Publications
+                            <span *ngIf="data.pubDBEnable"  class="tooltiptext" style="font-size: 11px;">{{data.pubCountDBWise}}</span>
+                          </p>
+                      </li>
+                      <li class="flex">
+                            <h2>{{data.patentCount}}</h2>
+                            <p class="tooltip1">Patents
+                              <span *ngIf="data.patDBEnable"  class="tooltiptext" style="font-size: 11px;">{{data.patCountStageWise}}</span>
+                            </p>
+                          </li>
+                      <!-- <li class="flex">
+                            <h2>{{data.projectCount}}</h2>
+                            <p>Projects</p>
+                        </li> -->
+                    </ul>
+                  </div>
+                </div>       
+              </div>         
+             </div>
+           </div>
+            <div class="col-lg-6 " style="float: right;margin-left: 40%;" *ngIf="userRole=='6'||userRole=='7'||userRole=='8'||userRole=='9'||userRole=='10'">
+            <ngb-pagination [maxSize]="3" [collectionSize]="tcollectionSize"(pageChange)="onPageChange($event)" [(page)]="page" [pageSize]="pageSize"></ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
